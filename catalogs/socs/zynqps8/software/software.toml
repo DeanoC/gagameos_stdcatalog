@@ -26,7 +26,7 @@ depends = ["core", "dbg", "multi_core", "platform", "utils"]
 type = "library.zynqps8.i2c"
 software = "libs/i2c/i2c.toml"
 cpus = "a53,r5f"
-depends = ["core", "dbg", "multi_core", "platform", "utils"]
+depends = ["core", "dbg", "multi_core", "platform", "utils", "zynqps8.gic_v2"]
 
 [[definition]]
 type = "library.zynqps8.mmu"

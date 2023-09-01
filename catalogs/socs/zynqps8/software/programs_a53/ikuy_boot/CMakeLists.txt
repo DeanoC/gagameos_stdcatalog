@@ -40,7 +40,7 @@ file(GLOB CPPLIST CONFIGURE_DEPENDS
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-M=${project}.map -T ${LINKSCRIPT}")
 
 set(PROJECT_EMBED_OBJ_FILES "")
-set(PROJECT_EMBED_FILES "${binary_dir}/programs_pmu/program.zynqps8.pmu_monitor/pmu_monitor.bin")
+set(PROJECT_EMBED_FILES "${binary_dir}/programs_pmu/program_zynqps8_pmu_monitor/pmu_monitor.bin")
 foreach(FILENAME ${PROJECT_EMBED_FILES})
 	get_filename_component(FILENAME_ONLY ${FILENAME} NAME)
 	get_filename_component(FILEPATH_ONLY ${FILENAME} PATH)
