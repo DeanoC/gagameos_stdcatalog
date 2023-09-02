@@ -1,0 +1,5 @@
+the_ROM_image:
+{
+  [fsbl_config] a53_x64
+  [bootloader]/home/deano/base/soft/build/programs_a53/programs_a53/program_zynqps8_ikuy_boot/ikuy_boot
+}
