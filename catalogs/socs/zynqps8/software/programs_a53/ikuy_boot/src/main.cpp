@@ -9,6 +9,7 @@
 #include "platform/aarch64/intrinsics_gcc.h"
 #include "platform/memory_map.h"
 #include "zynqps8/mmu/mmu.hpp"
+#include "fatfs/fatfs.h"
 
 #include "platform/registers/csu.h"
 #include "platform/registers/pmu_global.h"
@@ -47,6 +48,9 @@ Mmu::Manager * SetupMmu();
 #define CPU_CORTEXA53_0_TIMESTAMP_CLK_FREQ 33333000
 #define PSSYSMON_ANALOG_BUS_OFFSET		0x114U
 
+FATFS_DECLARE_DRIVE(sdcardDrive);
+FATFS_DECLARE_FILEHANDLE(pmuMonitorHandle)
+
 // main should never exit
 EXTERN_C NO_RETURN void main()
 {
@@ -62,10 +66,17 @@ EXTERN_C NO_RETURN void main()
 	HW_REG_WRITE1(CSU, SHA_RESET, CSU_SHA_RESET_RESET);
 
 	RegisterBringUp();
+	debug_printf(ANSI_BRIGHT_ON "Accessing SD card for pmu_monitor and shell" ANSI_BRIGHT_OFF);
+
+	FATFS_Mount(sdcardDrive, (utf8_int8_t const*)"0:");
+	if (!FATFS_Open(pmuMonitorHandle, (utf8_int8_t const *)"0:pmu_monitor.bin", FATFS_FM_Read))
+	{
+		debug_print(ANSI_RED_PAPER ANSI_BRIGHT_ON "\nLOAD ERROR: 0:pmu_monitor.bin NOT FOUND\n" ANSI_RESET_ATTRIBUTES);
+	}
 
 	debug_printf(ANSI_BRIGHT_ON "Bootloader size %luKB\nPMU size = %luKB\n" ANSI_BRIGHT_OFF,
-	             ((size_t) _end - (size_t) _vector_table) >> 10,
-	             ((size_t) _binary_pmu_monitor_bin_end - (size_t) _binary_pmu_monitor_bin_start)>>10);
+							 ((size_t)_end - (size_t)_vector_table) >> 10,
+							 ((size_t)_binary_pmu_monitor_bin_end - (size_t)_binary_pmu_monitor_bin_start) >> 10);
 	debug_printf("PMU load started\n");
 	PmuSleep();
 
@@ -123,7 +134,7 @@ EXTERN_C NO_RETURN void main()
 
 void PrintBanner(void )
 {
-	debug_printf(ANSI_RESET_ATTRIBUTES ANSI_YELLOW_PEN "IKUY Boot Loader\n" ANSI_WHITE_PEN);
+	debug_printf(ANSI_RESET_ATTRIBUTES ANSI_YELLOW_PEN "IKUY Boot Loader v2\n" ANSI_WHITE_PEN);
 	debug_printf("Silicon Version %d\n", HW_REG_GET_FIELD(HW_REG_GET_ADDRESS(CSU), CSU, VERSION, PS_VERSION)+1);
 	debug_printf( "A53 L1 Cache Size %dKiB, LineSize %d, Ways %d, Sets %d\n",
 										(Cache_GetDCacheLineSizeInBytes(1) * Cache_GetDCacheNumWays(1) * Cache_GetDCacheNumSets(1)) / 1024,

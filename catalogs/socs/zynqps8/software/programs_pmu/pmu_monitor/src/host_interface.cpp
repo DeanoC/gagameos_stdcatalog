@@ -8,6 +8,7 @@
 #include "platform/reg_access.h"
 #include "platform/memory_map.h"
 #include "platform/registers/apu.h"
+#include "platform/registers/crl_apb.h"
 #include "platform/registers/crf_apb.h"
 #include "os/ipi3_os_server.hpp"
 #include "cpuwake.hpp"
@@ -18,6 +19,13 @@ extern uint8_t textConsoleSkip;
 
 extern uint32_t uartDebugReceiveLast;
 extern uint32_t uartDebugReceiveHead;
+typedef struct {
+	uint32_t namesz;
+	uint32_t descsz;
+	uint32_t type;
+} ElfNoteSection_t;
+extern const ElfNoteSection_t g_note_build_id;
+
 static void HostInputCallback() {
 	HostInterface* host = &osHeap->hostInterface;
 	assert(host);
@@ -195,6 +203,18 @@ void HostInterface::WhatCommand() {
 		}
 		case "reset"_hash: {
 			Reset(cmdBuffer, finds, findCount);
+			break;
+		}
+		case "hard_reset"_hash: {
+			HardReset(cmdBuffer, finds, findCount);
+			break;
+		}
+		case "version"_hash: {
+			const uint8_t *build_id_data = &((uint8_t*)(&g_note_build_id)+1)[g_note_build_id.namesz];
+			// print Build ID
+			debug_print("Build ID: ");
+			for (uint32_t i = 0; i < g_note_build_id.descsz; ++i) debug_printf("%02x", build_id_data[i]);
+			debug_print("\n");
 			break;
 		}
 		default: {
@@ -391,6 +411,7 @@ void HostInterface::BootCpu(uint8_t const *cmdBuffer, unsigned int const *finds,
 			return;
 	}
 }
+
 void HostInterface::Reset(uint8_t const *cmdBuffer, unsigned int const *finds, unsigned int const findCount) {
 	debug_print("\nSoft Reset in Progress\n");
 	A53Sleep0();
@@ -414,5 +435,11 @@ void HostInterface::Reset(uint8_t const *cmdBuffer, unsigned int const *finds, u
 	HW_REG_WRITE1(APU, RVBARADDR0L, lowAddress);
 	HW_REG_WRITE1(APU, RVBARADDR0H, hiAddress);
 	A53WakeUp0();
+
+}
+
+void HostInterface::HardReset(uint8_t const *cmdBuffer, unsigned int const *finds, unsigned int const findCount) {
+	debug_print("\nHard Reset in Progress\n");
+	HW_REG_SET_BIT1(CRL_APB, RESET_CTRL, SOFT_RESET);
 
 }

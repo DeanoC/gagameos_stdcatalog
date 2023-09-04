@@ -37,4 +37,5 @@ struct HostInterface {
 	void WakeUpCpu(uint8_t const *cmdBuffer, unsigned int const *finds, unsigned int const findCount);
 	void BootCpu(uint8_t const *cmdBuffer, unsigned int const *finds, unsigned int const findCount);
 	void Reset(uint8_t const *cmdBuffer, unsigned int const *finds, unsigned int const findCount);
+	void HardReset(uint8_t const *cmdBuffer, unsigned int const *finds, unsigned int const findCount);
 };

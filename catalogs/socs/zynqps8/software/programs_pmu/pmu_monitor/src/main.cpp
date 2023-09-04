@@ -48,7 +48,7 @@ static void MainCallsCallback() {
 extern const ElfNoteSection_t g_note_build_id;
 void PrintBanner(void)
 {
-	raw_debug_print(ANSI_YELLOW_PEN ANSI_BRIGHT_ON "IKUY PMU Monitor\n" ANSI_WHITE_PEN ANSI_BRIGHT_OFF);
+	raw_debug_print(ANSI_YELLOW_PEN ANSI_BRIGHT_ON "IKUY PMU Monitor v2\n" ANSI_WHITE_PEN ANSI_BRIGHT_OFF);
 	const uint8_t *build_id_data = &((uint8_t*)(&g_note_build_id)+1)[g_note_build_id.namesz];
 
 	// print Build ID
