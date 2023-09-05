@@ -19,11 +19,7 @@ struct OsHeap {
 	const uint32_t nullBlock[1024]; // 4K poisoned to 0xDCDCDCDC for null page
 
 	static const unsigned int TotalSize = 1 * 1024*1024;
-	static const unsigned int UartBufferSize = 32 * 1024;
 	static const unsigned int BounceBufferSize = 64 * 1024;
-
-	uint8_t uartDEBUGTransmitBuffer[UartBufferSize]; // filled in an interrupt!
-	uint8_t uartDEBUGReceiveBuffer[UartBufferSize]; // filled in an interrupt!
 
 	BitmapAllocator_SingleThreaded<64*1024, 2046*16> ddrLoAllocator;
 	BitmapAllocator_SingleThreaded<64*1024, 2048*16> ddrHiAllocator;

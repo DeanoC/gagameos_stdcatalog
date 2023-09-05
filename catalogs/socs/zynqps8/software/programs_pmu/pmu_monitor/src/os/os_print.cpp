@@ -9,59 +9,33 @@
 #include "osservices/osservices.h"
 #include "utils/string_utils.hpp"
 
-extern uint32_t uartDebugTransmitLast;
-extern uint32_t uartDebugTransmitHead;
+extern "C" void UartPutSizedData(uint32_t size, const uint8_t *text);
 
-#define UART_DEBUG_BASE_ADDR UART1_BASE_ADDR
-
-namespace IPI3_OsServer {
-
-void PutSizedData(uint32_t size, const uint8_t *text) {
-	if (size == 0)
-		return;
-
-	//put text into to transmit buffer, interrupts will send it to host
-
-	// split at buffer end
-	if (uartDebugTransmitHead + size >= OsHeap::UartBufferSize) {
-		const uint32_t firstBlockSize = OsHeap::UartBufferSize - uartDebugTransmitHead;
-		if (firstBlockSize > 0) {
-			memcpy(&osHeap->uartDEBUGTransmitBuffer[uartDebugTransmitHead], text, firstBlockSize);
-			text += firstBlockSize;
-			size -= firstBlockSize;
-		}
-		uartDebugTransmitHead = 0;
-	}
-
-	if (size > 0) {
-		memcpy(&osHeap->uartDEBUGTransmitBuffer[uartDebugTransmitHead], text, size);
-		uartDebugTransmitHead += (uint32_t) size;
-	}
-
-	HW_REG_WRITE(HW_REG_GET_ADDRESS(UART_DEBUG), UART, INTRPT_EN, UART_INTRPT_EN_TEMPTY);
-}
-
-#define IsTransmitFull() (HW_REG_GET_BIT(UART_DEBUG, CHANNEL_STS, TNFUL))
-
+namespace IPI3_OsServer
+{
 void DebugInlinePrint(IPI3_Msg const *msgBuffer) {
 	uint8_t size = msgBuffer->Payload.InlinePrint.size;
+
 	const auto *text = (const uint8_t *) msgBuffer->Payload.InlinePrint.text;
-	PutSizedData(size, text);
+
+	// TODO allocate a tmpBuffer for each print and send each one to the uart outside the ipi interrupt using a main callback
+	//	tmpBufferAddr_ = osHeap->tmpOsBufferAllocator.Alloc(BitOp::PowerOfTwoContaining(size / 64));
+	//	memcpy((char *)tmpBufferAddr_, text, size);
+
+	UartPutSizedData(size, text);
 }
 
 void DebugPtrPrint(IPI_Channel senderChannel, IPI3_Msg const *msgBuffer) {
 	uint32_t size = msgBuffer->Payload.DdrPacket.packetSize - IPI3_HEADER_SIZE - sizeof(IPI3_DdrPacket);
 	const auto *text = (const uint8_t *) (msgBuffer->Payload.PtrPrint.text);
-	PutSizedData(size, text);
+	UartPutSizedData(size, text);
 }
 
 } // end namespace
 
-
-
 // override the weak prints, to write directly into the buffer
 EXTERN_C WEAK_LINKAGE void OsService_InlinePrint(uint8_t size, const char *const text) {
-	IPI3_OsServer::PutSizedData(size, (const uint8_t *)text);
+	UartPutSizedData(size, (const uint8_t *)text);
 }
 
 EXTERN_C WEAK_LINKAGE void OsService_Print(const char *const text) {
@@ -69,7 +43,7 @@ EXTERN_C WEAK_LINKAGE void OsService_Print(const char *const text) {
 }
 
 EXTERN_C WEAK_LINKAGE void OsService_PrintWithSize(unsigned int count, const char *const text) {
-	IPI3_OsServer::PutSizedData(count, (const uint8_t *) text);
+	UartPutSizedData(count, (const uint8_t *)text);
 }
 
 EXTERN_C WEAK_LINKAGE void OsService_Printf(const char *format, ...) {

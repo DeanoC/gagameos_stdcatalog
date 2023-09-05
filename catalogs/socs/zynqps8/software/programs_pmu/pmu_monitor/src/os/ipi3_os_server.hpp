@@ -19,10 +19,5 @@ void BootComplete(const IPI3_Msg *msgBuffer) NON_NULL(1);
 void FetchBootData(IPI_Channel senderChannel, const IPI3_Msg *msgBuffer) NON_NULL(2);
 void CpuWakeOrSleep(IPI3_Msg const *msgBuffer) NON_NULL(1);
 
-// for faster pmu direct send to to the UART
-void PutSizedData(uint32_t size, const uint8_t *text);
-ALWAYS_INLINE void PutByte(const uint8_t c) {
-	PutSizedData(1, &c);
-}
 
 } // end namespace
