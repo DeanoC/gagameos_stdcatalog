@@ -16,35 +16,44 @@
 struct OsHeap {
 	static void Init();
 	[[maybe_unused]] static void Fini();
-	const uint32_t nullBlock[1024]; // 4K poisoned to 0xDCDCDCDC for null page
 
 	static const unsigned int TotalSize = 1 * 1024*1024;
 	static const unsigned int BounceBufferSize = 64 * 1024;
+	static const unsigned int TmpOsBufferChunkSize = 64;
+	static const unsigned int TmpOsBufferCount = 4096;
+	static const unsigned int BootOCMStoreSize = 256 * 1024;
 
-	BitmapAllocator_SingleThreaded<64*1024, 2046*16> ddrLoAllocator;
-	BitmapAllocator_SingleThreaded<64*1024, 2048*16> ddrHiAllocator;
+	const uint32_t nullBlock[1024]; // 4K poisoned to 0xDCDCDCDC for null page
 
-	BitmapAllocator_SingleThreaded<64, 4096> tmpOsBufferAllocator;
-	uint8_t tmpBuffer[64 * 4096];
-
-	uint8_t bounceBuffer[BounceBufferSize];
-
-	uint8_t bootOCMStore[256*1024];
 	HostInterface hostInterface;
 	BootData bootData;
+	bool isDdrLoStashed;
+	bool isDdrHiStashed;
+
+	BitmapAllocator_SingleThreaded<64*1024, 2047*16> ddrLoAllocator;
+	BitmapAllocator_SingleThreaded<64*1024, 2048*16> ddrHiAllocator;
+
+	BitmapAllocator_SingleThreaded<TmpOsBufferChunkSize, TmpOsBufferCount> tmpOsBufferAllocator;
+
+	uint8_t tmpOsBuffer[TmpOsBufferChunkSize * TmpOsBufferCount];
+	uint8_t bounceBuffer[BounceBufferSize];
+	uint8_t ddrLoSnapshot[sizeof(ddrLoAllocator)];
+	uint8_t ddrHiSnapshot[sizeof(ddrHiAllocator)];
+	uint8_t bootOCMStore[BootOCMStoreSize];
 
 };
 
-enum class HundredHzTasks {
+static_assert(sizeof(OsHeap) < (OsHeap::TotalSize));
+
+enum class HundredHzTasks
+{
 	HOST_MAIN_CALLS = 0,
 	HOST_INPUT,
 	HOST_COMMANDS_PROCESSING
 };
 
-enum class ThirtyHzTasks {
+enum class ThirtyHzTasks
+{
 };
 
-static_assert(sizeof(OsHeap) < (OsHeap::TotalSize));
-
 extern OsHeap *osHeap;
-

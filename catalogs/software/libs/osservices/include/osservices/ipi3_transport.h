@@ -89,35 +89,42 @@ WARN_UNUSED_RESULT CONST_EXPR ALWAYS_INLINE IPI_BUFFER_OFFSET IPI_ChannelToBuffe
 	}
 }
 #ifdef __cplusplus
-	typedef enum OS_ServiceFunc : uint8_t {
+typedef enum OS_ServiceFunc : uint8_t
+{
 #else
-	typedef enum PACKED  {
+typedef enum PACKED
+{
 #endif
-	OSF_PTR_PRINT = 0,						// debug print from a ddr buffer, ptr must be valid until response
-	OSF_DDR_LO_BLOCK_ALLOC, 			// allocate 1MB chunks of DDR in low (32bit) range
-	OSF_DDR_HI_BLOCK_ALLOC, 			// allocate 1MB chunks of DDR in high (64bit) range
-	OSF_FETCH_BOOT_DATA,					// retrieve the stored boot data
+	OSF_PTR_PRINT = 0,			// debug print from a ddr buffer, ptr must be valid until response
+	OSF_DDR_LO_BLOCK_ALLOC, // allocate 1MB chunks of DDR in low (32bit) range
+	OSF_DDR_HI_BLOCK_ALLOC, // allocate 1MB chunks of DDR in high (64bit) range
+	OSF_FETCH_BOOT_DATA,		// retrieve the stored boot data
 	OSF_FIRE_AND_FORGET_BIT = 0x80,
 
-	OSF_INLINE_PRINT = OSF_FIRE_AND_FORGET_BIT | 0, 					// inline debug print <= 29 bytes
-	OSF_DDR_LO_BLOCK_FREE = OSF_FIRE_AND_FORGET_BIT | 1,  		// free previously allocated lo chunks
-	OSF_DDR_HI_BLOCK_FREE = OSF_FIRE_AND_FORGET_BIT | 2,  		// free previously allocated hi chunks
-	OSF_BOOT_COMPLETE = OSF_FIRE_AND_FORGET_BIT | 4,					// boot loader is done, passing some parameters upto PMU
-	OSF_CPU_WAKE_OR_SLEEP = OSF_FIRE_AND_FORGET_BIT | 6, 			// power down or up CPUs
-	OSF_DEVICE_WAKE_OR_SLEEP = OSF_FIRE_AND_FORGET_BIT | 7,			// power down or up the Devices like the FPGA
+	OSF_INLINE_PRINT = OSF_FIRE_AND_FORGET_BIT | 0, // inline debug print <= 29 bytes
+	OSF_DDR_LO_BLOCK_FREE,													// free previously allocated lo chunks
+	OSF_DDR_HI_BLOCK_FREE,													// free previously allocated hi chunks
+	OSF_BOOT_COMPLETE,															// boot loader is done, passing some parameters upto PMU
+	OSF_CPU_WAKE_OR_SLEEP,													// power down or up CPUs
+	OSF_DEVICE_WAKE_OR_SLEEP,												// power down or up the Devices like the FPGA
+	OSF_DDR_LO_STASH,																// store the DDR low range allocations for restoration later
+	OSF_DDR_LO_RESTORE,															// restore the DDR low range allocations
+	OSF_DDR_HI_STASH,																// store the DDR high range allocations for restoration later
+	OSF_DDR_HI_RESTORE,															// restore the DDR high range allocation
+
 } OS_ServiceFunc;
 
 typedef struct PACKED {
 	// the ddr address can be above the 32 bit boundary but unless noted in the function
 	// shouldn't be bigger than 64K (possible 128K depending on the os server state)
-	// for lower 32 bit Ddr addresses can be upto 2GB packets
+	// for lower 32 bit Ddr addresses, can be upto 2GB
 	uint8_t _padd_0[6];	// padd to 64 bit alignment
 	uintptr_all_t packetDdrAddress; // only valid for non fire and forget
 	uint32_t packetSize; // packetSize includes first 32 bytes which is an IPI3_Msg
 } IPI3_DdrPacket;
 
-#define IPI3_HEADER_SIZE 2
-#define IPI3_PACKET_MINUS_HEADER_SIZE (32 - IPI3_HEADER_SIZE)
+#define IPI3_MSG_HEADER_SIZE 2
+#define IPI3_MSG_PACKET_MINUS_HEADER_SIZE (32 - IPI3_MSG_HEADER_SIZE)
 
 typedef struct PACKED {
 	OS_ServiceFunc function; 	// 8 bits (256 max functions)
@@ -126,16 +133,16 @@ typedef struct PACKED {
 
 	struct PACKED {
 		union {
-			uint8_t padd[IPI3_PACKET_MINUS_HEADER_SIZE];					// IPI3_Msg always 32 bytes
+			uint8_t padd[IPI3_MSG_PACKET_MINUS_HEADER_SIZE]; // IPI3_Msg always 32 bytes
 			IPI3_DdrPacket DdrPacket;
 			struct PACKED {
 				uint8_t _reserved : 3;
 				uint8_t size : 5;																		// size of text in this packet
-				uint8_t text[IPI3_PACKET_MINUS_HEADER_SIZE-1];			// ASCII text without a /0 terminator
+				uint8_t text[IPI3_MSG_PACKET_MINUS_HEADER_SIZE - 1]; // ASCII text without a /0 terminator
 			} InlinePrint;
 			struct PACKED {
 				IPI3_DdrPacket DdrPacket;
-				uint8_t text[IPI3_PACKET_MINUS_HEADER_SIZE-sizeof(IPI3_DdrPacket)];			// first n character, rest follow msg
+				uint8_t text[IPI3_MSG_PACKET_MINUS_HEADER_SIZE - sizeof(IPI3_DdrPacket)]; // first n character, rest follow msg
 			} PtrPrint;
 			struct PACKED {
 				uint8_t padd0[2]; 			// align to 32 bit boundary as we have the space to spare
@@ -192,11 +199,13 @@ typedef enum PACKED {
 	IRR_OUT_OF_MEMORY = -1,
 	IRR_BAD_PARAMETERS = -2,
 } IPI3_ResponseResult;
+#define IPI3_RESPONSE_HEADER_SIZE 1
+#define IPI3_RESPONSE_PACKET_MINUS_HEADER_SIZE (32 - IPI3_RESPONSE_HEADER_SIZE)
 
 typedef struct PACKED {
 	IPI3_ResponseResult result;
 	union {
-		uint8_t _padd[31]; // IPI3_Response is always 32 bytes
+		uint8_t _padd[IPI3_RESPONSE_PACKET_MINUS_HEADER_SIZE]; // IPI3_Response is always 32 bytes
 		struct PACKED {
 			uint32_t offset; // offset in bytes from DDR LO base of our RAM
 		} DdrLoBlockAlloc;
@@ -210,9 +219,10 @@ typedef struct PACKED {
 } IPI3_Response;
 
 static_assert(sizeof(IPI3_Msg) == 32, "IPI3_Msg must be exactly 32 bytes");
-static_assert(sizeof(IPI3_Msg) - IPI3_PACKET_MINUS_HEADER_SIZE == 2, "IPI3_Msg header must be 2 bytes");
+static_assert(sizeof(IPI3_Msg) - IPI3_MSG_PACKET_MINUS_HEADER_SIZE == 2, "IPI3_Msg header must be 2 bytes");
 
 static_assert(sizeof(IPI3_Response) == 32, "IPI3_Response must be exactly 32 bytes");
+static_assert(sizeof(IPI3_Response) - IPI3_RESPONSE_PACKET_MINUS_HEADER_SIZE == 1, "IPI3_RESPONSE header must be 1 bytes");
 
 #define IPI_MSG(buffer, target) (uint8_t*)(IPI_BUFFER_BASE_ADDR + (buffer) + ((target)*0x40))
 #define IPI_RESPONSE(buffer, target) (uint8_t*)(IPI_BUFFER_BASE_ADDR + (buffer) + 0x20 + ((target)*0x40))

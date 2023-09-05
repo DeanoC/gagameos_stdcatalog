@@ -14,6 +14,10 @@ void DdrLoBlockAlloc(IPI_Channel senderChannel, const IPI3_Msg *msgBuffer) NON_N
 void DdrLoBlockFree(const IPI3_Msg *msgBuffer) NON_NULL(1);
 void DdrHiBlockAlloc(IPI_Channel senderChannel, const IPI3_Msg *msgBuffer) NON_NULL(2);
 void DdrHiBlockFree(const IPI3_Msg *msgBuffer) NON_NULL(1);
+void DdrLoStashAllocs(IPI3_Msg const *msgBuffer) NON_NULL(1);
+void DdrLoRestoreAllocs(IPI3_Msg const *msgBuffer) NON_NULL(1);
+void DdrHiStashAllocs(IPI3_Msg const *msgBuffer) NON_NULL(1);
+void DdrHiRestoreAllocs(IPI3_Msg const *msgBuffer) NON_NULL(1);
 
 void BootComplete(const IPI3_Msg *msgBuffer) NON_NULL(1);
 void FetchBootData(IPI_Channel senderChannel, const IPI3_Msg *msgBuffer) NON_NULL(2);

@@ -26,7 +26,7 @@ void DebugInlinePrint(IPI3_Msg const *msgBuffer) {
 }
 
 void DebugPtrPrint(IPI_Channel senderChannel, IPI3_Msg const *msgBuffer) {
-	uint32_t size = msgBuffer->Payload.DdrPacket.packetSize - IPI3_HEADER_SIZE - sizeof(IPI3_DdrPacket);
+	uint32_t size = msgBuffer->Payload.DdrPacket.packetSize - IPI3_MSG_HEADER_SIZE - sizeof(IPI3_DdrPacket);
 	const auto *text = (const uint8_t *) (msgBuffer->Payload.PtrPrint.text);
 	UartPutSizedData(size, text);
 }

@@ -30,7 +30,16 @@ void HandleFireAndForget(const IPI3_Msg *const msgBuffer) {
 			break;
 		case OSF_CPU_WAKE_OR_SLEEP: CpuWakeOrSleep(msgBuffer);
 			break;
-		default: debug_printf("Invalid function 0x%x in fire and forget handler IPI3\n", msgBuffer->function);
+		case OSF_DDR_LO_STASH: DdrLoStashAllocs(msgBuffer);
+			break;
+		case OSF_DDR_LO_RESTORE: DdrLoRestoreAllocs(msgBuffer);
+			break;
+		case OSF_DDR_HI_STASH: DdrHiStashAllocs(msgBuffer);
+			break;
+		case OSF_DDR_HI_RESTORE: DdrHiRestoreAllocs(msgBuffer);
+			break;
+		default:
+			debug_printf("Invalid function 0x%x in fire and forget handler IPI3\n", msgBuffer->function);
 	}
 }
 
