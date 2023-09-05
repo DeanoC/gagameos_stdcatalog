@@ -10,6 +10,7 @@
 #include "platform/memory_map.h"
 #include "zynqps8/mmu/mmu.hpp"
 #include "fatfs/fatfs.h"
+#include "fatfs/filesystem.h"
 
 #include "platform/registers/csu.h"
 #include "platform/registers/pmu_global.h"
@@ -68,12 +69,6 @@ EXTERN_C NO_RETURN void main()
 	RegisterBringUp();
 	debug_printf(ANSI_BRIGHT_ON "Accessing SD card for pmu_monitor and shell" ANSI_BRIGHT_OFF);
 
-	FATFS_Mount(sdcardDrive, (utf8_int8_t const*)"0:");
-	if (!FATFS_Open(pmuMonitorHandle, (utf8_int8_t const *)"0:pmu_monitor.bin", FATFS_FM_Read))
-	{
-		debug_print(ANSI_RED_PAPER ANSI_BRIGHT_ON "\nLOAD ERROR: 0:pmu_monitor.bin NOT FOUND\n" ANSI_RESET_ATTRIBUTES);
-	}
-
 	debug_printf(ANSI_BRIGHT_ON "Bootloader size %luKB\nPMU size = %luKB\n" ANSI_BRIGHT_OFF,
 							 ((size_t)_end - (size_t)_vector_table) >> 10,
 							 ((size_t)_binary_pmu_monitor_bin_end - (size_t)_binary_pmu_monitor_bin_start) >> 10);
@@ -95,6 +90,18 @@ EXTERN_C NO_RETURN void main()
 	// PMU OS is enabled
 	debug_force_raw_print(false);
 	EnablePSToPL();
+
+	FATFS_Mount(sdcardDrive, (utf8_int8_t const*)"0:");
+	if (!FATFS_Open(pmuMonitorHandle, (utf8_int8_t const *)"0:pmu_monitor.bin", FATFS_FM_Read))
+	{
+		debug_print(ANSI_RED_PAPER ANSI_BRIGHT_ON "\nLOAD ERROR: 0:pmu_monitor.bin NOT FOUND\r\n" ANSI_RESET_ATTRIBUTES);
+		MEMORY_STACK_ALLOCATOR(ls, 1024);
+		auto dir = FATFS_DirectoryEnumeratorCreate(ls, (utf8_int8_t const *)"0:");
+		while(auto item = FATFS_DirectoryEnumeratorNext(dir)) {
+			debug_printf("%s\n", (char*)item->filename);
+		}
+		FATFS_DirectoryEnumeratorDestroy(dir);
+	}
 
 	// ensure other a53 cores are asleep
 	OsService_SleepCpus(OSSC_A53_1 | OSSC_A53_2 | OSSC_A53_3);

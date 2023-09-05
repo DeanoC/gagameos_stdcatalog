@@ -111,20 +111,24 @@ typedef struct FATFS_DirectoryEnumerator {
 	DIR dir;
 	FATFS_DirectoryEnumeratorItem lastItem;
 	FILINFO fileInfo;
+	Memory_Allocator* allocator;
 } FATFS_DirectoryEnumerator;
 
-bool FATFS_DirectoryEnumeratorCreate(FATFS_DirectoryEnumeratorHandle* handle_, utf8_int8_t const * path_) {
-	FATFS_DirectoryEnumerator* enumerator = (FATFS_DirectoryEnumerator*)handle_;
+FATFS_DirectoryEnumeratorHandle FATFS_DirectoryEnumeratorCreate(Memory_Allocator* allocator_, utf8_int8_t const * path_) {
+	FATFS_DirectoryEnumerator* enumerator = (FATFS_DirectoryEnumerator*)MCALLOC(allocator_, 1, sizeof(FATFS_DirectoryEnumerator));
 	if(f_opendir(&enumerator->dir, path_) == FR_OK) {
-		return true;
+		enumerator->allocator = allocator_;
+		return enumerator;
 	}
 
-	return false;
+	MFREE(allocator_, enumerator);
+	return nullptr;
 }
 
 void FATFS_DirectoryEnumeratorDestroy(FATFS_DirectoryEnumeratorHandle handle) {
 	FATFS_DirectoryEnumerator * enumerator = (FATFS_DirectoryEnumerator *) handle;
 	f_closedir(&enumerator->dir);
+	MFREE(enumerator->allocator, enumerator);
 }
 
 FATFS_DirectoryEnumeratorItem const* FATFS_DirectoryEnumeratorNext(FATFS_DirectoryEnumeratorHandle handle_) {

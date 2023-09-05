@@ -15,6 +15,6 @@ typedef struct FATFS_DirectoryEnumeratorItem {
 
 typedef struct FATFS_DirectoryEnumerator *FATFS_DirectoryEnumeratorHandle;
 
-EXTERN_C NON_NULL(1, 2) bool FATFS_DirectoryEnumeratorCreate(FATFS_DirectoryEnumeratorHandle * dir_, utf8_int8_t const * path_);
+EXTERN_C NON_NULL(1, 2) FATFS_DirectoryEnumeratorHandle FATFS_DirectoryEnumeratorCreate(Memory_Allocator * allocator_, utf8_int8_t const * path_);
 EXTERN_C NON_NULL(1) void FATFS_DirectoryEnumeratorDestroy(FATFS_DirectoryEnumeratorHandle handle);
 EXTERN_C NON_NULL(1) FATFS_DirectoryEnumeratorItem const* FATFS_DirectoryEnumeratorNext(FATFS_DirectoryEnumeratorHandle handle);

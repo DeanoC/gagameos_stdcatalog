@@ -9,14 +9,13 @@
 #include "core/utf8.h"
 #include "memory/memory.h"
 
-static uint64_t g_allocCounter = 0;
-uint64_t Memory_TrackerBreakOnAllocNumber = 0; // set this here or in code before the allocation occurs to break
-
 //#define MEMORY_TRACKING 0 // will switch off the cost of tracking bar 3 pushing and memory for the strings
 // #define MEMORY_TRACKING_SETUP 0 in header will remove this overhead as well..
 
-#if !defined(MEMORY_TRACKING)
-#define MEMORY_TRACKING 1
+
+#if (defined(MEMORY_TRACKING_SETUP) && MEMORY_TRACKING_SETUP != 0)
+static uint64_t g_allocCounter = 0;
+uint64_t Memory_TrackerBreakOnAllocNumber = 0; // set this here or in code before the allocation occurs to break
 #endif
 
 #if !defined(MEMORY_TRACKING) && (defined(MEMORY_TRACKING_SETUP) && MEMORY_TRACKING_SETUP != 0)
