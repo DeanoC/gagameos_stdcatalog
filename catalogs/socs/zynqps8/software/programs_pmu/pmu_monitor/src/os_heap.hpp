@@ -29,17 +29,9 @@ struct OsHeap {
 
 	uint8_t bounceBuffer[BounceBufferSize];
 
-	Timers::Callback hundredHzCallbacks[Timers::MaxHundredHzCallbacks];
-	Timers::Callback thirtyHzCallbacks[Timers::MaxThirtyHzCallbacks];
-
 	uint8_t bootOCMStore[256*1024];
 	HostInterface hostInterface;
 	BootData bootData;
-
-	static const int MaxMainCalls = 50;
-	typedef void (*MainCallCallback)();
-	MainCallCallback mainCallCallbacks[MaxMainCalls];
-	uint32_t mainCallCallbacksIndex;
 
 };
 

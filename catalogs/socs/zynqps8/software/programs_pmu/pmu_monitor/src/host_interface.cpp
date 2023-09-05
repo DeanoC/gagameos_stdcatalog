@@ -31,6 +31,9 @@ static void HostCommandCallback() {
 	host->CommandCallback();
 }
 
+extern "C" Timers::Callback hundredHzCallbacks[Timers::MaxHundredHzCallbacks];
+extern "C" Timers::Callback thirtyHzCallbacks[Timers::MaxThirtyHzCallbacks];
+
 void HostInterface::Init() {
 	this->currentState = State::RECEIVING_COMMAND;
 	this->cmdBuffer = (uint8_t*) osHeap->tmpOsBufferAllocator.Alloc(CMD_BUF_SIZE/64);
@@ -39,8 +42,9 @@ void HostInterface::Init() {
 	this->lastReadAddress = 0;
 	this->lastCommandWasR = false;
 
-	osHeap->hundredHzCallbacks[(int)HundredHzTasks::HOST_INPUT] = &HostInputCallback;
-	osHeap->hundredHzCallbacks[(int)HundredHzTasks::HOST_COMMANDS_PROCESSING] = &HostCommandCallback;
+	hundredHzCallbacks[(int)HundredHzTasks::HOST_INPUT] = &HostInputCallback;
+	
+	hundredHzCallbacks[(int)HundredHzTasks::HOST_COMMANDS_PROCESSING] = &HostCommandCallback;
 
 	// clear errors and enable them all
 	HW_REG_WRITE1(PMU_GLOBAL, ERROR_STATUS_1, 0xFFFFFFFFU);

@@ -38,13 +38,6 @@ typedef struct {
 
 MainLoop loopy;
 
-static void MainCallsCallback() {
-	for(uint32_t i = 0; i < osHeap->mainCallCallbacksIndex;++i) {
-		osHeap->mainCallCallbacks[i]();
-	}
-	osHeap->mainCallCallbacksIndex = 0;
-}
-
 extern const ElfNoteSection_t g_note_build_id;
 void PrintBanner(void)
 {
@@ -162,8 +155,6 @@ void main()
 	Timers::Start();
 
 	HW_REG_SET_BIT1(PMU_GLOBAL, GLOBAL_CNTRL, FW_IS_PRESENT);
-
-	osHeap->hundredHzCallbacks[(int)HundredHzTasks::HOST_MAIN_CALLS] = &MainCallsCallback;
 
 	loopy.Loop();
 
