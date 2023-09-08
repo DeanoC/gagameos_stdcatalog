@@ -20,7 +20,7 @@ struct BitmapAllocator {
 #error Bitmap_Allocator requires at least 32 bit atomics
 #endif
 
-	static const int BitBlockCount = ((BMA_BLOCK_COUNT/(CPU_MAX_BITOP_TYPE_WIDTH/2))+1);
+	static const int BitBlockCount = ((BMA_BLOCK_COUNT / (CPU_MAX_BITOP_TYPE_WIDTH / 2)) + 1);
 	static const uint8_t AllocMaskBoundrary = (1 << 7);
 	uintptr_t blockBaseAddr;
 	BitMapType bitmap[BitBlockCount];
@@ -45,16 +45,16 @@ template<int BLOCKSIZE_IN_BYTES, int BLOCK_COUNT>
 uintptr_t BitmapAllocator<BLOCKSIZE_IN_BYTES, BLOCK_COUNT>::AllocOne() {
 	const auto mask = 0x1;
 	unsigned int i = 0;
-	for(; i < BitBlockCount;++i) {
-		restart:;
+	for (; i < BitBlockCount;++i) {
+restart:;
 		const BitMapType blockBitmap = this->bitmap[i];
 		const auto first = BitOp::Clz<BitMapType>(blockBitmap);
 		raw_debug_printf("bitmap 0x%x mask 0x%x\n", this->bitmap[i], mask);
 
-		if(first != sizeof(BitMapType)) {
+		if (first != sizeof(BitMapType)) {
 			const auto maskShift = ((sizeof(BitMapType) * 8) - first);
 			// found update bitmap and return address of block
-			if( Atomic::CompareExchange<BitMapType>(&this->bitmap[i], &blockBitmap, blockBitmap & ~(mask << maskShift)) == false)
+			if (Atomic::CompareExchange<BitMapType>(&this->bitmap[i], &blockBitmap, blockBitmap & ~(mask << maskShift)) == false)
 				goto restart;
 			else {
 				const BitMapType index = (i * sizeof(BitMapType)) + first;
@@ -69,27 +69,26 @@ uintptr_t BitmapAllocator<BLOCKSIZE_IN_BYTES, BLOCK_COUNT>::AllocOne() {
 
 template<int BLOCKSIZE_IN_BYTES, int BMA_BLOCK_COUNT>
 uintptr_t BitmapAllocator<BLOCKSIZE_IN_BYTES, BMA_BLOCK_COUNT>::Alloc(const uint32_t blockCount) {
-//	if(blockCount == 1) {
-//		return AllocOne();
-//	}
+	//	if(blockCount == 1) {
+	//		return AllocOne();
+	//	}
 	assert(blockCount < 128);
 	assert(blockCount < sizeof(BitMapType) * 8);
 
 	const auto mask = BitOp::CountToRightmostMask<uint8_t>(blockCount);
 	unsigned int i = 0;
-	for(; i < BitBlockCount;++i) {
-		restart:;
+	for (; i < BitBlockCount;++i) {
+restart:;
 		const BitMapType blockBitmap = this->bitmap[i];
 		const auto first = BitOp::FindFirstStringOfOnes<BitMapType>(blockBitmap, blockCount);
 		debug_printf("ALLOC bitmap 0x%x mask 0x%x first %d\n", this->bitmap[i], mask, first);
 
-		if(first != sizeof(BitMapType)) {
+		if (first != sizeof(BitMapType)) {
 			const auto maskShift = 0;//BitOp::UpperShiftForFindFirstStringOfOnes<BitMapType>(blockBitmap, blockCount) - 1;
 			// found update bitmap and return address of block
-			if( Atomic::CompareExchange<BitMapType>(&this->bitmap[i], &blockBitmap, blockBitmap & ~(mask << maskShift)) == false) {
+			if (Atomic::CompareExchange<BitMapType>(&this->bitmap[i], &blockBitmap, blockBitmap & ~(mask << maskShift)) == false) {
 				goto restart;
-			}
-			else {
+			} else {
 				const auto maskWidth = BitOp::PopulationCount<uint8_t>(mask);
 
 				const BitMapType index = (i * sizeof(BitMapType)) + (first - maskWidth + 1);
@@ -107,37 +106,37 @@ uintptr_t BitmapAllocator<BLOCKSIZE_IN_BYTES, BMA_BLOCK_COUNT>::Alloc(const uint
 	// we use a mutex, so we only do this if the normal fast search when the first
 	// search has failed
 	const uint32_t zero = 0;
-	while( Atomic::CompareExchange(&this->lowMemorySearchMutex, &zero, (uint32_t)1)) {
+	while (Atomic::CompareExchange(&this->lowMemorySearchMutex, &zero, (uint32_t) 1)) {
 		// stall
 	}
 
-	const unsigned int halfBitWidth = sizeof(BitMapType) * (8/2);
-	for(unsigned int j = 0; j < BitBlockCount; ++j) {
+	const unsigned int halfBitWidth = sizeof(BitMapType) * (8 / 2);
+	for (unsigned int j = 0; j < BitBlockCount; ++j) {
 		BitMapType bitmap0 = this->bitmap[j];
-		BitMapType bitmap1 = this->bitmap[j+1];
+		BitMapType bitmap1 = this->bitmap[j + 1];
 		auto halfMask = BitOp::CountToRightmostMask<BitMapType>(halfBitWidth);
-		BitMapType bits = ((bitmap0 & halfMask)  >> halfBitWidth) |
-				((bitmap1 & ~halfMask) >> halfBitWidth);
+		BitMapType bits = ((bitmap0 & halfMask) >> halfBitWidth) |
+			((bitmap1 & ~halfMask) >> halfBitWidth);
 
 		const auto first = (unsigned int) BitOp::FindFirstStringOfOnes<BitMapType>(bits, blockCount);
-		if(first != sizeof(BitMapType)) {
-			const int topbit = ((int)first - (int)halfBitWidth);
-			const int botbit = ((int)first - (int)blockCount - (int)halfBitWidth);
+		if (first != sizeof(BitMapType)) {
+			const int topbit = ((int) first - (int) halfBitWidth);
+			const int botbit = ((int) first - (int) blockCount - (int) halfBitWidth);
 
 			const BitMapType topmask = (botbit < 0) ? mask >> -botbit : mask << botbit;
 			const BitMapType botmask = (botbit < 0) ? mask << (sizeof(BitMapType) + botbit) : 0;
 
-			this->bitmap[j] =  bitmap0 & ~topmask;
-			this->bitmap[j+1] =  bitmap1 & ~botmask;
+			this->bitmap[j] = bitmap0 & ~topmask;
+			this->bitmap[j + 1] = bitmap1 & ~botmask;
 			BitMapType index = ((j * sizeof(BitMapType)) + topbit);
 			this->allocMasks[index] = mask | AllocMaskBoundrary;
 
-			Atomic::Store(&this->lowMemorySearchMutex, (uint32_t)0);
+			Atomic::Store(&this->lowMemorySearchMutex, (uint32_t) 0);
 			return this->blockBaseAddr + (index * BLOCKSIZE_IN_BYTES);
 		}
 	}
 
-	Atomic::Store(&this->lowMemorySearchMutex, (uint32_t)0);
+	Atomic::Store(&this->lowMemorySearchMutex, (uint32_t) 0);
 #endif
 
 	return ~0;
@@ -148,7 +147,7 @@ void BitmapAllocator<BLOCKSIZE_IN_BYTES, BMA_BLOCK_COUNT>::Free(uintptr_t addres
 	const BitMapType index = ((address - this->blockBaseAddr) / BLOCKSIZE_IN_BYTES);
 	const BitMapType blockIndex = (index / sizeof(BitMapType));
 
-	if((this->allocMasks[index] & AllocMaskBoundrary) == 0) {
+	if ((this->allocMasks[index] & AllocMaskBoundrary) == 0) {
 		const auto mask = (BitMapType) this->allocMasks[index];
 		const auto maskWidth = BitOp::PopulationCount<uint8_t>(mask);
 		const BitMapType first = maskWidth + index - (blockIndex * sizeof(BitMapType)) - 1;
@@ -157,27 +156,26 @@ void BitmapAllocator<BLOCKSIZE_IN_BYTES, BMA_BLOCK_COUNT>::Free(uintptr_t addres
 		raw_debug_printf("FREE bitmap 0x%x blockIndex %d first %d, actual mask 0x%x\n", this->bitmap[blockIndex], blockIndex, first, (mask << maskShift));
 		Atomic::Or(&this->bitmap[blockIndex], (mask << maskShift));
 		raw_debug_printf("FREE bitmap 0x%x mask 0x%x maskShift %d\n", this->bitmap[blockIndex], mask, maskShift);
-	}
-	else {
-/*
-		const uint32_t zero = 0;
-		while( Atomic::CompareExchange(&this->lowMemorySearchMutex, &zero, (uint32_t)1)) {
-			// stall
-		}
+	} else {
+		/*
+				const uint32_t zero = 0;
+				while( Atomic::CompareExchange(&this->lowMemorySearchMutex, &zero, (uint32_t)1)) {
+					// stall
+				}
 
-		const unsigned int halfBitWidth = sizeof(BitMapType) * (8/2);
-		const uint8_t mask = this->allocMasks[index] & ~AllocMaskBoundrary;
-		const uint8_t blockCount = BitOp::RightmostMaskToCount(mask);
+				const unsigned int halfBitWidth = sizeof(BitMapType) * (8/2);
+				const uint8_t mask = this->allocMasks[index] & ~AllocMaskBoundrary;
+				const uint8_t blockCount = BitOp::RightmostMaskToCount(mask);
 
-		const int botbit = ((int)first - (int)blockCount - (int)halfBitWidth);
-		const BitMapType topmask = (botbit < 0) ? mask >> -botbit : mask << botbit;
-		const BitMapType botmask = (botbit < 0) ? mask << (sizeof(BitMapType) + botbit) : 0;
+				const int botbit = ((int)first - (int)blockCount - (int)halfBitWidth);
+				const BitMapType topmask = (botbit < 0) ? mask >> -botbit : mask << botbit;
+				const BitMapType botmask = (botbit < 0) ? mask << (sizeof(BitMapType) + botbit) : 0;
 
-		this->bitmap[index] = this->bitmap[index] | topmask;
-		this->bitmap[index+1] = this->bitmap[index+1] | botmask;
+				this->bitmap[index] = this->bitmap[index] | topmask;
+				this->bitmap[index+1] = this->bitmap[index+1] | botmask;
 
-		Atomic::Store(&this->lowMemorySearchMutex, (uint32_t)0);
-		*/
-assert(false);
+				Atomic::Store(&this->lowMemorySearchMutex, (uint32_t)0);
+				*/
+		assert(false);
 	}
 }

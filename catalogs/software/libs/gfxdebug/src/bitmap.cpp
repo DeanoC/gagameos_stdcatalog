@@ -4,19 +4,19 @@
 
 #include "gfxdebug/bitmap.hpp"
 
-namespace GfxDebug {
+namespace GfxDebug
+{
 
-BitmapBase::BitmapBase(uint16_t width_, uint16_t height_, uint8_t * buffer_) :
+BitmapBase::BitmapBase(uint16_t width_, uint16_t height_, uint8_t* buffer_) :
 	width(width_),
 	height(height_),
-	widthInBytes(width_/8),
-	bitmapBuffer(buffer_)
-{
+	widthInBytes(width_ / 8),
+	bitmapBuffer(buffer_) {
 }
 
 void BitmapBase::setPixel(uint16_t x_, uint16_t y_, bool pixel_) {
 	uint8_t const pixels = get8AlignedPixels(x_, y_);
-	uint8_t const bit = ((uint8_t)pixel_) << (x_ & 7);
+	uint8_t const bit = ((uint8_t) pixel_) << (x_ & 7);
 	set8AlignedPixels(x_, y_, (pixels & ~bit) | bit);
 }
 
@@ -26,11 +26,11 @@ bool BitmapBase::getPixel(uint16_t x_, uint16_t y_) {
 }
 
 void BitmapBase::set8AlignedPixels(uint16_t x_, uint16_t y_, uint8_t pixels) {
-	bitmapBuffer[ (y_ * widthInBytes) + (x_ >> 3) ] = pixels;
+	bitmapBuffer[(y_ * widthInBytes) + (x_ >> 3)] = pixels;
 }
 
 uint8_t BitmapBase::get8AlignedPixels(uint16_t x_, uint16_t y_) {
-	return bitmapBuffer[ (y_ * widthInBytes) + (x_ >> 3) ];
+	return bitmapBuffer[(y_ * widthInBytes) + (x_ >> 3)];
 }
 
 

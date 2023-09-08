@@ -2,7 +2,8 @@
 
 #include "drawerbase.hpp"
 
-namespace GfxDebug {
+namespace GfxDebug
+{
 
 struct RGBA8 : public DrawerBase {
 	static const int MaxFontZoom = 4;
@@ -10,18 +11,18 @@ struct RGBA8 : public DrawerBase {
 	RGBA8();
 
 	// framebuffer is assumed to be far away, fastTmpBuffer is near and should be 8 * 4 * max font zoom
-	explicit RGBA8(uint16_t width, uint16_t height, uint8_t *framebuffer);
+	explicit RGBA8(uint16_t width, uint16_t height, uint8_t* framebuffer);
 
 	uint32_t backgroundColour;
 	uint32_t penColour;
 	uint16_t width;
 	uint16_t height;
 	int fontZoom;
-	uint8_t *frameBuffer;
-	uint8_t *fontTmpBuffer[MaxFontZoom * 8 * 4];
+	uint8_t* frameBuffer;
+	uint8_t* fontTmpBuffer[MaxFontZoom * 8 * 4];
 
 	void setBackgroundColour(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-		backgroundColour = PackABGR( a, r, g, b);
+		backgroundColour = PackABGR(a, r, g, b);
 	}
 
 	void setBackgroundColour(uint8_t index) override {
@@ -29,14 +30,14 @@ struct RGBA8 : public DrawerBase {
 	}
 
 	void setPenColour(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-		penColour = PackABGR( a, r, g, b);
+		penColour = PackABGR(a, r, g, b);
 	}
 	void setPenColour(uint8_t index) override {
 		penColour = palette[index];
 	}
 
 	void Clear() const override;
-	void PutString(int col, int row, char const *str) const override;
+	void PutString(int col, int row, char const* str) const override;
 	void PutChar(int col, int row, char c) const override;
 
 	void SetPixel(int x, int y, uint8_t index) override;

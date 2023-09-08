@@ -67,53 +67,53 @@ EXTERN_C bool VFile_ReadBool(VFile_Handle handle) {
 
 EXTERN_C float VFile_ReadFloat(VFile_Handle handle) {
   float ret;
-	VFile_Read(handle, &ret, sizeof(ret));
-	return ret;
+  VFile_Read(handle, &ret, sizeof(ret));
+  return ret;
 }
 
 EXTERN_C double VFile_ReadDouble(VFile_Handle handle) {
-	double ret;
-	VFile_Read(handle, &ret, sizeof(ret));
-	return ret;
+  double ret;
+  VFile_Read(handle, &ret, sizeof(ret));
+  return ret;
 }
 /*
 EXTERN_C Math_Vec2F VFile_ReadVec2F(VFile_Handle handle) {
-	Math_Vec2F data;
-	VFile_Read(handle, &data, sizeof(float) * 2);
-	return data;
+  Math_Vec2F data;
+  VFile_Read(handle, &data, sizeof(float) * 2);
+  return data;
 }
 
 EXTERN_C Math_Vec3F VFile_ReadVec3F(VFile_Handle handle) {
-	Math_Vec3F data;
-	VFile_Read(handle, &data, sizeof(float) * 3);
-	return data;
+  Math_Vec3F data;
+  VFile_Read(handle, &data, sizeof(float) * 3);
+  return data;
 }
 
 EXTERN_C Math_Vec3F VFile_ReadPackedVec3F(VFile_Handle handle, float maxAbsCoord) {
-	float invV = maxAbsCoord / 32767.0f;
-	int16_t coords[3];
-	VFile_Read(handle, &coords, sizeof(int16_t) * 3);
+  float invV = maxAbsCoord / 32767.0f;
+  int16_t coords[3];
+  VFile_Read(handle, &coords, sizeof(int16_t) * 3);
 
-	Math_Vec3F ret = {
-			coords[0] * invV, coords[1] * invV, coords[2] * invV
-	};
-	return ret;
+  Math_Vec3F ret = {
+      coords[0] * invV, coords[1] * invV, coords[2] * invV
+  };
+  return ret;
 }
 
 EXTERN_C Math_Vec4F VFile_ReadVec4F(VFile_Handle handle) {
-	Math_Vec4F data;
-	VFile_Read(handle, &data, sizeof(float) * 4);
-	return data;
+  Math_Vec4F data;
+  VFile_Read(handle, &data, sizeof(float) * 4);
+  return data;
 }*/
 
-EXTERN_C size_t VFile_ReadString(VFile_Handle handle, char *buffer, size_t maxSize) {
-	size_t pos = 0;
-	while (!VFile_IsEOF(handle)) {
-		if (pos >= maxSize) {
-			return pos;
-		}
+EXTERN_C size_t VFile_ReadString(VFile_Handle handle, char* buffer, size_t maxSize) {
+  size_t pos = 0;
+  while (!VFile_IsEOF(handle)) {
+    if (pos >= maxSize) {
+      return pos;
+    }
 
-		char c = VFile_ReadChar(handle);
+    char c = VFile_ReadChar(handle);
     buffer[pos++] = c;
     if (c == 0) {
       return pos;
@@ -126,7 +126,7 @@ EXTERN_C void VFile_ReadFileID(VFile_Handle handle, char buffer[4]) {
   VFile_Read(handle, buffer, sizeof(char) * 4);
 }
 
-EXTERN_C size_t VFile_ReadLine(VFile_Handle handle, char *buffer, size_t maxSize) {
+EXTERN_C size_t VFile_ReadLine(VFile_Handle handle, char* buffer, size_t maxSize) {
   size_t pos = 0;
   while (!VFile_IsEOF(handle)) {
     if (pos >= maxSize) { return pos; }

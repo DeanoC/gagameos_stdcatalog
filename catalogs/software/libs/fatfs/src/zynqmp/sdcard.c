@@ -2,14 +2,14 @@
 #include "dbg/print.h"
 #include "library_defines/library_defines.h"
 
-#if IKUY_HAVE_LIB_XILINX_ZYNQPS8
+#if IKUY_HAVE_LIB_ZYNQPS8_XILINX
 #include "sdps/xsdps.h"
 #include "sdps/xsdps_core.h"
 
 static XSdPs SdInstance;
 
 bool FATFS_ZynqMPSDCardInit() {
-	XSdPs_Config *SdConfig;
+	XSdPs_Config* SdConfig;
 	int Status;
 
 	debug_print("SD Card Start\n");
@@ -19,7 +19,7 @@ bool FATFS_ZynqMPSDCardInit() {
 	}
 
 	Status = XSdPs_CfgInitialize(&SdInstance, SdConfig,
-															 SdConfig->BaseAddress);
+		SdConfig->BaseAddress);
 	if (Status != XST_SUCCESS) {
 		return false;
 	}
@@ -32,10 +32,10 @@ bool FATFS_ZynqMPSDCardInit() {
 	return true;
 }
 
-bool FATFS_ZynqMPSDCardRead(uint32_t startSector_, void * buffer_, uint32_t sectors_) {
+bool FATFS_ZynqMPSDCardRead(uint32_t startSector_, void* buffer_, uint32_t sectors_) {
 	return(XSdPs_ReadPolled(&SdInstance, startSector_, sectors_, buffer_) == XST_SUCCESS);
 }
-bool FATFS_ZynqMPSDCardWrite(uint32_t startSector_, void const * buffer_, uint32_t sectors_) {
+bool FATFS_ZynqMPSDCardWrite(uint32_t startSector_, void const* buffer_, uint32_t sectors_) {
 	return(XSdPs_WritePolled(&SdInstance, startSector_, sectors_, buffer_) == XST_SUCCESS);
 }
 

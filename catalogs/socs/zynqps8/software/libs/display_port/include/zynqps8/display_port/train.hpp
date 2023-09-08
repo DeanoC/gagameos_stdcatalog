@@ -1,6 +1,7 @@
 #pragma once
 
-namespace DisplayPort::Display {
+namespace DisplayPort::Display
+{
 
 bool TrainLink(struct Connection* display);
 

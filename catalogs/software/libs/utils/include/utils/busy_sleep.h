@@ -3,7 +3,7 @@
 #include "core/core.h"
 
 #ifdef __cplusplus
-EXTERN_C {
+EXTERN_C{
 #endif
 
 // wait for n clocks; clock rate is hw dependent

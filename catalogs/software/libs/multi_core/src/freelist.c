@@ -7,7 +7,7 @@
 #include "multi_core/freelist.h"
 #if 0
 #define END_OF_LIST_SENTINEL (~0UL)
-static bool AllocNewBlock(MultiCore_FreeList *fl) {
+static bool AllocNewBlock(MultiCore_FreeList* fl) {
 	// first thing we need to do is claim our new index range
 	uint64_t baseIndex = Atomic_Add_U64(&fl->totalElementsAllocated, (fl->elementsPerBlockMask + 1));
 
@@ -21,7 +21,7 @@ static bool AllocNewBlock(MultiCore_FreeList *fl) {
 
 	size_t const blockSize = (fl->elementsPerBlockMask + 1) * fl->elementSize;
 
-	uint8_t *base = (uint8_t *) MEMORY_CALLOC(1, blockSize);
+	uint8_t* base = (uint8_t*) MEMORY_CALLOC(1, blockSize);
 	if (!base) {
 		debug_print("Out of memory!");
 		return false;
@@ -30,17 +30,17 @@ static bool AllocNewBlock(MultiCore_FreeList *fl) {
 	Atomic_Store_Ptr(fl->blocks + (baseIndex >> fl->elementsPerBlockShift), base);
 
 	// init free list for new block
-	uint8_t *workPtr = base;
+	uint8_t* workPtr = base;
 	for (uint32_t i = 0u; i < fl->elementsPerBlockMask; ++i) {
-		*((uintptr_t *) workPtr) = (uintptr_t) (workPtr + fl->elementSize);
+		*((uintptr_t*) workPtr) = (uintptr_t) (workPtr + fl->elementSize);
 		workPtr += fl->elementSize;
 	}
 
 	// link the new block into the free list and attach existing free list to the
 	// end of this block
-	Redo:;
+Redo:;
 	uint64_t head = Atomic_Load_U64(&fl->freeListHead);
-	*((uintptr_t *) workPtr) = head;
+	*((uintptr_t*) workPtr) = head;
 
 	if (Atomic_CompareExchange_U64(&fl->freeListHead, &head, (uint64_t) base) != head) {
 		goto Redo; // something changed reverse the transaction
@@ -61,11 +61,11 @@ MultiCore_FreeListHandle MultiCore_FreeListCreate(size_t elementSize, uint32_t b
 
 	// first block is attached directly to the header
 	size_t const allocSize = sizeof(MultiCore_FreeList)
-                         + blockSize +
-                         8 + // padding to ensure atomics are at least 8 byte aligned
-                         (maxBlocks * sizeof(void*));
+		+ blockSize +
+		8 + // padding to ensure atomics are at least 8 byte aligned
+		(maxBlocks * sizeof(void*));
 
-	MultiCore_FreeList *fl = (MultiCore_FreeList *) MEMORY_CALLOC(1, allocSize);
+	MultiCore_FreeList* fl = (MultiCore_FreeList*) MEMORY_CALLOC(1, allocSize);
 	if (!fl) {
 		return nullptr;
 	}
@@ -74,22 +74,22 @@ MultiCore_FreeListHandle MultiCore_FreeListCreate(size_t elementSize, uint32_t b
 	fl->elementsPerBlockShift = Math_LogTwo_U32(blockCount);
 	fl->maxBlocks = maxBlocks;
 
-	uint8_t *base = (uint8_t *) (fl + 1);
+	uint8_t* base = (uint8_t*) (fl + 1);
 
 	// get to blocks space with 8 byte alignment guarenteed
-	fl->blocks = (void* *) (((uintptr_t) base + blockSize + 0x8ull) & ~0x7ull);
+	fl->blocks = (void**) (((uintptr_t) base + blockSize + 0x8ull) & ~0x7ull);
 	Atomic_Store_Ptr(fl->blocks + 0, base);
 	Atomic_Store_U64(&fl->totalElementsAllocated, blockCount);
 
 	// init free list for new block
-	uint8_t *workPtr = base;
+	uint8_t* workPtr = base;
 	for (uint32_t i = 0u; i < (blockCount - 1); ++i) {
-		*((uintptr_t *) workPtr) = (uintptr_t) (workPtr + fl->elementSize);
+		*((uintptr_t*) workPtr) = (uintptr_t) (workPtr + fl->elementSize);
 		workPtr += fl->elementSize;
 	}
 
 	// fix last index to point to the invalid marker
-	*((uintptr_t *) workPtr) = END_OF_LIST_SENTINEL;
+	*((uintptr_t*) workPtr) = END_OF_LIST_SENTINEL;
 
 	// point head to start of the free list
 	Atomic_Store_U64(&fl->freeListHead, (uintptr_t) base);
@@ -117,10 +117,10 @@ size_t MultiCore_FreeListElementSize(MultiCore_FreeListHandle freelist) {
 	return freelist->elementSize;
 }
 
-void *MultiCore_FreeListAlloc(MultiCore_FreeListHandle fl) {
+void* MultiCore_FreeListAlloc(MultiCore_FreeListHandle fl) {
 	assert(fl != NULL);
 
-	Redo:;
+Redo:;
 	uint64_t head = Atomic_Load_U64(&fl->freeListHead);
 	// check to see if the free list is empty
 	if (head == END_OF_LIST_SENTINEL) {
@@ -139,7 +139,7 @@ void *MultiCore_FreeListAlloc(MultiCore_FreeListHandle fl) {
 		goto Redo;
 	}
 
-	uintptr_t next = *((uintptr_t *) head);
+	uintptr_t next = *((uintptr_t*) head);
 
 	if (Atomic_CompareExchange_U64(&fl->freeListHead, &head, next) != head) {
 		goto Redo; // something changed reverse the transaction
@@ -147,20 +147,20 @@ void *MultiCore_FreeListAlloc(MultiCore_FreeListHandle fl) {
 
 	// the item is now ours to abuse
 	// clear it out ready for its new life
-	memset((void *) head, 0x0, fl->elementSize);
+	memset((void*) head, 0x0, fl->elementSize);
 
-	return (void *) head;
+	return (void*) head;
 
 }
 
-void MultiCore_FreeListRelease(MultiCore_FreeListHandle fl, void *vptr) {
+void MultiCore_FreeListRelease(MultiCore_FreeListHandle fl, void* vptr) {
 	assert(fl != nullptr);
 	assert(vptr != nullptr);
 
-	Redo:;
+Redo:;
 	uint64_t head = Atomic_Load_U64(&fl->freeListHead);
 	uint64_t ptr = (uint64_t) vptr;
-	*((uintptr_t *) ptr) = head;
+	*((uintptr_t*) ptr) = head;
 
 	if (Atomic_CompareExchange_U64(&fl->freeListHead, &head, ptr) != head) {
 		goto Redo; // something changed reverse the transaction
@@ -171,15 +171,15 @@ void MultiCore_FreeListReset(MultiCore_FreeListHandle fl, bool freeAllocatedMemo
 	assert(fl != nullptr);
 
 	uintptr_t endLink = END_OF_LIST_SENTINEL;
-	for (uint32_t i = fl->maxBlocks-1; i >= 1; --i) {
+	for (uint32_t i = fl->maxBlocks - 1; i >= 1; --i) {
 		if (fl->blocks[i]) {
 			if (!freeAllocatedMemory) {
-				uint8_t *workPtr = (uint8_t *) fl->blocks[i];
+				uint8_t* workPtr = (uint8_t*) fl->blocks[i];
 				for (uint32_t j = 0u; j < fl->elementsPerBlockMask; ++j) {
-					*((uintptr_t *) workPtr) = (uintptr_t) (workPtr + fl->elementSize);
+					*((uintptr_t*) workPtr) = (uintptr_t) (workPtr + fl->elementSize);
 					workPtr += fl->elementSize;
 				}
-				*((uintptr_t *) workPtr) = endLink;
+				*((uintptr_t*) workPtr) = endLink;
 				endLink = (uintptr_t) fl->blocks[i];
 			} else {
 				MEMORY_FREE(fl->blocks[i]);
@@ -188,15 +188,15 @@ void MultiCore_FreeListReset(MultiCore_FreeListHandle fl, bool freeAllocatedMemo
 		}
 	}
 
-	uint8_t *workPtr = (uint8_t *) fl->blocks[0];
+	uint8_t* workPtr = (uint8_t*) fl->blocks[0];
 	for (uint32_t i = 0u; i < fl->elementsPerBlockMask; ++i) {
-		*((uintptr_t *) workPtr) = (uintptr_t) (workPtr + fl->elementSize);
+		*((uintptr_t*) workPtr) = (uintptr_t) (workPtr + fl->elementSize);
 		workPtr += fl->elementSize;
 	}
-	*((uintptr_t *) workPtr) = endLink;
+	*((uintptr_t*) workPtr) = endLink;
 	fl->freeListHead = (uint64_t) fl->blocks[0];
-	if(freeAllocatedMemory){
-		fl->totalElementsAllocated = fl->elementsPerBlockMask+1;
+	if (freeAllocatedMemory) {
+		fl->totalElementsAllocated = fl->elementsPerBlockMask + 1;
 	}
 }
 

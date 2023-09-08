@@ -2,7 +2,8 @@
 
 #include "core/core.h"
 
-namespace I2C {
+namespace I2C
+{
 
 enum class Speed {
 	ONE_HUNDRED_KHZ = 0,
@@ -19,17 +20,17 @@ struct Message {
 	uint8_t flags;
 
 	uint32_t bufferLength;
-	uint8_t * buffer;
+	uint8_t* buffer;
 };
 
 void InitAsSupplier(Speed speed_);
 
 // true if send was okay, false if nack'ed
 bool Send(uint16_t address_, void* buffer_, uint8_t byteCount_);
-void Receive(uint16_t address_, void * outBuffer_, uint8_t byteCount_);
-void ReceiveLarge(uint16_t address_, void * outBuffer_, uint32_t byteCount_);
+void Receive(uint16_t address_, void* outBuffer_, uint8_t byteCount_);
+void ReceiveLarge(uint16_t address_, void* outBuffer_, uint32_t byteCount_);
 
-void SendMessages(uint16_t address_, uint32_t numberOfMessages_, Message const * messages_ );
+void SendMessages(uint16_t address_, uint32_t numberOfMessages_, Message const* messages_);
 template<typename VALUE>
 VALUE ReadRegister8BitReg(uint16_t address_, VALUE registerAddress_) {
 	VALUE buffer[1] = {};
@@ -37,7 +38,7 @@ VALUE ReadRegister8BitReg(uint16_t address_, VALUE registerAddress_) {
 			.registerAddress = registerAddress_,
 			.flags = MF_8BitRegisterAddress | MF_Read,
 			.bufferLength = sizeof(VALUE),
-			.buffer = (uint8_t *) buffer,
+			.buffer = (uint8_t*) buffer,
 	};
 	SendMessages(address_, 1, &msg);
 	return buffer[0];
@@ -49,7 +50,7 @@ VALUE ReadRegister16BitReg(uint16_t address_, VALUE registerAddress_) {
 			.registerAddress = registerAddress_,
 			.flags = MF_Read,
 			.bufferLength = sizeof(VALUE),
-			.buffer = (uint8_t *) buffer,
+			.buffer = (uint8_t*) buffer,
 	};
 	SendMessages(address_, 1, &msg);
 	return buffer[0];
@@ -62,7 +63,7 @@ void WriteRegister8BitReg(uint16_t address_, uint8_t registerAddress_, VALUE val
 			.registerAddress = registerAddress_,
 			.flags = MF_8BitRegisterAddress,
 			.bufferLength = sizeof(VALUE),
-			.buffer = (uint8_t *) buffer,
+			.buffer = (uint8_t*) buffer,
 	};
 	SendMessages(address_, 1, &msg);
 }
@@ -73,7 +74,7 @@ void WriteRegister16BitReg(uint16_t address_, uint16_t registerAddress_, VALUE v
 			.registerAddress = registerAddress_,
 			.flags = 0,
 			.bufferLength = sizeof(VALUE),
-			.buffer = (uint8_t *) buffer,
+			.buffer = (uint8_t*) buffer,
 	};
 	SendMessages(address_, 1, &msg);
 }

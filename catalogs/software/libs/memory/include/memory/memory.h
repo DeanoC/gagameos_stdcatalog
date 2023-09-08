@@ -38,11 +38,11 @@ typedef struct Memory_Allocator {
 } Memory_Allocator;
 
 typedef struct Memory_LinearAllocator {
-		Memory_Allocator allocatorFuncs;
-		void * bufferStart;
-		void * bufferEnd;
-		uint8_t * current;
-		void * last; // when free is called after alloc with no other allocs in between, we can undo it
+	Memory_Allocator allocatorFuncs;
+	void* bufferStart;
+	void* bufferEnd;
+	uint8_t* current;
+	void* last; // when free is called after alloc with no other allocs in between, we can undo it
 } Memory_LinearAllocator;
 
 #if CPU_host
@@ -93,30 +93,30 @@ EXTERN_C void Memory_HeapAllocatorFinish(void* heapAllocator);        // Free th
 
 #if MEMORY_TRACKING_SETUP == 1
 
-EXTERN_C void * Memory_TrackedMalloc(Memory_Allocator * allocator_,
-                                   char const * sourceFile_,
-                                   unsigned int sourceLine_,
-                                   char const * sourceFunc_,
-                                   size_t size_);
-EXTERN_C void * Memory_TrackedAalloc(Memory_Allocator * allocator_,
-                                    char const * sourceFile_,
-                                    unsigned int sourceLine_,
-                                    char const * sourceFunc_,
-                                    size_t size_,
-																		size_t align_);
-EXTERN_C void * Memory_TrackedCalloc(Memory_Allocator * allocator_,
-                                     char const * sourceFile_,
-                                     unsigned int sourceLine_,
-                                     char const * sourceFunc_,
-                                     size_t count_,
-                                     size_t size_);
-EXTERN_C void * Memory_TrackedRealloc(Memory_Allocator * allocator_,
-                                     const char * sourceFile_,
-                                     unsigned int sourceLine_,
-                                     char const * sourceFunc_,
-																		 void * address_,
-                                     size_t size_);
-EXTERN_C bool Memory_TrackedFree(Memory_Allocator * allocator_, void * address_);
+EXTERN_C void* Memory_TrackedMalloc(Memory_Allocator* allocator_,
+	char const* sourceFile_,
+	unsigned int sourceLine_,
+	char const* sourceFunc_,
+	size_t size_);
+EXTERN_C void* Memory_TrackedAalloc(Memory_Allocator* allocator_,
+	char const* sourceFile_,
+	unsigned int sourceLine_,
+	char const* sourceFunc_,
+	size_t size_,
+	size_t align_);
+EXTERN_C void* Memory_TrackedCalloc(Memory_Allocator* allocator_,
+	char const* sourceFile_,
+	unsigned int sourceLine_,
+	char const* sourceFunc_,
+	size_t count_,
+	size_t size_);
+EXTERN_C void* Memory_TrackedRealloc(Memory_Allocator* allocator_,
+	const char* sourceFile_,
+	unsigned int sourceLine_,
+	char const* sourceFunc_,
+	void* address_,
+	size_t size_);
+EXTERN_C bool Memory_TrackedFree(Memory_Allocator* allocator_, void* address_);
 
 
 #define Memory_TrackingPaddingSize 4

@@ -44,7 +44,6 @@ extern "C" Timers::Callback thirtyHzCallbacks[Timers::MaxThirtyHzCallbacks];
 
 void HostInterface::Init() {
 	this->currentState = State::RECEIVING_COMMAND;
-	this->cmdBuffer = (uint8_t*) osHeap->tmpOsBufferAllocator.Alloc(CMD_BUF_SIZE/64);
 	this->cmdBufferHead = 0;
 	this->downloadAddress = 0x8'0000'0000;
 	this->lastReadAddress = 0;
@@ -69,7 +68,6 @@ void HostInterface::Init() {
 }
 
 [[maybe_unused]] void HostInterface::Fini() {
-	osHeap->tmpOsBufferAllocator.Free((uintptr_t)this->cmdBuffer, CMD_BUF_SIZE/64 );
 }
 
 extern void UartTmpBufferRefill(uintptr_t &tmpBufferAddr, uint32_t &tmpBufferSize);

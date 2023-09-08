@@ -26,10 +26,9 @@
 
 #include "core/core.h"
 
-NON_NULL(1,2) void *memcpy(void * const v_dst, const void * const v_src, size_t c)
-{
-	const char *src = v_src;
-	char *dst = v_dst;
+NON_NULL(1, 2) void* memcpy(void* const v_dst, const void* const v_src, size_t c) {
+	const char* src = v_src;
+	char* dst = v_dst;
 
 	// The following code tries to optimize the copy by using unsigned
 	// alignment. This will work fine if both source and destination are
@@ -37,42 +36,42 @@ NON_NULL(1,2) void *memcpy(void * const v_dst, const void * const v_src, size_t 
 	// different boundaries shifts will be necessary. This might result in
 	// bad performance on MicroBlaze systems without a barrel shifter.
 	//
-	const uint32_t *i_src;
-	uint32_t *i_dst;
+	const uint32_t* i_src;
+	uint32_t* i_dst;
 
 	if (BRANCH_LIKELY(c >= 4)) {
 		unsigned  value, buf_hold;
 
 		/* Align the destination to a word boundary. */
 		/* This is done in an endian independent manner. */
-		switch ((unsigned long)dst & 3) {
-			case 1:
-				*dst++ = *src++;
-				--c;
-				case 2:
-					*dst++ = *src++;
-					--c;
-					case 3:
-						*dst++ = *src++;
-						--c;
+		switch ((unsigned long) dst & 3) {
+		case 1:
+			*dst++ = *src++;
+			--c;
+		case 2:
+			*dst++ = *src++;
+			--c;
+		case 3:
+			*dst++ = *src++;
+			--c;
 		}
 
-		i_dst = (void *)dst;
+		i_dst = (void*) dst;
 
 		// Choose a copy scheme based on the source
 		// alignment relative to destination.
-		switch ((unsigned long)src & 3) {
-			case 0x0:	// Both byte offsets are aligned
-			i_src  = (const void *)src;
+		switch ((unsigned long) src & 3) {
+		case 0x0:	// Both byte offsets are aligned
+			i_src = (const void*) src;
 
 			for (; c >= 4; c -= 4)
 				*i_dst++ = *i_src++;
 
-			src  = (const void *)i_src;
+			src = (const void*) i_src;
 			break;
-			case 0x1:	// Unaligned - Off by 1
+		case 0x1:	// Unaligned - Off by 1
 			// Word align the source
-			i_src = (const void *) ((unsigned)src & ~3);
+			i_src = (const void*) ((unsigned) src & ~3);
 			// Load the holding buffer
 			buf_hold = (*i_src++ & 0xFFFFFF00) >> 8;
 
@@ -83,12 +82,12 @@ NON_NULL(1,2) void *memcpy(void * const v_dst, const void * const v_src, size_t 
 			}
 
 			// Realign the source
-			src = (const void *)i_src;
+			src = (const void*) i_src;
 			src -= 3;
 			break;
-			case 0x2:	// Unaligned - Off by 2
+		case 0x2:	// Unaligned - Off by 2
 			// Word align the source
-			i_src = (const void *) ((unsigned)src & ~3);
+			i_src = (const void*) ((unsigned) src & ~3);
 			// Load the holding buffer
 			buf_hold = (*i_src++ & 0xFFFF0000) >> 16;
 
@@ -99,12 +98,12 @@ NON_NULL(1,2) void *memcpy(void * const v_dst, const void * const v_src, size_t 
 			}
 
 			// Realign the source
-			src = (const void *)i_src;
+			src = (const void*) i_src;
 			src -= 2;
 			break;
-			case 0x3:	// Unaligned - Off by 3
+		case 0x3:	// Unaligned - Off by 3
 			// Word align the source
-			i_src = (const void *) ((unsigned)src & ~3);
+			i_src = (const void*) ((unsigned) src & ~3);
 
 			// Load the holding buffer
 			buf_hold = (*i_src++ & 0xFF000000) >> 24;
@@ -116,22 +115,22 @@ NON_NULL(1,2) void *memcpy(void * const v_dst, const void * const v_src, size_t 
 			}
 
 			// Realign the source
-			src = (const void *)i_src;
+			src = (const void*) i_src;
 			src -= 1;
 			break;
 		}
-		dst = (void *)i_dst;
+		dst = (void*) i_dst;
 	}
 
 	// Finish off any remaining bytes
 	// simple fast copy, ... unless a cache boundary is crossed
 	switch (c) {
-		case 3:
-			*dst++ = *src++;
-			case 2:
-				*dst++ = *src++;
-				case 1:
-					*dst++ = *src++;
+	case 3:
+		*dst++ = *src++;
+	case 2:
+		*dst++ = *src++;
+	case 1:
+		*dst++ = *src++;
 	}
 
 	return v_dst;

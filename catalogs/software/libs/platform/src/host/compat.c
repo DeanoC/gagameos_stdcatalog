@@ -4,7 +4,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-void raw_debug_printf(const char *format, ...) {
+void raw_debug_printf(const char* format, ...) {
 	char buffer[256]; // 256 byte max string (on stack)
 	va_list va;
 	va_start(va, format);
@@ -15,7 +15,7 @@ void raw_debug_printf(const char *format, ...) {
 }
 
 
-void debug_printf(const char *format, ...) {
+void debug_printf(const char* format, ...) {
 	char buffer[256]; // 256 byte max string (on stack)
 	va_list va;
 	va_start(va, format);
@@ -24,6 +24,6 @@ void debug_printf(const char *format, ...) {
 	buffer[255] = 0;
 	printf("%s", buffer);
 }
-void debug_print(const char *txt) {
+void debug_print(const char* txt) {
 	printf("%s", txt);
 }

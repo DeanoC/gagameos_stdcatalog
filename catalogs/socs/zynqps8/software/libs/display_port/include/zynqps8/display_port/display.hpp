@@ -2,7 +2,8 @@
 
 #include "core/core.h"
 
-namespace DisplayPort::Display {
+namespace DisplayPort::Display
+{
 
 // 12 bit colours are fairly common. the MSB of this should be zero
 typedef uint16_t uint12_t;
@@ -48,17 +49,17 @@ struct PACKED DMADescriptor {
 	union {
 		uint32_t CONTROL;
 		struct {
-			uint32_t preamble: 8;
-			uint32_t enableCompletionInterrupt: 1;
-			uint32_t enableDescriptorUpdate: 1;
-			uint32_t ignoreDone: 1;
-			uint32_t burstType: 1; // 0 = INCR, 1 = FIXED
-			uint32_t axiCache: 4;
-			uint32_t axiProt: 2;
-			uint32_t fragmented: 1;
-			uint32_t last: 1;
-			uint32_t enableCrc: 1;
-			uint32_t lastOfFrame: 1;
+			uint32_t preamble : 8;
+			uint32_t enableCompletionInterrupt : 1;
+			uint32_t enableDescriptorUpdate : 1;
+			uint32_t ignoreDone : 1;
+			uint32_t burstType : 1; // 0 = INCR, 1 = FIXED
+			uint32_t axiCache : 4;
+			uint32_t axiProt : 2;
+			uint32_t fragmented : 1;
+			uint32_t last : 1;
+			uint32_t enableCrc : 1;
+			uint32_t lastOfFrame : 1;
 			uint32_t : 0;
 		};
 	};
@@ -66,7 +67,7 @@ struct PACKED DMADescriptor {
 	union {
 		uint32_t DSCR_ID;
 		struct {
-			uint32_t dscrId: 16;
+			uint32_t dscrId : 16;
 			uint32_t : 0;
 		};
 	};
@@ -80,8 +81,8 @@ struct PACKED DMADescriptor {
 	union {
 		uint32_t LINE_SIZE_STRIDE;
 		struct {
-			uint32_t width: 18;
-			uint32_t stride: 14;
+			uint32_t width : 18;
+			uint32_t stride : 14;
 		};
 	};
 
@@ -94,17 +95,17 @@ struct PACKED DMADescriptor {
 	union {
 		uint32_t MSB_Timestamp;
 		struct {
-			uint32_t timestampMSB: 10;
-			uint32_t padd0: 21;
-			uint32_t timestampDone: 1;
+			uint32_t timestampMSB : 10;
+			uint32_t padd0 : 21;
+			uint32_t timestampDone : 1;
 		};
 	};
 
 	union {
 		uint32_t ADDR_EXT;
 		struct {
-			uint32_t nextDescriptorAddressExt: 16;
-			uint32_t sourceAddressExt: 16;
+			uint32_t nextDescriptorAddressExt : 16;
+			uint32_t sourceAddressExt : 16;
 		};
 	};
 	union {
@@ -124,15 +125,15 @@ struct PACKED DMADescriptor {
 	union {
 		uint32_t ADDR_EXT_23;
 		struct {
-			uint32_t source2AddressExt: 16;
-			uint32_t source3AddressExt: 16;
+			uint32_t source2AddressExt : 16;
+			uint32_t source3AddressExt : 16;
 		};
 	};
 	union {
 		uint32_t ADDR_EXT_45;
 		struct {
-			uint32_t source4AddressExt: 16;
-			uint32_t source5AddressExt: 16;
+			uint32_t source4AddressExt : 16;
+			uint32_t source5AddressExt : 16;
 		};
 	};
 	union {
@@ -169,23 +170,23 @@ struct PACKED DMADescriptor {
 };
 #pragma GCC diagnostic pop
 
-static_assert( sizeof(DMADescriptor) == 64);
-static_assert( offsetof(DMADescriptor, CONTROL) == 0);
-static_assert( offsetof(DMADescriptor, DSCR_ID) == 4);
-static_assert( offsetof(DMADescriptor, XFER_SIZE) == 8);
-static_assert( offsetof(DMADescriptor, LINE_SIZE_STRIDE) == 12);
-static_assert( offsetof(DMADescriptor, LSB_Timestamp) == 16);
-static_assert( offsetof(DMADescriptor, MSB_Timestamp) == 20);
-static_assert( offsetof(DMADescriptor, ADDR_EXT) == 24);
-static_assert( offsetof(DMADescriptor, NEXT_DESC) == 28);
-static_assert( offsetof(DMADescriptor, SRC_ADDR) == 32);
-static_assert( offsetof(DMADescriptor, ADDR_EXT_23) == 36);
-static_assert( offsetof(DMADescriptor, ADDR_EXT_45) == 40);
-static_assert( offsetof(DMADescriptor, SRC_ADDR2) == 44);
-static_assert( offsetof(DMADescriptor, SRC_ADDR3) == 48);
-static_assert( offsetof(DMADescriptor, SRC_ADDR4) == 52);
-static_assert( offsetof(DMADescriptor, SRC_ADDR5) == 56);
-static_assert( offsetof(DMADescriptor, CRC) == 60);
+static_assert(sizeof(DMADescriptor) == 64);
+static_assert(offsetof(DMADescriptor, CONTROL) == 0);
+static_assert(offsetof(DMADescriptor, DSCR_ID) == 4);
+static_assert(offsetof(DMADescriptor, XFER_SIZE) == 8);
+static_assert(offsetof(DMADescriptor, LINE_SIZE_STRIDE) == 12);
+static_assert(offsetof(DMADescriptor, LSB_Timestamp) == 16);
+static_assert(offsetof(DMADescriptor, MSB_Timestamp) == 20);
+static_assert(offsetof(DMADescriptor, ADDR_EXT) == 24);
+static_assert(offsetof(DMADescriptor, NEXT_DESC) == 28);
+static_assert(offsetof(DMADescriptor, SRC_ADDR) == 32);
+static_assert(offsetof(DMADescriptor, ADDR_EXT_23) == 36);
+static_assert(offsetof(DMADescriptor, ADDR_EXT_45) == 40);
+static_assert(offsetof(DMADescriptor, SRC_ADDR2) == 44);
+static_assert(offsetof(DMADescriptor, SRC_ADDR3) == 48);
+static_assert(offsetof(DMADescriptor, SRC_ADDR4) == 52);
+static_assert(offsetof(DMADescriptor, SRC_ADDR5) == 56);
+static_assert(offsetof(DMADescriptor, CRC) == 60);
 
 struct DisplayVideoPlane {
 	enum class Source {
@@ -231,49 +232,49 @@ struct DisplayVideoPlane {
 
 	[[nodiscard]] static bool IsFormatRGB(Format format) {
 		return (format == DisplayVideoPlane::Format::RGB8 ||
-				format == DisplayVideoPlane::Format::RGBX8 ||
-				format == DisplayVideoPlane::Format::RGB10);
+			format == DisplayVideoPlane::Format::RGBX8 ||
+			format == DisplayVideoPlane::Format::RGB10);
 	}
 	[[nodiscard]] static bool NeedColourUpSampling(Format format) {
 		switch (format) {
-			case Format::CbYfCrYs8_422:
-			case Format::CrYfCbYs8_422:
-			case Format::YfCrYsCb8_422:
-			case Format::YfCbYsCr8_422:
-			case Format::Y8_Cr8_Cb8_422:
-			case Format::Y8_CrCb8_422:
-			case Format::Y8_CbCr8_422:
-			case Format::Y10_CrCb10_422:
-			case Format::Y10_CbCr10_422:
-			case Format::Y10_Cr10_Cb10_422:
-			case Format::Y8_CrCb8_420:
-			case Format::Y8_CbCr8_420:
-			case Format::Y10_Cr10_Cb10_420:
-			case Format::Y10_CrCb10_420:
-			case Format::Y10_CbCr10_420:
-			case Format::Y8_Cr8_Cb8_420:
-				return true;
-			default: return false;
+		case Format::CbYfCrYs8_422:
+		case Format::CrYfCbYs8_422:
+		case Format::YfCrYsCb8_422:
+		case Format::YfCbYsCr8_422:
+		case Format::Y8_Cr8_Cb8_422:
+		case Format::Y8_CrCb8_422:
+		case Format::Y8_CbCr8_422:
+		case Format::Y10_CrCb10_422:
+		case Format::Y10_CbCr10_422:
+		case Format::Y10_Cr10_Cb10_422:
+		case Format::Y8_CrCb8_420:
+		case Format::Y8_CbCr8_420:
+		case Format::Y10_Cr10_Cb10_420:
+		case Format::Y10_CrCb10_420:
+		case Format::Y10_CbCr10_420:
+		case Format::Y8_Cr8_Cb8_420:
+			return true;
+		default: return false;
 		}
 	}
 	[[nodiscard]] static int NumberOfPlanes(Format format) {
 		switch (format) {
-			case Format::Y8_Cr8_Cb8_422:
-			case Format::Y8_Cr8_Cb8_420:
-			case Format::Y10_Cr10_Cb10_420:
-			case Format::Y10_Cr10_Cb10_422:
-			case Format::Y10_Cr10_Cb10_444:
-			case Format::Y8_Cr8_Cb8_444: return 3;
+		case Format::Y8_Cr8_Cb8_422:
+		case Format::Y8_Cr8_Cb8_420:
+		case Format::Y10_Cr10_Cb10_420:
+		case Format::Y10_Cr10_Cb10_422:
+		case Format::Y10_Cr10_Cb10_444:
+		case Format::Y8_Cr8_Cb8_444: return 3;
 
-			case Format::Y10_CrCb10_420:
-			case Format::Y10_CbCr10_420:
-			case Format::Y8_CrCb8_420:
-			case Format::Y8_CbCr8_420:
-			case Format::Y10_CrCb10_422:
-			case Format::Y10_CbCr10_422:
-			case Format::Y8_CrCb8_422:
-			case Format::Y8_CbCr8_422: return 2;
-			default: return 1;
+		case Format::Y10_CrCb10_420:
+		case Format::Y10_CbCr10_420:
+		case Format::Y8_CrCb8_420:
+		case Format::Y8_CbCr8_420:
+		case Format::Y10_CrCb10_422:
+		case Format::Y10_CbCr10_422:
+		case Format::Y8_CrCb8_422:
+		case Format::Y8_CbCr8_422: return 2;
+		default: return 1;
 		}
 	}
 };
@@ -363,9 +364,9 @@ struct Display {
 
 	VideoTiming videoTiming;
 
-	uint8_t synchronousClock: 1;
-	uint8_t dynamicRange: 1;
-	uint8_t ycbcrColourimety: 1;
+	uint8_t synchronousClock : 1;
+	uint8_t dynamicRange : 1;
+	uint8_t ycbcrColourimety : 1;
 
 };
 
@@ -375,16 +376,16 @@ struct Connection {
 	uint8_t numLanes;
 	uint8_t lane_0_1Status;
 	uint8_t laneAlignStatus;
-	uint8_t voltageSwing: 4;
-	uint8_t preEmphasis: 4;
+	uint8_t voltageSwing : 4;
+	uint8_t preEmphasis : 4;
 
-	uint8_t supportsDownSpread: 1;
-	uint8_t supportsEnhancedFrame: 1;
-	uint8_t supportsTrainingPattern3: 1;
-	uint8_t enhancedFrameEnabled: 1;
-	uint8_t downSpreadEnabled: 1;
-	uint8_t msaTimingParIgnored: 1;
-	uint8_t connected: 1;
+	uint8_t supportsDownSpread : 1;
+	uint8_t supportsEnhancedFrame : 1;
+	uint8_t supportsTrainingPattern3 : 1;
+	uint8_t enhancedFrameEnabled : 1;
+	uint8_t downSpreadEnabled : 1;
+	uint8_t msaTimingParIgnored : 1;
+	uint8_t connected : 1;
 	uint8_t : 0;
 
 	uint32_t delayRateUS;
@@ -393,16 +394,16 @@ struct Connection {
 	static uint8_t const MaxPreEmphasis = 2;
 };
 
-void Init(Connection *link);
-void Init(Display *display);
-void Init(Mixer *mixer);
+void Init(Connection* link);
+void Init(Display* display);
+void Init(Mixer* mixer);
 void Init(DMADescriptor* dma);
 
-bool IsDisplayConnected(Connection *link);
-bool Connect(Connection *link);
-bool CopyNativeResolution(Connection *link, VideoTiming *videoTiming);
-bool CopyStandardVideoMode(StandardVideoMode videoMode, VideoTiming *videoTiming);
-void SetDisplay(Connection *link, Display *display, Mixer *mixer);
+bool IsDisplayConnected(Connection* link);
+bool Connect(Connection* link);
+bool CopyNativeResolution(Connection* link, VideoTiming* videoTiming);
+bool CopyStandardVideoMode(StandardVideoMode videoMode, VideoTiming* videoTiming);
+void SetDisplay(Connection* link, Display* display, Mixer* mixer);
 void SetMixerDMA(Mixer* mixer);
 
 void SetVBlankInterrupt(bool enable);

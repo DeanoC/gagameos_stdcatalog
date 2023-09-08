@@ -27,8 +27,8 @@ struct HostInterface {
 
 	bool DecodeAddress(uint8_t const *cmdBuffer, unsigned int const *finds, unsigned int const findCount);
 
-	static const int CMD_BUF_SIZE = 1024;
-	uint8_t* cmdBuffer;
+	static const int CMD_BUF_SIZE = 256;
+	uint8_t cmdBuffer[CMD_BUF_SIZE];
 	uint32_t cmdBufferHead;
 	uintptr_all_t downloadAddress;
   ZModem zModem;

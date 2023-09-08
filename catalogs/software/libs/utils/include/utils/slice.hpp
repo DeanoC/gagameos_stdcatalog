@@ -3,50 +3,53 @@
 #include "dbg/assert.h"
 #include "core/utils.hpp"
 
-namespace Utils {
-	/// non owning slice of memory
-	template<typename T> struct Slice {
-			T * const data;
-			size_t const size;
-	};
+namespace Utils
+{
 
-	template<typename T> struct TrackingSlice {
-			Slice<T> slice;
-			T * current;
-			explicit TrackingSlice(Slice<T> slice_, size_t startOffset_ = 0) : slice(slice_), current(slice.data + startOffset_) {}
+/// non owning slice of memory
+template<typename T> struct Slice {
+	T* const data;
+	size_t const size;
+};
 
-			void increment(size_t val) {
-				assert(current+val <= slice.data + slice.size);
-				current += val;
-			}
+template<typename T> struct TrackingSlice {
+	Slice<T> slice;
+	T* current;
+	explicit TrackingSlice(Slice<T> slice_, size_t startOffset_ = 0) : slice(slice_), current(slice.data + startOffset_) {}
 
-			WARN_UNUSED_RESULT size_t left() const { return (slice.data + slice.size) - current; }
+	void increment(size_t val) {
+		assert(current + val <= slice.data + slice.size);
+		current += val;
+	}
 
-			// pre-increment
-			T * operator++() {
-				assert(current+1 <= slice.data + slice.size);
-				return ++current;
-			}
-			T const * operator--() {
-				assert(current-1 >= slice.data);
-				return --current;
-			}
-			// post-increment
-			T * operator++(int) {
-				assert(current+1 <= slice.data + slice.size);
-				return current++;
-			}
-			T * operator--(int) {
-				assert(current-1 >= slice.data);
-				return current--;
-			}
+	WARN_UNUSED_RESULT size_t left() const { return (slice.data + slice.size) - current; }
 
-			// deference
-			T const& operator*() const {
-				return *current;
-			}
-			T & operator*() {
-				return *current;
-			}
-	};
+	// pre-increment
+	T* operator++() {
+		assert(current + 1 <= slice.data + slice.size);
+		return ++current;
+	}
+	T const* operator--() {
+		assert(current - 1 >= slice.data);
+		return --current;
+	}
+	// post-increment
+	T* operator++(int) {
+		assert(current + 1 <= slice.data + slice.size);
+		return current++;
+	}
+	T* operator--(int) {
+		assert(current - 1 >= slice.data);
+		return current--;
+	}
+
+	// deference
+	T const& operator*() const {
+		return *current;
+	}
+	T& operator*() {
+		return *current;
+	}
+};
+
 }

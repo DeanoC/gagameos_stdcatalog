@@ -2,7 +2,9 @@
 
 #include "core/core.h"
 
-namespace Dma::FpdDma {
+namespace Dma::FpdDma
+{
+
 enum class Channels : uint8_t {
 	ChannelZero = 0,
 	ChannelOne,
@@ -23,4 +25,5 @@ AsyncToken SimpleDmaCopy(Channels channel, uintptr_all_t src, uintptr_all_t dest
 void Stall(Channels channel);
 
 void StallForToken(AsyncToken token);
-}
+
+} // end namespace

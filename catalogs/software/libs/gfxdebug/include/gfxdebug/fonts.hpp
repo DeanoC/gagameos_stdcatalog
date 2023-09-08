@@ -7,7 +7,7 @@
 #define GFXDEBUG_FONTS_MINIMAL_MEMORY 0
 #endif
 
-extern uint8_t const * font8x8;
+extern uint8_t const* font8x8;
 
 #if GFXDEBUG_FONTS_MINIMAL_MEMORY == 2
 #define GFXDEBUG_FONTS_MIN_CHAR 33
@@ -18,7 +18,7 @@ extern uint8_t const * font8x8;
 #elif GFXDEBUG_FONTS_MINIMAL_MEMORY == 0
 #define GFXDEBUG_FONTS_MIN_CHAR 0
 #define GFXDEBUG_FONTS_MAX_CHAR 255
-extern uint8_t const * font8x16;
+extern uint8_t const* font8x16;
 #else
 #error GFXDEBUG_FONTS_MINIMAL_MEMORY must be 0 to 2
 #endif

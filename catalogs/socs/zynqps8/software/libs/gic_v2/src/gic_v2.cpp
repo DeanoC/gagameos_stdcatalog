@@ -9,7 +9,8 @@
 #include "platform/cpu.h"
 #include "multi_core/mutex.h"
 
-namespace GicV2 {
+namespace GicV2
+{
 
 static Core_Mutex mutex;
 
@@ -60,7 +61,7 @@ void EnableInterruptForThisCore(Interrupt_Names name_) {
 		uint32_t const targetRegNum = name_ / 4;
 		uint32_t const interruptIdReg = name_ & 0x3;
 		uint32_t targets = hw_RegRead(ACPU_GICD_BASE_ADDR,
-																	ACPU_GICD_ITARGETSR0_OFFSET + (targetRegNum * 4));
+			ACPU_GICD_ITARGETSR0_OFFSET + (targetRegNum * 4));
 		targets |= 1 << ((interruptIdReg * 8) + cpuId);
 		hw_RegWrite(ACPU_GICD_BASE_ADDR, ACPU_GICD_ITARGETSR0_OFFSET + (targetRegNum * 4), targets);
 	}
@@ -71,8 +72,8 @@ void EnableInterruptForThisCore(Interrupt_Names name_) {
 		uint32_t const interruptIdReg = name_ & 0x1f;
 
 		hw_RegWrite(ACPU_GICD_BASE_ADDR,
-								ACPU_GICD_ISENABLER0_OFFSET + (targetRegNum * 4),
-								(1 << interruptIdReg));
+			ACPU_GICD_ISENABLER0_OFFSET + (targetRegNum * 4),
+			(1 << interruptIdReg));
 	}
 	MultiCore_UnlockMutex(&mutex);
 }
@@ -86,8 +87,8 @@ void DisableInterruptForThisCore(Interrupt_Names name_) {
 		uint32_t const interruptIdReg = name_ & 0x1f;
 
 		hw_RegWrite(ACPU_GICD_BASE_ADDR,
-								ACPU_GICD_ICENABLER0_OFFSET + (targetRegNum * 4),
-								(1 << interruptIdReg));
+			ACPU_GICD_ICENABLER0_OFFSET + (targetRegNum * 4),
+			(1 << interruptIdReg));
 	}
 
 	// update distributor
@@ -96,7 +97,7 @@ void DisableInterruptForThisCore(Interrupt_Names name_) {
 		uint32_t const targetRegNum = name_ / 4;
 		uint32_t const interruptIdReg = name_ & 0x3;
 		uint32_t targets = hw_RegRead(ACPU_GICD_BASE_ADDR,
-																	ACPU_GICD_ITARGETSR0_OFFSET + (targetRegNum * 4));
+			ACPU_GICD_ITARGETSR0_OFFSET + (targetRegNum * 4));
 		targets &= ~(cpuId << (interruptIdReg << 8));
 		targets |= 1 << ((interruptIdReg * 8) + cpuId);
 

@@ -25,10 +25,9 @@
  */
 #include "core/core.h"
 
-NON_NULL(1) void *memset(void * const v_src, int c, size_t n)
-{
-	uint8_t *src = v_src;
-	uint32_t *i_src;
+NON_NULL(1) void* memset(void* const v_src, int c, size_t n) {
+	uint8_t* src = v_src;
+	uint32_t* i_src;
 	uint32_t w32 = 0;
 
 	// Truncate c to 8 bits
@@ -45,26 +44,26 @@ NON_NULL(1) void *memset(void * const v_src, int c, size_t n)
 		// Align the destination to a word boundary
 		// This is done in an endian independent manner
 		switch ((unsigned) src & 3) {
-			case 1:
-				*src++ = c;
-				--n;
-				// fallthrough;
-				case 2:
-					*src++ = c;
-					--n;
-					// fallthrough;
-					case 3:
-						*src++ = c;
-						--n;
+		case 1:
+			*src++ = c;
+			--n;
+			// fallthrough;
+		case 2:
+			*src++ = c;
+			--n;
+			// fallthrough;
+		case 3:
+			*src++ = c;
+			--n;
 		}
 
-		i_src  = (void *)src;
+		i_src = (void*) src;
 
 		// Do as many full-word copies as we can
 		for (; n >= 4; n -= 4)
 			*i_src++ = w32;
 
-		src  = (void *)i_src;
+		src = (void*) i_src;
 	}
 
 	// Simple, byte oriented memset for the rest of count.

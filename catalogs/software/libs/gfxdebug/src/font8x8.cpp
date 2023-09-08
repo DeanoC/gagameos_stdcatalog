@@ -23,8 +23,8 @@
  * Fetched from: http://dimensionalrift.homelinux.net/combuster/mos3/?p=viewsource&file=/modules/gfx/font8_8.asm
  **/
 
-// Constant: font8x8_basic
-// Contains an 8x8 font map for unicode points U+0021 - U+007F (basic latin)
+ // Constant: font8x8_basic
+ // Contains an 8x8 font map for unicode points U+0021 - U+007F (basic latin)
 static uint8_t font8x8_basic[95][8] = {
 		{ 0x18, 0x3C, 0x3C, 0x18, 0x18, 0x00, 0x18, 0x00},   // U+0021 (!)
 		{ 0x36, 0x36, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00},   // U+0022 (")
@@ -123,7 +123,7 @@ static uint8_t font8x8_basic[95][8] = {
 		{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}    // U+007F
 };
 
-uint8_t const * font8x8 = &font8x8_basic[0][0];
+uint8_t const* font8x8 = &font8x8_basic[0][0];
 
 #else
 // both GFXDEBUG_FONTS_MINIMAL_MEMORY == 0 | 1 have the full 8 bit font
@@ -132,7 +132,7 @@ uint8_t const * font8x8 = &font8x8_basic[0][0];
 // This fonts come from ftp://ftp.simtel.net/pub/simtelnet/msdos/screen/fntcol16.zip
 // The package is (c) by Joseph Gil
 // The individual fonts are public domain
-static uint8_t font8x8_vgabios[256*8]=
+static uint8_t font8x8_vgabios[256 * 8] =
 {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x7e, 0x81, 0xa5, 0x81, 0xbd, 0x99, 0x81, 0x7e,
@@ -391,6 +391,6 @@ static uint8_t font8x8_vgabios[256*8]=
 	0x00, 0x00, 0x3c, 0x3c, 0x3c, 0x3c, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-uint8_t const *font8x8 = &font8x8_vgabios[0];
+uint8_t const* font8x8 = &font8x8_vgabios[0];
 
 #endif

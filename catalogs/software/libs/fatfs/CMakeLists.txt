@@ -43,7 +43,7 @@ set(PRIVATE_LIBRARIES
 		vfile
 		utils
 		)
-if(${IKUY_HAVE_LIB_XILINX_ZYNQPS8})
+if(${IKUY_HAVE_LIB_ZYNQPS8_XILINX})
 	list(APPEND PRIVATE_LIBRARIES xilinx)
 endif()
 

@@ -20,7 +20,7 @@ void OsService_FetchBootData(BootData* bootData) {
 	memcpy(&msg.Payload.BootData.bootData, bootData, sizeof(BootData));
 	IPI3_Response ALIGN(64) response;
 	IPI3_OnService_SubmitAndFetchResponse(&msg, &response);
-	if(response.result == IRR_SUCCESS) {
+	if (response.result == IRR_SUCCESS) {
 		memcpy(bootData, &response.BootData, sizeof(BootData));
 	} else {
 		memset(bootData, 0, sizeof(BootData));

@@ -4,14 +4,14 @@
 #include "memory/memory.h"
 #include "dbg/assert.h"
 
-static void * linearMalloc(Memory_Allocator* allocator, size_t size) {
+static void* linearMalloc(Memory_Allocator* allocator, size_t size) {
 	Memory_LinearAllocator* linearAllocator = (Memory_LinearAllocator*) allocator;
-	assert(linearAllocator->current < (uint8_t *)linearAllocator->bufferEnd);
-	uint8_t * const ret = linearAllocator->current;
-	size_t left = (uint8_t*)linearAllocator->bufferEnd - ret;
+	assert(linearAllocator->current < (uint8_t*) linearAllocator->bufferEnd);
+	uint8_t* const ret = linearAllocator->current;
+	size_t left = (uint8_t*) linearAllocator->bufferEnd - ret;
 
-	if(size > left) {
-		debug_printf( "Linear Allocator run out of space left %zi size %zu\n", left, size);
+	if (size > left) {
+		debug_printf("Linear Allocator run out of space left %zi size %zu\n", left, size);
 		return nullptr;
 	}
 	linearAllocator->current = ret + size;
@@ -19,15 +19,15 @@ static void * linearMalloc(Memory_Allocator* allocator, size_t size) {
 	return ret;
 }
 
-static void * linearAalloc(Memory_Allocator* allocator, size_t size, size_t align) {
+static void* linearAalloc(Memory_Allocator* allocator, size_t size, size_t align) {
 	Memory_LinearAllocator* linearAllocator = (Memory_LinearAllocator*) allocator;
 	uintptr_t const addr = (uintptr_t) linearAllocator->current;
-	linearAllocator->current = (uint8_t *)((addr + align - 1) & ~(align - 1));
+	linearAllocator->current = (uint8_t*) ((addr + align - 1) & ~(align - 1));
 	return linearMalloc(allocator, size);
 }
-static void * linearCalloc(Memory_Allocator* allocator, size_t count, size_t size) {
-	void * ret = linearMalloc(allocator, size * count);
-	if(ret) {
+static void* linearCalloc(Memory_Allocator* allocator, size_t count, size_t size) {
+	void* ret = linearMalloc(allocator, size * count);
+	if (ret) {
 		memset(ret, 0, size * count);
 		return ret;
 	} else {
@@ -35,10 +35,10 @@ static void * linearCalloc(Memory_Allocator* allocator, size_t count, size_t siz
 	}
 }
 
-static void * linearRealloc(Memory_Allocator* allocator, void *ptr, size_t size) {
+static void* linearRealloc(Memory_Allocator* allocator, void* ptr, size_t size) {
 	// we never extends always alloc and copy
-	void * ret = linearMalloc(allocator, size);
-	if(!ret) {
+	void* ret = linearMalloc(allocator, size);
+	if (!ret) {
 		return nullptr;
 	} else {
 		memcpy(ret, ptr, size);
@@ -46,9 +46,9 @@ static void * linearRealloc(Memory_Allocator* allocator, void *ptr, size_t size)
 	}
 }
 
-static void linearFree(Memory_Allocator* allocator, void *ptr) {
+static void linearFree(Memory_Allocator* allocator, void* ptr) {
 	Memory_LinearAllocator* linearAllocator = (Memory_LinearAllocator*) allocator;
-	if(linearAllocator->last == ptr) {
+	if (linearAllocator->last == ptr) {
 		linearAllocator->current = linearAllocator->last;
 	} else {
 		// do nothing

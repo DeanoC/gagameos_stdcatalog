@@ -24,10 +24,10 @@
 #include "core/utf8.h"
 
 // length of a null terminated UCS2 string as a UTF8 string
-EXTERN_C size_t Core_UCS2toUTF8NullLen(uint16_t const * text);
+EXTERN_C size_t Core_UCS2toUTF8NullLen(uint16_t const* text);
 
 // length of a UCS2 string of len as a UTF8String
-EXTERN_C size_t Core_UCS2toUTF8Len(uint16_t const * text, int len);
+EXTERN_C size_t Core_UCS2toUTF8Len(uint16_t const* text, int len);
 
 // Convert a UCS-2 string to a UTF-8 string
-EXTERN_C void Core_UCS2toUTF8(const uint16_t *src, int len, utf8_int8_t *dst);
+EXTERN_C void Core_UCS2toUTF8(const uint16_t* src, int len, utf8_int8_t* dst);

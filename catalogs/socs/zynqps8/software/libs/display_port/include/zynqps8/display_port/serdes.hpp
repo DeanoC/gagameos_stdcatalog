@@ -1,6 +1,7 @@
 #pragma once
 
-namespace DisplayPort::Display::Serdes {
+namespace DisplayPort::Display::Serdes
+{
 enum LinkStatus {
 	LS_OKAY = 0,
 	LS_CLOCK_RECOVERY_FAILED = 0x1,
@@ -22,6 +23,6 @@ bool CheckLanesClockRecovery(struct Connection const* display);
 bool CheckLanesChannelEqualisation(struct Connection const* display);
 LinkStatus CheckLinkStatus(struct Connection const* display);
 
-void StallForPhyReady(struct Connection *display);
+void StallForPhyReady(struct Connection* display);
 
 } // end namespace

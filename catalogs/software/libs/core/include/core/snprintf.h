@@ -43,18 +43,18 @@ extern "C"
 {
 #endif
 
-/**
- * Tiny snprintf/vsnprintf implementation
- * \param buffer A pointer to the buffer where to store the formatted string
- * \param count The maximum number of characters to store in the buffer, including a terminating null character
- * \param format A string that specifies the format of the output
- * \param va A value identifying a variable arguments list
- * \return The number of characters that COULD have been written into the buffer, not counting the terminating
- *         null character. A value equal or larger than count indicates truncation. Only when the returned value
- *         is non-negative and less than count, the string has been completely written.
- */
-int snprintf(char *buffer, size_t count, const char *format, ...) FORMAT_PRINT(3,4);
-int vsnprintf(char *buffer, size_t count, const char *format, va_list va);
+  /**
+   * Tiny snprintf/vsnprintf implementation
+   * \param buffer A pointer to the buffer where to store the formatted string
+   * \param count The maximum number of characters to store in the buffer, including a terminating null character
+   * \param format A string that specifies the format of the output
+   * \param va A value identifying a variable arguments list
+   * \return The number of characters that COULD have been written into the buffer, not counting the terminating
+   *         null character. A value equal or larger than count indicates truncation. Only when the returned value
+   *         is non-negative and less than count, the string has been completely written.
+   */
+  int snprintf(char* buffer, size_t count, const char* format, ...) FORMAT_PRINT(3, 4);
+  int vsnprintf(char* buffer, size_t count, const char* format, va_list va);
 
 #ifdef __cplusplus
 }
