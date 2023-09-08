@@ -38,13 +38,6 @@ typedef struct {
 
 MainLoop loopy;
 
-static void MainCallsCallback() {
-	for(uint32_t i = 0; i < osHeap->mainCallCallbacksIndex;++i) {
-		osHeap->mainCallCallbacks[i]();
-	}
-	osHeap->mainCallCallbacksIndex = 0;
-}
-
 extern const ElfNoteSection_t g_note_build_id;
 void PrintBanner(void)
 {
@@ -94,8 +87,9 @@ void setupInterruptHandlers() {
 	HW_REG_WRITE1(LPD_SLCR, GICP0_IRQ_ENABLE, LPD_SLCR_GICP0_IRQ_ENABLE_SRC21);
 #endif
 
+	// enable uart reciever interrupt
 	HW_REG_WRITE1(LPD_SLCR, GICP_PMU_IRQ_ENABLE, LPD_SLCR_GICP_PMU_IRQ_ENABLE_SRC0);
-	HW_REG_WRITE(HW_REG_GET_ADDRESS(UART_DEBUG), UART, INTRPT_DIS, 	~UART_CHNL_INT_STS_RTRIG);
+	HW_REG_WRITE(HW_REG_GET_ADDRESS(UART_DEBUG), UART, INTRPT_DIS, (~UART_CHNL_INT_STS_RTRIG) | UART_CHNL_INT_STS_TEMPTY | UART_CHNL_INT_STS_TFUL);
 	HW_REG_WRITE(HW_REG_GET_ADDRESS(UART_DEBUG), UART, INTRPT_EN, 	UART_CHNL_INT_STS_RTRIG);
 	HW_REG_WRITE(HW_REG_GET_ADDRESS(UART_DEBUG), UART, RCVR_TIMEOUT, 32);
 	HW_REG_WRITE(HW_REG_GET_ADDRESS(UART_DEBUG), UART, RCVR_FIFO_TRIGGER_LEVEL, 1);
@@ -161,8 +155,6 @@ void main()
 	Timers::Start();
 
 	HW_REG_SET_BIT1(PMU_GLOBAL, GLOBAL_CNTRL, FW_IS_PRESENT);
-
-	osHeap->hundredHzCallbacks[(int)HundredHzTasks::HOST_MAIN_CALLS] = &MainCallsCallback;
 
 	loopy.Loop();
 

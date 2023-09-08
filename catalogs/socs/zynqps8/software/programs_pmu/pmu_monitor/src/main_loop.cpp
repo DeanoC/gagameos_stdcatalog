@@ -13,12 +13,15 @@ void MainLoop::Init() {
 	osHeap->hostInterface.Fini();
 }
 
+Timers::Callback hundredHzCallbacks[Timers::MaxHundredHzCallbacks];
+Timers::Callback thirtyHzCallbacks[Timers::MaxThirtyHzCallbacks];
+
 void MainLoop::Loop() {
 	while(!this->endLoop) {
 		if(this->hundredHertzTrigger) {
 			this->hundredHertzTrigger = false;
 			for(int i=0;i < Timers::MaxHundredHzCallbacks;++i) {
-				auto callback = osHeap->hundredHzCallbacks[i];
+				auto callback = hundredHzCallbacks[i];
 				if (callback != nullptr) {
 					callback();
 				}
@@ -27,7 +30,7 @@ void MainLoop::Loop() {
 		if(this->thirtyHertzTrigger) {
 			this->thirtyHertzTrigger = false;
 			for(int i=0;i < Timers::MaxThirtyHzCallbacks;++i) {
-				auto callback = osHeap->thirtyHzCallbacks[i];
+				auto callback = thirtyHzCallbacks[i];
 				if (callback != nullptr) {
 					callback();
 				}

@@ -68,4 +68,53 @@ void DdrHiBlockFree(IPI3_Msg const *msgBuffer) {
 	osHeap->ddrHiAllocator.Free(address, blockCount);
 }
 
+void DdrLoStashAllocs(IPI3_Msg const *msgBuffer)
+{
+	debug_print("\nStashing DDR Lo allocations\n");
+	if (osHeap->isDdrLoStashed) {
+		debug_print("\nDDR Lo already stashed, existing stash will be deleted\n");
+	}
+	memcpy(osHeap->ddrLoSnapshot, &osHeap->ddrLoAllocator, sizeof(osHeap->ddrLoAllocator));
+	osHeap->isDdrLoStashed = true;
+}
+
+void DdrLoRestoreAllocs(IPI3_Msg const *msgBuffer)
+{
+	debug_print("\nRestoring DDR Lo allocations to last stash\n");
+	if (osHeap->isDdrLoStashed)
+	{
+		memcpy(&osHeap->ddrLoAllocator, osHeap->ddrLoSnapshot, sizeof(osHeap->ddrLoAllocator));
+		osHeap->isDdrLoStashed = false;
+	}
+	else
+	{
+		debug_print("\n DDR Lo allocations not stashed\n");
+	}
+}
+
+void DdrHiStashAllocs(IPI3_Msg const *msgBuffer)
+{
+	debug_print("\nStashing DDR Hi allocations\n");
+	if (osHeap->isDdrHiStashed)
+	{
+		debug_print("\nDDR Hi already stashed, existing stash will be deleted\n");
+	}
+	memcpy(osHeap->ddrHiSnapshot, &osHeap->ddrHiAllocator, sizeof(osHeap->ddrHiAllocator));
+	osHeap->isDdrHiStashed = true;
+}
+
+void DdrHiRestoreAllocs(IPI3_Msg const *msgBuffer)
+{
+	debug_print("\nRestoring DDR Hi allocations to last stash\n");
+	if (osHeap->isDdrHiStashed)
+	{
+		memcpy(&osHeap->ddrHiAllocator, osHeap->ddrHiSnapshot, sizeof(osHeap->ddrHiAllocator));
+		osHeap->isDdrHiStashed = false;
+	}
+	else
+	{
+		debug_print("\n DDR Hi allocations not stashed\n");
+	}
+}
+
 } // end namespace

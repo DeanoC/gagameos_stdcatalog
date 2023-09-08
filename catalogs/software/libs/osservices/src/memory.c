@@ -50,7 +50,7 @@ uintptr_all_t OsService_DdrHiBlockAlloc(uint32_t blocks64KB_, uint32_t tag_) {
 	IPI3_Response response;
 	IPI3_OnService_SubmitAndFetchResponse(&msg, &response);
 	if(response.result == IRR_SUCCESS) {
-		return (uintptr_t) (DDR_1_BASE_ADDR + response.DdrLoBlockAlloc.offset);
+		return (uintptr_t) (DDR_1_BASE_ADDR + response.DdrHiBlockAlloc.offset);
 	} else {
 		OsService_InlinePrint(OSS_INLINE_TEXT("DdrLoBlocKAlloc failed"));
 		switch(response.result) {
@@ -73,7 +73,7 @@ void OsService_DdrHiBlockFree(uintptr_all_t ptr, uint32_t blockCount_, uint32_t 
 #if CPU_a53
 	IPI3_Msg msg = {
 			.function = OSF_DDR_HI_BLOCK_FREE,
-			.Payload.DdrHiBlockFree.offset = ((uintptr_t)ptr - DDR_0_BASE_ADDR),
+			.Payload.DdrHiBlockFree.offset = ((uintptr_t)ptr - DDR_1_BASE_ADDR),
 			.Payload.DdrHiBlockFree.blockCount = blockCount_,
 			.Payload.DdrHiBlockFree.tag = tag_,
 	};

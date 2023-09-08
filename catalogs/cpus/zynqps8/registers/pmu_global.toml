@@ -2502,6 +2502,26 @@ description = "PMU Global Control"
   default = "0x00000000"
   offset = "0x00000530"
   [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
+  [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
     type = "wtc"
@@ -2587,6 +2607,26 @@ description = "PMU Global Control"
   default = "0xFFFF32FF"
   offset = "0x00000534"
   [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
+  [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
     type = "ro"
@@ -2666,6 +2706,26 @@ description = "PMU Global Control"
   default = "0x00000000"
   offset = "0x00000538"
   [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
+  [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
     type = "wo"
@@ -2744,6 +2804,26 @@ description = "PMU Global Control"
   description = "System Errors to PMU; Interrupt Disable, Reg 1."
   default = "0x00000000"
   offset = "0x0000053C"
+  [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
   [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
@@ -3086,6 +3166,26 @@ description = "PMU Global Control"
   default = "0xFFFF32FF"
   offset = "0x00000550"
   [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
+  [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
     type = "ro"
@@ -3165,6 +3265,26 @@ description = "PMU Global Control"
   default = "0x00000000"
   offset = "0x00000554"
   [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
+  [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
     type = "wo"
@@ -3243,6 +3363,26 @@ description = "PMU Global Control"
   description = "System Errors to POR; Interrupt Disable, Reg 1."
   default = "0x00000000"
   offset = "0x00000558"
+  [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
   [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
@@ -3512,6 +3652,26 @@ description = "PMU Global Control"
   default = "0xFFFF32FF"
   offset = "0x00000568"
   [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
+  [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
     type = "ro"
@@ -3591,6 +3751,26 @@ description = "PMU Global Control"
   default = "0x00000000"
   offset = "0x0000056C"
   [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
+  [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
     type = "wo"
@@ -3669,6 +3849,26 @@ description = "PMU Global Control"
   description = "System Errors to Reset; Interrupt Disable, Reg 1."
   default = "0x00000000"
   offset = "0x00000570"
+  [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
   [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
@@ -3938,6 +4138,26 @@ description = "PMU Global Control"
   default = "0x000000C3"
   offset = "0x00000580"
   [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
+  [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
     type = "ro"
@@ -4013,6 +4233,26 @@ description = "PMU Global Control"
   default = "0x00000000"
   offset = "0x00000584"
   [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
+  [[register.field]]
     name = "CSU_SWDT"
     bits = "27"
     type = "wo"
@@ -4087,6 +4327,26 @@ description = "PMU Global Control"
   description = "System Errors to PL; Interrupt Disable, Reg 1."
   default = "0x00000000"
   offset = "0x00000588"
+  [[register.field]]
+    name = "AUX3"
+    bits = "31"
+    type = "wo"
+    shortdesc = '''AUX3 user bit.'''
+  [[register.field]]
+    name = "AUX2"
+    bits = "30"
+    type = "wo"
+    shortdesc = '''AUX2 user bit.'''
+  [[register.field]]
+    name = "AUX1"
+    bits = "29"
+    type = "wo"
+    shortdesc = '''AUX1 user bit.'''
+  [[register.field]]
+    name = "AUX0"
+    bits = "28"
+    type = "wo"
+    shortdesc = '''AUX0 user bit.'''
   [[register.field]]
     name = "CSU_SWDT"
     bits = "27"

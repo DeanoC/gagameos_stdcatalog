@@ -13,6 +13,8 @@
 #include "os/ipi3_os_server.hpp"
 #include "cpuwake.hpp"
 #include "zynqps8/dma/lpddma.hpp"
+#include "platform/registers/pmu_global.h"
+#include "zmodem.hpp"
 
 #define SIZED_TEXT(text) sizeof(text), (uint8_t const*)text
 extern uint8_t textConsoleSkip;
@@ -37,6 +39,9 @@ static void HostCommandCallback() {
 	host->CommandCallback();
 }
 
+extern "C" Timers::Callback hundredHzCallbacks[Timers::MaxHundredHzCallbacks];
+extern "C" Timers::Callback thirtyHzCallbacks[Timers::MaxThirtyHzCallbacks];
+
 void HostInterface::Init() {
 	this->currentState = State::RECEIVING_COMMAND;
 	this->cmdBuffer = (uint8_t*) osHeap->tmpOsBufferAllocator.Alloc(CMD_BUF_SIZE/64);
@@ -45,37 +50,33 @@ void HostInterface::Init() {
 	this->lastReadAddress = 0;
 	this->lastCommandWasR = false;
 
-	osHeap->hundredHzCallbacks[(int)HundredHzTasks::HOST_INPUT] = &HostInputCallback;
-	osHeap->hundredHzCallbacks[(int)HundredHzTasks::HOST_COMMANDS_PROCESSING] = &HostCommandCallback;
+	hundredHzCallbacks[(int)HundredHzTasks::HOST_INPUT] = &HostInputCallback;
+	
+	hundredHzCallbacks[(int)HundredHzTasks::HOST_COMMANDS_PROCESSING] = &HostCommandCallback;
 
+	// clear errors and enable them all
+	HW_REG_WRITE1(PMU_GLOBAL, ERROR_STATUS_1, 0xFFFFFFFFU);
+	HW_REG_WRITE1(PMU_GLOBAL, ERROR_STATUS_2, 0xFFFFFFFFU);
+	HW_REG_WRITE1(PMU_GLOBAL, ERROR_EN_1, 0xFFFFFFFFU);
+	HW_REG_WRITE1(PMU_GLOBAL, ERROR_EN_2, 0xFFFFFFFFU);
+
+	// enable internal POR for harder reset
+	HW_REG_SET_BIT1(PMU_GLOBAL, ERROR_SRST_DIS_1, AUX0);
+	HW_REG_SET_BIT1(PMU_GLOBAL, ERROR_INT_DIS_1, AUX0);
+	HW_REG_SET_BIT1(PMU_GLOBAL, ERROR_SIG_DIS_1, AUX0);
+	HW_REG_CLR_BIT1(PMU_GLOBAL, ERROR_POR_MASK_1, AUX0);
+	HW_REG_SET_BIT1(PMU_GLOBAL, ERROR_POR_EN_1, AUX0);
 }
 
 [[maybe_unused]] void HostInterface::Fini() {
 	osHeap->tmpOsBufferAllocator.Free((uintptr_t)this->cmdBuffer, CMD_BUF_SIZE/64 );
 }
 
-void HostInterface::TmpBufferRefill(uintptr_t& tmpBufferAddr, uint32_t& tmpBufferSize) {
-	if (uartDebugReceiveLast != uartDebugReceiveHead) {
-		uint32_t last = uartDebugReceiveLast;
-		uint32_t head = uartDebugReceiveHead;
-
-		if (last > head) {
-			// wrapped
-			auto firstSize = OsHeap::UartBufferSize - last;
-			tmpBufferSize = firstSize + head;
-			tmpBufferAddr = osHeap->tmpOsBufferAllocator.Alloc(BitOp::PowerOfTwoContaining(tmpBufferSize / 64));
-			memcpy((char *) tmpBufferAddr, &osHeap->uartDEBUGReceiveBuffer[last], firstSize);
-			memcpy((char *) tmpBufferAddr + firstSize, &osHeap->uartDEBUGReceiveBuffer[0], head);
-		} else {
-			tmpBufferSize = head - last;
-			tmpBufferAddr = osHeap->tmpOsBufferAllocator.Alloc(BitOp::PowerOfTwoContaining(tmpBufferSize / 64));
-			memcpy((char *) tmpBufferAddr, &osHeap->uartDEBUGReceiveBuffer[last], tmpBufferSize);
-		}
-		uartDebugReceiveLast = head;
-	} else {
-		tmpBufferAddr = 0;
-		tmpBufferSize = 0;
-	}
+extern void UartTmpBufferRefill(uintptr_t &tmpBufferAddr, uint32_t &tmpBufferSize);
+extern "C" void UartPutSizedData(uint32_t size, const uint8_t *text);
+static ALWAYS_INLINE void PutByte(const uint8_t c)
+{
+	UartPutSizedData(1, &c);
 }
 
 void HostInterface::InputCallback() {
@@ -86,8 +87,7 @@ void HostInterface::InputCallback() {
 	uint32_t tmpBufferSize = 0;
 	uint32_t tmpBufferIndex = 0;
 
-	TmpBufferRefill(tmpBufferAddr, tmpBufferSize);
-
+	UartTmpBufferRefill(tmpBufferAddr, tmpBufferSize);
 
 	while(true) {
 		uint8_t c;
@@ -111,7 +111,7 @@ void HostInterface::InputCallback() {
 		switch (c) {
 			case ASCII_BACKSPACE: // backspace
 				this->cmdBufferHead--;
-				IPI3_OsServer::PutByte('\b');
+				PutByte('\b');
 				continue;
 			case ASCII_EOT: // Control C should send this...
 				this->cmdBufferHead = 0;
@@ -122,7 +122,7 @@ void HostInterface::InputCallback() {
 			default:
 				// normal keys
 				// echo
-				IPI3_OsServer::PutByte(c);
+				PutByte(c);
 				if (this->cmdBufferHead >= CMD_BUF_SIZE - 1) {
 					debug_print("\nCommand too long\n");
 					this->cmdBufferHead = 0;
@@ -139,6 +139,25 @@ void HostInterface::CommandCallback() {
 		case State::PROCESSING_COMMAND:
 			this->WhatCommand();
 			return;
+		case State::ZMODEM: {
+			ZModem::Result result = zModem.Receive();
+			switch (result) {
+				case ZModem::Result::FAIL:
+					osHeap->console.console.NewLine();
+					osHeap->console.console.PrintLn(ANSI_RED_PAPER ANSI_BRIGHT_ON "ZModem FAIL" ANSI_RESET_ATTRIBUTES);
+					this->currentState = State::RECEIVING_COMMAND;
+					textConsoleSkip = 0;
+					return;
+				case ZModem::Result::CONTINUE:
+					return;
+				case ZModem::Result::SUCCESS:
+					osHeap->console.console.NewLine();
+					osHeap->console.console.PrintLn(ANSI_GREEN_PEN ANSI_BRIGHT_ON "ZModem SUCCESS" ANSI_RESET_ATTRIBUTES);
+					this->currentState = State::RECEIVING_COMMAND;
+					textConsoleSkip = 0;
+					return;
+			}
+		}      
 		default:
 			return;
 	}
@@ -160,6 +179,18 @@ void HostInterface::WhatCommand() {
 		return;
 	}
 
+	// special case Zmodem receive code first
+	if(cmdBufferHeadTmp > 4 && this->cmdBuffer[4] == 0x18) {
+		if(Core::RuntimeHash(4, (char *) this->cmdBuffer) == "rz**"_hash) {
+			// zmodem download start
+			osHeap->console.console.PrintLn(ANSI_BLUE_PAPER "ZModem download started" ANSI_RESET_ATTRIBUTES);
+			textConsoleSkip = 30;
+			this->zModem.ReInit();
+			this->zModem.destinationAddress = this->downloadAddress;
+			this->currentState = State::ZMODEM;
+			return;
+		}
+	}
 	this->lastCommandWasR = false;
 
 	const auto findCount = Utils::StringFindMultiple(cmdBufferHeadTmp, (char *) this->cmdBuffer, ' ', MaxFinds, finds);
@@ -205,14 +236,10 @@ void HostInterface::WhatCommand() {
 			Reset(cmdBuffer, finds, findCount);
 			break;
 		}
-		case "hard_reset"_hash: {
-			HardReset(cmdBuffer, finds, findCount);
-			break;
-		}
 		case "version"_hash: {
 			const uint8_t *build_id_data = &((uint8_t*)(&g_note_build_id)+1)[g_note_build_id.namesz];
 			// print Build ID
-			debug_print("Build ID: ");
+			debug_print("\nBuild ID: ");
 			for (uint32_t i = 0; i < g_note_build_id.descsz; ++i) debug_printf("%02x", build_id_data[i]);
 			debug_print("\n");
 			break;
@@ -406,40 +433,56 @@ void HostInterface::BootCpu(uint8_t const *cmdBuffer, unsigned int const *finds,
 //			break;
 //		}
 		default:
-			debug_printf(ANSI_RED_PAPER ANSI_BRIGHT_ON "\nUnknown CPU target\n" ANSI_RESET_ATTRIBUTES);
+			debug_printf(ANSI_RED_PAPER ANSI_BRIGHT_ON "\nUnknown CPU target" ANSI_RESET_ATTRIBUTES "\n" );
 			this->currentState = State::RECEIVING_COMMAND;
 			return;
 	}
 }
 
 void HostInterface::Reset(uint8_t const *cmdBuffer, unsigned int const *finds, unsigned int const findCount) {
-	debug_print("\nSoft Reset in Progress\n");
-	A53Sleep0();
-	A53Sleep1();
-	A53Sleep2();
-	A53Sleep3();
-	R5FSleep0();
-	R5FSleep1();
-	// restore boot program
-	using namespace Dma::LpdDma;
-	Stall(Channels::ChannelSevern);
-	SimpleDmaCopy(Channels::ChannelSevern,
-								(uintptr_all_t) osHeap->bootOCMStore,
-								osHeap->bootData.bootCodeStart,
-								osHeap->bootData.bootCodeSize);
-	debug_printf("\nSoft reset from %#010lx\n", osHeap->bootData.bootCodeStart);
+	switch (Core::RuntimeHash(finds[1] - finds[0] - 1, (char *)cmdBuffer + finds[0] + 1))
+	{
+		case "por"_hash:
+			debug_print(ANSI_RED_PEN "\nPOR Reset in Progress" ANSI_RESET_ATTRIBUTES "\n");
+      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE0, 0);
+      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE1, 0);
+      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE2, 0);
+      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE3, 0);
+      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE4, 0);
+      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE5, 0);
+      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE6, 0);
+      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE7, 0);
+			HW_REG_WRITE1(PMU_GLOBAL, REQ_SWRST_TRIG, PMU_GLOBAL_REQ_SWRST_TRIG_PL | PMU_GLOBAL_REQ_SWRST_TRIG_FP | PMU_GLOBAL_REQ_SWRST_TRIG_LP);
+			HW_REG_SET_BIT1(CRL_APB, RESET_CTRL, SOFT_RESET);
+			return;
+		case "soft"_hash:
+			debug_print(ANSI_YELLOW_PEN "\nSoft (SRST) Reset in Progress" ANSI_RESET_ATTRIBUTES "\n");
+			HW_REG_SET_BIT1(CRL_APB, RESET_CTRL, SOFT_RESET);
+			return;
+		default:
+		case "boot"_hash:
+			debug_print(ANSI_GREEN_PEN "\nBoot (ikuy_boot) reset in Progress" ANSI_RESET_ATTRIBUTES "\n");
+			A53Sleep0();
+			A53Sleep1();
+			A53Sleep2();
+			A53Sleep3();
+			R5FSleep0();
+			R5FSleep1();
+			// restore boot program
+			using namespace Dma::LpdDma;
+			Stall(Channels::ChannelSevern);
+			SimpleDmaCopy(Channels::ChannelSevern,
+										(uintptr_all_t)osHeap->bootOCMStore,
+										osHeap->bootData.bootCodeStart,
+										osHeap->bootData.bootCodeSize);
+			debug_printf("\nReboot from %#010lx\n", osHeap->bootData.bootCodeStart);
 
-	Stall(Channels::ChannelSevern);
-	auto const lowAddress = (uint32_t) (osHeap->bootData.bootCodeStart & 0x0000'0000'FFFF'FFFFull);
-	auto const hiAddress = (uint32_t) ((osHeap->bootData.bootCodeStart & 0xFFFF'FFFF'0000'0000ull) >> 32ull);
-	HW_REG_WRITE1(APU, RVBARADDR0L, lowAddress);
-	HW_REG_WRITE1(APU, RVBARADDR0H, hiAddress);
-	A53WakeUp0();
-
-}
-
-void HostInterface::HardReset(uint8_t const *cmdBuffer, unsigned int const *finds, unsigned int const findCount) {
-	debug_print("\nHard Reset in Progress\n");
-	HW_REG_SET_BIT1(CRL_APB, RESET_CTRL, SOFT_RESET);
-
+			Stall(Channels::ChannelSevern);
+			auto const lowAddress = (uint32_t)(osHeap->bootData.bootCodeStart & 0x0000'0000'FFFF'FFFFull);
+			auto const hiAddress = (uint32_t)((osHeap->bootData.bootCodeStart & 0xFFFF'FFFF'0000'0000ull) >> 32ull);
+			HW_REG_WRITE1(APU, RVBARADDR0L, lowAddress);
+			HW_REG_WRITE1(APU, RVBARADDR0H, hiAddress);
+			A53WakeUp0();
+			return;
+		}
 }

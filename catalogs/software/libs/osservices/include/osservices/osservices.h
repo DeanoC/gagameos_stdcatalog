@@ -15,6 +15,10 @@ EXTERN_C {
 // 4KB: 600KB - 640 * 480 front buffer of RGB565 pixels
 // 604KB: 36KB unused
 typedef struct BootData {
+// 	uint16_t frameBufferWidth;
+//	uint16_t frameBufferHeight;
+//	uint16_t frameBufferHertz;
+  
 	uintptr_all_t mmu;            // Mmu manager
 	uintptr_lo_t bootCodeStart; 	// location where the boot program begins
 	uint32_t bootCodeSize; 			 	// size of boot program in bytes

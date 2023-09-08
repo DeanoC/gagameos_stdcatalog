@@ -14,15 +14,17 @@ void DdrLoBlockAlloc(IPI_Channel senderChannel, const IPI3_Msg *msgBuffer) NON_N
 void DdrLoBlockFree(const IPI3_Msg *msgBuffer) NON_NULL(1);
 void DdrHiBlockAlloc(IPI_Channel senderChannel, const IPI3_Msg *msgBuffer) NON_NULL(2);
 void DdrHiBlockFree(const IPI3_Msg *msgBuffer) NON_NULL(1);
+void DdrLoStashAllocs(IPI3_Msg const *msgBuffer) NON_NULL(1);
+void DdrLoRestoreAllocs(IPI3_Msg const *msgBuffer) NON_NULL(1);
+void DdrHiStashAllocs(IPI3_Msg const *msgBuffer) NON_NULL(1);
+void DdrHiRestoreAllocs(IPI3_Msg const *msgBuffer) NON_NULL(1);
 
 void BootComplete(const IPI3_Msg *msgBuffer) NON_NULL(1);
 void FetchBootData(IPI_Channel senderChannel, const IPI3_Msg *msgBuffer) NON_NULL(2);
 void CpuWakeOrSleep(IPI3_Msg const *msgBuffer) NON_NULL(1);
 
-// for faster pmu direct send to to the UART
-void PutSizedData(uint32_t size, const uint8_t *text);
-ALWAYS_INLINE void PutByte(const uint8_t c) {
-	PutSizedData(1, &c);
-}
+void ScreenConsoleEnable(const IPI3_Msg *msgBuffer) NON_NULL(1);
+void ScreenConsoleInlinePrint(const IPI3_Msg *msgBuffer) NON_NULL(1);
+void ScreenConsolePtrPrint(IPI_Channel senderChannel, const IPI3_Msg *msgBuffer) NON_NULL(2);
 
 } // end namespace

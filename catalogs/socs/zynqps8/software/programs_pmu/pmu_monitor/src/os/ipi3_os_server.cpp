@@ -8,9 +8,31 @@
 
 OsHeap *osHeap;
 
+uint8_t textConsoleSkip;
+uint8_t textConsoleSkipCurrent;
+
+static void TextConsoleDrawCallback() {
+	if(osHeap->console.framebuffer != nullptr && osHeap->screenConsoleEnabled) {
+		if(textConsoleSkipCurrent == textConsoleSkip) {
+			textConsoleSkipCurrent = 0;
+			auto const frameBuffer = osHeap->console.framebuffer;
+			auto const width = osHeap->console.frameBufferWidth;
+			auto const height = osHeap->console.frameBufferHeight;
+
+			GfxDebug::RGBA8 drawer(width, height, frameBuffer);
+			osHeap->console.console.Display(&drawer, 0, 0);
+		} else {
+			textConsoleSkipCurrent++;
+		}
+	}
+}
+extern "C" Timers::Callback thirtyHzCallbacks[Timers::MaxThirtyHzCallbacks];
+
 namespace IPI3_OsServer {
 
 void Init() {
+	osHeap->console.Init();
+	thirtyHzCallbacks[(int)ThirtyHzTasks::TEXT_CONSOLE] = &TextConsoleDrawCallback;
 }
 
 static bool IsFireAndForget(OS_ServiceFunc func) {
@@ -30,7 +52,21 @@ void HandleFireAndForget(const IPI3_Msg *const msgBuffer) {
 			break;
 		case OSF_CPU_WAKE_OR_SLEEP: CpuWakeOrSleep(msgBuffer);
 			break;
-		default: debug_printf("Invalid function 0x%x in fire and forget handler IPI3\n", msgBuffer->function);
+		case OSF_DDR_LO_STASH: DdrLoStashAllocs(msgBuffer);
+			break;
+		case OSF_DDR_LO_RESTORE: DdrLoRestoreAllocs(msgBuffer);
+			break;
+		case OSF_DDR_HI_STASH: DdrHiStashAllocs(msgBuffer);
+			break;
+		case OSF_DDR_HI_RESTORE: DdrHiRestoreAllocs(msgBuffer);
+			break;
+		case OSF_SCREEN_CONSOLE_ENABLE: ScreenConsoleEnable(msgBuffer);
+			break;
+		case OSF_SCREEN_CONSOLE_INLINE_PRINT: ScreenConsoleInlinePrint(msgBuffer);
+			break;
+      
+		default:
+			debug_printf("Invalid function 0x%x in fire and forget handler IPI3\n", msgBuffer->function);
 	}
 }
 
@@ -46,6 +82,8 @@ void HandleNeedResponse(IPI_Channel const senderChannel, const IPI3_Msg *const m
 			break;
 		case OSF_FETCH_BOOT_DATA: FetchBootData(senderChannel, msgBuffer);
 			break;
+		case OSF_SCREEN_CONSOLE_PTR_PRINT: ScreenConsolePtrPrint(senderChannel, msgBuffer);
+			break;      
 		default: debug_printf("Invalid function 0x%x in need response handler IPI3\n", msgBuffer->function);
 	}
 }
