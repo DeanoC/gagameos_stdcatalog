@@ -1,7 +1,6 @@
 #include "core/core.h"
 #include "core/utf8.h"
 #include "dbg/print.h"
-#include "memory/memory.h"
 #include "fatfs/fatfs.h"
 #include "fatfs/filesystem.h"
 #include "ff.h"
@@ -125,14 +124,12 @@ bool FATFS_DirectoryEnumeratorCreate(FATFS_DirectoryEnumeratorHandle handle_, ut
 		return true;
 	}
 
-	MFREE(allocator_, enumerator);
 	return nullptr;
 }
 
 void FATFS_DirectoryEnumeratorDestroy(FATFS_DirectoryEnumeratorHandle handle_) {
 	FATFS_DirectoryEnumerator* enumerator = (FATFS_DirectoryEnumerator*) handle_;
 	f_closedir(&enumerator->dir);
-	MFREE(enumerator->allocator, enumerator);
 }
 
 FATFS_DirectoryEnumeratorItem const* FATFS_DirectoryEnumeratorNext(FATFS_DirectoryEnumeratorHandle handle_) {
