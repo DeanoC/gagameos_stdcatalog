@@ -4,7 +4,7 @@
 #include "platform/memory_map.h"
 #include "osservices.h"
 #ifdef __cplusplus
-EXTERN_C {
+EXTERN_C{
 #endif
 
 typedef enum {
@@ -42,20 +42,20 @@ typedef enum PACKED {
 } IPI_Agent;
 
 typedef enum PACKED {
-	IBO_APU 				= 0x400,
-	IBO_R5F_0				= 0x0,
-	IBO_R5F_1				= 0x200,
+	IBO_APU = 0x400,
+	IBO_R5F_0 = 0x0,
+	IBO_R5F_1 = 0x200,
 
-	IBO_PL_0				= 0x600,
-	IBO_PL_1				= 0x800,
-	IBO_PL_2				= 0xA00,
-	IBO_PL_3				= 0xC00,
+	IBO_PL_0 = 0x600,
+	IBO_PL_1 = 0x800,
+	IBO_PL_2 = 0xA00,
+	IBO_PL_3 = 0xC00,
 
-	IBO_PMU					= 0xE00,
+	IBO_PMU = 0xE00,
 } IPI_BUFFER_OFFSET;
 
 WARN_UNUSED_RESULT CONST_EXPR ALWAYS_INLINE IPI_Agent IPI_ChannelToAgent(IPI_Channel channel) {
-	switch(channel) {
+	switch (channel) {
 		case IC_APU: return IA_APU;
 		case IC_R5F_0: return IA_R5F_0;
 		case IC_R5F_1: return IA_R5F_1;
@@ -72,7 +72,7 @@ WARN_UNUSED_RESULT CONST_EXPR ALWAYS_INLINE IPI_Agent IPI_ChannelToAgent(IPI_Cha
 	}
 }
 WARN_UNUSED_RESULT CONST_EXPR ALWAYS_INLINE IPI_BUFFER_OFFSET IPI_ChannelToBuffer(IPI_Channel channel) {
-	switch(channel) {
+	switch (channel) {
 		case IC_APU: return IBO_APU;
 		case IC_R5F_0: return IBO_R5F_0;
 		case IC_R5F_1: return IBO_R5F_1;
@@ -227,8 +227,8 @@ static_assert(sizeof(IPI3_Response) - IPI3_RESPONSE_PACKET_MINUS_HEADER_SIZE == 
 #define IPI_MSG(buffer, target) (uint8_t*)(IPI_BUFFER_BASE_ADDR + (buffer) + ((target)*0x40))
 #define IPI_RESPONSE(buffer, target) (uint8_t*)(IPI_BUFFER_BASE_ADDR + (buffer) + 0x20 + ((target)*0x40))
 
-void IPI3_OsService_Submit(const IPI3_Msg *msg);
-void IPI3_OnService_SubmitAndFetchResponse(const IPI3_Msg * msg, IPI3_Response * reply);
+void IPI3_OsService_Submit(const IPI3_Msg* msg);
+void IPI3_OnService_SubmitAndFetchResponse(const IPI3_Msg* msg, IPI3_Response* reply);
 
 #ifdef __cplusplus
 }

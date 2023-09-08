@@ -5,18 +5,18 @@
 #include "multi_core/atomics.h"
 
 typedef struct MultiCore_FreeList {
-		uint64_t elementSize;
-		uint64_t maxBlocks;
-		uint32_t elementsPerBlockMask;
-		uint32_t elementsPerBlockShift;
+	uint64_t elementSize;
+	uint64_t maxBlocks;
+	uint32_t elementsPerBlockMask;
+	uint32_t elementsPerBlockShift;
 
-		uint64_t freeListHead;
-		void* * blocks;
-		uint64_t totalElementsAllocated;
-		uint64_t currentAllocating;
+	uint64_t freeListHead;
+	void** blocks;
+	uint64_t totalElementsAllocated;
+	uint64_t currentAllocating;
 } MultiCore_FreeList;
 
-typedef struct MultiCore_FreeList *MultiCore_FreeListHandle;
+typedef struct MultiCore_FreeList* MultiCore_FreeListHandle;
 
 // free threaded (any thread can call at any time)
 EXTERN_C size_t MultiCore_FreeListElementSize(MultiCore_FreeListHandle handle);

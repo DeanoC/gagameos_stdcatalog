@@ -14,9 +14,9 @@ EXTERN_C
 #if DO_ASSERT
 
 #if CPU_pmu != 1
-NO_RETURN void assert_printf(char const *file, int line, char const* txt);
+NO_RETURN void assert_printf(char const* file, int line, char const* txt);
 #else
-void assert_printf(char const *file, int line, char const* txt);
+void assert_printf(char const* file, int line, char const* txt);
 #endif
 
 #define assert(test) if (!(test)) { assert_printf(__FILE__, __LINE__, #test); }

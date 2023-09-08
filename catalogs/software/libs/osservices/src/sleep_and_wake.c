@@ -48,7 +48,7 @@ void OsService_SleepFPGA() {
 	IPI3_Msg msg = {
 			.function = OSF_DEVICE_WAKE_OR_SLEEP,
 			.Payload.DeviceWakeOrSleep.sleepFPGA = 1,
-		 	.Payload.DeviceWakeOrSleep.wakeFPGA = 0,
+			.Payload.DeviceWakeOrSleep.wakeFPGA = 0,
 	};
 	IPI3_OsService_Submit(&msg);
 }

@@ -2,7 +2,8 @@
 
 #include "core/core.h"
 #include "drawerbase.hpp"
-namespace GfxDebug {
+namespace GfxDebug
+{
 
 // CLUT8 expects a palette setup with the first 16 colour set like so
 // PackRGB(0, 0, 0), // Black
@@ -28,15 +29,15 @@ struct CLUT8 : public DrawerBase {
 	CLUT8();
 
 	// framebuffer is assumed to be far away, fastTmpBuffer is near and should be 8 * 4 * max font zoom
-	explicit CLUT8(uint16_t width, uint16_t height, uint8_t *framebuffer);
+	explicit CLUT8(uint16_t width, uint16_t height, uint8_t* framebuffer);
 
 	uint8_t backgroundColour;
 	uint8_t penColour;
 	uint16_t width;
 	uint16_t height;
 	int fontZoom;
-	uint8_t *frameBuffer;
-	uint8_t *fontTmpBuffer[MaxFontZoom * 8];
+	uint8_t* frameBuffer;
+	uint8_t* fontTmpBuffer[MaxFontZoom * 8];
 
 	void setBackgroundColour(uint8_t index) override {
 		backgroundColour = index;
@@ -47,7 +48,7 @@ struct CLUT8 : public DrawerBase {
 	}
 
 	void Clear() const override;
-	void PutString(int col, int row, char const *str) const override;
+	void PutString(int col, int row, char const* str) const override;
 	void PutChar(int col, int row, char c) const override;
 
 	void SetPixel(int x, int y, uint8_t index) override;

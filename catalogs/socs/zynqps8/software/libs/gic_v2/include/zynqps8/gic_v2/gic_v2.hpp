@@ -3,7 +3,8 @@
 #include "core/core.h"
 #include "platform/zynqmp/interrupts.h"
 
-namespace GicV2 {
+namespace GicV2
+{
 
 void InitDist();
 void InitCPU();

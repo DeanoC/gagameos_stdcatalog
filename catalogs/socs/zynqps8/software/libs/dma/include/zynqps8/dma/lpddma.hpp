@@ -2,7 +2,8 @@
 
 #include "core/core.h"
 
-namespace Dma::LpdDma {
+namespace Dma::LpdDma
+{
 
 enum class Channels : uint8_t {
 	ChannelZero = 0,

@@ -8,7 +8,8 @@
 #include "dbg/print.h"
 #include "dbg/assert.h"
 
-namespace DisplayPort::Display {
+namespace DisplayPort::Display
+{
 
 static void StallWhileAuxBusy(Connection* link) {
 	uint32_t timeout = 100;
@@ -17,10 +18,10 @@ static void StallWhileAuxBusy(Connection* link) {
 
 	do {
 		uint32_t const status = HW_REG_READ1(DP, REPLY_STATUS);
-		if((status & mask) == 0) return;
+		if ((status & mask) == 0) return;
 		Utils_BusyMicroSleep(20);
 		timeout--;
-	} while(timeout >= 0);
+	} while (timeout >= 0);
 
 	debug_print("StallWhileAuxBusy timeout");
 }
@@ -32,12 +33,12 @@ static void StallUntilAuxReplyIsDone(Connection* link) {
 	do {
 		uint32_t const status = HW_REG_READ1(DP, REPLY_STATUS);
 
-		if((status & DP_REPLY_STATUS_REPLY_RECEIVED) &&
+		if ((status & DP_REPLY_STATUS_REPLY_RECEIVED) &&
 			!(status & DP_REPLY_STATUS_REPLY_IN_PROGRESS)) return;
 
 		Utils_BusyMicroSleep(20);
 		timeout--;
-	} while(timeout >= 0);
+	} while (timeout >= 0);
 
 	debug_print("StallUntilAuxReplyIsDone timeout");
 
@@ -47,30 +48,30 @@ static void StallForAuxReady(Connection* display) {
 
 	do {
 		uint32_t const status = HW_REG_READ1(DP, INTERRUPT_SIGNAL_STATE);
-		if(	(status & DP_INTERRUPT_SIGNAL_STATE_REQUEST_STATE) == false) return;
+		if ((status & DP_INTERRUPT_SIGNAL_STATE_REQUEST_STATE) == false) return;
 
 		Utils_BusyMicroSleep(20);
 		timeout--;
-	} while(timeout >= 0);
+	} while (timeout >= 0);
 
 	debug_print("StallForAuxReady timeout");
 
 }
 
-static bool AuxReadUpto16Bytes(Connection *link, uint32_t address, uint32_t const numBytes, uint8_t *data) {
+static bool AuxReadUpto16Bytes(Connection* link, uint32_t address, uint32_t const numBytes, uint8_t* data) {
 	assert(numBytes <= 16);
 	StallWhileAuxBusy(link);
 
 	uint32_t tryCount = 100;
-	Retry:;
+Retry:;
 	StallForAuxReady(link);
 	HW_REG_WRITE1(DP, AUX_ADDRESS, address);
 	HW_REG_WRITE1(DP, AUX_COMMAND_REGISTER,
-						 HW_REG_ENCODE_FIELD(DP,
-																 AUX_COMMAND_REGISTER,
-																 AUX_CH_COMMAND,
-																 DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_AUX_READ) |
-								 HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, numBytes - 1));
+		HW_REG_ENCODE_FIELD(DP,
+			AUX_COMMAND_REGISTER,
+			AUX_CH_COMMAND,
+			DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_AUX_READ) |
+		HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, numBytes - 1));
 
 	StallUntilAuxReplyIsDone(link);
 	uint32_t const replyCode = HW_REG_READ1(DP, AUX_REPLY_CODE);
@@ -88,7 +89,7 @@ static bool AuxReadUpto16Bytes(Connection *link, uint32_t address, uint32_t cons
 	assert(HW_REG_DECODE_FIELD(DP, AUX_REPLY_CODE, CODE0, replyCode) == DP_AUX_REPLY_CODE_CODE0_AUX_ACK);
 
 	tryCount = 100;
-	RetryDataCount:;
+RetryDataCount:;
 	uint32_t const byteCount = HW_REG_READ1(DP, REPLY_DATA_COUNT);
 	if (byteCount != numBytes && tryCount > 0) {
 		Utils_BusyMicroSleep(100);
@@ -105,9 +106,9 @@ static bool AuxReadUpto16Bytes(Connection *link, uint32_t address, uint32_t cons
 	}
 }
 
-bool AuxRead(Connection *link, uint32_t address, uint32_t numBytes, uint8_t *data) {
-	while(numBytes > 16) {
-		if(!AuxReadUpto16Bytes(link, address, 16, data)) {
+bool AuxRead(Connection* link, uint32_t address, uint32_t numBytes, uint8_t* data) {
+	while (numBytes > 16) {
+		if (!AuxReadUpto16Bytes(link, address, 16, data)) {
 			return false;
 		}
 		data += 16;
@@ -115,14 +116,14 @@ bool AuxRead(Connection *link, uint32_t address, uint32_t numBytes, uint8_t *dat
 		numBytes -= 16;
 	}
 
-	if(numBytes > 0) {
+	if (numBytes > 0) {
 		return AuxReadUpto16Bytes(link, address, numBytes, data);
 	} else {
 		return true;
 	}
 }
 
-static bool AuxWriteUpto16Bytes(Connection *link, uint32_t address, uint32_t numBytes, uint8_t const *data) {
+static bool AuxWriteUpto16Bytes(Connection* link, uint32_t address, uint32_t numBytes, uint8_t const* data) {
 	assert(numBytes <= 16);
 	StallWhileAuxBusy(link);
 
@@ -137,11 +138,11 @@ Retry:;
 	}
 
 	HW_REG_WRITE1(DP, AUX_COMMAND_REGISTER,
-						 HW_REG_ENCODE_FIELD(DP,
-																 AUX_COMMAND_REGISTER,
-																 AUX_CH_COMMAND,
-																 DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_AUX_WRITE) |
-								 HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, (numBytes - 1)));
+		HW_REG_ENCODE_FIELD(DP,
+			AUX_COMMAND_REGISTER,
+			AUX_CH_COMMAND,
+			DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_AUX_WRITE) |
+		HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, (numBytes - 1)));
 
 	StallUntilAuxReplyIsDone(link);
 
@@ -162,9 +163,9 @@ Retry:;
 	return true;
 }
 
-bool AuxWrite(Connection *link, uint32_t address, uint32_t numBytes, uint8_t const *data) {
-	while(numBytes > 16) {
-		if(!AuxWriteUpto16Bytes(link, address, 16, data)) {
+bool AuxWrite(Connection* link, uint32_t address, uint32_t numBytes, uint8_t const* data) {
+	while (numBytes > 16) {
+		if (!AuxWriteUpto16Bytes(link, address, 16, data)) {
 			return false;
 		}
 		data += 16;
@@ -172,44 +173,43 @@ bool AuxWrite(Connection *link, uint32_t address, uint32_t numBytes, uint8_t con
 		numBytes -= 16;
 	}
 
-	if(numBytes > 0) {
+	if (numBytes > 0) {
 		return AuxWriteUpto16Bytes(link, address, numBytes, data);
 	} else {
 		return true;
 	}
 }
 
-static bool I2CReadUpto16Bytes(Connection *link, bool mot, uint32_t address, uint32_t const numBytes, uint8_t *data) {
+static bool I2CReadUpto16Bytes(Connection* link, bool mot, uint32_t address, uint32_t const numBytes, uint8_t* data) {
 	assert(numBytes <= 16);
 	StallWhileAuxBusy(link);
 
 	uint32_t tryCount = 100;
-	Retry:;
+Retry:;
 	StallForAuxReady(link);
 	HW_REG_WRITE1(DP, AUX_ADDRESS, address);
-	if(mot) {
+	if (mot) {
 		HW_REG_WRITE1(DP, AUX_COMMAND_REGISTER,
-							 HW_REG_ENCODE_FIELD(DP,
-																	 AUX_COMMAND_REGISTER,
-																	 AUX_CH_COMMAND,
-																	 DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_I2C_READ_MOT) |
-									 HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, numBytes - 1));
+			HW_REG_ENCODE_FIELD(DP,
+				AUX_COMMAND_REGISTER,
+				AUX_CH_COMMAND,
+				DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_I2C_READ_MOT) |
+			HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, numBytes - 1));
 	} else {
 		HW_REG_WRITE1(DP, AUX_COMMAND_REGISTER,
-							 HW_REG_ENCODE_FIELD(DP,
-																	 AUX_COMMAND_REGISTER,
-																	 AUX_CH_COMMAND,
-																	 DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_I2C_READ) |
-									 HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, numBytes - 1));
+			HW_REG_ENCODE_FIELD(DP,
+				AUX_COMMAND_REGISTER,
+				AUX_CH_COMMAND,
+				DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_I2C_READ) |
+			HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, numBytes - 1));
 	}
 	StallUntilAuxReplyIsDone(link);
 	uint32_t const replyCode = HW_REG_READ1(DP, AUX_REPLY_CODE);
 	if (HW_REG_DECODE_FIELD(DP, AUX_REPLY_CODE, CODE1, replyCode) == DP_AUX_REPLY_CODE_CODE1_I2C_NACK) {
 		debug_print("!DP_AUX_REPLY_CODE_CODE1_I2C_NACK\n");
 		return false;
-	}
-	else if( (HW_REG_DECODE_FIELD(DP, AUX_REPLY_CODE, CODE1, replyCode) == DP_AUX_REPLY_CODE_CODE1_I2C_DEFER) ||
-			(HW_REG_DECODE_FIELD(DP, AUX_REPLY_CODE, CODE0, replyCode) == DP_AUX_REPLY_CODE_CODE0_AUX_DEFER) ) {
+	} else if ((HW_REG_DECODE_FIELD(DP, AUX_REPLY_CODE, CODE1, replyCode) == DP_AUX_REPLY_CODE_CODE1_I2C_DEFER) ||
+		(HW_REG_DECODE_FIELD(DP, AUX_REPLY_CODE, CODE0, replyCode) == DP_AUX_REPLY_CODE_CODE0_AUX_DEFER)) {
 		Utils_BusyMilliSleep(1);
 		// try again
 		tryCount--;
@@ -221,7 +221,7 @@ static bool I2CReadUpto16Bytes(Connection *link, bool mot, uint32_t address, uin
 	assert(HW_REG_DECODE_FIELD(DP, AUX_REPLY_CODE, CODE1, replyCode) == DP_AUX_REPLY_CODE_CODE1_I2C_ACK);
 
 	tryCount = 100;
-	RetryDataCount:;
+RetryDataCount:;
 	uint32_t const byteCount = HW_REG_READ1(DP, REPLY_DATA_COUNT);
 	if (byteCount != numBytes && tryCount > 0) {
 		Utils_BusyMicroSleep(100);
@@ -239,29 +239,29 @@ static bool I2CReadUpto16Bytes(Connection *link, bool mot, uint32_t address, uin
 	}
 }
 
-bool I2CReadBlock(Connection *link, uint32_t address, uint32_t numBytes, uint8_t *data) {
-	while(numBytes > 16) {
-		if(!I2CReadUpto16Bytes(link, true, address, 16, data)) {
+bool I2CReadBlock(Connection* link, uint32_t address, uint32_t numBytes, uint8_t* data) {
+	while (numBytes > 16) {
+		if (!I2CReadUpto16Bytes(link, true, address, 16, data)) {
 			return false;
 		}
 		data += 16;
 		numBytes -= 16;
 	}
 
-	if(numBytes > 0) {
+	if (numBytes > 0) {
 		return I2CReadUpto16Bytes(link, false, address, numBytes, data);
 	} else {
 		return false;
 	}
 }
 
-static bool I2CWriteUpto16Bytes(Connection *link, bool mot, uint32_t address, uint32_t numBytes, uint8_t const *data) {
+static bool I2CWriteUpto16Bytes(Connection* link, bool mot, uint32_t address, uint32_t numBytes, uint8_t const* data) {
 	assert(numBytes <= 16);
 	StallWhileAuxBusy(link);
 
 	uint32_t tryCount = 100;
 
-	Retry:;
+Retry:;
 	StallForAuxReady(link);
 	HW_REG_WRITE1(DP, AUX_ADDRESS, address);
 
@@ -269,20 +269,20 @@ static bool I2CWriteUpto16Bytes(Connection *link, bool mot, uint32_t address, ui
 		HW_REG_WRITE1(DP, AUX_WRITE_FIFO, data[i]);
 	}
 
-	if(mot) {
+	if (mot) {
 		HW_REG_WRITE1(DP, AUX_COMMAND_REGISTER,
-							 HW_REG_ENCODE_FIELD(DP,
-																	 AUX_COMMAND_REGISTER,
-																	 AUX_CH_COMMAND,
-																	 DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_I2C_WRITE_MOT) |
-									 HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, (numBytes - 1)));
+			HW_REG_ENCODE_FIELD(DP,
+				AUX_COMMAND_REGISTER,
+				AUX_CH_COMMAND,
+				DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_I2C_WRITE_MOT) |
+			HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, (numBytes - 1)));
 	} else {
 		HW_REG_WRITE1(DP, AUX_COMMAND_REGISTER,
-							 HW_REG_ENCODE_FIELD(DP,
-																	 AUX_COMMAND_REGISTER,
-																	 AUX_CH_COMMAND,
-																	 DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_I2C_WRITE) |
-									 HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, (numBytes - 1)));
+			HW_REG_ENCODE_FIELD(DP,
+				AUX_COMMAND_REGISTER,
+				AUX_CH_COMMAND,
+				DP_AUX_COMMAND_REGISTER_AUX_CH_COMMAND_I2C_WRITE) |
+			HW_REG_ENCODE_FIELD(DP, AUX_COMMAND_REGISTER, NUM_OF_BYTES, (numBytes - 1)));
 	}
 	StallUntilAuxReplyIsDone(link);
 
@@ -304,20 +304,20 @@ static bool I2CWriteUpto16Bytes(Connection *link, bool mot, uint32_t address, ui
 }
 
 #define SEGPTR_ADDR				0x30
-bool I2CRead(Connection *link, uint32_t address, uint32_t offset, uint32_t numBytes, uint8_t *data) {
+bool I2CRead(Connection* link, uint32_t address, uint32_t offset, uint32_t numBytes, uint8_t* data) {
 	uint8_t segment = offset >> 8;
-	uint8_t off = (uint8_t)(offset & 0xFF);
+	uint8_t off = (uint8_t) (offset & 0xFF);
 	uint8_t currentBytesToRead;
-	if(numBytes >= (256U - off)) {
+	if (numBytes >= (256U - off)) {
 		currentBytesToRead = (256U - off);
 	} else {
 		currentBytesToRead = numBytes;
 	}
 
-	while(numBytes > 0) {
-		if(!I2CWriteUpto16Bytes(link, false, SEGPTR_ADDR, 1, &segment)) return false;
-		if(!I2CWriteUpto16Bytes(link, true, address, 1, &off)) return false;
-		if(!I2CReadBlock(link, address, currentBytesToRead, data)) return false;
+	while (numBytes > 0) {
+		if (!I2CWriteUpto16Bytes(link, false, SEGPTR_ADDR, 1, &segment)) return false;
+		if (!I2CWriteUpto16Bytes(link, true, address, 1, &off)) return false;
+		if (!I2CReadBlock(link, address, currentBytesToRead, data)) return false;
 
 		numBytes -= currentBytesToRead;
 		data += currentBytesToRead;

@@ -52,29 +52,29 @@ typedef uint32_t uintptr_lo_t;
 typedef uint64_t uintptr_all_t;
 
 #if CPU_host != 1
-EXTERN_C WARN_UNUSED_RESULT int memcmp ( const void * a, const void * b, size_t num ) NON_NULL(1,2);
+EXTERN_C WARN_UNUSED_RESULT int memcmp(const void* a, const void* b, size_t num) NON_NULL(1, 2);
 
-EXTERN_C void * memset ( void * RESTRICT destination, int c, size_t num ) NON_NULL(1);
-EXTERN_C void * memcpy ( void * RESTRICT destination, const void * RESTRICT source, size_t bytes ) NON_NULL(1, 2);
-EXTERN_C void * memmove ( void * RESTRICT destination, const void * RESTRICT source, size_t bytes )NON_NULL(1,2);
+EXTERN_C void* memset(void* RESTRICT destination, int c, size_t num) NON_NULL(1);
+EXTERN_C void* memcpy(void* RESTRICT destination, const void* RESTRICT source, size_t bytes) NON_NULL(1, 2);
+EXTERN_C void* memmove(void* RESTRICT destination, const void* RESTRICT source, size_t bytes)NON_NULL(1, 2);
 
-ALWAYS_INLINE WARN_UNUSED_RESULT long unsigned int strlen(char const * const RESTRICT str) {
-	char const * p = str;
-	while(*p){ p++; };
+ALWAYS_INLINE WARN_UNUSED_RESULT long unsigned int strlen(char const* const RESTRICT str) {
+	char const* p = str;
+	while (*p) { p++; };
 	return p - str;
 }
 
-WARN_UNUSED_RESULT int strncmp(char const * RESTRICT a, char const * RESTRICT b, size_t bytes);
+WARN_UNUSED_RESULT int strncmp(char const* RESTRICT a, char const* RESTRICT b, size_t bytes);
 
 void srand(unsigned int seed);
 
 int rand(void);
 #else
 #ifndef __cplusplus
-	#include <string.h>
+#include <string.h>
 #else
-	#include <cstring>
-	#include <string>
+#include <cstring>
+#include <string>
 #endif // end CPU_Host
 
 #endif

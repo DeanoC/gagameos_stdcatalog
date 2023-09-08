@@ -50,21 +50,21 @@ EXTERN_C
 #endif
 
 ALWAYS_INLINE uint32_t hw_RegRead(const uintptr_t addr_, const uint32_t offset_in_bytes_) {
-	return *(((const volatile uint32_t *)addr_) + offset_in_bytes_/sizeof(uint32_t));
+	return *(((const volatile uint32_t*) addr_) + offset_in_bytes_ / sizeof(uint32_t));
 }
 ALWAYS_INLINE void hw_RegWrite(const uintptr_t addr_, const uint32_t offset_in_bytes_, const uint32_t value_) {
-	*(((volatile uint32_t *)addr_) + offset_in_bytes_/sizeof(uint32_t)) = value_;
+	*(((volatile uint32_t*) addr_) + offset_in_bytes_ / sizeof(uint32_t)) = value_;
 }
 ALWAYS_INLINE void hw_RegRMW(const uintptr_t addr_, const uint32_t offset_in_bytes_, const uint32_t mask_, const uint32_t value_) {
 	hw_RegWrite(addr_, offset_in_bytes_, (hw_RegRead(addr_, offset_in_bytes_) & ~(mask_)) | ((value_) & (mask_)));
 }
 
 // these read/write 64 bit registers
-ALWAYS_INLINE uint64_t hw_RegRead64(const uintptr_t addr, const uint64_t offset_in_bytes){
-	return *(((const volatile uint64_t *)addr) + offset_in_bytes/sizeof(uint64_t));
+ALWAYS_INLINE uint64_t hw_RegRead64(const uintptr_t addr, const uint64_t offset_in_bytes) {
+	return *(((const volatile uint64_t*) addr) + offset_in_bytes / sizeof(uint64_t));
 }
-ALWAYS_INLINE void hw_RegWrite64(const uintptr_t addr, const uint64_t offset_in_bytes, const uint64_t value){
-	*(((volatile uint64_t *)addr) + offset_in_bytes/sizeof(uint64_t)) = value;
+ALWAYS_INLINE void hw_RegWrite64(const uintptr_t addr, const uint64_t offset_in_bytes, const uint64_t value) {
+	*(((volatile uint64_t*) addr) + offset_in_bytes / sizeof(uint64_t)) = value;
 }
 ALWAYS_INLINE void hw_RegRMW64(const uintptr_t addr_, const uint64_t offset_in_bytes_, const uint64_t mask_, const uint64_t value_) {
 	hw_RegWrite64(addr_, offset_in_bytes_, (hw_RegRead64(addr_, offset_in_bytes_) & ~(mask_)) | ((value_) & (mask_)));

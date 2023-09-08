@@ -40,25 +40,25 @@ static Core_Mutex mutex;
 //#define WAIT_FOR_ACK(a,b) while (HW_REG_READ1(IPI, a) & (b)) { /*raw_debug_printf("%#010x %#010x",HW_REG_READ1(IPI, a), (uint32_t)b); */}
 #define WAIT_FOR_ACK(a,b) while (HW_REG_READ1(IPI, a) & (b)) {}
 
-void IPI3_OsService_Submit(const IPI3_Msg *const msg) {
+void IPI3_OsService_Submit(const IPI3_Msg* const msg) {
 	LOCK_MUTEX();
 
 	WAIT_FOR_ACK(IPI_OBS, IC_PMU_3)
-	// TODO BUGFIX - this will fail when r5f and a53 use the os at the same time
-	// we need to use the CPUs buffer not PMUs, it works now because APUs are mutexed as they only have one channel
-	// but r5f each have there own buffer but this code will use the PMU one, which would have 3 user simultanously
-	memcpy(IPI_MSG(IPI_BUFFER, IA_PMU), msg, 32);
+		// TODO BUGFIX - this will fail when r5f and a53 use the os at the same time
+		// we need to use the CPUs buffer not PMUs, it works now because APUs are mutexed as they only have one channel
+		// but r5f each have there own buffer but this code will use the PMU one, which would have 3 user simultanously
+		memcpy(IPI_MSG(IPI_BUFFER, IA_PMU), msg, 32);
 	HW_REG_WRITE1(IPI, IPI_TRIG, IC_PMU_3);
 
 	UNLOCK_MUTEX();
 }
 
-void IPI3_OnService_SubmitAndFetchResponse(const IPI3_Msg *const msg, IPI3_Response * reply) {
+void IPI3_OnService_SubmitAndFetchResponse(const IPI3_Msg* const msg, IPI3_Response* reply) {
 	LOCK_MUTEX();
 
 	IPI3_OsService_Submit(msg);
 	WAIT_FOR_ACK(IPI_OBS, IC_PMU_3)
-	memcpy(reply, IPI_RESPONSE(IPI_BUFFER, IA_PMU), 32);
+		memcpy(reply, IPI_RESPONSE(IPI_BUFFER, IA_PMU), 32);
 
 	UNLOCK_MUTEX();
 }

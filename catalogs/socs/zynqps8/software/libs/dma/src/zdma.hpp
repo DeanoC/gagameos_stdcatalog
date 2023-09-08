@@ -2,7 +2,8 @@
 
 #include "core/core.h"
 
-namespace Dma::ZDma {
+namespace Dma::ZDma
+{
 
 void SimpleDmaSet32(uintptr_lo_t baseAddr_, uint32_t data_, uintptr_all_t address_, uint32_t size_);
 

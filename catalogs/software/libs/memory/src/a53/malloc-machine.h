@@ -22,7 +22,7 @@
 #define MAP_ANONYMOUS 2
 #define EINVAL 1
 #define ENOMEM 2
-EXTERN_C void *FAKE_mmap(void *addr, size_t length, int prot, int flags, int fd, int64_t offset);
-EXTERN_C int FAKE_munmap(void *addr, size_t length);
+EXTERN_C void* FAKE_mmap(void* addr, size_t length, int prot, int flags, int fd, int64_t offset);
+EXTERN_C int FAKE_munmap(void* addr, size_t length);
 #define mmap FAKE_mmap
 #define munmap FAKE_munmap

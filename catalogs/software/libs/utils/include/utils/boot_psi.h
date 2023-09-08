@@ -68,7 +68,7 @@ EXTERN_C
 {
 #endif
 
-void psi_RunRegisterProgram(PSI_IWord const *program);
+void psi_RunRegisterProgram(PSI_IWord const* program);
 
 #ifdef __cplusplus
 }

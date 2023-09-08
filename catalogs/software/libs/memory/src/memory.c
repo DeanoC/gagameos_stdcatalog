@@ -72,11 +72,11 @@ static Core_Mutex g_allocMutex;
 #define CLEAN_REPORTED_ADDRESS(x) (void*)(((uintptr_t)(x)) & ~0xF)
 
 typedef struct AllocUnit {
-	void *uncleanReportedAddress; //address is always at least 16 byte aligned so we stuff things in the bottom four bit!
-	char const *sourceFile;
-	char const *sourceFunc;
-	struct AllocUnit *next;
-	struct AllocUnit *prev;
+	void* uncleanReportedAddress; //address is always at least 16 byte aligned so we stuff things in the bottom four bit!
+	char const* sourceFile;
+	char const* sourceFunc;
+	struct AllocUnit* next;
+	struct AllocUnit* prev;
 
 	uint64_t allocationNumber;
 
@@ -87,9 +87,9 @@ typedef struct AllocUnit {
 
 #define hashBits 12u
 #define hashSize (1u << hashBits)
-static AllocUnit *hashTable[hashSize];
-static AllocUnit *reservoir;
-static AllocUnit **reservoirBuffer = NULL;
+static AllocUnit* hashTable[hashSize];
+static AllocUnit* reservoir;
+static AllocUnit** reservoirBuffer = NULL;
 static uint32_t reservoirBufferSize = 0;
 GLOBAL_HEAP_ALLOCATOR(reservoirAllocator)
 
@@ -109,36 +109,36 @@ ALWAYS_INLINE size_t calculateReportedSize(const size_t actualSize) {
 	return actualSize - Memory_TrackingPaddingSize * sizeof(uint32_t) * 2;
 }
 
-ALWAYS_INLINE void * Memory_TrackerCalculateActualAddress(const void *reportedAddress) {
+ALWAYS_INLINE void* Memory_TrackerCalculateActualAddress(const void* reportedAddress) {
 	// We allow this...
 	if (!reportedAddress) {
 		return NULL;
 	}
-	if( REPORTED_ADDRESS_BITS_MASK(reportedAddress) & REPORTED_ADDRESS_BITES_SAME_AS_REPORTED) {
-		return (void*) (((uintptr_t)reportedAddress) & ~0xF);
+	if (REPORTED_ADDRESS_BITS_MASK(reportedAddress) & REPORTED_ADDRESS_BITES_SAME_AS_REPORTED) {
+		return (void*) (((uintptr_t) reportedAddress) & ~0xF);
 	}
 
 	// JUst account for the padding
-	return (void *) (((uint8_t const *) (reportedAddress)) - sizeof(uint32_t) * Memory_TrackingPaddingSize);
+	return (void*) (((uint8_t const*) (reportedAddress)) - sizeof(uint32_t) * Memory_TrackingPaddingSize);
 }
 
-ALWAYS_INLINE void *calculateReportedAddress(const void *actualAddress) {
+ALWAYS_INLINE void* calculateReportedAddress(const void* actualAddress) {
 	// We allow this...
 	if (!actualAddress) {
 		return NULL;
 	}
 
 	// JUst account for the padding
-	return (void *) (((uint8_t const *) (actualAddress)) + sizeof(uint32_t) * Memory_TrackingPaddingSize);
+	return (void*) (((uint8_t const*) (actualAddress)) + sizeof(uint32_t) * Memory_TrackingPaddingSize);
 }
 
-static const char *sourceFileStripper(const char *sourceFile) {
+static const char* sourceFileStripper(const char* sourceFile) {
 	char const* ptr = sourceFile + utf8size(sourceFile);
 	uint32_t slashCount = 0;
-	while(ptr > sourceFile) {
-		if(*ptr == '\\' || *ptr == '/') {
+	while (ptr > sourceFile) {
+		if (*ptr == '\\' || *ptr == '/') {
 			slashCount++;
-			if(slashCount == 3) {
+			if (slashCount == 3) {
 				return ptr + 1;
 			}
 		}
@@ -147,7 +147,7 @@ static const char *sourceFileStripper(const char *sourceFile) {
 	return sourceFile;
 }
 
-static AllocUnit *findAllocUnit(const void *reportedAddress) {
+static AllocUnit* findAllocUnit(const void* reportedAddress) {
 	// Just in case...
 	assert(reportedAddress != NULL);
 
@@ -155,7 +155,7 @@ static AllocUnit *findAllocUnit(const void *reportedAddress) {
 	// addresses will be on four-, eight- or even sixteen-byte boundaries. If we didn't do this, the hash index would not have
 	// very good coverage.
 	uintptr_t hashIndex = (((uintptr_t) reportedAddress) >> 4) & (hashSize - 1);
-	AllocUnit *ptr = hashTable[hashIndex];
+	AllocUnit* ptr = hashTable[hashIndex];
 	while (ptr) {
 		if (CLEAN_REPORTED_ADDRESS(ptr->uncleanReportedAddress) == reportedAddress) {
 			return ptr;
@@ -170,7 +170,7 @@ static bool GrowReservoir() {
 	debug_print(ANSI_BRIGHT_ON "Memory Tracker: Growing Reservoir" ANSI_BRIGHT_OFF "\n");
 
 	// Allocate 256 reservoir elements
-	reservoir = (AllocUnit *) reservoirAllocator->calloc(reservoirAllocator, 256, sizeof(AllocUnit));
+	reservoir = (AllocUnit*) reservoirAllocator->calloc(reservoirAllocator, 256, sizeof(AllocUnit));
 	// Danger Will Robinson!
 	if (reservoir == NULL) {
 		return false;
@@ -182,7 +182,7 @@ static bool GrowReservoir() {
 	}
 
 	// Add this address to our reservoirBuffer so we can free it later
-	AllocUnit **temp = (AllocUnit **) reservoirAllocator->realloc(reservoirAllocator, reservoirBuffer, (reservoirBufferSize + 1) * sizeof(AllocUnit *));
+	AllocUnit** temp = (AllocUnit**) reservoirAllocator->realloc(reservoirAllocator, reservoirBuffer, (reservoirBufferSize + 1) * sizeof(AllocUnit*));
 	assert(temp);
 	if (temp) {
 		reservoirBuffer = temp;
@@ -192,12 +192,12 @@ static bool GrowReservoir() {
 	return true;
 }
 
-void * Memory_TrackedMalloc(Memory_Allocator * allocator_,
-													char const* sourceFile_,
-													unsigned int const sourceLine_,
-													char const * sourceFunc_,
-													size_t const size_) {
-	void * mem = allocator_->malloc(allocator_, Memory_TrackerCalculateActualSize(size_));
+void* Memory_TrackedMalloc(Memory_Allocator* allocator_,
+	char const* sourceFile_,
+	unsigned int const sourceLine_,
+	char const* sourceFunc_,
+	size_t const size_) {
+	void* mem = allocator_->malloc(allocator_, Memory_TrackerCalculateActualSize(size_));
 
 	if (mem == NULL) {
 		debug_print("ERROR: Request for allocation failed. Out of memory.");
@@ -211,20 +211,20 @@ void * Memory_TrackedMalloc(Memory_Allocator * allocator_,
 	}
 
 	MUTEX_LOCK
-	// If necessary, grow the reservoir of unused allocation units
-	if (!reservoir) {
+		// If necessary, grow the reservoir of unused allocation units
+		if (!reservoir) {
 			if (!GrowReservoir()) {
 				MUTEX_UNLOCK
-				return NULL;
+					return NULL;
+			}
 		}
-	}
 
 	if (Memory_TrackerBreakOnAllocNumber != 0 && Memory_TrackerBreakOnAllocNumber == g_allocCounter + 1) {
 		debug_print("WARNING:  Break on allocation number hit");
 		IKUY_DEBUG_BREAK();
 	}
 
-	if(sourceFile_ == NULL) {
+	if (sourceFile_ == NULL) {
 		debug_print("WARNING:  Allocation without tracking file/line/function info");
 		IKUY_DEBUG_BREAK();
 	}
@@ -233,12 +233,12 @@ void * Memory_TrackedMalloc(Memory_Allocator * allocator_,
 	assert(reservoir != NULL);
 
 	// Grab a new allocaton unit from the front of the reservoir
-	AllocUnit *au = reservoir;
+	AllocUnit* au = reservoir;
 	reservoir = au->next;
 
 	// Populate it with some real data
 	memset(au, 0, sizeof(AllocUnit));
-	au->reportedSize = (size_ > 0xFFFFFFFF) ? (uint32_t)(0xFFFFFFFF) : (uint32_t) size_;
+	au->reportedSize = (size_ > 0xFFFFFFFF) ? (uint32_t) (0xFFFFFFFF) : (uint32_t) size_;
 	au->uncleanReportedAddress = calculateReportedAddress(mem);
 	au->sourceFile = sourceFile_;
 	au->sourceLine = sourceLine_;
@@ -256,16 +256,16 @@ void * Memory_TrackedMalloc(Memory_Allocator * allocator_,
 
 	MUTEX_UNLOCK
 
-	return CLEAN_REPORTED_ADDRESS(au->uncleanReportedAddress);
+		return CLEAN_REPORTED_ADDRESS(au->uncleanReportedAddress);
 }
 
-void * Memory_TrackedAalloc(Memory_Allocator * allocator_,
-													 char const * sourceFile_,
-													 unsigned int const sourceLine_,
-													 char const * sourceFunc_,
-													 size_t const size_,
-													 size_t const align_) {
-	void *mem = allocator_->aalloc(allocator_, Memory_TrackerCalculateActualSize(size_), align_);
+void* Memory_TrackedAalloc(Memory_Allocator* allocator_,
+	char const* sourceFile_,
+	unsigned int const sourceLine_,
+	char const* sourceFunc_,
+	size_t const size_,
+	size_t const align_) {
+	void* mem = allocator_->aalloc(allocator_, Memory_TrackerCalculateActualSize(size_), align_);
 
 	if (mem == NULL) {
 		debug_print("ERROR: Request for allocation failed. Out of memory.");
@@ -281,12 +281,12 @@ void * Memory_TrackedAalloc(Memory_Allocator * allocator_,
 
 	MUTEX_LOCK
 
-	if(Memory_TrackerBreakOnAllocNumber != 0 && Memory_TrackerBreakOnAllocNumber == g_allocCounter+1) {
-		debug_print("WARNING: Break on allocation number hit");
-		IKUY_DEBUG_BREAK();
-	}
+		if (Memory_TrackerBreakOnAllocNumber != 0 && Memory_TrackerBreakOnAllocNumber == g_allocCounter + 1) {
+			debug_print("WARNING: Break on allocation number hit");
+			IKUY_DEBUG_BREAK();
+		}
 
-	if(sourceFile_ == NULL) {
+	if (sourceFile_ == NULL) {
 		debug_print("WARNING: Allocation without tracking file/line/function info");
 		IKUY_DEBUG_BREAK();
 	}
@@ -295,7 +295,7 @@ void * Memory_TrackedAalloc(Memory_Allocator * allocator_,
 	if (!reservoir) {
 		if (!GrowReservoir()) {
 			MUTEX_UNLOCK
-			return NULL;
+				return NULL;
 		}
 	}
 
@@ -303,12 +303,12 @@ void * Memory_TrackedAalloc(Memory_Allocator * allocator_,
 	assert(reservoir != NULL);
 
 	// Grab a new allocaton unit from the front of the reservoir
-	AllocUnit *au = reservoir;
+	AllocUnit* au = reservoir;
 	reservoir = au->next;
 
 	// Populate it with some real data
 	memset(au, 0, sizeof(AllocUnit));
-	au->reportedSize = (size_ > 0xFFFFFFFF) ? (uint32_t)(0xFFFFFFFF) : (uint32_t)size_;
+	au->reportedSize = (size_ > 0xFFFFFFFF) ? (uint32_t) (0xFFFFFFFF) : (uint32_t) size_;
 	au->uncleanReportedAddress = mem;
 	au->sourceFile = sourceFile_;
 	au->sourceLine = sourceLine_;
@@ -316,7 +316,7 @@ void * Memory_TrackedAalloc(Memory_Allocator * allocator_,
 	au->allocationNumber = ++g_allocCounter;
 
 	// or in reported == allocated bit
-	au->uncleanReportedAddress = (void*)(((uintptr_t)au->uncleanReportedAddress) | REPORTED_ADDRESS_BITES_SAME_AS_REPORTED);
+	au->uncleanReportedAddress = (void*) (((uintptr_t) au->uncleanReportedAddress) | REPORTED_ADDRESS_BITES_SAME_AS_REPORTED);
 
 	// Insert the new allocation into the hash table
 	uintptr_t hashIndex = (((uintptr_t) au->uncleanReportedAddress) >> 4) & (hashSize - 1);
@@ -329,33 +329,33 @@ void * Memory_TrackedAalloc(Memory_Allocator * allocator_,
 
 	MUTEX_UNLOCK
 
-	return CLEAN_REPORTED_ADDRESS(au->uncleanReportedAddress);
+		return CLEAN_REPORTED_ADDRESS(au->uncleanReportedAddress);
 }
-void * Memory_TrackedCalloc(Memory_Allocator * allocator_,
-                                     char const * sourceFile_,
-                                     unsigned int sourceLine_,
-                                     char const * sourceFunc_,
-                                     size_t count_,
-                                     size_t size_) {
-	void * mem = Memory_TrackedMalloc(allocator_, sourceFile_, sourceLine_,sourceFunc_, count_ * size_);
-	if(mem) {
+void* Memory_TrackedCalloc(Memory_Allocator* allocator_,
+	char const* sourceFile_,
+	unsigned int sourceLine_,
+	char const* sourceFunc_,
+	size_t count_,
+	size_t size_) {
+	void* mem = Memory_TrackedMalloc(allocator_, sourceFile_, sourceLine_, sourceFunc_, count_ * size_);
+	if (mem) {
 		memset(mem, 0, count_ * size_);
 	}
 	return mem;
 }
 
 
-void *Memory_TrackedRealloc(Memory_Allocator * allocator_,
-														char const * sourceFile_,
-														unsigned int const sourceLine_,
-														char const * sourceFunc_,
-														void * address_,
-														size_t const size_) {
+void* Memory_TrackedRealloc(Memory_Allocator* allocator_,
+	char const* sourceFile_,
+	unsigned int const sourceLine_,
+	char const* sourceFunc_,
+	void* address_,
+	size_t const size_) {
 	// Calling realloc with a nullptr should force same operations as a malloc
 	if (!address_) {
 		return Memory_TrackedMalloc(allocator_, sourceFile_, sourceLine_, sourceFunc_, size_);
 	}
-	void *mem = allocator_->realloc(allocator_, Memory_TrackerCalculateActualAddress(address_), Memory_TrackerCalculateActualSize(size_));
+	void* mem = allocator_->realloc(allocator_, Memory_TrackerCalculateActualAddress(address_), Memory_TrackerCalculateActualSize(size_));
 
 	if (!mem) {
 		debug_print("ERROR: Request for reallocation failed. Out of memory.");
@@ -363,37 +363,37 @@ void *Memory_TrackedRealloc(Memory_Allocator * allocator_,
 	}
 
 #if MEMORY_TRACKING == 0
-		return mem;
+	return mem;
 #endif
 
 	MUTEX_LOCK
 
-	if(Memory_TrackerBreakOnAllocNumber != 0 && Memory_TrackerBreakOnAllocNumber == g_allocCounter+1) {
-		debug_print("WARNING: Break on allocation number hit");
-		IKUY_DEBUG_BREAK();
-	}
+		if (Memory_TrackerBreakOnAllocNumber != 0 && Memory_TrackerBreakOnAllocNumber == g_allocCounter + 1) {
+			debug_print("WARNING: Break on allocation number hit");
+			IKUY_DEBUG_BREAK();
+		}
 
-	if(sourceFile_ == NULL) {
+	if (sourceFile_ == NULL) {
 		debug_print("WARNING: Allocation without tracking file/line/function info");
 		IKUY_DEBUG_BREAK();
 	}
 
 	// Locate the existing allocation unit
-	AllocUnit *au = findAllocUnit(address_);
+	AllocUnit* au = findAllocUnit(address_);
 
 	// If you hit this assert, you tried to reallocate RAM that wasn't allocated by this memory manager.
 	if (au == nullptr) {
 		debug_print("ERROR: Request to reallocate RAM that was never allocated");
 		MUTEX_UNLOCK
-		return nullptr;
+			return nullptr;
 	}
 
 	// Do the reallocation
-	void *oldReportedAddress = address_;
+	void* oldReportedAddress = address_;
 	size_t newActualSize = Memory_TrackerCalculateActualSize(size_);
 
 	// Update the allocation with the new information
-	au->reportedSize = (calculateReportedSize(newActualSize) > 0xFFFFFFFF) ? (uint32_t)(0xFFFFFFFF) : (uint32_t)calculateReportedSize(size_);
+	au->reportedSize = (calculateReportedSize(newActualSize) > 0xFFFFFFFF) ? (uint32_t) (0xFFFFFFFF) : (uint32_t) calculateReportedSize(size_);
 	au->uncleanReportedAddress = calculateReportedAddress(mem);
 	au->sourceFile = sourceFile_;
 	au->sourceLine = sourceLine_;
@@ -430,11 +430,11 @@ void *Memory_TrackedRealloc(Memory_Allocator * allocator_,
 
 	MUTEX_UNLOCK
 
-	// Return the (reported) address of the new allocation unit
-	return CLEAN_REPORTED_ADDRESS(au->uncleanReportedAddress);
+		// Return the (reported) address of the new allocation unit
+		return CLEAN_REPORTED_ADDRESS(au->uncleanReportedAddress);
 }
 
-bool Memory_TrackedFree(Memory_Allocator * allocator_, void * address_) {
+bool Memory_TrackedFree(Memory_Allocator* allocator_, void* address_) {
 	if (!address_) return true;
 
 #if MEMORY_TRACKING == 0
@@ -449,13 +449,13 @@ bool Memory_TrackedFree(Memory_Allocator * allocator_, void * address_) {
 
 	MUTEX_LOCK
 
-	// Go get the allocation unit
-	AllocUnit *au = findAllocUnit(address_);
+		// Go get the allocation unit
+		AllocUnit* au = findAllocUnit(address_);
 	if (au == NULL) {
 		debug_printf("ERROR: Request to deallocate RAM (%p) that was never allocated\n", address_);
 		IKUY_DEBUG_BREAK();
 		MUTEX_UNLOCK
-		return false;
+			return false;
 	}
 	bool const adjustPtr = (REPORTED_ADDRESS_BITS_MASK(au->uncleanReportedAddress) & REPORTED_ADDRESS_BITES_SAME_AS_REPORTED) == 0;
 
@@ -484,39 +484,39 @@ bool Memory_TrackedFree(Memory_Allocator * allocator_, void * address_) {
 
 	MUTEX_UNLOCK
 
-	if (adjustPtr) {
-		allocator_->free(allocator_, Memory_TrackerCalculateActualAddress(address_));
-	} else {
-		allocator_->free(allocator_, address_);
-	}
+		if (adjustPtr) {
+			allocator_->free(allocator_, Memory_TrackerCalculateActualAddress(address_));
+		} else {
+			allocator_->free(allocator_, address_);
+		}
 	return adjustPtr;
 }
 
 void Memory_TrackerDestroyAndLogLeaks() {
 	MUTEX_LOCK
-	bool loggedHeader = 0;
+		bool loggedHeader = 0;
 	for (int i = 0; i < hashSize; ++i) {
-		AllocUnit *au = hashTable[i];
+		AllocUnit* au = hashTable[i];
 		while (au != NULL) {
 			if (loggedHeader == false) {
 				loggedHeader = true;
 				debug_printf("-=-=-=-=-=-=- Memory Leak Report -=-=-=-=-=-=-\n");
 			}
-			if(au->sourceFile) {
-				char const *fileNameOnly = sourceFileStripper( au->sourceFile );
-				debug_printf( "%u bytes from %s(%u): %s number: %lu\n", au->reportedSize, fileNameOnly, au->sourceLine, au->sourceFunc, au->allocationNumber );
+			if (au->sourceFile) {
+				char const* fileNameOnly = sourceFileStripper(au->sourceFile);
+				debug_printf("%u bytes from %s(%u): %s number: %lu\n", au->reportedSize, fileNameOnly, au->sourceLine, au->sourceFunc, au->allocationNumber);
 			} else
-				debug_printf( "%u bytes from an unknown caller number: %lu\n", au->reportedSize, au->allocationNumber );
+				debug_printf("%u bytes from an unknown caller number: %lu\n", au->reportedSize, au->allocationNumber);
 
 			au = au->next;
 		}
 	}
-	if(loggedHeader == false) {
+	if (loggedHeader == false) {
 		debug_printf("-=-=-=-=-=-=- No Memory Leaks! -=-=-=-=-=-=-\n");
 	}
 
 	// free the reservoirs
-	for(uint32_t i = 0;i < reservoirBufferSize;++i) {
+	for (uint32_t i = 0;i < reservoirBufferSize;++i) {
 		reservoirAllocator->free(reservoirAllocator, reservoirBuffer[i]);
 	}
 	reservoirBuffer = NULL;
@@ -526,7 +526,7 @@ void Memory_TrackerDestroyAndLogLeaks() {
 	memset(hashTable, 0, sizeof(AllocUnit*) * hashSize);
 	MUTEX_UNLOCK
 
-	MUTEX_DESTROY
+		MUTEX_DESTROY
 }
 
 #else

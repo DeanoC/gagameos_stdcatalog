@@ -1,17 +1,18 @@
 #pragma once
 #include "core/core.h"
 
-namespace GfxDebug {
+namespace GfxDebug
+{
 
 struct BitmapBase {
 
-	BitmapBase(uint16_t width_, uint16_t height_, uint8_t * buffer_);
+	BitmapBase(uint16_t width_, uint16_t height_, uint8_t* buffer_);
 
 	uint16_t const width;
 	uint16_t const height;
 	uint16_t const widthInBytes;
 
-	uint8_t * const bitmapBuffer;
+	uint8_t* const bitmapBuffer;
 
 	void clear() {
 		memset(bitmapBuffer, 0, widthInBytes * height);
@@ -32,7 +33,7 @@ class Bitmap : public BitmapBase {
 		clear();
 	}
 
-	uint8_t buffer[((WIDTH+7)>>3) * HEIGHT];
+	uint8_t buffer[((WIDTH + 7) >> 3) * HEIGHT];
 };
 
 } // GfxDebug
