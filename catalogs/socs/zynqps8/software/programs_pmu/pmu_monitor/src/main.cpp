@@ -12,6 +12,7 @@
 #include "dbg/raw_print.h"
 #include "dbg/ansi_escapes.h"
 #include "dbg/print.h"
+#include "utils/busy_sleep.h"
 
 #include "interrupts/interrupts.hpp"
 #include "interrupts/interrupt_handlers.hpp"
@@ -44,7 +45,7 @@ void PrintBanner(void)
 	raw_debug_print(ANSI_YELLOW_PEN ANSI_BRIGHT_ON "IKUY PMU Monitor v2\n" ANSI_WHITE_PEN ANSI_BRIGHT_OFF);
 	const uint8_t *build_id_data = &((uint8_t*)(&g_note_build_id)+1)[g_note_build_id.namesz];
 
-	// print Build ID
+ 	// print Build ID
 	raw_debug_print("Build ID: ");
 	for (uint32_t i = 0; i < g_note_build_id.descsz; ++i) raw_debug_printf("%02x", build_id_data[i]);
 	raw_debug_print("\n");
@@ -109,7 +110,7 @@ void setupInterruptHandlers() {
 	raw_debug_print("Set Up Interrupt Handlers Finished\n");
 }
 
-
+extern "C" void mioRunInitProgram();
 
 void main() __attribute__((noreturn));
 
@@ -121,6 +122,8 @@ void main()
 	Interrupts::Init();
 
 	HW_REG_CLR_BIT1(PMU_GLOBAL, GLOBAL_CNTRL, DONT_SLEEP);
+
+  mioRunInitProgram();
 
 	PrintBanner();
 
@@ -150,6 +153,7 @@ void main()
 
 	HW_REG_WRITE1(PMU_GLOBAL, GLOBAL_GEN_STORAGE0,
 						 HW_REG_READ1(PMU_GLOBAL, GLOBAL_GEN_STORAGE0) | OS_GLOBAL0_PMU_READY);
+
 
 	debug_print("IKUY PMU Firmware setup complete\n");
 	Timers::Start();

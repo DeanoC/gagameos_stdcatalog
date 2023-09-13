@@ -10,11 +10,13 @@
 #include "platform/registers/apu.h"
 #include "platform/registers/crl_apb.h"
 #include "platform/registers/crf_apb.h"
+#include "platform/registers/csu.h"
 #include "os/ipi3_os_server.hpp"
 #include "cpuwake.hpp"
 #include "zynqps8/dma/lpddma.hpp"
 #include "platform/registers/pmu_global.h"
 #include "zmodem.hpp"
+#include "utils/busy_sleep.h"
 
 #define SIZED_TEXT(text) sizeof(text), (uint8_t const*)text
 extern uint8_t textConsoleSkip;
@@ -242,6 +244,12 @@ void HostInterface::WhatCommand() {
 			debug_print("\n");
 			break;
 		}
+    case "delay"_hash: {
+			debug_print("\nDelay Test Start (wait 2 seconds)\n");
+      Utils_BusySecondSleep(2);
+			debug_print("Delay Test End\n");
+      break;
+    }
 		default: {
 			bool hasPrintable = false;
 			uint8_t const * ptr  = this->cmdBuffer;
@@ -440,18 +448,10 @@ void HostInterface::BootCpu(uint8_t const *cmdBuffer, unsigned int const *finds,
 void HostInterface::Reset(uint8_t const *cmdBuffer, unsigned int const *finds, unsigned int const findCount) {
 	switch (Core::RuntimeHash(finds[1] - finds[0] - 1, (char *)cmdBuffer + finds[0] + 1))
 	{
-		case "por"_hash:
-			debug_print(ANSI_RED_PEN "\nPOR Reset in Progress" ANSI_RESET_ATTRIBUTES "\n");
-      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE0, 0);
-      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE1, 0);
-      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE2, 0);
-      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE3, 0);
-      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE4, 0);
-      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE5, 0);
-      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE6, 0);
-      HW_REG_WRITE1(PMU_GLOBAL, PERS_GLOB_GEN_STORAGE7, 0);
-			HW_REG_WRITE1(PMU_GLOBAL, REQ_SWRST_TRIG, PMU_GLOBAL_REQ_SWRST_TRIG_PL | PMU_GLOBAL_REQ_SWRST_TRIG_FP | PMU_GLOBAL_REQ_SWRST_TRIG_LP);
-			HW_REG_SET_BIT1(CRL_APB, RESET_CTRL, SOFT_RESET);
+		case "hard"_hash:
+			debug_print(ANSI_RED_PEN "\nHard Reset in Progress" ANSI_RESET_ATTRIBUTES "\n");
+      HW_REG_WRITE1(CSU, CSU_MULTI_BOOT, 0);
+			HW_REG_SET_BIT1(CRL_APB, RESET_CTRL, SOFT_RESET); 
 			return;
 		case "soft"_hash:
 			debug_print(ANSI_YELLOW_PEN "\nSoft (SRST) Reset in Progress" ANSI_RESET_ATTRIBUTES "\n");

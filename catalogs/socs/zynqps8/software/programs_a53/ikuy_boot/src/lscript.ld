@@ -1,8 +1,10 @@
 /* needs to have 8K space free during early MMU function */
 _STACK_SIZE = DEFINED(_STACK_SIZE) ? _STACK_SIZE : 9K;
 
-/* Enough for registers + PMU Monitor */
-_HEAP_SIZE = DEFINED(_HEAP_SIZE) ? _HEAP_SIZE : 40K ;
+/* Enough for registers + PMU Monitor 
+Increase if yoiu get a lscript.ld:219 cannot move location counter backwards
+*/
+_HEAP_SIZE = DEFINED(_HEAP_SIZE) ? _HEAP_SIZE : 70K ;
 
 MEMORY
 {

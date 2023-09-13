@@ -49,7 +49,10 @@ static BYTE TranslateFileAccessFlags(enum FATFS_FileMode modeFlags) {
 
 void FATFS_Mount(FATFS_DriveHandle drive_, utf8_int8_t const* driveName) {
 	FATFS* fatfs = (FATFS*) drive_;
-	f_mount(fatfs, driveName, 0);
+	FRESULT mount_ok = f_mount(fatfs, driveName, 0);
+  if(mount_ok != FR_OK) {
+    debug_printf("FATGS_Mount not OK {%u}", mount_ok);
+  }
 }
 
 bool FATFS_Open(FATFS_FileHandle fh_, utf8_int8_t const* filename_, enum FATFS_FileMode mode_) {

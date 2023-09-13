@@ -124,10 +124,16 @@ _RW_SMALL_DATA_BASE_ = __sdata_start + ((__sbss_end - __sdata_start) / 2 );
 _RO_SMALL_DATA_BASE_ = __sdata2_start + ((__sbss2_end - __sdata2_start) / 2 );
 
 
-/* Generate Stack definitions */
+/* Generate Stack definitions 
+We put the hardware registers tables at the the end, as they are 
+only usd once and can be written over after initial bringup
+*/
 .stack (NOLOAD) : {
    _stack_end = .;
-   . += _STACK_SIZE;
+   *(.hwregs)
+   _stack_tmp = .;
+   . += (_STACK_SIZE - (_stack_tmp - _stack_end));
+/*   . += _STACK_SIZE;*/
    . = ALIGN(8);
    _stack = .;
    __stack = _stack;

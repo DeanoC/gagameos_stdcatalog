@@ -49,9 +49,6 @@ Mmu::Manager * SetupMmu();
 #define CPU_CORTEXA53_0_TIMESTAMP_CLK_FREQ 33333000
 #define PSSYSMON_ANALOG_BUS_OFFSET		0x114U
 
-FATFS_DECLARE_DRIVE(sdcardDrive);
-FATFS_DECLARE_FILEHANDLE(pmuMonitorHandle)
-
 // main should never exit
 EXTERN_C NO_RETURN void main()
 {
@@ -67,13 +64,6 @@ EXTERN_C NO_RETURN void main()
 	HW_REG_WRITE1(CSU, SHA_RESET, CSU_SHA_RESET_RESET);
 
 	RegisterBringUp();
-	debug_printf(ANSI_BRIGHT_ON "Accessing SD card for pmu_monitor and shell" ANSI_BRIGHT_OFF);
-
-	FATFS_Mount(sdcardDrive, (utf8_int8_t const*)"0:");
-	if (!FATFS_Open(pmuMonitorHandle, (utf8_int8_t const *)"0:pmu_monitor.bin", FATFS_FM_Read))
-	{
-		debug_print(ANSI_RED_PAPER ANSI_BRIGHT_ON "\nLOAD ERROR: 0:pmu_monitor.bin NOT FOUND\n" ANSI_RESET_ATTRIBUTES);
-	}
 
 	debug_printf(ANSI_BRIGHT_ON "Bootloader size %luKB\nPMU size = %luKB\n" ANSI_BRIGHT_OFF,
 							 ((size_t)_end - (size_t)_vector_table) >> 10,
@@ -97,6 +87,16 @@ EXTERN_C NO_RETURN void main()
 	debug_force_raw_print(false);
 	EnablePSToPL();
 
+/*  FATFS_DECLARE_DRIVE(sdcardDrive);
+  FATFS_DECLARE_FILEHANDLE(pmuMonitorHandle)
+
+	debug_printf(ANSI_BRIGHT_ON "Accessing SD card for pmu_monitor and shell" ANSI_BRIGHT_OFF);
+	FATFS_Mount(sdcardDrive, (utf8_int8_t const*)"0:");
+	if (!FATFS_Open(pmuMonitorHandle, (utf8_int8_t const *)"0:pmu_monitor.bin", FATFS_FM_Read))
+	{
+		debug_print(ANSI_RED_PAPER ANSI_BRIGHT_ON "\nLOAD ERROR: 0:pmu_monitor.bin NOT FOUND\n" ANSI_RESET_ATTRIBUTES);
+	}
+*/
 /*	FATFS_Mount(sdcardDrive, (utf8_int8_t const*)"0:");
 	if (!FATFS_Open(pmuMonitorHandle, (utf8_int8_t const *)"0:pmu_monitor.bin", FATFS_FM_Read))
 	{

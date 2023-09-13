@@ -75,17 +75,15 @@ void HandleNeedResponse(IPI_Channel const senderChannel, const IPI3_Msg* const m
 	assert(IsFireAndForget(msgBuffer->function) == false);
 
 	switch (msgBuffer->function) {
-	case OSF_PTR_PRINT: DebugPtrPrint(senderChannel, msgBuffer);
-		break;
-	case OSF_DDR_LO_BLOCK_ALLOC: DdrLoBlockAlloc(senderChannel, msgBuffer);
-		break;
-	case OSF_DDR_HI_BLOCK_ALLOC: DdrHiBlockAlloc(senderChannel, msgBuffer);
-		break;
-	case OSF_FETCH_BOOT_DATA: FetchBootData(senderChannel, msgBuffer);
+		case OSF_PTR_PRINT: DebugPtrPrint(senderChannel, msgBuffer);
 			break;
-		case OSF_SCREEN_CONSOLE_PTR_PRINT: ScreenConsolePtrPrint(senderChannel, msgBuffer);
-		break;      
-	default: debug_printf("Invalid function 0x%x in need response handler IPI3\n", msgBuffer->function);
+		case OSF_DDR_LO_BLOCK_ALLOC: DdrLoBlockAlloc(senderChannel, msgBuffer);
+			break;
+		case OSF_DDR_HI_BLOCK_ALLOC: DdrHiBlockAlloc(senderChannel, msgBuffer);
+			break;
+		case OSF_FETCH_BOOT_DATA: FetchBootData(senderChannel, msgBuffer);
+			break;
+		default: debug_printf("Invalid function 0x%x in need response handler IPI3\n", msgBuffer->function);
 	}
 }
 
