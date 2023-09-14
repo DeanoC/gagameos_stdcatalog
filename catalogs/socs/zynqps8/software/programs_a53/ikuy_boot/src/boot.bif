@@ -1,5 +1,6 @@
 the_ROM_image:
 {
   [fsbl_config] a53_x64
+  [pmufw_image] /home/deano/base/soft/build/programs_pmu/programs_pmu/program_zynqps8_pmu_monitor/pmu_monitor
   [bootloader, destination_cpu=a53-0]/home/deano/base/soft/build/programs_a53/programs_a53/program_zynqps8_ikuy_boot/ikuy_boot
 }

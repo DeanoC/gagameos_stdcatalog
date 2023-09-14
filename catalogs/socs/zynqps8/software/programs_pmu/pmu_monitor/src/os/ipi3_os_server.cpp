@@ -116,7 +116,7 @@ void Handler(IPI_Channel senderChannel) {
 					// 64 bit memory space and bigger than bounceBuffer might be able to
 					// cope if its fits in our tmp space thats left...
 					uint32_t const blockCount = BitOp::PowerOfTwoContaining(msgBuffer->Payload.DdrPacket.packetSize / 64);
-					raw_debug_printf("blockCOunt %lu\n", blockCount);
+					debug_printf("blockCount %lu\n", blockCount);
 					if (blockCount > 128) {
 						IPI3_Response responseBuffer;
 						responseBuffer.result = IRR_BAD_PARAMETERS;

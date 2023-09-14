@@ -1,18 +1,5 @@
 set(project ikuy_boot)
 project(${project} C CXX ASM)
-include(ExternalProject)
-
-ExternalProject_Add(pmu_monitor
-		PREFIX "${CMAKE_BINARY_DIR}/pmu_build"
-		SOURCE_DIR "${CMAKE_SOURCE_DIR}"
-		INSTALL_COMMAND ""
-		CMAKE_ARGS
-			-DCMAKE_TOOLCHAIN_FILE=${CMAKE_SOURCE_DIR}/pmu_toolchain.cmake
-			-DCPU=pmu
-			-DBOARD=${BOARD}
-			-DCMAKE_BUILD_TYPE=MinSizeRel
-		)
-ExternalProject_Get_Property(pmu_monitor binary_dir)
 
 file(GLOB LINKSCRIPT CONFIGURE_DEPENDS src/lscript.ld)
 file(GLOB ASMFILES CONFIGURE_DEPENDS src/*.S)
@@ -40,7 +27,7 @@ file(GLOB CPPLIST CONFIGURE_DEPENDS
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-M=${project}.map -T ${LINKSCRIPT}")
 
 set(PROJECT_EMBED_OBJ_FILES "")
-set(PROJECT_EMBED_FILES "${binary_dir}/programs_pmu/program_zynqps8_pmu_monitor/pmu_monitor.bin")
+set(PROJECT_EMBED_FILES "")
 foreach(FILENAME ${PROJECT_EMBED_FILES})
 	get_filename_component(FILENAME_ONLY ${FILENAME} NAME)
 	get_filename_component(FILEPATH_ONLY ${FILENAME} PATH)
@@ -68,4 +55,3 @@ target_link_libraries(${project} PRIVATE fatfs)
 target_link_libraries(${project} PRIVATE memory)
 target_link_libraries(${project} PRIVATE library_defines)
 
-add_dependencies(${project} pmu_monitor)

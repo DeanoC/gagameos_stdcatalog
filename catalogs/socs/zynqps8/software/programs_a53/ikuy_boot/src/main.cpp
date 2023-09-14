@@ -65,26 +65,21 @@ EXTERN_C NO_RETURN void main()
 
 	RegisterBringUp();
 
-	debug_printf(ANSI_BRIGHT_ON "Bootloader size %luKB\nPMU size = %luKB\n" ANSI_BRIGHT_OFF,
-							 ((size_t)_end - (size_t)_vector_table) >> 10,
-							 ((size_t)_binary_pmu_monitor_bin_end - (size_t)_binary_pmu_monitor_bin_start) >> 10);
-	debug_printf("PMU load started\n");
-	PmuSleep();
-
-	PmuSafeMemcpy((void *) PMURAM_0_BASE_ADDR,
-								(void *) _binary_pmu_monitor_bin_start,
-								(size_t) _binary_pmu_monitor_bin_end - (size_t) _binary_pmu_monitor_bin_start);
-	PmuWakeup();
+	debug_printf(ANSI_BRIGHT_ON "\nBootloader size %luKB" ANSI_BRIGHT_OFF "\n",
+							 ((size_t)_end - (size_t)_vector_table) >> 10);
 
 	debug_printf("Wait for PMU\n");
+
+  HW_REG_WRITE1(PMU_GLOBAL, GLOBAL_GEN_STORAGE0, OS_GLOBAL0_REGISTERS_READY);
 	// stall until pmu says it loaded and ready to go
 	while (!(HW_REG_READ1(PMU_GLOBAL, GLOBAL_GEN_STORAGE0) & OS_GLOBAL0_PMU_READY)) {}
+
+	// PMU OS is enabled
+	debug_force_raw_print(false);
 	debug_printf("PMU " ANSI_GREEN_PEN"Ready\n" ANSI_WHITE_PEN);
 
 	auto mmu = SetupMmu();
 
-	// PMU OS is enabled
-	debug_force_raw_print(false);
 	EnablePSToPL();
 
 /*  FATFS_DECLARE_DRIVE(sdcardDrive);

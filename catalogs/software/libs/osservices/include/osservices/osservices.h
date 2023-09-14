@@ -4,8 +4,9 @@
 EXTERN_C{
 #endif
 
-#define OS_GLOBAL0_PMU_READY 		(1 << 0)
-#define OS_GLOBAL0_BOOT_COMPLETE 	(1 << 1)
+#define OS_GLOBAL0_REGISTERS_READY 		(1 << 0)
+#define OS_GLOBAL0_PMU_READY 		      (1 << 1)
+#define OS_GLOBAL0_BOOT_COMPLETE 	    (1 << 2)
 
 // video block is either null (no video output has been setup)
 // or
