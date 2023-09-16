@@ -26,4 +26,4 @@ typedef struct FATFS_DriveFunctions {
 
 } FATFS_DriveFunctions;
 
-void FATFS_RegisterDrive(uint32_t)
+void FATFS_RegisterDrive(uint32_t);

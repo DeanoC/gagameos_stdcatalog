@@ -9,8 +9,7 @@
 #include "platform/aarch64/intrinsics_gcc.h"
 #include "platform/memory_map.h"
 #include "zynqps8/mmu/mmu.hpp"
-#include "fatfs/fatfs.h"
-#include "fatfs/filesystem.h"
+#include "petitfatfs/petitfatfs.h"
 
 #include "platform/registers/csu.h"
 #include "platform/registers/pmu_global.h"

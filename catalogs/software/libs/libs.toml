@@ -20,6 +20,12 @@ type = "library.dbg"
 depends = ["core", "platform"]
 
 [[definition]]
+type = "library.fatfs"
+depends = ["core", "dbg", "memory", "platform", "vfile", "utils"]
+cpus = "a53"
+
+
+[[definition]]
 type = "library.image"
 cpus = "a53,host"
 depends = ["core", "dbg", "memory", "multi_core", "platform", "tiny_image_format", "musl_math",
@@ -73,6 +79,11 @@ cpus = "a53,r5f,pmu"
 depends = ["core", "dbg", "multi_core", "platform", "utils"]
 
 [[definition]]
+type = "library.petitfatfs"
+depends = ["core", "dbg", "memory", "platform", "vfile", "utils", "xilinx"]
+cpus = "a53"
+
+[[definition]]
 type = "library.platform"
 depends = ["core", "dbg"]
 
@@ -106,11 +117,6 @@ depends = ["core", "dbg"]
 [[definition]]
 type = "library.vfile_memory"
 depends = ["core", "dbg", "vfile", "memory"]
-
-[[definition]]
-type = "library.fatfs"
-depends = ["core", "dbg", "memory", "platform", "vfile", "utils"]
-cpus = "a53"
 
 [[definition]]
 type = "library.gpio"

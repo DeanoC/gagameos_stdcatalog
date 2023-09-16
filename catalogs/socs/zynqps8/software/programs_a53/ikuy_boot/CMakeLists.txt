@@ -51,7 +51,7 @@ target_link_libraries(${project} PRIVATE utils)
 target_link_libraries(${project} PRIVATE xilinx)
 target_link_libraries(${project} PRIVATE zynqps8_display_port)
 target_link_libraries(${project} PRIVATE zynqps8_mmu)
-target_link_libraries(${project} PRIVATE fatfs)
+target_link_libraries(${project} PRIVATE petitfatfs)
 target_link_libraries(${project} PRIVATE memory)
 target_link_libraries(${project} PRIVATE library_defines)
 
