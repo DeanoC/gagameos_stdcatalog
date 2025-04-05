@@ -1,0 +1,561 @@
+bank:
+- address: '0xff960000'
+  name: OCM
+description: OCM Memory Controller Configuration
+register:
+- default: '0x0000000F'
+  description: Enable/Disable a error response
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3'
+    name: UE_RES
+    type: rw
+  - bits: '2'
+    name: PWR_ERR_RES
+    type: rw
+  - bits: '1'
+    longdesc: 'When XMPU asserts poison signal, the resulting decode eror will be:
+      0: decerr = 1''b0 1: decerr = 1''b1 There is also a maskable interrupt , "INV_OCM_INT"
+      that could be asserted, independent of what option is selected here.'
+    name: PZ_ERR_RES
+    shortdesc: XMPU security check fails,XMPU asserts poison signal on read nad write
+      channel.
+    type: rw
+  - bits: '0'
+    name: APB_ERR_RES
+    type: rw
+  name: OCM_ERR_CTRL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    name: UE_RMW
+    type: wtc
+  - bits: '9'
+    name: FIX_BURST_WR
+    type: wtc
+  - bits: '8'
+    name: FIX_BURST_RD
+    type: wtc
+  - bits: '7'
+    name: ECC_UE
+    type: wtc
+  - bits: '6'
+    name: ECC_CE
+    type: wtc
+  - bits: '5'
+    name: LOCK_ERR_WR
+    type: wtc
+  - bits: '4'
+    name: LOCK_ERR_RD
+    type: wtc
+  - bits: '3'
+    name: INV_OCM_WR
+    type: wtc
+  - bits: '2'
+    name: INV_OCM_RD
+    type: wtc
+  - bits: '1'
+    name: PWR_DWN
+    type: wtc
+  - bits: '0'
+    name: INV_APB
+    type: wtc
+  name: OCM_ISR
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x000007FF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    name: UE_RMW
+    type: ro
+  - bits: '9'
+    name: FIX_BURST_WR
+    type: ro
+  - bits: '8'
+    name: FIX_BURST_RD
+    type: ro
+  - bits: '7'
+    name: ECC_UE
+    type: ro
+  - bits: '6'
+    name: ECC_CE
+    type: ro
+  - bits: '5'
+    name: LOCK_ERR_WR
+    type: ro
+  - bits: '4'
+    name: LOCK_ERR_RD
+    type: ro
+  - bits: '3'
+    name: INV_OCM_WR
+    type: ro
+  - bits: '2'
+    name: INV_OCM_RD
+    type: ro
+  - bits: '1'
+    name: PWR_DWN
+    type: ro
+  - bits: '0'
+    name: INV_APB
+    type: ro
+  name: OCM_IMR
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    name: UE_RMW
+    type: wo
+  - bits: '9'
+    name: FIX_BURST_WR
+    type: wo
+  - bits: '8'
+    name: FIX_BURST_RD
+    type: wo
+  - bits: '7'
+    name: ECC_UE
+    type: wo
+  - bits: '6'
+    name: ECC_CE
+    type: wo
+  - bits: '5'
+    name: LOCK_ERR_WR
+    type: wo
+  - bits: '4'
+    name: LOCK_ERR_RD
+    type: wo
+  - bits: '3'
+    name: INV_OCM_WR
+    type: wo
+  - bits: '2'
+    name: INV_OCM_RD
+    type: wo
+  - bits: '1'
+    name: PWR_DWN
+    type: wo
+  - bits: '0'
+    name: INV_APB
+    type: wo
+  name: OCM_IEN
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    name: UE_RMW
+    type: wo
+  - bits: '9'
+    name: FIX_BURST_WR
+    type: wo
+  - bits: '8'
+    name: FIX_BURST_RD
+    type: wo
+  - bits: '7'
+    name: ECC_UE
+    type: wo
+  - bits: '6'
+    name: ECC_CE
+    type: wo
+  - bits: '5'
+    name: LOCK_ERR_WR
+    type: wo
+  - bits: '4'
+    name: LOCK_ERR_RD
+    type: wo
+  - bits: '3'
+    name: INV_OCM_WR
+    type: wo
+  - bits: '2'
+    name: INV_OCM_RD
+    type: wo
+  - bits: '1'
+    name: PWR_DWN
+    type: wo
+  - bits: '0'
+    name: INV_APB
+    type: wo
+  name: OCM_IDS
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: control register for OCM
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: OCM loads the internal counter with the fault inject counter regiser
+      value and count down on every clock cycle. Once counter reaches to "zero", ocm
+      injects one/mutiple error indicated by fault inject register depending on FI_MODE
+      0 = Inject single error on write trasaction after FI Counter reaches to zero
+      1= Inject error on every write transaction after FI counter reaches to zero
+    name: FI_MODE
+    shortdesc: User can inject error in OCM DATA & Syndrome bits by writing fault
+      inject register along with fault inject counter register.
+    type: rw
+  - bits: '1'
+    name: DET_ONLY
+    type: rw
+  - bits: '0'
+    longdesc: This bit should be initialized during system boot. It should not be
+      changed while OCM is in use
+    name: ECC_ON_OFF
+    shortdesc: ON/OFF controll of ECC port 1 = on ; 0 = OFF.
+    type: rw
+  name: OCM_ECC_CTRL
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: CLEAR REGITER FOR EXLCUSIVE ACCESS MONITORS
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7'
+    name: MON_7
+    type: wo
+  - bits: '6'
+    name: MON_6
+    type: wo
+  - bits: '5'
+    name: MON_5
+    type: wo
+  - bits: '4'
+    name: MON_4
+    type: wo
+  - bits: '3'
+    name: MON_3
+    type: wo
+  - bits: '2'
+    name: MON_2
+    type: wo
+  - bits: '1'
+    name: MON_1
+    type: wo
+  - bits: '0'
+    name: MON_0
+    type: wo
+  name: OCM_CLR_EXE
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Correctable Error First Failing Address Register
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: raz
+  - bits: '17:0'
+    longdesc: OCM holds the logged value untill software clears the CE interrupt.
+    name: ADDR
+    shortdesc: This register stores the memory address [17:0] for 256KB OCM) of the
+      first occurrence of an access with a correctable error.
+    type: ro
+  name: OCM_CE_FFA
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Correctable Error First Failing Data Register (CE_FFD [31:0])
+  field:
+  - bits: '31:0'
+    longdesc: OCM holds the logged value untill software clears the CE interrupt.
+    name: DATA
+    shortdesc: This register stores the (uncorrected) failing data (bits [31:0]) of
+      the first occurrence of an access with a correctable error.
+    type: ro
+  name: OCM_CE_FFD0
+  offset: '0x00000020'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Correctable Error First Failing Data Register (CE_FFD [63:32])
+  field:
+  - bits: '31:0'
+    longdesc: OCM holds the logged value untill software clears the CE interrupt.
+    name: DATA
+    shortdesc: This register stores the (uncorrected) failing data (bits [63:32])
+      of the first occurrence of an access with a correctable error.
+    type: ro
+  name: OCM_CE_FFD1
+  offset: '0x00000024'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Correctable Error First Failing Data Register (CE_FFD [95:64])
+  field:
+  - bits: '31:0'
+    longdesc: OCM holds the logged value untill software clears the CE interrupt.
+    name: DATA
+    shortdesc: This register stores the (uncorrected) failing data (bits [95:64])
+      of the first occurrence of an access with a correctable error.
+    type: ro
+  name: OCM_CE_FFD2
+  offset: '0x00000028'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Correctable Error First Failing Data Register (CE_FFD [127:96])
+  field:
+  - bits: '31:0'
+    longdesc: OCM holds the logged value untill software clears the CE interrupt.
+    name: DATA
+    shortdesc: This register stores the (uncorrected) failing data (bits [127:96])
+      of the first occurrence of an access with a correctable error.
+    type: ro
+  name: OCM_CE_FFD3
+  offset: '0x0000002C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Correctable Error First Failing ECC Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    longdesc: OCM holds the logged value untill software clears the CE interrupt.
+    name: SYNDROME
+    shortdesc: This register stores the ECC bits of the first occurrence of an access
+      with a correctable error.
+    type: ro
+  name: OCM_CE_FFE
+  offset: '0x00000030'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Uncorrectable Error First Failing Address Register
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: raz
+  - bits: '17:0'
+    name: ADDR
+    type: ro
+  name: OCM_UE_FFA
+  offset: '0x00000034'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Uncorrectable Error First Failing Data Register (UE_FFD [31:0])
+  field:
+  - bits: '31:0'
+    longdesc: OCM holds the logged value untill software clears the UE interrupt.
+    name: DATA
+    shortdesc: This register stores the (uncorrected) failing data (bits [31:0]) of
+      the first occurrence of an access with a uncorrectable error.
+    type: ro
+  name: OCM_UE_FFD0
+  offset: '0x00000038'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Uncorrectable Error First Failing Data Register (UE_FFD [63:32])
+  field:
+  - bits: '31:0'
+    longdesc: OCM holds the logged value untill software clears the UE interrupt.
+    name: DATA
+    shortdesc: This register stores the (uncorrected) failing data (bits [63:32])
+      of the first occurrence of an access with a uncorrectable error.
+    type: ro
+  name: OCM_UE_FFD1
+  offset: '0x0000003C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Uncorrectable Error First Failing Data Register (UE_FFD [95:64])
+  field:
+  - bits: '31:0'
+    longdesc: OCM holds the logged value untill software clears the UE interrupt.
+    name: DATA
+    shortdesc: This register stores the (uncorrected) failing data (bits [95:64])
+      of the first occurrence of an access with a uncorrectable error.
+    type: ro
+  name: OCM_UE_FFD2
+  offset: '0x00000040'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Uncorrectable Error First Failing Data Register (UE_FFD [127:96])
+  field:
+  - bits: '31:0'
+    longdesc: OCM holds the logged value untill software clears the UE interrupt.
+    name: DATA
+    shortdesc: This register stores the (uncorrected) failing data (bits [127:96])
+      of the first occurrence of an access with a uncorrectable error.
+    type: ro
+  name: OCM_UE_FFD3
+  offset: '0x00000044'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Uncorrectable Error First Failing ECC Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: SYNDROME
+    type: ro
+  name: OCM_UE_FFE
+  offset: '0x00000048'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Fault Injection Data Register (FI_D0)
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: rw
+  name: OCM_FI_D0
+  offset: '0x0000004C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Fault Injection Data Register (FI_D1)
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: rw
+  name: OCM_FI_D1
+  offset: '0x00000050'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Fault Injection Data Register (FI_D2)
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: rw
+  name: OCM_FI_D2
+  offset: '0x00000054'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Fault Injection Data Register (FI_D3)
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: rw
+  name: OCM_FI_D3
+  offset: '0x00000058'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Fault Injection Syndrome Register (FI_SY)
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: DATA
+    type: rw
+  name: OCM_FI_SY
+  offset: '0x0000005C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: RMW uncorrectable error log register
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: raz
+  - bits: '17:0'
+    name: ADDR
+    type: ro
+  name: OCM_RMW_UE_FFA
+  offset: '0x00000070'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Fault Injection Count Register
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: raz
+  - bits: '23:0'
+    longdesc: Once counter reach to Zero, it injects single/multiple error (depend
+      on FI_MODE bit) in bits indicated by FI_D and FI_SY registers
+    name: COUNT
+    shortdesc: OCM FI Counter value in its internal counter and count down on every
+      clock cycle.
+    type: rw
+  name: OCM_FI_CNTR
+  offset: '0x00000074'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: OCM Implementation Register
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3:0'
+    name: SIZE
+    type: ro
+  name: OCM_IMP
+  offset: '0x00000080'
+  type: mixed
+  width: 32
+- default: '0x0000FFFF'
+  description: OCM PRDY Debug register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:12'
+    name: BANK3
+    type: ro
+  - bits: '11:8'
+    name: BANK2
+    type: ro
+  - bits: '7:4'
+    name: BANK1
+    type: ro
+  - bits: '3:0'
+    name: BANK0
+    type: ro
+  name: OCM_PRDY_DBG
+  offset: '0x00000084'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: OCM Safety Check Register
+  field:
+  - bits: '31:0'
+    name: VAL
+    type: rw
+  name: OCM_SAFETY_CHK
+  offset: '0x00000FF8'
+  type: rw
+  width: 32

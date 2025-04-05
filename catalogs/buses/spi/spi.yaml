@@ -1,0 +1,12 @@
+definition:
+- buses:
+  - data_width: 32
+    name: lpdunitsswitch_spi${index}
+    supplier: false
+  max_instances: 2
+  registers:
+  - address_increment: '0x1_0000'
+    base_address: '0x0104_0000'
+    name: SPI${index}
+    resource: zynqps8/spi.toml
+  type: switch.spi.zynqps8

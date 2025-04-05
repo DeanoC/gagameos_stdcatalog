@@ -1,0 +1,113 @@
+connection:
+- bus_name: cci_fpd
+  connection: CCI -> FPDMainSwitch
+  type: bus
+- bus_name: fpd_siou
+  connection: FPDMainSwitch -> SIOUSwitch
+  type: bus
+- connection: FPDMainSwitch -> PS8Soc
+  type: logical
+- bus_name: siou_gpu
+  connection: SIOUSwitch -> GPU
+  type: bus
+- bus_name: siou_cci
+  connection: SIOUOutboundSwitch -> CCI
+  type: bus
+- bus_name: gpu_siououtbound
+  connection: GPU -> SIOUOutboundSwitch
+  type: bus
+- bus_name: siou_fpd_slcr
+  connection: SIOUSwitch -> FPD_SLCR
+  type: bus
+- bus_name: siou_dp
+  connection: SIOUSwitch -> DP
+  type: bus
+- bus_name: siou_fpddma
+  connection: SIOUSwitch -> FPDDMA
+  type: bus
+- bus_name: fpd_lpdinbound
+  connection: FPDMainSwitch -> LPDInboundSwitch
+  type: bus
+- bus_name: dp_out
+  connection: DP -> DP_HP0_MP
+  consumer_bus_name: in0
+  type: bus
+- bus_name: in1
+  connection: PS8Soc -> DP_HP0_MP
+  type: logical
+- bus_name: in0
+  connection: PS8Soc -> HP1_HP2_MP
+  type: logical
+- bus_name: in1
+  connection: PS8Soc -> HP1_HP2_MP
+  type: logical
+- bus_name: in0
+  connection: PS8Soc -> HP3_FPDDMA_MP
+  type: logical
+- bus_name: in1
+  connection: FPDDMA -> HP1_HP2_MP
+  type: logical
+- bus_name: in1
+  connection: PS8Soc -> CORESIGHT_HPC0_HPC1_MP
+  type: logical
+- bus_name: in2
+  connection: PS8Soc -> CORESIGHT_HPC0_HPC1_MP
+  type: logical
+- bus_name: out
+  connection: CORESIGHT_HPC0_HPC1_MP -> CCI
+  type: bus
+- bus_name: out
+  connection: DP_HP0_MP -> FPD_DDR_SPLITTER0
+  consumer_bus_name: in
+  type: bus
+- bus_name: out
+  connection: HP1_HP2_MP -> FPD_DDR_SPLITTER1
+  consumer_bus_name: in
+  type: bus
+- bus_name: out
+  connection: HP3_FPDDMA_MP -> FPD_DDR_SPLITTER2
+  consumer_bus_name: in
+  type: bus
+- bus_name: out0
+  connection: FPD_DDR_SPLITTER0 -> FPDMainSwitch
+  consumer_bus_name: splitter0_fpd
+  type: bus
+- bus_name: out0
+  connection: FPD_DDR_SPLITTER1 -> FPDMainSwitch
+  consumer_bus_name: splitter1_fpd
+  type: bus
+- bus_name: out0
+  connection: FPD_DDR_SPLITTER2 -> FPDMainSwitch
+  consumer_bus_name: splitter2_fpd
+  type: bus
+instance:
+- name: CCI
+  type: switch.internal.cci.zynqps8
+- name: FPDMainSwitch
+  type: switch.internal.fpd.zynqps8
+- name: SIOUSwitch
+  type: switch.internal.siouswitch.zynqps8
+- name: SIOUOutboundSwitch
+  type: switch.internal.siououtbound.zynqps8
+- name: GPU
+  type: graphic.gpu.mali400.zynqps8
+- name: DP
+  type: graphic.display.displayport.zynqps8
+- name: FPD_SLCR
+  type: other.internal.fpd_slcr.zynqps8
+- name: FPDDMA
+  type: other.dma.fpd.zynqps8
+- name: DP_HP0_MP
+  type: switch.internal.two_to_one_multiplexer.zynqps8
+- name: HP1_HP2_MP
+  type: switch.internal.two_to_one_multiplexer.zynqps8
+- name: HP3_FPDDMA_MP
+  type: switch.internal.two_to_one_multiplexer.zynqps8
+- name: CORESIGHT_HPC0_HPC1_MP
+  type: switch.internal.three_to_one_multiplexer.zynqps8
+- name: FPD_DDR_SPLITTER0
+  type: switch.internal.one_to_two_splitter.zynqps8
+- name: FPD_DDR_SPLITTER1
+  type: switch.internal.one_to_two_splitter.zynqps8
+- name: FPD_DDR_SPLITTER2
+  type: switch.internal.one_to_two_splitter.zynqps8

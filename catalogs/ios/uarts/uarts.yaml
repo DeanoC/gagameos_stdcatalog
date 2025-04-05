@@ -1,0 +1,15 @@
+definition:
+- consumer_prefix: apb_
+  gateware: apb_ctrl/apb_ctrl.toml
+  type: io.uart.apb_ctrl
+- buses:
+  - name: iopunitsswitch_uart${index}
+    supplier: false
+  max_instances: 2
+  registers:
+  - address_increment: '0x1_0000'
+    base_address: '0x0200_0000'
+    name: UART${index}
+    register_window_size: 64 KiB
+    resource: zynqps8/uart.toml
+  type: io.uart.zynqps8

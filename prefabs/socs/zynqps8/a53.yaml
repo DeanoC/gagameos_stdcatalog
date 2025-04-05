@@ -1,0 +1,7 @@
+connection:
+- bus_name: apu_cci
+  connection: APU -> CCI
+  type: bus
+instance:
+- name: APU
+  type: cpu.a53.zynqps8

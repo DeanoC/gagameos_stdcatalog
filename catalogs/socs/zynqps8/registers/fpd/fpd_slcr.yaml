@@ -1,0 +1,396 @@
+description: FPD System-level Control
+register:
+- default: '0x00000001'
+  description: FP Domain SLCR Write protection register
+  field:
+  - bits: '0'
+    name: ACTIVE
+    type: rw
+  name: WPROT0
+  offset: '0x00000000'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: General control register for the FP Domain SLCR
+  field:
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: CTRL
+  offset: '0x00000004'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Status Register
+  field:
+  - bits: '0'
+    longdesc: '0: No Event 1: Event Occurred'
+    name: ADDR_DECODE_ERR
+    shortdesc: Status for an address decode error.
+    type: wtc
+  name: ISR
+  offset: '0x00000008'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Interrupt Mask Register
+  field:
+  - bits: '0'
+    longdesc: '0: Interrupt Enabled 1: Interrupt Disabled'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error.
+    type: ro
+  name: IMR
+  offset: '0x0000000C'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Enable Register
+  field:
+  - bits: '0'
+    longdesc: '0: Ignored 1: imr -> 0'
+    name: ADDR_DECODE_ERR
+    shortdesc: Enable for an address decode error.
+    type: wo
+  name: IER
+  offset: '0x00000010'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Disable Register
+  field:
+  - bits: '0'
+    longdesc: '0: Ignored 1: imr -> 1'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error.
+    type: wo
+  name: IDR
+  offset: '0x00000014'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Trigger Register
+  field:
+  - bits: '0'
+    longdesc: '0: Ignored 1: isr -> 1'
+    name: ADDR_DECODE_ERR
+    shortdesc: Trigger an address decode error interrupt.
+    type: wo
+  name: ITR
+  offset: '0x00000018'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: SWDT clock source select
+  field:
+  - bits: '31:1'
+    longdesc: '0: Ignored 1: isr -> 1'
+    name: RESERVED
+    shortdesc: Trigger an address decode error interrupt.
+    type: raz
+  - bits: '0'
+    enum:
+    - name: APB_CLOCK
+      value: 0
+    - name: EXTERNAL_CLOCK
+      value: 1
+    name: SELECT
+    type: rw
+  name: WDT_CLK_SEL
+  offset: '0x00000100'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interconnect Clock Source Select
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: 'This signal may only be toggled after 4 cycles of the old clock and
+      4 cycles of the new clock. 0: Default. Use LPD Clocks. This setting must be
+      used when LPD and FPD need to commmunicate 1: Use clock originating in FPD.
+      This option must be used when LPD and FPD are isolated.'
+    name: GFM_SEL
+    shortdesc: Clock Source select for FPD Interconnect components that interface
+      to LPD.
+    type: rw
+  name: INT_FPD
+  offset: '0x00000200'
+  type: mixed
+  width: 32
+- default: '0x00000007'
+  description: GPU Idle status Register
+  field:
+  - bits: '10:7'
+    name: ARCACHE
+    type: rw
+  - bits: '6:3'
+    name: AWCACHE
+    type: rw
+  - bits: '2'
+    name: PP1_IDLE
+    type: ro
+  - bits: '1'
+    name: PP0_IDLE
+    type: ro
+  - bits: '0'
+    name: IDLE
+    type: ro
+  name: GPU
+  offset: '0x0000100C'
+  type: mixed
+  width: 32
+- default: '0x00000048'
+  description: GDMA RF2 Configuation
+  field:
+  - bits: '6:5'
+    name: BUS_WIDTH
+    type: ro
+  - bits: '4:0'
+    name: NUM_CH
+    type: ro
+  name: GDMA_CFG
+  offset: '0x00003000'
+  type: ro
+  width: 7
+- default: '0x00003B3B'
+  description: RAM control register
+  field:
+  - bits: '15'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '7'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: rw
+  name: GDMA_RAM
+  offset: '0x00003010'
+  type: mixed
+  width: 16
+- default: '0x00000A00'
+  description: afi fs SLCR control register. This register is static and should not
+    be modified during operation.
+  field:
+  - bits: '31:12'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '11:10'
+    name: DW_SS1_SEL
+    type: rw
+  - bits: '9:8'
+    name: DW_SS0_SEL
+    type: rw
+  - bits: '7:0'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  name: AFI_FS
+  offset: '0x00005000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: going to PL through AFI FS1)
+    name: AFIFS1
+    shortdesc: ISR for ATB placed between fpd main switch and AFI_FS1 (trans.
+    type: wtc
+  - bits: '1'
+    longdesc: going to PL through AFI FS0)
+    name: AFIFS0
+    shortdesc: ISR for ATB placed between fpd main switch and AFI_FS0 (trans.
+    type: wtc
+  - bits: '0'
+    name: FPDS
+    type: wtc
+  name: ERR_ATB_ISR
+  offset: '0x00006000'
+  type: mixed
+  width: 32
+- default: '0x00000007'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: going to PL through AFI FS1)
+    name: AFIFS1
+    shortdesc: IMR for ATB placed between fpd main switch and AFI_FS1 (trans.
+    type: ro
+  - bits: '1'
+    longdesc: going to PL through AFI FS0)
+    name: AFIFS0
+    shortdesc: IMR for ATB placed between fpd main switch and AFI_FS0 (trans.
+    type: ro
+  - bits: '0'
+    name: FPDS
+    type: ro
+  name: ERR_ATB_IMR
+  offset: '0x00006004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: going to PL through AFI FS1)
+    name: AFIFS1
+    shortdesc: IER for ATB placed between fpd main switch and AFI_FS1 (trans.
+    type: wo
+  - bits: '1'
+    longdesc: going to PL through AFI FS0)
+    name: AFIFS0
+    shortdesc: IER for ATB placed between fpd main switch and AFI_FS0 (trans.
+    type: wo
+  - bits: '0'
+    name: FPDS
+    type: wo
+  name: ERR_ATB_IER
+  offset: '0x00006008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: going to PL through AFI FS1)
+    name: AFIFS1
+    shortdesc: IDR for ATB placed between fpd main switch and AFI_FS1 (trans.
+    type: wo
+  - bits: '1'
+    longdesc: going to PL through AFI FS0)
+    name: AFIFS0
+    shortdesc: IDR for ATB placed between fpd main switch and AFI_FS0 (trans.
+    type: wo
+  - bits: '0'
+    name: FPDS
+    type: wo
+  name: ERR_ATB_IDR
+  offset: '0x0000600C'
+  type: mixed
+  width: 32
+- default: '0x00000007'
+  description: ATB Sideband Signals
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: If '0' ATB does not keep track of any transaction
+    name: AFIFS1
+    shortdesc: When '1', ATB keeps track of Read and Write transactions.
+    type: rw
+  - bits: '1'
+    longdesc: If '0' ATB does not keep track of any transaction
+    name: AFIFS0
+    shortdesc: When '1', ATB keeps track of Read and Write transactions.
+    type: rw
+  - bits: '0'
+    longdesc: If '0' ATB does not keep track of any transaction
+    name: FPDS
+    shortdesc: When '1', ATB keeps track of Read and Write transactions.
+    type: rw
+  name: ATB_CMD_STORE_EN
+  offset: '0x00006010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ATB Sideband Signals
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: If '0' ATB will not send any response
+    name: AFIFS1
+    shortdesc: When '1', ATB will send response if it sees timeout.
+    type: rw
+  - bits: '1'
+    longdesc: If '0' ATB will not send any response
+    name: AFIFS0
+    shortdesc: When '1', ATB will send response if it sees timeout.
+    type: rw
+  - bits: '0'
+    longdesc: If '0' ATB will not send any response
+    name: FPDS
+    shortdesc: When '1', ATB will send response if it sees timeout.
+    type: rw
+  name: ATB_RESP_EN
+  offset: '0x00006014'
+  type: mixed
+  width: 32
+- default: '0x00000007'
+  description: Register to specify the type of response generated by the AXI Timeout
+    Block
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: If '0' ATB will send OKAY when it sees timeout
+    name: AFIFS1
+    shortdesc: When '1', ATB will send SLVERR if it sees timeout.
+    type: rw
+  - bits: '1'
+    longdesc: If '0' ATB will send OKAY when it sees timeout
+    name: AFIFS0
+    shortdesc: When '1', ATB will send SLVERR if it sees timeout.
+    type: rw
+  - bits: '0'
+    longdesc: If '0' ATB will send OKAY when it sees timeout
+    name: FPDS
+    shortdesc: When '1', ATB will send SLVERR if it sees timeout.
+    type: rw
+  name: ATB_RESP_TYPE
+  offset: '0x00006018'
+  type: mixed
+  width: 32
+- default: '0x0000FFFF'
+  description: ATB Sideband Signals
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16'
+    longdesc: When set to 1, timer will start running and timeouts may be reported.
+      When set to 0, timeouts will not be detected.
+    name: ENABLE
+    shortdesc: Counter Enable.
+    type: rw
+  - bits: '15:0'
+    longdesc: The timeout will be set to 32000 * 10ns * this register.
+    name: VALUE
+    shortdesc: 16 bit prescale value based on 100 MHz clock.
+    type: rw
+  name: ATB_PRESCALE
+  offset: '0x00006020'
+  type: mixed
+  width: 32

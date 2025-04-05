@@ -1,0 +1,944 @@
+description: GPIO Controller
+register:
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank0, MIO, Lower 16bits)
+  field:
+  - bits: '31:16'
+    longdesc: '0: pin value is updated 1: pin is masked Each bit controls the corresponding
+      pin within the 16-bit half-bank. Reads return 0''s.'
+    name: MASK_0_LSW
+    shortdesc: On a write, only bits with a corresponding deasserted mask will change
+      the output value.
+    type: wo
+  - bits: '15:0'
+    longdesc: Each bit controls the corresponding pin within the 16-bit half-bank.
+      Reads return the previous value written to this register or DATA_0[15:0]. Reads
+      do not return the value on the GPIO pin.
+    name: DATA_0_LSW
+    shortdesc: On a write, these are the data values for the corresponding GPIO output
+      bits.
+    type: rw
+  name: MASK_DATA_0_LSW
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank0, MIO, Upper 10bits)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:16'
+    name: MASK_0_MSW
+    type: wo
+  - bits: '15:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    name: DATA_0_MSW
+    type: rw
+  name: MASK_DATA_0_MSW
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank1, MIO, Lower 16bits)
+  field:
+  - bits: '31:16'
+    name: MASK_1_LSW
+    type: wo
+  - bits: '15:0'
+    name: DATA_1_LSW
+    type: rw
+  name: MASK_DATA_1_LSW
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank1, MIO, Upper 10 bits)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:16'
+    name: MASK_1_MSW
+    type: wo
+  - bits: '15:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    name: DATA_1_MSW
+    type: rw
+  name: MASK_DATA_1_MSW
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank2, MIO, Lower 16 bits)
+  field:
+  - bits: '31:16'
+    name: MASK_2_LSW
+    type: wo
+  - bits: '15:0'
+    name: DATA_2_LSW
+    type: rw
+  name: MASK_DATA_2_LSW
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank1, MIO, Upper 10 bits)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:16'
+    name: MASK_2_MSW
+    type: wo
+  - bits: '15:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    name: DATA_2_MSW
+    type: rw
+  name: MASK_DATA_2_MSW
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank3, EMIO, Lower 16bits)
+  field:
+  - bits: '31:16'
+    name: MASK_3_LSW
+    type: wo
+  - bits: '15:0'
+    name: DATA_3_LSW
+    type: rw
+  name: MASK_DATA_3_LSW
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank3, EMIO, Upper 16bits)
+  field:
+  - bits: '31:16'
+    name: MASK_3_MSW
+    type: wo
+  - bits: '15:0'
+    name: DATA_3_MSW
+    type: rw
+  name: MASK_DATA_3_MSW
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank4, EMIO, Lower 16bits)
+  field:
+  - bits: '31:16'
+    name: MASK_4_LSW
+    type: wo
+  - bits: '15:0'
+    name: DATA_4_LSW
+    type: rw
+  name: MASK_DATA_4_LSW
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank4, EMIO, Upper 16bits)
+  field:
+  - bits: '31:16'
+    name: MASK_4_MSW
+    type: wo
+  - bits: '15:0'
+    name: DATA_4_MSW
+    type: rw
+  name: MASK_DATA_4_MSW
+  offset: '0x00000024'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank5, EMIO, Lower 16bits)
+  field:
+  - bits: '31:16'
+    name: MASK_5_LSW
+    type: wo
+  - bits: '15:0'
+    name: DATA_5_LSW
+    type: rw
+  name: MASK_DATA_5_LSW
+  offset: '0x00000028'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maskable Output Data (GPIO Bank5, EMIO, Upper 16bits)
+  field:
+  - bits: '31:16'
+    name: MASK_5_MSW
+    type: wo
+  - bits: '15:0'
+    name: DATA_5_MSW
+    type: rw
+  name: MASK_DATA_5_MSW
+  offset: '0x0000002C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Output Data (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: DATA_0
+    type: rw
+  name: DATA_0
+  offset: '0x00000040'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Output Data (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: DATA_1
+    type: rw
+  name: DATA_1
+  offset: '0x00000044'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Output Data (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: DATA_2
+    type: rw
+  name: DATA_2
+  offset: '0x00000048'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Output Data (GPIO Bank3, EMIO)
+  field:
+  - bits: '31:0'
+    name: DATA_3
+    type: rw
+  name: DATA_3
+  offset: '0x0000004C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Output Data (GPIO Bank4, EMIO)
+  field:
+  - bits: '31:0'
+    name: DATA_4
+    type: rw
+  name: DATA_4
+  offset: '0x00000050'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Output Data (GPIO Bank5, EMIO)
+  field:
+  - bits: '31:0'
+    name: DATA_5
+    type: rw
+  name: DATA_5
+  offset: '0x00000054'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Input Data (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: DATA_0_RO
+    type: ro
+  name: DATA_0_RO
+  offset: '0x00000060'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Input Data (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: DATA_1_RO
+    type: ro
+  name: DATA_1_RO
+  offset: '0x00000064'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Input Data (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: DATA_2_RO
+    type: ro
+  name: DATA_2_RO
+  offset: '0x00000068'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Input Data (GPIO Bank3, EMIO)
+  field:
+  - bits: '31:0'
+    name: DATA_3_RO
+    type: ro
+  name: DATA_3_RO
+  offset: '0x0000006C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Input Data (GPIO Bank4, EMIO)
+  field:
+  - bits: '31:0'
+    name: DATA_4_RO
+    type: ro
+  name: DATA_4_RO
+  offset: '0x00000070'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Input Data (GPIO Bank5, EMIO)
+  field:
+  - bits: '31:0'
+    name: DATA_5_RO
+    type: ro
+  name: DATA_5_RO
+  offset: '0x00000074'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Direction mode (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: DIRECTION_0
+    type: rw
+  name: DIRM_0
+  offset: '0x00000204'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Output enable (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: OP_ENABLE_0
+    type: rw
+  name: OEN_0
+  offset: '0x00000208'
+  type: mixed
+  width: 32
+- default: '0x03FFFFFF'
+  description: Interrupt Mask Status (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_MASK_0
+    type: ro
+  name: INT_MASK_0
+  offset: '0x0000020C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable/Unmask (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_ENABLE_0
+    type: wo
+  name: INT_EN_0
+  offset: '0x00000210'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable/Mask (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_DISABLE_0
+    type: wo
+  name: INT_DIS_0
+  offset: '0x00000214'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_STATUS_0
+    type: wtc
+  name: INT_STAT_0
+  offset: '0x00000218'
+  type: mixed
+  width: 32
+- default: '0x03FFFFFF'
+  description: Interrupt Type (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_TYPE_0
+    type: rw
+  name: INT_TYPE_0
+  offset: '0x0000021C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Polarity (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_POL_0
+    type: rw
+  name: INT_POLARITY_0
+  offset: '0x00000220'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Any Edge Sensitive (GPIO Bank0, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_ON_ANY_0
+    type: rw
+  name: INT_ANY_0
+  offset: '0x00000224'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Direction mode (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: DIRECTION_1
+    type: rw
+  name: DIRM_1
+  offset: '0x00000244'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Output enable (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: OP_ENABLE_1
+    type: rw
+  name: OEN_1
+  offset: '0x00000248'
+  type: mixed
+  width: 32
+- default: '0x03FFFFFF'
+  description: Interrupt Mask Status (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_MASK_1
+    type: ro
+  name: INT_MASK_1
+  offset: '0x0000024C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable/Unmask (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_ENABLE_1
+    type: wo
+  name: INT_EN_1
+  offset: '0x00000250'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable/Mask (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_DISABLE_1
+    type: wo
+  name: INT_DIS_1
+  offset: '0x00000254'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_STATUS_1
+    type: wtc
+  name: INT_STAT_1
+  offset: '0x00000258'
+  type: mixed
+  width: 32
+- default: '0x03FFFFFF'
+  description: Interrupt Type (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_TYPE_1
+    type: rw
+  name: INT_TYPE_1
+  offset: '0x0000025C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Polarity (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_POL_1
+    type: rw
+  name: INT_POLARITY_1
+  offset: '0x00000260'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Any Edge Sensitive (GPIO Bank1, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_ON_ANY_1
+    type: rw
+  name: INT_ANY_1
+  offset: '0x00000264'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Direction mode (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: DIRECTION_2
+    type: rw
+  name: DIRM_2
+  offset: '0x00000284'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Output enable (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: OP_ENABLE_2
+    type: rw
+  name: OEN_2
+  offset: '0x00000288'
+  type: mixed
+  width: 32
+- default: '0x03FFFFFF'
+  description: Interrupt Mask Status (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_MASK_2
+    type: ro
+  name: INT_MASK_2
+  offset: '0x0000028C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable/Unmask (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_ENABLE_2
+    type: wo
+  name: INT_EN_2
+  offset: '0x00000290'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable/Mask (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_DISABLE_2
+    type: wo
+  name: INT_DIS_2
+  offset: '0x00000294'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_STATUS_2
+    type: wtc
+  name: INT_STAT_2
+  offset: '0x00000298'
+  type: mixed
+  width: 32
+- default: '0x03FFFFFF'
+  description: Interrupt Type (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_TYPE_2
+    type: rw
+  name: INT_TYPE_2
+  offset: '0x0000029C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Polarity (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_POL_2
+    type: rw
+  name: INT_POLARITY_2
+  offset: '0x000002A0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Any Edge Sensitive (GPIO Bank2, MIO)
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: raz
+  - bits: '25:0'
+    name: INT_ON_ANY_2
+    type: rw
+  name: INT_ANY_2
+  offset: '0x000002A4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Direction mode (GPIO Bank3, EMIO Bank0)
+  field:
+  - bits: '31:0'
+    name: DIRECTION_3
+    type: rw
+  name: DIRM_3
+  offset: '0x000002C4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Output enable (GPIO Bank3, EMIO Bank0)
+  field:
+  - bits: '31:0'
+    name: OP_ENABLE_3
+    type: rw
+  name: OEN_3
+  offset: '0x000002C8'
+  type: rw
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Mask Status (GPIO Bank3, EMIO Bank0)
+  field:
+  - bits: '31:0'
+    name: INT_MASK_3
+    type: ro
+  name: INT_MASK_3
+  offset: '0x000002CC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable/Unmask (GPIO Bank3, EMIO Bank0)
+  field:
+  - bits: '31:0'
+    name: INT_ENABLE_3
+    type: wo
+  name: INT_EN_3
+  offset: '0x000002D0'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable/Mask (GPIO Bank3, EMIO Bank0)
+  field:
+  - bits: '31:0'
+    name: INT_DISABLE_3
+    type: wo
+  name: INT_DIS_3
+  offset: '0x000002D4'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status (GPIO Bank3, EMIO Bank0)
+  field:
+  - bits: '31:0'
+    name: INT_STATUS_3
+    type: wtc
+  name: INT_STAT_3
+  offset: '0x000002D8'
+  type: wtc
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Type (GPIO Bank3, EMIO Bank0)
+  field:
+  - bits: '31:0'
+    name: INT_TYPE_3
+    type: rw
+  name: INT_TYPE_3
+  offset: '0x000002DC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Polarity (GPIO Bank3, EMIO Bank0)
+  field:
+  - bits: '31:0'
+    name: INT_POL_3
+    type: rw
+  name: INT_POLARITY_3
+  offset: '0x000002E0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Any Edge Sensitive (GPIO Bank3, EMIO Bank0)
+  field:
+  - bits: '31:0'
+    name: INT_ON_ANY_3
+    type: rw
+  name: INT_ANY_3
+  offset: '0x000002E4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Direction mode (GPIO Bank4, EMIO Bank1)
+  field:
+  - bits: '31:0'
+    name: DIRECTION_4
+    type: rw
+  name: DIRM_4
+  offset: '0x00000304'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Output enable (GPIO Bank4, EMIO Bank1)
+  field:
+  - bits: '31:0'
+    name: OP_ENABLE_4
+    type: rw
+  name: OEN_4
+  offset: '0x00000308'
+  type: rw
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Mask Status (GPIO Bank4, EMIO Bank1)
+  field:
+  - bits: '31:0'
+    name: INT_MASK_4
+    type: ro
+  name: INT_MASK_4
+  offset: '0x0000030C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable/Unmask (GPIO Bank4, EMIO Bank1)
+  field:
+  - bits: '31:0'
+    name: INT_ENABLE_4
+    type: wo
+  name: INT_EN_4
+  offset: '0x00000310'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable/Mask (GPIO Bank4, EMIO Bank1)
+  field:
+  - bits: '31:0'
+    name: INT_DISABLE_4
+    type: wo
+  name: INT_DIS_4
+  offset: '0x00000314'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status (GPIO Bank4, EMIO Bank1)
+  field:
+  - bits: '31:0'
+    name: INT_STATUS_4
+    type: wtc
+  name: INT_STAT_4
+  offset: '0x00000318'
+  type: wtc
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Type (GPIO Bank4, EMIO Bank1)
+  field:
+  - bits: '31:0'
+    name: INT_TYPE_4
+    type: rw
+  name: INT_TYPE_4
+  offset: '0x0000031C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Polarity (GPIO Bank4, EMIO Bank1)
+  field:
+  - bits: '31:0'
+    name: INT_POL_4
+    type: rw
+  name: INT_POLARITY_4
+  offset: '0x00000320'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Any Edge Sensitive (GPIO Bank4, EMIO Bank1)
+  field:
+  - bits: '31:0'
+    name: INT_ON_ANY_4
+    type: rw
+  name: INT_ANY_4
+  offset: '0x00000324'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Direction mode (GPIO Bank5, EMIO Bank2)
+  field:
+  - bits: '31:0'
+    name: DIRECTION_5
+    type: rw
+  name: DIRM_5
+  offset: '0x00000344'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Output enable (GPIO Bank5, EMIO Bank2)
+  field:
+  - bits: '31:0'
+    name: OP_ENABLE_5
+    type: rw
+  name: OEN_5
+  offset: '0x00000348'
+  type: rw
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Mask Status (GPIO Bank5, EMIO Bank2)
+  field:
+  - bits: '31:0'
+    name: INT_MASK_5
+    type: ro
+  name: INT_MASK_5
+  offset: '0x0000034C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable/Unmask (GPIO Bank5, EMIO Bank2)
+  field:
+  - bits: '31:0'
+    name: INT_ENABLE_5
+    type: wo
+  name: INT_EN_5
+  offset: '0x00000350'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable/Mask (GPIO Bank5, EMIO Bank2)
+  field:
+  - bits: '31:0'
+    name: INT_DISABLE_5
+    type: wo
+  name: INT_DIS_5
+  offset: '0x00000354'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status (GPIO Bank5, EMIO Bank2)
+  field:
+  - bits: '31:0'
+    name: INT_STATUS_5
+    type: wtc
+  name: INT_STAT_5
+  offset: '0x00000358'
+  type: wtc
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Type (GPIO Bank5, EMIO Bank2)
+  field:
+  - bits: '31:0'
+    name: INT_TYPE_5
+    type: rw
+  name: INT_TYPE_5
+  offset: '0x0000035C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Polarity (GPIO Bank5, EMIO Bank2)
+  field:
+  - bits: '31:0'
+    name: INT_POL_5
+    type: rw
+  name: INT_POLARITY_5
+  offset: '0x00000360'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Any Edge Sensitive (GPIO Bank5, EMIO Bank2)
+  field:
+  - bits: '31:0'
+    name: INT_ON_ANY_5
+    type: rw
+  name: INT_ANY_5
+  offset: '0x00000364'
+  type: rw
+  width: 32

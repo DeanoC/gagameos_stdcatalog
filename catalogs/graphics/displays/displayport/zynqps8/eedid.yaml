@@ -1,0 +1,407 @@
+description: E-EDID registers
+register:
+- description: Must equal 0x00FF_FFFF_FFFF_FF00
+  name: HEADER
+  offset: '0x0'
+  width: 64
+- description: '5 bit character #1 and 2 bits of #2'
+  field:
+  - bits: '6:2'
+    name: CHAR_1
+    type: ro
+  - bits: '1:0'
+    name: CHAR_2_HI
+    type: ro
+  name: ID_MANUFACTORER_NAME_0
+  offset: '0x8'
+  width: 8
+- description: '3 bit character #2 and 5 bits of #3'
+  field:
+  - bits: '7:5'
+    name: CHAR_2_LO
+    type: ro
+  - bits: '4:0'
+    name: CHAR_3
+    type: ro
+  name: ID_MANUFACTORER_NAME_1
+  offset: '0x9'
+  width: 8
+- description: LSB of Product code
+  name: ID_PRODUCT_CODE_0
+  offset: '0xA'
+  width: 8
+- description: MSB of Product code
+  name: ID_PRODUCT_CODE_1
+  offset: '0xB'
+  width: 8
+- description: Serial Number
+  name: ID_SERIAL_NUMBER
+  offset: '0xC'
+  width: 32
+- description: Week of manufacture
+  name: MANUFACTURE_WEEK
+  offset: '0x10'
+  width: 8
+- description: Year of manufacture
+  name: MANUFACTURE_YEAR
+  offset: '0x11'
+  width: 8
+- description: Display port major version
+  name: DISPLAY_PORT_MAJOR_VERSION
+  offset: '0x12'
+  width: 8
+- description: Display port minor version
+  name: DISPLAY_PORT_MINOR_VERSION
+  offset: '0x13'
+  width: 8
+- description: Video Input Defination Table 3.6.1
+  field:
+  - bits: 7
+    name: DIGITAL_VIDEO
+    type: ro
+  - bits: '6:5'
+    enum:
+    - name: '0_700_0_300_1_000'
+      value: 0
+    - name: 0_714_0_2860_1_000
+      value: 1
+    - name: '1_000_0_400_1_400'
+      value: 2
+    - name: '0_700_0_000_0_700'
+      value: 3
+    name: ANALOG_SIGNAL_LEVEL
+    type: ro
+  - bits: 4
+    name: ANALOG_BLANK_TO_BLACK_SETUP
+  - bits: 3
+    name: ANALOG_SEPERATE_SYNC_H_V_SUPPORTED
+  - bits: 2
+    name: ANALOG_COMPOSITE_SYNC_ON_HORIZONTAL_SUPPORTED
+  - bits: 1
+    name: ANALOG_COMPOSITE_SYNC_ON_GREEN_SUPPORTED
+  - bits: 0
+    name: ANALOG_SERRATION_ON_VERTICAL_SYNC_SUPPORTED
+  - bits: '6:4'
+    enum:
+    - name: UNDEFINED
+      value: 0
+    - name: 6_BITS_PER_PRIMARY_COLOUR
+      value: 1
+    - name: 8_BITS_PER_PRIMARY_COLOUR
+      value: 2
+    - name: 10_BITS_PER_PRIMARY_COLOUR
+      value: 3
+    - name: 12_BITS_PER_PRIMARY_COLOUR
+      value: 4
+    - name: 14_BITS_PER_PRIMARY_COLOUR
+      value: 5
+    - name: 16_BITS_PER_PRIMARY_COLOUR
+      value: 6
+    name: DIGITAL_COLOUR_BIT_DEPTH
+  - bits: '3:0'
+    enum:
+    - name: NOT_DEFINED
+      value: 0
+    - name: DVI_SUPPORTED
+      value: 1
+    - name: HDMI_A_SUPPORTED
+      value: 2
+    - name: HDMI_B_SUPPORTED
+      value: 3
+    - name: MDDI_SUPPORTED
+      value: 4
+    - name: DISPLAY_PORT_SUPPORTED
+      value: 5
+    name: DIGITAL_VIDEO_INTERFACE_SUPPORT
+  name: VIDEO_INPUT_DEFINITION
+  offset: '0x14'
+  width: 8
+- description: Horizontal Screen Size of Aspect Ratio Table 3.12
+  name: HORIZONTAL_DIMS
+  offset: '0x15'
+  width: 8
+- description: Vertical Screen Size or Aspect Ratio Table 3.12
+  name: VERTICAL_DIMS
+  offset: '0x16'
+  width: 8
+- description: Display Transfer Characteristics Table 3.13
+  name: GAMMA
+  offset: '0x17'
+  width: 8
+- description: Feature support Table 3.14
+  field:
+  - bits: 7
+    name: STANDBY_SUPPORTED
+  - bits: 6
+    name: SUSPEND_SUPPORTED
+  - bits: 5
+    name: ACTIVE_OFF_SUPPORTED
+  - bits: '4:3'
+    description: If bit 7 or address 0x14 == 0
+    enum:
+    - name: GREYSCALE
+      value: 0
+    - name: RGB_COLOUR
+      value: 1
+    - name: NON_RGB_COLOUR
+      value: 2
+    - name: UNDEFINED
+      value: 3
+    name: DISPLAY_COLOUR_TYPE
+  - bits: '4:3'
+    description: If bit 7 or address 0x14 == 1
+    enum:
+    - name: RGB_444
+      value: 0
+    - name: RGB_444_YCRCB444
+      value: 1
+    - name: RGB_444_YCRCB422
+      value: 2
+    - name: RGB_444_YCRCB444_YCRCB422
+      value: 3
+    name: COLOUR_FORMATS_SUPPORTED
+  - bits: 2
+    name: SRGB_STANDARD_IS_DEFAULT
+  - bits: 1
+    name: PTM_IS_NATIVE
+  - bits: 0
+    name: CONTINUOUS_FREQUENCY
+  name: FEATURE_SUPPORT
+  offset: '0x18'
+  width: 8
+- description: Chromaticity Table 3.16
+  name: CHROMATICITY_RG_LOWBUTS
+  offset: '0x19'
+  width: 8
+- description: Chromaticity Table 3.16
+  name: CHROMATICITY_BW_LOWBUTS
+  offset: '0x1A'
+  width: 8
+- description: Chromaticity Table 3.14
+  name: CHROMATICITY_RED_X
+  offset: '0x1B'
+  width: 8
+- description: Chromaticity Table 3.14
+  name: CHROMATICITY_RED_Y
+  offset: '0x1C'
+  width: 8
+- description: Chromaticity Table 3.14
+  name: CHROMATICITY_GREEN_X
+  offset: '0x1D'
+  width: 8
+- description: Chromaticity Table 3.14
+  name: CHROMATICITY_GREEN_Y
+  offset: '0x1E'
+  width: 8
+- description: Chromaticity Table 3.14
+  name: CHROMATICITY_BLUE_X
+  offset: '0x1F'
+  width: 8
+- description: Chromaticity Table 3.14
+  name: CHROMATICITY_BLUE_Y
+  offset: '0x20'
+  width: 8
+- description: Chromaticity Table 3.14
+  name: CHROMATICITY_WHITE_X
+  offset: '0x21'
+  width: 8
+- description: Chromaticity Table 3.14
+  name: CHROMATICITY_WHITE_Y
+  offset: '0x22'
+  width: 8
+- description: Established timings Table 3.18
+  field:
+  - bits: 7
+    name: 720_400_70HZ
+  - bits: 6
+    name: 720_400_88HZ
+  - bits: 5
+    name: 640_480_60HZ
+  - bits: 4
+    name: 640_480_67HZ
+  - bits: 3
+    name: 640_480_72HZ
+  - bits: 2
+    name: 640_480_75HZ
+  - bits: 1
+    name: 800_600_56HZ
+  - bits: 0
+    name: 800_600_60HZ
+  name: ESTABLISHED_TIMING_1
+  offset: '0x23'
+  width: 8
+- description: Established timings Table 3.18
+  field:
+  - bits: 7
+    name: 800_600_72HZ
+  - bits: 6
+    name: 800_600_75HZ
+  - bits: 5
+    name: 832_624_75HZ
+  - bits: 4
+    name: 1024_768_87HZ_I
+  - bits: 3
+    name: 1024_768_60HZ
+  - bits: 2
+    name: 1024_768_70HZ
+  - bits: 1
+    name: 1024_768_75HZ
+  - bits: 0
+    name: 1280_1024_75HZ
+  name: ESTABLISHED_TIMING_2
+  offset: '0x24'
+  width: 8
+- description: Established timings Table 3.18
+  field:
+  - bits: 7
+    name: 1152_870_75HZ
+  name: ESTABLISHED_TIMING_3
+  offset: '0x25'
+  width: 8
+- description: Standard timings Table 3.19
+  name: STANDARD_TIMING_1
+  offset: '0x26'
+  width: 8
+- description: Standard timings Table 3.19
+  field:
+  - bits: '7:6'
+    enum:
+    - name: '16_10'
+      value: 0
+    - name: '4_3'
+      value: 1
+    - name: '5_4'
+      value: 2
+    - name: '16_9'
+      value: 3
+    name: IMAGE_ASPECT_RATIO
+  - bits: '5:0'
+    name: FIELD_REFRESH_RATE
+  name: STANDARD_TIMING_1_AR
+  offset: '0x27'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_PIXEL_CLOCK_LSB_1
+  offset: '0x36'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_PIXEL_CLOCK_MSB_1
+  offset: '0x37'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_HORIZONTAL_ADDRESSABLE_LSB_1
+  offset: '0x38'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_HORIZONTAL_BLANKING_LSB_1
+  offset: '0x39'
+  width: 8
+- description: Detailed Timing Table 3.21
+  field:
+  - bits: '7:4'
+    name: HA_MSB
+  - bits: '3:0'
+    name: HB_MSB
+  name: DTD_HA_HB_MSB_1
+  offset: '0x3A'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_VERTICAL_ADDRESSABLE_LSB_1
+  offset: '0x3B'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_VERTICAL_BLANKING_LSB_1
+  offset: '0x3C'
+  width: 8
+- description: Detailed Timing Table 3.21
+  field:
+  - bits: '7:4'
+    name: VA_MSB
+  - bits: '3:0'
+    name: VB_MSB
+  name: DTD_VA_VB_MSB_1
+  offset: '0x3D'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_HORIZONTAL_FRONT_PORCH_LSB_1
+  offset: '0x3E'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_HORIZONTAL_SYNC_PULSE_LSB_1
+  offset: '0x3F'
+  width: 8
+- description: Detailed Timing Table 3.21
+  field:
+  - bits: '7:4'
+    name: VFP_LSB
+  - bits: '3:0'
+    name: VSP_LSB
+  name: DTD_VERTICAL_FRONT_PORCH_VERTICAL_SYNC_PULSE_LSB_1
+  offset: '0x40'
+  width: 8
+- description: Detailed Timing Table 3.21
+  field:
+  - bits: '7:6'
+    name: HFP_MSB
+  - bits: '5:4'
+    name: HSP_MSB
+  - bits: '3:2'
+    name: VFP_MSB
+  - bits: '1:0'
+    name: VSP_MSB
+  name: DTD_HFP_HSP_VFP_VSP_MSB_1
+  offset: '0x41'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_HORIZONTAL_ADDRESSABLE_MM_LSB_1
+  offset: '0x42'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_VERTICAL_ADDRESSABLE_MM_LSB_1
+  offset: '0x43'
+  width: 8
+- description: Detailed Timing Table 3.21
+  field:
+  - bits: '7:4'
+    name: HAMM_MSB
+  - bits: '3:0'
+    name: VAMM_MSB
+  name: DTD_HAMM_VAMM_MSB_1
+  offset: '0x44'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_HORIZONTAL_BORDER_1
+  offset: '0x45'
+  width: 8
+- description: Detailed Timing Table 3.21
+  name: DTD_VERTICAL_BORDER_1
+  offset: '0x46'
+  width: 8
+- description: Detailed Timing Table 3.22
+  field:
+  - bits: 7
+    name: INTERLACED
+  - bits: '6:5'
+    name: STEREO_MSB
+  - bits: '4:3'
+    enum:
+    - name: ANALOG_COMPOSITE_SYNC
+      value: 0
+    - name: ANALOG_BIPOLAR_COMPOSITE_SYNC
+      value: 1
+    - name: DIGITAL_COMPOSITE_SYNC
+      value: 2
+    - name: DIGITAL_SEPERATE_SYNC
+      value: 3
+    name: SYNC
+  - bits: 2
+    name: SERRATIONS_OR_DIGITAL_SEPERATE_SYNC_IS_POSITIVE
+  - bits: 1
+    name: DIGITAL_HORIZONTAL_SYNC_IS_POSITIVE
+  - bits: 1
+    name: ANALOG_SYNC_ON_RGB
+  - bits: 0
+    name: STEREO_LSB
+  name: DTD_FLAGS_1
+  offset: '0x47'
+  width: 8

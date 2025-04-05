@@ -1,0 +1,249 @@
+bank:
+- address: '0xffcd0000'
+  name: BBRAM
+description: Battery-backed RAM control
+register:
+- default: '0x00000000'
+  description: BBRAM Status
+  field:
+  - bits: '9'
+    longdesc: This bit is only valid when AES_CRC_DONE is set.
+    name: AES_CRC_PASS
+    shortdesc: Indicates that the AES key integrity check passed.
+    type: ro
+  - bits: '8'
+    longdesc: Pass/Fail is indicated in the AES_CRC_PASS bit.
+    name: AES_CRC_DONE
+    shortdesc: Indicates that the AES key integrity check has finished.
+    type: ro
+  - bits: '7:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: This bit will only get set after a zerize command is issued (either
+      BBRAM_CTRL[ZEROIZE] or PGM_MODE).
+    name: BBRAM_ZEROIZED
+    shortdesc: This bit indicates when a zerization command has been successful.
+    type: ro
+  - bits: '3:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: Entering programming mode will zeroize the current contents of the BBRAM
+      and enable new contents to be loaded. The AES key integrity check can also be
+      performed when the BBRAM is in programming mode.
+    name: PGM_MODE
+    shortdesc: This bit indicates that the BBRAM is in programming mode.
+    type: ro
+  name: BBRAM_STATUS
+  offset: '0x00000000'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Control
+  field:
+  - bits: '0'
+    longdesc: Zeroization status is reported in the BBRAM_STATUS. (This bit is self
+      clearing)
+    name: ZEROIZE
+    shortdesc: Writing to this bit will zeroize the contents of the BBRAM.
+    type: wo
+  name: BBRAM_CTRL
+  offset: '0x00000004'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Program Mode
+  field:
+  - bits: '31:0'
+    longdesc: WARNING, entering programming mode will erase all data in the BBRAM.
+      New data can be loaded into the BBRAM once the PGM_MODE bit is set on the BBRAM_STATUS
+      register.
+    name: PGM_MODE_VALUE
+    shortdesc: Writing 0x757BDF0D to this register will put the BBRAM into programming
+      mode.
+    type: rw
+  name: PGM_MODE
+  offset: '0x00000008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: BBRAM AES Key Integrity Check
+  field:
+  - bits: '31:0'
+    longdesc: When the check is finished the AES_CRC_DONE bit will be set in the BBRAM_STATUS
+      register. If the value calculated by the BBRAM controller matches the value
+      writen to this register, then the AES_CRC_PASS bit will also be set. The CRC
+      check can only be performed when the BBRAM is in programming mode.
+    name: AES_CRC_VALUE
+    shortdesc: Writing the AES key CRC value to this register will start the AES integrity
+      check.
+    type: wo
+  name: BBRAM_AES_CRC
+  offset: '0x0000000C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Data 0
+  field:
+  - bits: '31:0'
+    longdesc: The BBRAM must be in PGM_MODE before writing this register.
+    name: DATA
+    shortdesc: This register writes the BBRAM AES key value [31:0].
+    type: wo
+  name: BBRAM_0
+  offset: '0x00000010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Data 1
+  field:
+  - bits: '31:0'
+    longdesc: The BBRAM must be in PGM_MODE before writing this register.
+    name: DATA
+    shortdesc: This register writes the BBRAM AES key value [63:32].
+    type: wo
+  name: BBRAM_1
+  offset: '0x00000014'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Data 2
+  field:
+  - bits: '31:0'
+    longdesc: The BBRAM must be in PGM_MODE before writing this register.
+    name: DATA
+    shortdesc: This register writes the BBRAM AES key value [95:64].
+    type: wo
+  name: BBRAM_2
+  offset: '0x00000018'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Data 3
+  field:
+  - bits: '31:0'
+    longdesc: The BBRAM must be in PGM_MODE before writing this register.
+    name: DATA
+    shortdesc: This register writes the BBRAM AES key value [127:96].
+    type: wo
+  name: BBRAM_3
+  offset: '0x0000001C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Data 4
+  field:
+  - bits: '31:0'
+    longdesc: The BBRAM must be in PGM_MODE before writing this register.
+    name: DATA
+    shortdesc: This register writes the BBRAM AES key value [159:128].
+    type: wo
+  name: BBRAM_4
+  offset: '0x00000020'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Data 5
+  field:
+  - bits: '31:0'
+    longdesc: The BBRAM must be in PGM_MODE before writing this register.
+    name: DATA
+    shortdesc: This register writes the BBRAM AES key value [191:160].
+    type: wo
+  name: BBRAM_5
+  offset: '0x00000024'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Data 6
+  field:
+  - bits: '31:0'
+    longdesc: The BBRAM must be in PGM_MODE before writing this register.
+    name: DATA
+    shortdesc: This register writes the BBRAM AES key value [223:192].
+    type: wo
+  name: BBRAM_6
+  offset: '0x00000028'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Data 7
+  field:
+  - bits: '31:0'
+    longdesc: The BBRAM must be in PGM_MODE before writing this register.
+    name: DATA
+    shortdesc: This register writes the BBRAM AES key value [255:224].
+    type: wo
+  name: BBRAM_7
+  offset: '0x0000002C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Data 8
+  field:
+  - bits: '31:0'
+    longdesc: The BBRAM must be in PGM_MODE before writing this register.
+    name: DATA
+    shortdesc: This register writes the BBRAM extra value [31:0].
+    type: wo
+  name: BBRAM_8
+  offset: '0x00000030'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Slave Error Control
+  field:
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: BBRAM_SLVERR
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Interrupt Status
+  field:
+  - bits: '0'
+    name: APB_SLVERR
+    type: wtc
+  name: BBRAM_ISR
+  offset: '0x00000038'
+  type: wtc
+  width: 32
+- default: '0x00000001'
+  description: BBRAM Interrupt Mask
+  field:
+  - bits: '0'
+    name: APB_SLVERR
+    type: ro
+  name: BBRAM_IMR
+  offset: '0x0000003C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Interrupt Enable
+  field:
+  - bits: '0'
+    name: APB_SLVERR
+    type: wo
+  name: BBRAM_IER
+  offset: '0x00000040'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BBRAM Interrupt Disable
+  field:
+  - bits: '0'
+    name: APB_SLVERR
+    type: wo
+  name: BBRAM_IDR
+  offset: '0x00000044'
+  type: wo
+  width: 32

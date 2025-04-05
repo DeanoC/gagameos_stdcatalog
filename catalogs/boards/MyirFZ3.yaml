@@ -1,0 +1,303 @@
+definition:
+- board_device: xczu3eg-sfvc784-1-e
+  board_family: UltraScale+
+  board_type: Xilinx
+  clocks:
+  - name: clock.ref.25MHz
+    pin: M6
+    standard: LVCMOS18
+  defaults:
+    drive: 8
+    pullup: false
+    slew: Slow
+    standard: LVCMOS33
+  pingroups:
+  - name: SYS.FAN_TACH
+    pin: AD14
+  - name: LED.SYS_STATUS
+    pin: AA13
+  - name: HD_L06_25
+    pin_n: F11
+    pin_p: F12
+  - name: HD_L07_26
+    pin_n: F13
+    pin_p: G13
+  - name: HD_L08_25
+    pin_n: D11
+    pin_p: E12
+  - name: HD_L10_25
+    pin_n: A10
+    pin_p: B11
+  - name: HP_BANK66_L01
+    pin_n: F1
+    pin_p: G1
+  - name: HP_BANK66_L02
+    pin_n: D1
+    pin_p: E1
+  - name: HP_BANK66_L07
+    pin_n: B1
+    pin_p: C1
+  - name: PS_MIO6
+    pin: AF16
+  - name: PS_MIO7
+    pin: AH17
+  - name: PS_MIO8
+    pin: AF17
+  - name: PS_MIO9
+    pin: AC16
+  - name: HD_L03_26
+    pin_n: A13
+    pin_p: B13
+  - name: HD_L05_25
+    pin_n: F10
+    pin_p: G11
+  - name: HD_L06_26
+    pin_n: E13
+    pin_p: E14
+  - name: HD_L07_25
+    pin_n: D10
+    pin_p: E10
+  - name: HD_L08_26
+    pin_n: E15
+    pin_p: F15
+  - name: HD_L09_25
+    pin_n: B10
+    pin_p: C11
+  - name: HD_L10_26
+    pin_n: H13
+    pin_p: H14
+  - name: HD_L11_25
+    pin_n: A11
+    pin_p: A12
+  - name: BT1120.CLK
+    pin: AC12
+  - name: BT1120.DATA
+    pins:
+    - Y9
+    - AA8
+    - AB9
+    - Y10
+    - AH11
+    - AG10
+    - AF10
+    - AE10
+    - AG11
+    - AF11
+    - AG21
+    - AF12
+    - AD10
+    - AE12
+    - W10
+    - AD11
+  - name: HP_BANK66_L08
+    pin_n: A1
+    pin_p: A2
+  - name: HP_BANK66_L12
+    pin_n: C2
+    pin_p: C3
+  - name: HP_BANK65_L07
+    pin_n: K1
+    pin_p: L1
+  - name: HP_BANK65_L08
+    pin_n: H1
+    pin_p: J1
+  - name: HP_BANK65_L12
+    pin_n: L2
+    pin_p: L3
+  - name: BT1120.UART0_RXD
+    pin: AH10
+  - name: BT1120.UART0_TXD
+    pin: AB10
+  - name: BT1120.GPIO_Z
+    pin: AD12
+  - name: MIPI.CSI_CLK
+    pin_n: AD4
+    pin_p: AD5
+  - name: MIPI.CSI_DATA0
+    pin_n: AC3
+    pin_p: AC4
+  - name: MIPI.CSI_DATA1
+    pin_n: AB3
+    pin_p: AB4
+  - name: MIPI.CSI_DATA2
+    pin_n: AC2
+    pin_p: AB2
+  - name: MIPI.CSI_DATA3
+    pin_n: AC1
+    pin_p: AB1
+  - name: CAM.PWDN_n
+    pin: J7
+  - name: CAM.RST_n
+    pin: H7
+  - name: CAM.MCLK
+    pin: K8
+  - name: QSPI.LOWER_SCK
+    pin: AG15
+  - name: QSPI.LOWER_DATA
+    pins:
+    - AH16
+    - AG16
+    - AF15
+    - AH15
+  - name: QSPI.LOWER_CS
+    pin: AD16
+  - name: SDIO1.EMMC_CMD
+    pin: AC21
+  - name: SDIO1.EMMC_CLK
+    pin: AB20
+  - name: SDIO1.EMMC_RST
+    pin: AB18
+  - name: SDIO1.EMMC_DATA
+    pins:
+    - AH18
+    - AG18
+    - AE18
+    - AF18
+    - AC18
+    - AC19
+    - AE19
+    - AD19
+  - name: SDIO0.WP
+    pin: J20
+  - name: SDIO0.CD
+    pin: K20
+  - name: SDIO0.CMD
+    pin: M19
+  - name: SDIO0.CLK
+    pin: L21
+  - name: SDIO0.DATA
+    pins:
+    - L20
+    - H21
+    - J21
+    - M18
+  - name: USBHUB.RESET_N
+    pin: J17
+  - name: USBPHY.RESET_N
+    pin: H18
+  - name: USB0.CLK_IN
+    pin: G18
+  - name: USB0.DIR
+    pin: D16
+  - name: USB0.NXT
+    pin: B16
+  - name: USB0.STP
+    pin: F18
+  - name: USB0.TX_DATA
+    pins:
+    - C16
+    - A16
+    - F17
+    - E17
+    - C17
+    - D17
+    - A17
+    - E18
+  - name: USB0.SSTX
+    pin_n: D24
+    pin_p: D23
+  - name: USB0.SSRX
+    pin_n: D28
+    pin_p: D27
+  - name: MGTR.USB3_0_CLK_26MHz
+    pin_n: E22
+    pin_p: E21
+  - name: ENET.TXC
+    pin: E19
+  - name: ENET.TDATA
+    pins:
+    - A18
+    - G19
+    - B18
+    - C18
+  - name: ENET.TX_CTL
+    pin: D19
+  - name: ENET.RXC
+    pin: C19
+  - name: ENET.RDATA
+    pins:
+    - B19
+    - G20
+    - G21
+    - D20
+  - name: ENET.RX_CTL
+    pin: A19
+  - name: ENET.MDC
+    pin: B20
+  - name: ENET.MDIO
+    pin: F20
+  - name: ENET.INT
+    pin: H19
+  - name: ENET.RST
+    pin: K18
+  - name: WDT.FEED
+    pin: J19
+  - name: DEBUG.RXD
+    pin: L17
+  - name: DEBUG.TXD
+    pin: H17
+  - name: PS.PMIC_IRQ
+    pin: L15
+  - name: PL.PMIC_IRQ
+    pin: AE13
+  - name: PMBUS.CLK
+    pin: AE15
+  - name: PMBUS.DAT
+    pin: AG14
+  - name: CAN.TX
+    pin: AB19
+  - name: CAN.RX
+    pin: AB21
+  - name: PL.485_RXD
+    pin: AB15
+  - name: PL.485_TXD
+    pin: AB14
+  - name: PL.485_DE
+    pin: W14
+  - name: SECURE.PIOA
+    pin: Y14
+  - name: SECURE.PIOB
+    pin: Y13
+  - name: I2C0.SCL
+    pin: L18
+  - name: I2C0.SDA
+    pin: K19
+  - name: I2C1.SCL
+    pin: J16
+  - name: I2C1.SDA
+    pin: L16
+  - name: PCIE.RST
+    pin: H16
+  - name: PCIE.HOTPLUG_DET
+    pin: AG13
+  - name: MGTR.PCIE_CLK_100MHz
+    pin_n: F24
+    pin_p: F23
+  - name: MGTR.DP_CLK_27MHz
+    pin_n: C22
+    pin_p: C21
+  - name: MGT0_PCIE_TX0
+    pin_n: E26
+    pin_p: E25
+  - name: MGT0_PCIE_RX0
+    pin_n: F28
+    pin_p: F27
+  - name: MGT0.DP1_TX
+    pin_n: C26
+    pin_p: C25
+  - name: MGT0.DP0_TX
+    pin_n: B24
+    pin_p: B25
+  - name: DP.DOUT
+    pin: J15
+  - name: DP.HP_DET
+    pin: K15
+  - name: DP.OE
+    pin: G16
+  - name: DP.DIN
+    pin: F16
+  type: board.myirfz3
+- size_in_bytes: 4 GiB
+  type: ram.ddr.ddr4.MT40A256M16LY
+- size_in_bytes: 8 GiB
+  type: storage.sdio.emmc.MTFC8GAKAJCN

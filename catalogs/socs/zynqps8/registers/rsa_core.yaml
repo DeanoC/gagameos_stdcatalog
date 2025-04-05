@@ -1,0 +1,136 @@
+bank:
+- address: '0xffce0000'
+  name: RSA_CORE
+description: RSA Core Data and Configuration
+register:
+- default: '0x00000000'
+  description: Write Data
+  field:
+  - bits: '7:0'
+    longdesc: 24 writes to this register complete a 192-bit word. The word is written
+      into the memory once the WR_ADDR register is written to. First byte is the LB
+      of the word.
+    name: WR_DATA
+    shortdesc: Write data for the memory.
+    type: wo
+  name: RSA_WR_DATA
+  offset: '0x00000000'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Write Address
+  field:
+  - bits: '6:0'
+    longdesc: Completes the data write into th ememory of the 192-bit word pre-written
+      into the WR_DATA register
+    name: WR_ADDR
+    shortdesc: Memory write address.
+    type: wo
+  name: RSA_WR_ADDR
+  offset: '0x00000004'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Read Data
+  field:
+  - bits: '7:0'
+    longdesc: 24 reads from this register completes the readout of the 192-bit word
+      previously fetched by a write to the RD_ADDR register.
+    name: RD_DATA
+    shortdesc: Read data from the memory.
+    type: ro
+  name: RSA_RD_DATA
+  offset: '0x00000008'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Read Address
+  field:
+  - bits: '6:0'
+    longdesc: A write to this register fetches a 192-bit word from the memory. Data
+      in the RD_DATA regsiter will be available to read 4 clock cycles after the write
+      into this register.
+    name: RD_ADDR
+    shortdesc: Memory read address.
+    type: wo
+  name: RSA_RD_ADDR
+  offset: '0x0000000C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: RSA Control
+  field:
+  - bits: '7:4'
+    name: LEN_CODE
+    type: wo
+  - bits: '3'
+    name: DONE_CLR_ABORT
+    type: wo
+  - bits: '2:0'
+    name: OPCODE
+    type: wo
+  name: CTRL
+  offset: '0x00000010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: RSA Status
+  field:
+  - bits: '7:3'
+    longdesc: Can be used to monitor the progress of the operation.
+    name: PROG_CNT
+    shortdesc: Progress counter.
+    type: ro
+  - bits: '2'
+    name: ERROR
+    type: ro
+  - bits: '1'
+    name: BUSY
+    type: ro
+  - bits: '0'
+    name: DONE
+    type: ro
+  name: STATUS
+  offset: '0x00000014'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: RSA MINV0
+  field:
+  - bits: '7:0'
+    name: MINV0
+    type: wo
+  name: MINV0
+  offset: '0x00000018'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: RSA MINV1
+  field:
+  - bits: '7:0'
+    name: MINV1
+    type: wo
+  name: MINV1
+  offset: '0x0000001C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: RSA MINV2
+  field:
+  - bits: '7:0'
+    name: MINV2
+    type: wo
+  name: MINV2
+  offset: '0x00000020'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: RSA MINV3
+  field:
+  - bits: '7:0'
+    name: MINV2
+    type: wo
+  name: MINV3
+  offset: '0x00000024'
+  type: wo
+  width: 32

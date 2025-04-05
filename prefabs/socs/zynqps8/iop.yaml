@@ -1,0 +1,132 @@
+connection:
+- bus_name: iopoutbound_lpd
+  connection: IOPOutboundSwitch -> LPDMainSwitch
+  type: bus
+- bus_name: iopunitsswitch_uart${index}
+  connection: IOPUnitsSwitch -> UART0
+  silent: true
+  type: bus
+- bus_name: iopunitsswitch_uart${index}
+  connection: IOPUnitsSwitch -> UART1
+  silent: true
+  type: bus
+- bus_name: iopunitsswitch_can${index}
+  connection: IOPUnitsSwitch -> CAN0
+  silent: true
+  type: bus
+- bus_name: iopunitsswitch_can${index}
+  connection: IOPUnitsSwitch -> CAN1
+  silent: true
+  type: bus
+- bus_protocol: internal_i2c
+  connection: IOPUnitsSwitch -> I2C0
+  silent: true
+  type: bus
+- bus_protocol: internal_i2c
+  connection: IOPUnitsSwitch -> I2C1
+  silent: true
+  type: bus
+- bus_name: iopinbound_usb${index}
+  connection: IOPInboundSwitch -> USB0
+  silent: true
+  type: bus
+- bus_name: iopinbound_usb${index}
+  connection: IOPInboundSwitch -> USB1
+  silent: true
+  type: bus
+- bus_name: usb${index}_lpdoutbound
+  connection: USB0 -> LPDOutboundSwitch
+  silent: true
+  type: bus
+- bus_name: usb${index}_lpdoutbound
+  connection: USB1 -> LPDOutboundSwitch
+  silent: true
+  type: bus
+- bus_name: iopunitsswitch_gem${index}
+  connection: IOPInboundSwitch -> Gem0
+  silent: true
+  type: bus
+- bus_name: gem${index}_iopoutbound
+  connection: Gem0 -> IOPOutboundSwitch
+  silent: true
+  type: bus
+- bus_name: gem${index}_iopoutbound
+  connection: Gem1 -> IOPOutboundSwitch
+  silent: true
+  type: bus
+- bus_name: iopunitsswitch_gem${index}
+  connection: IOPInboundSwitch -> Gem1
+  silent: true
+  type: bus
+- bus_name: gem${index}_iopoutbound
+  connection: Gem2 -> IOPOutboundSwitch
+  silent: true
+  type: bus
+- bus_name: iopunitsswitch_gem${index}
+  connection: IOPInboundSwitch -> Gem2
+  silent: true
+  type: bus
+- bus_name: gem${index}_iopoutbound
+  connection: Gem3 -> IOPOutboundSwitch
+  silent: true
+  type: bus
+- bus_name: iopunitsswitch_gem${index}
+  connection: IOPInboundSwitch -> Gem3
+  silent: true
+  type: bus
+- bus_name: iopinbound_pmuswitch
+  connection: IOPInboundSwitch -> PMUSwitch
+  silent: true
+  type: bus
+- bus_name: iopinbound_csu
+  connection: IOPInboundSwitch -> CSU
+  type: bus
+- bus_name: csu_outbound
+  connection: CSU -> PMUOutSwitch
+  type: bus
+- bus_name: dap_outbound
+  connection: DAP -> PMUOutSwitch
+  type: bus
+- bus_name: iopunitsswitch_sdio${index}
+  connection: IOPUnitsSwitch -> SDIO0
+  silent: true
+  type: bus
+- bus_name: sdio${index}_iopoutbound
+  connection: SDIO0 -> IOPOutboundSwitch
+  silent: true
+  type: bus
+- bus_name: iopunitsswitch_sdio${index}
+  connection: IOPUnitsSwitch -> SDIO1
+  silent: true
+  type: bus
+- bus_name: sdio${index}_iopoutbound
+  connection: SDIO1 -> IOPOutboundSwitch
+  silent: true
+  type: bus
+- bus_name: iopunitsswitch_quadspi
+  connection: IOPUnitsSwitch -> QSPI
+  silent: true
+  type: bus
+- bus_name: quadspi_iopoutbound
+  connection: QSPI -> IOPOutboundSwitch
+  silent: true
+  type: bus
+- bus_name: iopinbound_lpddma
+  connection: IOPInboundSwitch -> LPDDMA
+  type: bus
+- bus_name: lpddma_lpdoutbound
+  connection: LPDDMA -> LPDOutboundSwitch
+  type: bus
+instance:
+- name: IOPInboundSwitch
+  type: switch.internal.iopinbound.zynqps8
+- name: IOPUnitsSwitch
+  type: switch.internal.iopunitsswitch.zynqps8
+- name: IOPOutboundSwitch
+  type: switch.internal.iopoutbound.zynqps8
+- name: LPDDMA
+  type: other.dma.lpd.zynqps8
+- name: CSU
+  type: other.internal.csu.zynqps8
+- name: DAP
+  type: other.internal.dap.zynqps8

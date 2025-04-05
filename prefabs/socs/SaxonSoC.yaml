@@ -1,0 +1,6 @@
+instance:
+- type: riscv32
+- name: ramA
+  size: 8 KiB
+- name: SaxonPrivate
+  type: bus

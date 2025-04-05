@@ -1,0 +1,690 @@
+bank:
+- address: '0xff100000'
+  name: NAND
+description: NAND ONFI Control
+register:
+- default: '0x00000200'
+  description: Packet Configuration.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: raz
+  - bits: '23:12'
+    longdesc: '. 12''h7FF: 2047 12''h800: 2048. Note: Change this value only when
+      controller is not communicating with the memory device.'
+    name: PACKET_COUNT
+    shortdesc: 'Packet count: 12''h001: 1 12''h002: 2 .'
+    type: rw
+  - bits: '11'
+    name: RESERVED
+    type: raz
+  - bits: '10:0'
+    longdesc: 'Typical packet size is 11''h200bytes or 0x80 Dwords for BCH 4bit, 8bit,
+      and 12bit Error correction. Typical packet size is 11''h400bytes or 0x100 Dwords
+      for BCH 24bit Error correction. Note: Change this value only when controller
+      is not communicating with the memory device.'
+    name: PACKET_SIZE
+    shortdesc: Size of the packet.
+    type: rw
+  name: PACKET_REGISTER
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Memory Address, reg 1.
+  field:
+  - bits: '31:0'
+    longdesc: 'bit[12:0] indicates column address. bit[15:13] set = 0. bit[22:16]
+      page address. bit[24:23] interleaved address bits: 00: Interleaved address 0
+      selected (plane 0). 01: Interleaved address 1 selected (plane 1). 10: Interleaved
+      address 2 selected (plane 2). 11: Interleaved address 3 selected (plane 3).
+      bit[31:25] block address. Remaining block address bits are programmed in Memory
+      address Register2.'
+    name: MEMORY_ADDRESS
+    shortdesc: Consider page size 4k, 4plane, 2Lun flash device.
+    type: rw
+  name: MEMORY_ADDRESS_REGISTER1
+  offset: '0x00000004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Memory Address, reg 2.
+  field:
+  - bits: '31:30'
+    longdesc: '01: Chip 1 will be selected. 10: reserved 11: reserved'
+    name: CHIP_SELECT
+    shortdesc: '00: Chip 0 will be selected.'
+    type: rw
+  - bits: '27:25'
+    name: NFC_BCH_MODE
+    type: rw
+  - bits: '23:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    longdesc: 'bit [2] - Lun select bit: 0: Lun 0 selected. 1: Lun 1 selected. bit
+      [7:3] - Should be zero.'
+    name: MEMORY_ADDRESS
+    shortdesc: Consider page size 4k, 4plane, 2Lun flash device bit[1:0] - Remaining
+      block address bits.
+    type: rw
+  name: MEMORY_ADDRESS_REGISTER2
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x01000000'
+  description: Command and Configuration.
+  field:
+  - bits: '31'
+    longdesc: '0: ECC Off. Note: Change this value only when controller is not communicating
+      with the memory device.'
+    name: ECC_ON_OFF
+    shortdesc: '1: ECC On.'
+    type: rw
+  - bits: '30:28'
+    longdesc: '010: Two Address cycles. 110: Three Address cycles. .. 111:Seven Address
+      cycles. Note: Change this value only when controller is not communicating with
+      the memory device.'
+    name: NUMBER_OF_ADDRESS_CYCELS
+    shortdesc: '000: reserved 001: One Address cycle.'
+    type: rw
+  - bits: '27:26'
+    longdesc: '10: MDMA Mode. Others: reserved Note: Change this value only when controller
+      is not communicating with the memory device.'
+    name: DMA_ENABLE
+    shortdesc: '00: PIO Mode.'
+    type: rw
+  - bits: '25:23'
+    longdesc: '001: 2KB Page size. 010: 4KB Page size. 011: 8KB Page size. 100: 16KB
+      Page size. Others: reserved Note: Change this value only when controller is
+      not communicating with the memory device.'
+    name: PAGE_SIZE
+    shortdesc: '000: 512-byte Page size.'
+    type: rw
+  - bits: '22:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:8'
+    name: COMMAND2
+    type: rw
+  - bits: '7:0'
+    longdesc: 'Note: Change this value only when controller is not communicating with
+      the memory device.'
+    name: COMMAND1
+    shortdesc: Opcode value for 1st cycle command.
+    type: rw
+  name: COMMAND_REGISTER
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Initiate Controller Operations.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: raz
+  - bits: '26'
+    name: ODT_CONFIGURE
+    type: rw
+  - bits: '25'
+    name: VOLUME_SELECT
+    type: rw
+  - bits: '24'
+    name: PGM_PG_REG_CLR
+    type: rw
+  - bits: '23'
+    name: RESET_LUN
+    type: rw
+  - bits: '22'
+    name: CHANGE_ROW_ADDR_END
+    type: rw
+  - bits: '21'
+    name: CHANGE_ROW_ADDR
+    type: rw
+  - bits: '20'
+    name: SMALL_DATA_MOVE
+    type: rw
+  - bits: '19'
+    name: READ_CACHE_END
+    type: rw
+  - bits: '18'
+    name: READ_CACHE_RANDOM
+    type: rw
+  - bits: '17'
+    name: READ_CACHE_SEQUENTIAL
+    type: rw
+  - bits: '16'
+    name: READ_CACHE_START
+    type: rw
+  - bits: '15'
+    name: COPY_BACK_INTERLEAVED
+    type: rw
+  - bits: '14'
+    name: CHANGE_READ_COLUMN_ENHANCED
+    type: rw
+  - bits: '13'
+    name: READ_INTERLEAVED
+    type: rw
+  - bits: '12'
+    name: READ_STATUS_ENHANCED
+    type: rw
+  - bits: '11'
+    name: READ_UNIQUE_ID
+    type: rw
+  - bits: '10'
+    name: SET_FEATURES
+    type: rw
+  - bits: '9'
+    name: GET_FEATURES
+    type: rw
+  - bits: '8'
+    name: RESET
+    type: rw
+  - bits: '7'
+    name: READ_PARAMETER_PAGE
+    type: rw
+  - bits: '6'
+    name: READ_ID
+    type: rw
+  - bits: '5'
+    name: MULTI_DIE_RD
+    type: rw
+  - bits: '4'
+    name: PAGE_PROGRAM
+    type: rw
+  - bits: '3'
+    name: READ_STATUS
+    type: rw
+  - bits: '2'
+    name: BLOCK_ERASE
+    type: rw
+  - bits: '1'
+    name: MULTI_DIE
+    type: rw
+  - bits: '0'
+    name: READ
+    type: rw
+  name: PROGRAM_REGISTER
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Enable.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7'
+    longdesc: This is applicable only during MDMA mode of transfer.
+    name: ERROR_AHB_STS_EN
+    shortdesc: AHB Error Interrupt.
+    type: rw
+  - bits: '6'
+    longdesc: This is applicable only during MDMA mode of transfer.
+    name: DMA_INT_STS_EN
+    shortdesc: DMA Interrupt.
+    type: rw
+  - bits: '5'
+    name: ECC_ERR_INTRPT_STS_EN
+    type: rw
+  - bits: '4'
+    name: ERR_INTRPT_STS_EN
+    type: rw
+  - bits: '3'
+    longdesc: This field is used during Hamming (SLC) Error correction else treated
+      as 0.
+    name: MUL_BIT_ERR_STS_EN
+    shortdesc: Multi-bit error Interrupt.
+    type: rw
+  - bits: '2'
+    name: TRANS_COMP_STS_EN
+    type: rw
+  - bits: '1'
+    name: BUFF_RD_RDY_STS_EN
+    type: rw
+  - bits: '0'
+    name: BUFF_WR_RDY_STS_EN
+    type: rw
+  name: INTERRUPT_STATUS_ENABLE_REGISTER
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Signal Enable.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7'
+    longdesc: This is applicable only during MDMA mode of transfer.
+    name: ERROR_AHB_SIG_EN
+    shortdesc: AHB Error Interrupt.
+    type: rw
+  - bits: '6'
+    longdesc: This is applicable only during MDMA mode of transfer.
+    name: DMA_INT_SIG_EN
+    shortdesc: DMA Interrupt.
+    type: rw
+  - bits: '5'
+    name: ECC_ERR_INTRPT_SIG_EN
+    type: rw
+  - bits: '4'
+    name: ERR_INTRPT_SIG_EN
+    type: rw
+  - bits: '3'
+    longdesc: This field is used during Hamming (SLC) Error correction else treated
+      as 0.
+    name: MUL_BIT_ERR_SIG_EN
+    shortdesc: Multi-bit error Interrupt.
+    type: rw
+  - bits: '2'
+    name: TRANS_COMP_SIG_EN
+    type: rw
+  - bits: '1'
+    name: BUFF_RD_RDY_SIG_EN
+    type: rw
+  - bits: '0'
+    name: BUFF_WR_RDY_SIG_EN
+    type: rw
+  name: INTERRUPT_SIGNAL_ENABLE_REGISTER
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7'
+    longdesc: This bit field is used only during MDMA mode of transfer.
+    name: ERROR_AHB_REG
+    shortdesc: This bit is set if the AXI Slave sends error response in AXI Bus.
+    type: rw
+  - bits: '6'
+    longdesc: This bit field is used only during MDMA mode of transfer.
+    name: DMA_INT_REG
+    shortdesc: This bit is set if the NFC detects the DMA Buffer Boundary is reached
+      in DMA mode of transaction.
+    type: rw
+  - bits: '5'
+    name: ECC_ERR_INTRPT_REG
+    type: rw
+  - bits: '4'
+    longdesc: 'BCH can''t detect uncorrectable errors.) SLC: This bit is set by hardware
+      when single bit error is detected.'
+    name: ERR_INTRPT_REG
+    shortdesc: 'MLC: This bit is set whenever bch detect error is asserted (for both
+      correctable and non-correctable errors.'
+    type: rw
+  - bits: '3'
+    longdesc: This field is used during Hamming (SLC) Error correction else treated
+      as 0.
+    name: MUL_BIT_ERR_REG
+    shortdesc: This bit is set whenever multi bit error is asserted.
+    type: rw
+  - bits: '2'
+    name: TRANS_COMP_REG
+    type: rw
+  - bits: '1'
+    name: BUFF_RD_RDY_REG
+    type: rw
+  - bits: '0'
+    name: BUFF_WR_RDY_REG
+    type: rw
+  name: INTERRUPT_STATUS_REGISTER
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000003'
+  description: Ready Busy Status.
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: RB_N1_STATUS
+    type: ro
+  - bits: '0'
+    name: RB_N0_STATUS
+    type: ro
+  name: READY_BUSY
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DMA System Address, reg 1.
+  field:
+  - bits: '31:0'
+    longdesc: Applicable to MDMA mode of transaction.
+    name: DMA_SYSTEM_ADDRESS1_REGISTER
+    shortdesc: MSB of System memory address for a DMA transfer using 64-bit addressing.
+    type: rw
+  name: DMA_SYSTEM_ADDRESS1_REGISTER
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Flash Memory Status.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: FLASH_STATUS
+    type: ro
+  name: FLASH_STATUS_REGISTER
+  offset: '0x00000028'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interface Timing Control.
+  field:
+  - bits: '31:19'
+    name: RESERVED
+    type: raz
+  - bits: '18:15'
+    longdesc: 'Write data transaction values NVDDR Mode 0 - 4''h6 NVDDR Mode 1 - 4''h5
+      NVDDR Mode 2 - 4''h4 NVDDR Mode 3 - 4''h3 NVDDR Mode 4 - 4''h2 NVDDR Mode 5
+      - 4''h2 Note: Change this value only when controller is not communicating with
+      the memory device.'
+    name: DQS_BUFF_SEL_OUT
+    shortdesc: For write transaction program this value based on tDS value.
+    type: rw
+  - bits: '14:7'
+    longdesc: 'During write if pgm_pg_reg_clr bit is set then this value must be programmed.
+      Note: Change this value only when controller is not communicating with the memory
+      device.'
+    name: TADL_TIME
+    shortdesc: Address Latch Enable to Data Loading time.
+    type: rw
+  - bits: '6:3'
+    longdesc: 'Read data transaction values NVDDR Mode 0 - 4''h6 NVDDR Mode 1 - 4''h5
+      NVDDR Mode 2 - 4''h4 NVDDR Mode 3 - 4''h3 NVDDR Mode 4 - 4''h2 NVDDR Mode 5
+      - 4''h2 Note: Change this value only when controller is not communicating with
+      the memory device.'
+    name: DQS_BUFF_SEL_IN
+    shortdesc: For read transaction program this value based on tDQSQ value.
+    type: rw
+  - bits: '2'
+    longdesc: '1: fast device (tCADf). Note: Change this value only when controller
+      is not communicating with the memory device.'
+    name: SLOW_FAST_TCAD
+    shortdesc: '0: slow device (tCADs).'
+    type: rw
+  - bits: '1:0'
+    longdesc: '00: 500ns 01: 100ns 10: 200ns 11: 300ns Note: Change this value only
+      when controller is not communicating with the memory device.'
+    name: TCCS_TIME
+    shortdesc: Change column setup time.
+    type: rw
+  name: TIMING_REGISTER
+  offset: '0x0000002C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Buffer Data Port.
+  field:
+  - bits: '31:0'
+    longdesc: Nand flash controller buffer can be accessed through this register.
+    name: DATA_PORT_REGISTER
+    shortdesc: Data access port to the internal buffer.
+    type: rw
+  name: BUFFER_DATA_PORT_REGISTER
+  offset: '0x00000030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: ECC Configuration.
+  field:
+  - bits: '31:28'
+    name: RESERVED
+    type: raz
+  - bits: '27'
+    longdesc: '1: BCH error correction. Note: Change this value only when controller
+      is not communicating with the memory device.'
+    name: SLC_MLC
+    shortdesc: 'Select the error correction method: 0: Hamming error correction.'
+    type: rw
+  - bits: '26:16'
+    longdesc: 'For SLC use ECC size as: Page size 512B - 11''h 003 Page size 2KB -
+      11''h 00C Page size 4KB - 11''h 018 Page size 8KB - 11''h 030 Page size 16KB
+      - 11''h 060 For MLC 4-bit error correction use ECC size as: Page size 512B -
+      11''h 007 Page size 2KB - 11''h 01A Page size 4KB - 11''h 034 Page size 8KB
+      - 11''h 068 Page size 16KB - 11''h 0D0 For MLC 8-bit error correction use ECC
+      size as: Page size 512B - 11''h 00D Page size 2KB - 11''h 034 Page size 4KB
+      - 11''h 068 Page size 8KB - 11''h 0D0 Page size 16KB - 11''h 1A0 For MLC 12-bit
+      error correction use ECC size as: Page size 2KB - 11''h 04E Page size 4KB -
+      11''h 09C Page size 8KB - 11''h 138 Page size 16KB - 11''h 270 For MLC 24-bit
+      error correction use ECC size as: Page size 2KB - 11''h 054 Page size 4KB -
+      11''h 0A8 Page size 8KB - 11''h 150 Page size 16KB - 11''h 2A0 Note: Change
+      this value only when controller is not communicating with the memory device.'
+    name: ECC_SIZE
+    shortdesc: Register used to program the ECC size for write and read data transaction.
+    type: rw
+  - bits: '15:0'
+    longdesc: 'For SLC use ECC Address as: Page size 512 - 16''h 020D Page size 2k
+      - 16''h 834 Page size 4k - 16''h 1068 Page size 8k - 16''h 20D0 Page size 16k
+      - 16''h 4460 For MLC 4-bit error correction use ECC Addr as: Page size 512 -
+      16''h 0209 Page size 2k - 16''h 0826 Page size 4k - 16''h 104C Page size 8k
+      - 16''h 2098 Page size 16k - 16''h 43f0 For MLC 8-bit error correction use ECC
+      Addr as: Page size 512 - 16''h 0203 Page size 2k - 16''h 080C Page size 4k -
+      16''h 1018 Page size 8k - 16''h 2030 Page size 16k - 16''h 4320 For MLC 12-bit
+      error correction use ECC Addr as: Page size 2k - 16''h 0822 Page size 4k - 16''h
+      1044 Page size 8k - 16''h 2088 Page size 16k - 16''h 4250 For MLC 24-bit error
+      correction use ECC Addr as: Page size 2k - 16''h 081C Page size 4k - 16''h 1038
+      Page size 8k - 16''h 2070 Page size 16k - 16''h 4220 Note: Change this value
+      only when controller is not communicating with the memory device.'
+    name: ECC_ADDR
+    shortdesc: Register required to issue ECC Address for change read column / change
+      write column.
+    type: rw
+  name: ECC_REGISTER
+  offset: '0x00000034'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ECC Error Count
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:8'
+    longdesc: This register should be read after every page is read.
+    name: PAGE_BOUND_ERR_COUNT
+    shortdesc: Total error count for the entire page.
+    type: ro
+  - bits: '7:0'
+    longdesc: SW should read this register after every packet size amount of data
+      is read.
+    name: PACKET_BOUND_ERR_COUNT
+    shortdesc: Error count during read for every packet count.
+    type: ro
+  name: ECC_ERROR_COUNT_REGISTER
+  offset: '0x00000038'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ECC Spare Command
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: raz
+  - bits: '30:28'
+    longdesc: '. 111: Seven Address Cycle Note: Change this value only when controller
+      is not communicating with the memory device.'
+    name: NUMBER_OF_ECC_AND_SPARE_ADDRESS_CYCLES
+    shortdesc: '000: Not Used 001: One Address Cycle 010: Two Address Cycle .'
+    type: rw
+  - bits: '27:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    longdesc: 'Note: Change this value only when controller is not communicating with
+      the memory device.'
+    name: ECC_SPARE_CMD
+    shortdesc: Register used to program the Spare /ECC opcode for change write column
+      / change read column.
+    type: rw
+  name: ECC_SPARE_COMMAND_REGISTER
+  offset: '0x0000003C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Count of 1-bit Errors
+  field:
+  - bits: '31:0'
+    name: ERROR_COUNT_1BIT
+    type: rw
+  name: ERROR_COUNT_1BIT_REGISTER
+  offset: '0x00000040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Count of 2-bit Errors
+  field:
+  - bits: '31:0'
+    name: ERROR_COUNT_2BIT
+    type: rw
+  name: ERROR_COUNT_2BIT_REGISTER
+  offset: '0x00000044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Count of 3-bit Errors
+  field:
+  - bits: '31:0'
+    name: ERROR_COUNT_3BIT
+    type: rw
+  name: ERROR_COUNT_3BIT_REGISTER
+  offset: '0x00000048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Count of 4-bit Errors
+  field:
+  - bits: '31:0'
+    name: ERROR_COUNT_4BIT
+    type: rw
+  name: ERROR_COUNT_4BIT_REGISTER
+  offset: '0x0000004C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: DMA System Address, reg2.
+  field:
+  - bits: '31:0'
+    longdesc: Applicable to MDMA mode of transaction. Contains the LSB address when
+      using 64-bit addressing with the DMA_system_address1_register. The driver initializes
+      this register before starting a DMA transaction. The DMA transfer waits at every
+      boundary specified by the DMA_buffer_boundary_register. The controller generates
+      the DMA interrupt to request an update to the address register(s). The driver
+      sets the next system address of the next data position.
+    name: DMA_SYSTEM_ADDRESS0_REGISTER
+    shortdesc: System memory address for a DMA transfer.
+    type: rw
+  name: DMA_SYSTEM_ADDRESS0_REGISTER
+  offset: '0x00000050'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: DMA Buffer Boundary.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3'
+    longdesc: '1: enable. Note: Change this value only when controller is not communicating
+      with the memory device.'
+    name: DMA_BOUND_INT_EN
+    shortdesc: 'DMA Buffer Boundary Interrupt enable: 0: disable, masked.'
+    type: rw
+  - bits: '2:0'
+    longdesc: 'Program the size of the contiguous buffer in the system memory. The
+      DMA transfer waits at every boundary specified by this bit field and generates
+      the DMA Interrupt to request the driver to update the System Address register
+      for the next buffer transfer. Buffer size: 000: 4 KB 001: 8 KB 010: 16 KB 011:
+      32 KB 100: 64 KB 101: 128 KB 110: 256 KB 111: 512 KB Note: Change this value
+      only when controller is not communicating with the memory device.'
+    name: DMA_BUFFER_BOUNDARY_REGISTER
+    shortdesc: To perform long DMA transfer, the System Address register is updated
+      at every system boundary during the DMA transfer.
+    type: rw
+  name: DMA_BUFFER_BOUNDARY_REGISTER
+  offset: '0x00000054'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: CPU Release after Transferring Primary Boot Code.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: '0: boot code not transferred. 1: boot code was transferred.'
+    name: RELEASE_RESET_TO_CPU
+    shortdesc: Hardware sets this bit to a 1 after transferring the Primary Boot Code.
+    type: rw
+  name: CPU_RELEASE_REGISTER
+  offset: '0x00000058'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Count of 5-bit Errors
+  field:
+  - bits: '31:0'
+    name: ERROR_COUNT_5BIT
+    type: rw
+  name: ERROR_COUNT_5BIT_REGISTER
+  offset: '0x0000005C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Count of 6-bit Errors
+  field:
+  - bits: '31:0'
+    name: ERROR_COUNT_6BIT
+    type: rw
+  name: ERROR_COUNT_6BIT_REGISTER
+  offset: '0x00000060'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Count of 7-bit Errors
+  field:
+  - bits: '31:0'
+    name: ERROR_COUNT_7BIT
+    type: rw
+  name: ERROR_COUNT_7BIT_REGISTER
+  offset: '0x00000064'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Count of 8-bit Errors
+  field:
+  - bits: '31:0'
+    name: ERROR_COUNT_8BIT
+    type: rw
+  name: ERROR_COUNT_8BIT_REGISTER
+  offset: '0x00000068'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Data Interface Configuration
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10:9'
+    name: DATA_INTF
+    type: rw
+  - bits: '5:3'
+    name: NVDDR
+    type: rw
+  - bits: '2:0'
+    name: SDR
+    type: rw
+  name: DATA_INTERFACE_REGISTER
+  offset: '0x0000006C'
+  type: mixed
+  width: 32

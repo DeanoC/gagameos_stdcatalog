@@ -1,0 +1,23 @@
+definition:
+- buses:
+  - name: in
+    prefix: s_axi_
+    protocol: axi4
+    supplier: false
+  - name: out
+    prefix: m_axi_
+    protocol: axi4
+    supplier: true
+  gateware: axi_width_adapter.toml
+  type: switch.axi.width_adapter.alexforencich
+- buses:
+  - name: in
+    prefix: s_axi_
+    protocol: axi4
+    supplier: false
+  - name: out
+    prefix: m_axil_
+    protocol: axilite4
+    supplier: true
+  gateware: axi_axil_adapter.toml
+  type: switch.axi.axil_adapter.alexforencich

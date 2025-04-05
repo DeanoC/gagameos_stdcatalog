@@ -1,0 +1,129 @@
+description: SerDes Control and Debug
+register:
+- default: '0x00000000'
+  description: Miscellaneous control functions for SIOU
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: REG_CTRL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: wtc
+  name: IR_STATUS
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: ro
+  name: IR_MASK
+  offset: '0x00000008'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: wo
+  name: IR_ENABLE
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: wo
+  name: IR_DISABLE
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Misc Contorls for SATA.This register may only be modified during bootup
+    (while SATA block is disabled)
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1:0'
+    name: SATA_PM_CLK_SEL
+    type: rw
+  name: SATA_MISC_CTRL
+  offset: '0x00000100'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: crx_ctrl
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1:0'
+    name: REFCLK_SEL
+    type: rw
+  name: CRX_CTRL
+  offset: '0x00000410'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: dp_stc_ref_clk control register
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    name: REFSEL
+    type: rw
+  - bits: '9:8'
+    name: LANESEL
+    type: rw
+  - bits: '7'
+    name: UPTOG
+    type: rw
+  - bits: '6:1'
+    name: DIVISOR
+    type: rw
+  - bits: '0'
+    name: SOFT_RST
+    type: rw
+  name: DP_STC_CLKCTRL
+  offset: '0x00000430'
+  type: mixed
+  width: 32

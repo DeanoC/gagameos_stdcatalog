@@ -1,0 +1,910 @@
+bank:
+- address: '0xfe9c0000'
+  name: CORESIGHT_SOC_STM
+description: System Trace Macrocell with multiple SW and HW stimulus ports for MIPI
+  STPv2 traces
+register:
+- default: '0x00000000'
+  description: This write-only register is used to start a DMA transfer.A write of
+    one when the DMA peripheral request interface is idle starts a DMA transfer. A
+    write of zero has no effect. A write of one when the DMA peripheral request interface
+    is active has no effect.
+  field:
+  - bits: '0'
+    name: START
+    type: wo
+  name: DMASTARTR
+  offset: '0x00000C04'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: This write-only register is used to stop a DMA transfer.A write of
+    one stops an active DMA transfer. A write of zero has no effect. A write of one
+    when the DMA peripheral request interface is idle has no effect.
+  field:
+  - bits: '0'
+    name: STOP
+    type: wo
+  name: DMASTOPR
+  offset: '0x00000C08'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: This read-only register is used to determine the status of the DMA
+    peripheral request interface.
+  field:
+  - bits: '0'
+    name: STATUS
+    type: ro
+  name: DMASTATR
+  offset: '0x00000C0C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Controls the DMA transfer request mechanism.
+  field:
+  - bits: '3:2'
+    name: SENS
+    type: rw
+  name: DMACTLR
+  offset: '0x00000C10'
+  type: rw
+  width: 32
+- default: '0x00000002'
+  description: This read-only register indicates the DMA features of the STM
+  field:
+  - bits: '11:8'
+    name: VENDSPEC
+    type: ro
+  - bits: '7:4'
+    name: CLASSREV
+    type: ro
+  - bits: '3:0'
+    name: CLASS
+    type: ro
+  name: DMAIDR
+  offset: '0x00000CFC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: This read/write register is used to enable hardware events to generate
+    trace.The register defined one bit per hardware event. Writing 1 enables the appropriate
+    hardware event, writing 0 disables the appropriate hardware event.
+  field:
+  - bits: '31:0'
+    name: HEE
+    type: rw
+  name: HEER
+  offset: '0x00000D00'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register is used to enable trigger generation on hardware events.
+  field:
+  - bits: '31:0'
+    longdesc: 0 = disabled1 = enabled
+    name: HETE
+    shortdesc: Bit mask to enable trigger generation from the hardware events, with
+      one bit per hardware event.
+    type: rw
+  name: HETER
+  offset: '0x00000D20'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register is used to select the Hardware Event bank
+  field:
+  - bits: '0'
+    name: HEBS
+    type: rw
+  name: HEBSR
+  offset: '0x00000D60'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register is used to control the primary functions of Hardware
+    Event tracing.
+  field:
+  - bits: '7'
+    name: ATBTRIGEN
+    type: rw
+  - bits: '6'
+    longdesc: Writing a b1 to this bit when in multi-shot mode is Unpredictable.
+    name: TRIGCLEAR
+    shortdesc: When TRIGCTL indicates single-shot mode, this bit is used to clear
+      TRIGSTATUS.
+    type: wo
+  - bits: '5'
+    name: TRIGSTATUS
+    type: ro
+  - bits: '4'
+    name: TRIGCTL
+    type: rw
+  - bits: '2'
+    name: ERRDETECT
+    type: ro
+  - bits: '1'
+    name: COMPEN
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: HEMCR
+  offset: '0x00000D64'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This register is used to control hardware event multiplexors external
+    to the STM
+  field:
+  - bits: '7:0'
+    longdesc: The value of this register is an output from the STM on the HEEXTMUX[7:0]
+      signals. The behavior of the multiplexing logic is IMPLEMENTATION DEFINED. This
+      field is reset to zero.
+    name: EXTMUX
+    shortdesc: Specifies the value that the optional external multiplexing logic uses
+      to select the hardware events to connect to the STM.
+    type: rw
+  name: HEEXTMUXR
+  offset: '0x00000D68'
+  type: rw
+  width: 32
+- default: '0x00000080'
+  description: Indicates the STPv2 master number of hardware event trace. This number
+    is the master number presented in STPv2.
+  field:
+  - bits: '15:0'
+    name: MASTER
+    type: ro
+  name: HEMASTR
+  offset: '0x00000DF4'
+  type: ro
+  width: 32
+- default: '0x00200035'
+  description: Indicates the features of the STM.
+  field:
+  - bits: '30:28'
+    name: HEEXTMUXSIZE
+    type: ro
+  - bits: '23:15'
+    name: NUMHE
+    type: ro
+  - bits: '5:4'
+    name: HECOMP
+    type: ro
+  - bits: '3'
+    name: HEMASTR
+    type: ro
+  - bits: '2'
+    name: HEERR
+    type: ro
+  - bits: '0'
+    name: HETER
+    type: ro
+  name: HEFEAT1R
+  offset: '0x00000DF8'
+  type: ro
+  width: 32
+- default: '0x00000011'
+  description: Indicates the features of hardware event tracing in the STM.
+  field:
+  - bits: '11:8'
+    name: VENDSPEC
+    type: ro
+  - bits: '7:4'
+    name: CLASSREV
+    type: ro
+  - bits: '3:0'
+    name: CLASS
+    type: ro
+  name: HEIDR
+  offset: '0x00000DFC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: This read/write only register is used to enable the stimulus registers
+    to generate trace.The register defines one bit per stimulus register. Writing
+    1 enables the appropriate stimulus port, writing 0 disables the appropriate stimulus
+    port. This register is used in conjunction with the Software Enable Bank Select
+    Register.
+  field:
+  - bits: '31:0'
+    name: SPE
+    type: rw
+  name: SPER
+  offset: '0x00000E00'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register is used to enable trigger generation on writes to enabled
+    stimulus port registers.
+  field:
+  - bits: '31:0'
+    name: SPTE
+    type: rw
+  name: SPTER
+  offset: '0x00000E20'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register allows a debugger to program which stimulus ports the
+    STMSPER and STMSPTER apply to.
+  field:
+  - bits: '31:20'
+    name: PORTSEL
+    type: rw
+  - bits: '1:0'
+    name: PORTCTL
+    type: rw
+  name: SPSCR
+  offset: '0x00000E60'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register allows a debugger to program which masters the STMSPSCR
+    applies to.
+  field:
+  - bits: '22:15'
+    name: MASTSEL
+    type: rw
+  - bits: '0'
+    name: MASTCTL
+    type: rw
+  name: SPMSCR
+  offset: '0x00000E64'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register allows a debugger to override various features of the
+    STM.
+  field:
+  - bits: '31:15'
+    longdesc: This size of this field is defined by the number of implemented stimulus
+      ports
+    name: PORTSEL
+    shortdesc: This field defines which stimulus ports the override controls apply
+      to.
+    type: rw
+  - bits: '2'
+    longdesc: As with normal operation, this does not ensure all packets are generated
+      with timestamps. This field is independent of OVERCTL and PORTSEL.
+    name: OVERTS
+    shortdesc: This override requests all stimulus port writes that cause trace to
+      be traced with a timestamp (where possible).
+    type: rw
+  - bits: '1:0'
+    name: OVERCTL
+    type: rw
+  name: SPOVERRIDER
+  offset: '0x00000E68'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register allows a debugger to choose which masters the STMSPOVERRIDERR
+    applies to.
+  field:
+  - bits: '22:15'
+    longdesc: This size of this field is defined by the number of implemented masters
+    name: MASTSEL
+    shortdesc: This field defines which master ports the override controls apply to.
+    type: rw
+  - bits: '0'
+    name: MASTCTL
+    type: rw
+  name: SPMOVERRIDER
+  offset: '0x00000E6C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register is used to control the STM triggers caused by STMSPTER.
+  field:
+  - bits: '4'
+    name: ATBTRIGEN_DIR
+    type: rw
+  - bits: '3'
+    name: ATBTRIGEN_TE
+    type: rw
+  - bits: '2'
+    longdesc: Writing a b1 to this bit when in multi-shot mode is Unpredictable.
+    name: TRIGCLEAR
+    shortdesc: When TRIGCTL indicates single-shot mode, this bit is used to clear
+      TRIGSTATUS.
+    type: wo
+  - bits: '1'
+    name: TRIGSTATUS
+    type: ro
+  - bits: '0'
+    name: TRIGCTL
+    type: rw
+  name: SPTRIGCSR
+  offset: '0x00000E70'
+  type: mixed
+  width: 32
+- default: '0x00000004'
+  description: Controls the STM settings.
+  field:
+  - bits: '23'
+    name: BUSY
+    type: ro
+  - bits: '22:16'
+    name: TRACEID
+    type: rw
+  - bits: '5'
+    name: COMPEN
+    type: rw
+  - bits: '2'
+    name: SYNCEN
+    type: ro
+  - bits: '1'
+    name: TSEN
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: TCSR
+  offset: '0x00000E80'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This write-only register is used to force the next packet caused by
+    a stimulus port write to have a timestamp output.
+  field:
+  - bits: '0'
+    longdesc: A write to this register with this bit as b1 requests the next stimulus
+      port write which causes trace to be upgraded to have a timestamp.Writes with
+      this bit b0 are ignored.
+    name: FORCETS
+    shortdesc: Force Timestamp Stimulus.
+    type: wo
+  name: TSSTIMR
+  offset: '0x00000E84'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: This read-write register is used to indicate the frequency of the timestamp
+    counter. The unit of measurement is increments per second. When the STPv2 protocol
+    is used, this register contains the value output in the FREQ and FREQ_TS packets.
+    The timestamp frequency is output in the STPv2 protocol at every synchronization
+    point when STMTCSR.TSEN is b1.
+  field:
+  - bits: '31:0'
+    name: FREQ
+    type: rw
+  name: TSFREQR
+  offset: '0x00000E8C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register controls the interval between synchronization packets,
+    in terms of the number of bytes of trace generated.This register only provides
+    a hint of the desired synchronization frequency, implementations are permitted
+    to be inaccurate.Writing a value of 0x00000000 to this register disables the synchronization
+    counter however any other IMPLEMENTATION DEFINED synchronizations mechanism continue
+    to operate independently.
+  field:
+  - bits: '12'
+    name: MODE
+    type: rw
+  - bits: '11:3'
+    longdesc: Reads return the value of this register.
+    name: COUNT
+    shortdesc: Counter value for the number of bytes between synchronization packets.
+    type: rw
+  name: SYNCR
+  offset: '0x00000E90'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Used for IMPLEMENTATION DEFINED STM controls.
+  field:
+  - bits: '7'
+    name: QHWEVOVERRIDE
+    type: rw
+  - bits: '2'
+    name: PRIORINVDIS
+    type: rw
+  - bits: '1'
+    name: ASYNCPE
+    type: rw
+  - bits: '0'
+    name: FIFOAF
+    type: rw
+  name: AUXCR
+  offset: '0x00000E94'
+  type: rw
+  width: 32
+- default: '0x006587D1'
+  description: Indicates the features of the STM.
+  field:
+  - bits: '23:22'
+    longdesc: SWOEN support.
+    name: SWOEN
+    shortdesc: STMTCSR.
+    type: ro
+  - bits: '21:20'
+    longdesc: SYNCEN support.
+    name: SYNCEN
+    shortdesc: STMTCSR.
+    type: ro
+  - bits: '19:18'
+    longdesc: HWTEN support.
+    name: HWTEN
+    shortdesc: STMTCSR.
+    type: ro
+  - bits: '17:16'
+    name: TSPRESCALE
+    type: ro
+  - bits: '15:14'
+    name: TRIGCTL
+    type: ro
+  - bits: '13:10'
+    name: TRACEBUS
+    type: ro
+  - bits: '9:8'
+    name: SYNC
+    type: ro
+  - bits: '7'
+    name: FORCETS
+    type: ro
+  - bits: '6'
+    name: TSFREQ
+    type: ro
+  - bits: '5:4'
+    name: TS
+    type: ro
+  - bits: '3:0'
+    name: PROT
+    type: ro
+  name: FEAT1R
+  offset: '0x00000EA0'
+  type: ro
+  width: 32
+- default: '0x000114F2'
+  description: Indicates the features of the STM.
+  field:
+  - bits: '17:16'
+    name: SPTYPE
+    type: ro
+  - bits: '15:12'
+    name: DSIZE
+    type: ro
+  - bits: '10:9'
+    name: SPTRTYPE
+    type: ro
+  - bits: '8:7'
+    name: PRIVMASK
+    type: ro
+  - bits: '6'
+    name: SPOVERRIDE
+    type: ro
+  - bits: '5:4'
+    name: SPCOMP
+    type: ro
+  - bits: '2'
+    name: SPER
+    type: ro
+  - bits: '1:0'
+    name: SPTER
+    type: ro
+  name: FEAT2R
+  offset: '0x00000EA4'
+  type: ro
+  width: 32
+- default: '0x0000007F'
+  description: Indicates the features of the STM.
+  field:
+  - bits: '6:0'
+    name: NUMMAST
+    type: ro
+  name: FEAT3R
+  offset: '0x00000EA8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Integration Test for Cross-Trigger Outputs Register
+  field:
+  - bits: '3'
+    name: ASYNCOUT_W
+    type: wo
+  - bits: '2'
+    name: TRIGOUTHETE_W
+    type: wo
+  - bits: '1'
+    name: TRIGOUTSW_W
+    type: wo
+  - bits: '0'
+    name: TRIGOUTSPTE_W
+    type: wo
+  name: ITTRIGGER
+  offset: '0x00000EE8'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Controls the value of the ATDATAM output in integration mode:'
+  field:
+  - bits: '8'
+    name: ATDATAM63_W
+    type: wo
+  - bits: '7'
+    name: ATDATAM55_W
+    type: wo
+  - bits: '6'
+    name: ATDATAM47_W
+    type: wo
+  - bits: '5'
+    name: ATDATAM39_W
+    type: wo
+  - bits: '4'
+    name: ATDATAM31_W
+    type: wo
+  - bits: '3'
+    name: ATDATAM23_W
+    type: wo
+  - bits: '2'
+    name: ATDATAM15_W
+    type: wo
+  - bits: '1'
+    name: ATDATAM7_W
+    type: wo
+  - bits: '0'
+    name: ATDATAM0_W
+    type: wo
+  name: ITATBDATA0
+  offset: '0x00000EEC'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Returns the value of the ATREADYM and AFVALIDM inputs in integration
+    mode.
+  field:
+  - bits: '1'
+    name: AFVALIDM_R
+    type: ro
+  - bits: '0'
+    name: ATREADYM_R
+    type: ro
+  name: ITATBCTR2
+  offset: '0x00000EF0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Controls the value of the ATIDM output in integration mode.
+  field:
+  - bits: '6:0'
+    name: ATIDM_W
+    type: wo
+  name: ITATBID
+  offset: '0x00000EF4'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Controls the value of the ATVALIDM, AFREADYM, and ATBYTESM outputs
+    in integration mode.
+  field:
+  - bits: '10:8'
+    name: ATBYTESM_W
+    type: wo
+  - bits: '1'
+    name: AFREADYM_W
+    type: wo
+  - bits: '0'
+    name: ATVALIDM_W
+    type: wo
+  name: ITATBCTR0
+  offset: '0x00000EF8'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Used to enable topology detection. See the CoreSight Architecture
+    Specification for more information. This register enables the component to switch
+    between functional mode and integration mode. The default behavior is functional
+    mode. In integration mode the inputs and outputs of the STM can be directly controlled
+    for integration testing and topology solving. Note: When a device has been in
+    integration mode, it might not function with the original behavior. After performing
+    integration or topology detection, you must reset the system to ensure correct
+    behavior of CoreSight and other connected system components that are affected
+    by the integration or topology detection.'
+  field:
+  - bits: '0'
+    name: IME
+    type: rw
+  name: ITCTRL
+  offset: '0x00000F00'
+  type: rw
+  width: 32
+- default: '0x0000000F'
+  description: This is used in conjunction with Claim Tag Clear Register, STMCLAIMCLR.
+    This register forms one half of the Claim Tag value. This location allows individual
+    bits to be set, write, and returns the number of bits that can be set, read.
+  field:
+  - bits: '3:0'
+    name: SET_W
+    type: wo
+  name: CLAIMSET
+  offset: '0x00000FA0'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: This register is used in conjunction with Claim Tag Set Register, STMCLAIMSET.
+    This register forms one half of the Claim Tag value. This location enables individual
+    bits to be cleared, write, and returns the current Claim Tag value, read.
+  field:
+  - bits: '3:0'
+    name: CLR_W
+    type: wo
+  name: CLAIMCLR
+  offset: '0x00000FA4'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Enables write access to device registers.
+  field:
+  - bits: '31:0'
+    longdesc: An invalid write has the affect of removing write access.
+    name: KEY
+    shortdesc: A write of 0xC5ACCE55 enables further write access to this device.
+    type: wo
+  name: LAR
+  offset: '0x00000FB0'
+  type: wo
+  width: 32
+- default: '0x00000003'
+  description: Indicates the status of the lock control mechanism. This lock prevents
+    accidental writes by code under debug. The lock mechanism does not impact accesses
+    to the extended stimulus port registers. This register must always be present
+    although there might not be any lock access control mechanism. The lock mechanism,
+    where present and locked, blocks write accesses to any register, except the STMLAR.
+    The lock mechanism is only present for accesses with the PADDRDBG31 signal LOW.
+  field:
+  - bits: '2'
+    name: NTT
+    type: ro
+  - bits: '1'
+    name: SLK
+    type: ro
+  - bits: '0'
+    name: SLI
+    type: ro
+  name: LSR
+  offset: '0x00000FB4'
+  type: ro
+  width: 32
+- default: '0x000000AA'
+  description: Reports the required security level and current status of the authentication
+    interface.
+  field:
+  - bits: '7:6'
+    name: SNID
+    type: ro
+  - bits: '5:4'
+    name: SID
+    type: ro
+  - bits: '3:2'
+    name: NSNID
+    type: ro
+  - bits: '1:0'
+    name: NSID
+    type: ro
+  name: AUTHSTATUS
+  offset: '0x00000FB8'
+  type: ro
+  width: 32
+- default: '0x47710A63'
+  description: Indicates the architect and architecture of the STM. For the STM-500,
+    the architect is ARM, and the architecture is STMv1.1
+  field:
+  - bits: '31:21'
+    longdesc: Bits[31:28] indicate the DEP106 continuation code of the architect.
+      Bits[27:21] indicate the JEP106 identification code of the architect. See the
+      Standard Manufacturers Identification Code for information about JEP106.
+    name: ARCHITECT
+    shortdesc: Defines the architect of the component.
+    type: ro
+  - bits: '20'
+    name: PRESENT
+    type: ro
+  - bits: '19:16'
+    longdesc: Returns the revision of the architecture that the ARCHID field specifies.
+      For the STM-500, this value is 0x1, indicating the STMv1.1 architecture.
+    name: REVISION
+    shortdesc: Architecture revision.
+    type: ro
+  - bits: '14:0'
+    longdesc: Returns a value that identifies the architecture of the component. For
+      the STM-500, this value is 0x0A63, indicating the STMv1 architecture.
+    name: ARCHID
+    shortdesc: Architecture ID.
+    type: ro
+  name: DEVARCH
+  offset: '0x00000FBC'
+  type: ro
+  width: 32
+- default: '0x00010000'
+  description: Indicates the capabilities of the CoreSight STM.
+  field:
+  - bits: '16:0'
+    name: NUMSP
+    type: ro
+  name: DEVID
+  offset: '0x00000FC8'
+  type: ro
+  width: 32
+- default: '0x00000063'
+  description: Provides a debugger with information about the component when the part
+    number is not recognized. The debugger can then report this information.
+  field:
+  - bits: '7:4'
+    name: SUB
+    type: ro
+  - bits: '3:0'
+    name: MAJOR
+    type: ro
+  name: DEVTYPE
+  offset: '0x00000FCC'
+  type: ro
+  width: 32
+- default: '0x00000004'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer identity and the memory footprint indicator.
+  field:
+  - bits: '7:4'
+    longdesc: If a component only requires the standard 4KB, this bit field must read
+      as 0x0, 4KB only. For 8KB set to 0x1, for 16KB set to 0x2, for 32KB set to 0x3,
+      and so on.
+    name: SIZE
+    shortdesc: This 4-bit value indicates the total contiguous size of the memory
+      window used by the component in powers of two from the standard 4KB.
+    type: ro
+  - bits: '3:0'
+    name: DES_2
+    type: ro
+  name: PIDR4
+  offset: '0x00000FD0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: PIDR5
+  offset: '0x00000FD4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: PIDR6
+  offset: '0x00000FD8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: PIDR7
+  offset: '0x00000FDC'
+  type: ro
+  width: 32
+- default: '0x00000063'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer specific part number.
+  field:
+  - bits: '7:0'
+    name: PART_0
+    type: ro
+  name: PIDR0
+  offset: '0x00000FE0'
+  type: ro
+  width: 32
+- default: '0x000000B9'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer specific part number and part of the designer identity.
+  field:
+  - bits: '7:4'
+    name: DES_0
+    type: ro
+  - bits: '3:0'
+    name: PART_1
+    type: ro
+  name: PIDR1
+  offset: '0x00000FE4'
+  type: ro
+  width: 32
+- default: '0x0000001B'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer identity and the product revision.
+  field:
+  - bits: '7:4'
+    longdesc: The value increases by one for both major and minor revisions and is
+      used as a look-up to establish the exact major and minor revision.
+    name: REVISION
+    shortdesc: An incremental value starting at 0x0 for the first design of this component.
+    type: ro
+  - bits: '3'
+    longdesc: This bit is always set.
+    name: JEDEC
+    shortdesc: Indicates the use of a JEDEC assigned value.
+    type: ro
+  - bits: '2:0'
+    name: DES_1
+    type: ro
+  name: PIDR2
+  offset: '0x00000FE8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Part of the set of Peripheral Identification registers. Contains the
+    RevAnd and Customer_Modified bit fields.
+  field:
+  - bits: '7:4'
+    longdesc: In most cases this field is zero. ARM recommendeds that the component
+      designers ensure that the bit field can be changed by a metal fix if required,
+      for example by driving the bit field from registers that reset to zero.
+    name: REVAND
+    shortdesc: Indicates minor errata fixes specific to the design, for example metal
+      fixes after implementation.
+    type: ro
+  - bits: '3:0'
+    longdesc: In most cases this field is zero.
+    name: CMOD
+    shortdesc: Where the component is reusable IP, this value indicates if the customer
+      has modified the behavior of the component.
+    type: ro
+  name: PIDR3
+  offset: '0x00000FEC'
+  type: ro
+  width: 32
+- default: '0x0000000D'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_0
+    type: ro
+  name: CIDR0
+  offset: '0x00000FF0'
+  type: ro
+  width: 32
+- default: '0x00000090'
+  description: A component identification register, that indicates that the identification
+    registers are present. This register also indicates the component class.
+  field:
+  - bits: '7:4'
+    name: CLASS
+    type: ro
+  - bits: '3:0'
+    name: PRMBL_1
+    type: ro
+  name: CIDR1
+  offset: '0x00000FF4'
+  type: ro
+  width: 32
+- default: '0x00000005'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_2
+    type: ro
+  name: CIDR2
+  offset: '0x00000FF8'
+  type: ro
+  width: 32
+- default: '0x000000B1'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_3
+    type: ro
+  name: CIDR3
+  offset: '0x00000FFC'
+  type: ro
+  width: 32

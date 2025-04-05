@@ -1,0 +1,928 @@
+bank:
+- address: '0xfebf8000'
+  name: CORESIGHT_R5_CTI
+- address: '0xfebf9000'
+  name: CORESIGHT_R5_CTI_1
+- address: '0xfe990000'
+  name: CORESIGHT_SOC_CTI
+- address: '0xfe9a0000'
+  name: CORESIGHT_SOC_CTI_1
+- address: '0xfe9b0000'
+  name: CORESIGHT_SOC_CTI_2
+description: R5 Cross Trigger Interface with to/from broadcast
+register:
+- default: '0x00000000'
+  description: The CTI Control Register enables the CTI.
+  field:
+  - bits: '0'
+    name: GLBEN
+    type: rw
+  name: CTICONTROL
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Interrupt Acknowledge Register is write-only. Any bits written
+    as a 1 cause the ctitrigout output signal to be acknowledged. The acknowledgement
+    is cleared when MAPTRIGOUT is deactivated. This register is used when the ctitrigout
+    is used as a sticky output, that is, no hardware acknowledge is supplied, and
+    a software acknowledge is required.
+  field:
+  - bits: '7:0'
+    longdesc: There is one bit of the register for each ctitrigout output.When a 1
+      is written to a bit in this register, the corresponding ctitrigout is acknowledged
+      and is cleared when MAPTRIGOUT is LOW. Writing a 0 to any of the bits in this
+      register has no effect.
+    name: INTACK
+    shortdesc: Acknowledges the corresponding ctitrigout output.
+    type: wo
+  name: CTIINTACK
+  offset: '0x00000010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: The CTI Application Trigger Set Register is read/write. A write to
+    this register causes a channel event to be raised, corresponding to the bit written
+    to.
+  field:
+  - bits: '3:0'
+    longdesc: 'There is one bit of the register for each channel.Read: 0 = application
+      trigger inactive (reset). 1 = application trigger active.Write: 0 = no effect.
+      1 = generate channel event.'
+    name: APPSET
+    shortdesc: Setting a bit HIGH generates a channel event for the selected channel.
+    type: wo
+  name: CTIAPPSET
+  offset: '0x00000014'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: The CTI Interrupt Acknowledge Register is write-only. A write to this
+    register causes a channel event to be cleared, corresponding to the bit written
+    to.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the register for each channel.When a 1 is written
+      to a bit in this register, the corresponding application trigger is disabled
+      in the CTIAPPSET register. Writing a 0 to any of the bits in this register has
+      no effect.
+    name: APPCLEAR
+    shortdesc: Clears corresponding bits in the CTIAPPSET register.
+    type: wo
+  name: CTIAPPCLEAR
+  offset: '0x00000018'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: The CTI Application Pulse Register is write-only. A write to this register
+    causes a channel event pulse, one cticlk period, to be generated, corresponding
+    to the bit written to. The pulse external to the ECT can be extended to multi-cycle
+    by the handshaking interface circuits. This register clears itself immediately,
+    so it can be repeatedly written to without software having to clear it.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the register for each channel.When a 1 is written
+      to a bit in this register, a corresponding channel event pulse is generated
+      for one cticlk period. Writing a 0 to any of the bits in this register has no
+      effect.
+    name: APPULSE
+    shortdesc: Setting a bit HIGH generates a channel event pulse for the selected
+      channel.
+    type: wo
+  name: CTIAPPPULSE
+  offset: '0x0000001C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: The CTI Trigger 0 to Channel Enable Register enables the signalling
+    of an event on CTM channels when the core issues a trigger, ctitrigin, to the
+    CTI. Within this register there is one bit for each of the four channels implemented.
+    This register does not affect the application trigger operations.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, it enables the ctitrigin signal to generate
+      an event on the respective channel of the CTM. For example, TRIGINEN[0] set
+      to 1 enables ctitrigin onto channel 0. Writing a 0 to any of the bits in this
+      register disables the ctitrigin signal from generating an event on the respective
+      channel of the CTM.Reading this register returns the programmed value.
+    name: TRIGINEN
+    shortdesc: Enables a cross trigger event to the corresponding channel when an
+      ctitrigin is activated.
+    type: rw
+  name: CTIINEN0
+  offset: '0x00000020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Trigger 1 to Channel Enable Register enables the signalling
+    of an event on CTM channels when the core issues a trigger, ctitrigin, to the
+    CTI. Within this register there is one bit for each of the four channels implemented.
+    This register does not affect the application trigger operations.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, it enables the ctitrigin signal to generate
+      an event on the respective channel of the CTM. For example, TRIGINEN[0] set
+      to 1 enables ctitrigin onto channel 0. Writing a 0 to any of the bits in this
+      register disables the ctitrigin signal from generating an event on the respective
+      channel of the CTM.Reading this register returns the programmed value.
+    name: TRIGINEN
+    shortdesc: Enables a cross trigger event to the corresponding channel when an
+      ctitrigin is activated.
+    type: rw
+  name: CTIINEN1
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Trigger to Channel Enable Register 0 enables the signalling
+    of an event on CTM channels when the core issues a trigger, ctitrigin, to the
+    CTI. Within this register there is one bit for each of the four channels implemented.
+    This register does not affect the application trigger operations.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, it enables the ctitrigin signal to generate
+      an event on the respective channel of the CTM. For example, TRIGINEN[0] set
+      to 1 enables ctitrigin onto channel 0. Writing a 0 to any of the bits in this
+      register disables the ctitrigin signal from generating an event on the respective
+      channel of the CTM.Reading this register returns the programmed value.
+    name: TRIGINEN
+    shortdesc: Enables a cross trigger event to the corresponding channel when an
+      ctitrigin is activated.
+    type: rw
+  name: CTIINEN2
+  offset: '0x00000028'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Trigger to Channel Enable Register 0 enables the signalling
+    of an event on CTM channels when the core issues a trigger, ctitrigin, to the
+    CTI. Within this register there is one bit for each of the four channels implemented.
+    This register does not affect the application trigger operations.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, it enables the ctitrigin signal to generate
+      an event on the respective channel of the CTM. For example, TRIGINEN[0] set
+      to 1 enables ctitrigin onto channel 0. Writing a 0 to any of the bits in this
+      register disables the ctitrigin signal from generating an event on the respective
+      channel of the CTM.Reading this register returns the programmed value.
+    name: TRIGINEN
+    shortdesc: Enables a cross trigger event to the corresponding channel when an
+      ctitrigin is activated.
+    type: rw
+  name: CTIINEN3
+  offset: '0x0000002C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Trigger to Channel Enable Register 0 enables the signalling
+    of an event on CTM channels when the core issues a trigger, ctitrigin, to the
+    CTI. Within this register there is one bit for each of the four channels implemented.
+    This register does not affect the application trigger operations.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, it enables the ctitrigin signal to generate
+      an event on the respective channel of the CTM. For example, TRIGINEN[0] set
+      to 1 enables ctitrigin onto channel 0. Writing a 0 to any of the bits in this
+      register disables the ctitrigin signal from generating an event on the respective
+      channel of the CTM.Reading this register returns the programmed value.
+    name: TRIGINEN
+    shortdesc: Enables a cross trigger event to the corresponding channel when an
+      ctitrigin is activated.
+    type: rw
+  name: CTIINEN4
+  offset: '0x00000030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Trigger to Channel Enable Register 0 enables the signalling
+    of an event on CTM channels when the core issues a trigger, ctitrigin, to the
+    CTI. Within this register there is one bit for each of the four channels implemented.
+    This register does not affect the application trigger operations.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, it enables the ctitrigin signal to generate
+      an event on the respective channel of the CTM. For example, TRIGINEN[0] set
+      to 1 enables ctitrigin onto channel 0. Writing a 0 to any of the bits in this
+      register disables the ctitrigin signal from generating an event on the respective
+      channel of the CTM.Reading this register returns the programmed value.
+    name: TRIGINEN
+    shortdesc: Enables a cross trigger event to the corresponding channel when an
+      ctitrigin is activated.
+    type: rw
+  name: CTIINEN5
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Trigger to Channel Enable Register 0 enables the signalling
+    of an event on CTM channels when the core issues a trigger, ctitrigin, to the
+    CTI. Within this register there is one bit for each of the four channels implemented.
+    This register does not affect the application trigger operations.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, it enables the ctitrigin signal to generate
+      an event on the respective channel of the CTM. For example, TRIGINEN[0] set
+      to 1 enables ctitrigin onto channel 0. Writing a 0 to any of the bits in this
+      register disables the ctitrigin signal from generating an event on the respective
+      channel of the CTM.Reading this register returns the programmed value.
+    name: TRIGINEN
+    shortdesc: Enables a cross trigger event to the corresponding channel when an
+      ctitrigin is activated.
+    type: rw
+  name: CTIINEN6
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Trigger to Channel Enable Register 0 enables the signalling
+    of an event on CTM channels when the core issues a trigger, ctitrigin, to the
+    CTI. Within this register there is one bit for each of the four channels implemented.
+    This register does not affect the application trigger operations.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, it enables the ctitrigin signal to generate
+      an event on the respective channel of the CTM. For example, TRIGINEN[0] set
+      to 1 enables ctitrigin onto channel 0. Writing a 0 to any of the bits in this
+      register disables the ctitrigin signal from generating an event on the respective
+      channel of the CTM.Reading this register returns the programmed value.
+    name: TRIGINEN
+    shortdesc: Enables a cross trigger event to the corresponding channel when an
+      ctitrigin is activated.
+    type: rw
+  name: CTIINEN7
+  offset: '0x0000003C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Channel to Trigger 0 Enable Registers define which channels
+    can generate a ctitrigout[0] output. Within this register there is one bit for
+    each of the four channels implemented. This register affects the mapping from
+    application trigger to trigger outputs.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, the channel input (ctichin) from the CTM
+      is routed to the ctitrigout output. For example, enabling bit 0 enables ctichin[0]
+      to cause a trigger event on the ctitrigout[0] output. When a 0 is written to
+      any of the bits in this register, the channel input (ctichin) from the CTM is
+      not routed to the ctitrigout output.Reading this register returns the programmed
+      value.
+    name: TRIGOUTEN
+    shortdesc: Changing the value of this bit from a 0 to a 1 enables a channel event
+      for the corresponding channel to generate a ctitrigout[1] output.
+    type: rw
+  name: CTIOUTEN0
+  offset: '0x000000A0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Channel to Trigger 1 Enable Registers define which channels
+    can generate a ctitrigout[1] output. Within this register there is one bit for
+    each of the four channels implemented. This register affects the mapping from
+    application trigger to trigger outputs.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, the channel input (ctichin) from the CTM
+      is routed to the ctitrigout output. For example, enabling bit 0 enables ctichin[0]
+      to cause a trigger event on the ctitrigout[1] output. When a 0 is written to
+      any of the bits in this register, the channel input (ctichin) from the CTM is
+      not routed to the ctitrigout output.Reading this register returns the programmed
+      value.
+    name: TRIGOUTEN
+    shortdesc: Changing the value of this bit from a 0 to a 1 enables a channel event
+      for the corresponding channel to generate a ctitrigout[1] output.
+    type: rw
+  name: CTIOUTEN1
+  offset: '0x000000A4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Channel to Trigger 2 Enable Registers define which channels
+    can generate a ctitrigout[2] output. Within this register there is one bit for
+    each of the four channels implemented. This register affects the mapping from
+    application trigger to trigger outputs.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, the channel input (ctichin) from the CTM
+      is routed to the ctitrigout output. For example, enabling bit 0 enables ctichin[0]
+      to cause a trigger event on the ctitrigout[2] output. When a 0 is written to
+      any of the bits in this register, the channel input (ctichin) from the CTM is
+      not routed to the ctitrigout output.Reading this register returns the programmed
+      value.
+    name: TRIGOUTEN
+    shortdesc: Changing the value of this bit from a 0 to a 1 enables a channel event
+      for the corresponding channel to generate a ctitrigout[2] output.
+    type: rw
+  name: CTIOUTEN2
+  offset: '0x000000A8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Channel to Trigger 3 Enable Registers define which channels
+    can generate a ctitrigout[3] output. Within this register there is one bit for
+    each of the four channels implemented. This register affects the mapping from
+    application trigger to trigger outputs.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, the channel input (ctichin) from the CTM
+      is routed to the ctitrigout output. For example, enabling bit 0 enables ctichin[0]
+      to cause a trigger event on the ctitrigout[3] output. When a 0 is written to
+      any of the bits in this register, the channel input (ctichin) from the CTM is
+      not routed to the ctitrigout output.Reading this register returns the programmed
+      value.
+    name: TRIGOUTEN
+    shortdesc: Changing the value of this bit from a 0 to a 1 enables a channel event
+      for the corresponding channel to generate a ctitrigout[3] output.
+    type: rw
+  name: CTIOUTEN3
+  offset: '0x000000AC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Channel to Trigger 4 Enable Registers define which channels
+    can generate a ctitrigout[4] output. Within this register there is one bit for
+    each of the four channels implemented. This register affects the mapping from
+    application trigger to trigger outputs.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, the channel input (ctichin) from the CTM
+      is routed to the ctitrigout output. For example, enabling bit 0 enables ctichin[0]
+      to cause a trigger event on the ctitrigout[4] output. When a 0 is written to
+      any of the bits in this register, the channel input (ctichin) from the CTM is
+      not routed to the ctitrigout output.Reading this register returns the programmed
+      value.
+    name: TRIGOUTEN
+    shortdesc: Changing the value of this bit from a 0 to a 1 enables a channel event
+      for the corresponding channel to generate a ctitrigout[4] output.
+    type: rw
+  name: CTIOUTEN4
+  offset: '0x000000B0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Channel to Trigger 5 Enable Registers define which channels
+    can generate a ctitrigout[5] output. Within this register there is one bit for
+    each of the four channels implemented. This register affects the mapping from
+    application trigger to trigger outputs.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, the channel input (ctichin) from the CTM
+      is routed to the ctitrigout output. For example, enabling bit 0 enables ctichin[0]
+      to cause a trigger event on the ctitrigout[5] output. When a 0 is written to
+      any of the bits in this register, the channel input (ctichin) from the CTM is
+      not routed to the ctitrigout output.Reading this register returns the programmed
+      value.
+    name: TRIGOUTEN
+    shortdesc: Changing the value of this bit from a 0 to a 1 enables a channel event
+      for the corresponding channel to generate a ctitrigout[5] output.
+    type: rw
+  name: CTIOUTEN5
+  offset: '0x000000B4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Channel to Trigger 6 Enable Registers define which channels
+    can generate a ctitrigout[6] output. Within this register there is one bit for
+    each of the four channels implemented. This register affects the mapping from
+    application trigger to trigger outputs.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, the channel input (ctichin) from the CTM
+      is routed to the ctitrigout output. For example, enabling bit 0 enables ctichin[0]
+      to cause a trigger event on the ctitrigout[6] output. When a 0 is written to
+      any of the bits in this register, the channel input (ctichin) from the CTM is
+      not routed to the ctitrigout output.Reading this register returns the programmed
+      value.
+    name: TRIGOUTEN
+    shortdesc: Changing the value of this bit from a 0 to a 1 enables a channel event
+      for the corresponding channel to generate a ctitrigout[6] output.
+    type: rw
+  name: CTIOUTEN6
+  offset: '0x000000B8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Channel to Trigger 7 Enable Registers define which channels
+    can generate a ctitrigout[7] output. Within this register there is one bit for
+    each of the four channels implemented. This register affects the mapping from
+    application trigger to trigger outputs.
+  field:
+  - bits: '3:0'
+    longdesc: There is one bit of the field for each of the four channels.When a 1
+      is written to a bit in this register, the channel input (ctichin) from the CTM
+      is routed to the ctitrigout output. For example, enabling bit 0 enables ctichin[0]
+      to cause a trigger event on the ctitrigout[7] output. When a 0 is written to
+      any of the bits in this register, the channel input (ctichin) from the CTM is
+      not routed to the ctitrigout output.Reading this register returns the programmed
+      value.
+    name: TRIGOUTEN
+    shortdesc: Changing the value of this bit from a 0 to a 1 enables a channel event
+      for the corresponding channel to generate a ctitrigout[7] output.
+    type: rw
+  name: CTIOUTEN7
+  offset: '0x000000BC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The CTI Trigger In Status Register provides the status of the ctitrigin
+    inputs.
+  field:
+  - bits: '7:0'
+    longdesc: 1 = ctitrigin is active. 0 = ctitrigin is inactive.Because the register
+      provides a view of the raw ctitrigin inputs, the reset value is unknown. There
+      is one bit of the field for each trigger input.
+    name: TRIGINSTATUS
+    shortdesc: Shows the status of the ctitrigin inputs.
+    type: ro
+  name: CTITRIGINSTATUS
+  offset: '0x00000130'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: The CTI Trigger Out Status Register provides the status of the ctitrigout
+    outputs.
+  field:
+  - bits: '7:0'
+    longdesc: 1 = ctitrigout is active. 0 = ctitrigout is inactive.There is one bit
+      of the field for each trigger output.
+    name: TRIGOUTSTATUS
+    shortdesc: Shows the status of the ctitrigout outputs.
+    type: ro
+  name: CTITRIGOUTSTATUS
+  offset: '0x00000134'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: The CTI Channel In Status Register provides the status of the ctichin
+    inputs.
+  field:
+  - bits: '3:0'
+    longdesc: 1 = ctichin is active. 0 = ctichin is inactive.Because the register
+      provides a view of the raw ctichin inputs, the reset value is unknown. There
+      is one bit of the field for each channel input.
+    name: CTICHINSTATUS
+    shortdesc: Shows the status of the ctichin inputs.
+    type: ro
+  name: CTICHINSTATUS
+  offset: '0x00000138'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: The CTI Channel Out Status Register provides the status of the CTI
+    ctichout outputs.
+  field:
+  - bits: '3:0'
+    longdesc: 1 = ctichout is active. 0 = ctichout is inactive.There is one bit of
+      the field for each channel output.
+    name: CTICHOUTSTATUS
+    shortdesc: Shows the status of the ctichout outputs.
+    type: ro
+  name: CTICHOUTSTATUS
+  offset: '0x0000013C'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: The Gate Enable Register prevents the channels from propagating through
+    the CTM to other CTIs. This enables local cross-triggering, for example for causing
+    an interrupt when the ETM trigger occurs. It can be used effectively with CTIAPPSET,
+    CTIAPPCLEAR, and CTIAPPPULSE for asserting trigger outputs by asserting channels,
+    without affecting the rest of the system. On reset, this register is 0xF, and
+    channel propagation is enabled.
+  field:
+  - bits: '3:0'
+    longdesc: Set to 0 to disable channel propagation.
+    name: CTIGATEEN
+    shortdesc: Enable CTICHOUT3-0 respectively.
+    type: rw
+  name: CTIGATE
+  offset: '0x00000140'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Implementation-defined ASIC control, value written to the register
+    is output on asicctl[7:0].
+  field:
+  - bits: '7:0'
+    longdesc: If external multiplexing of trigger signals is implemented then the
+      number of multiplexed signals on each trigger must be reflected within the Device
+      ID Register. This is done within a Verilog define EXTMUXNUM.
+    name: ASICCTL
+    shortdesc: Implementation-defined ASIC control, value written to the register
+      is output on asicctl[7:0].
+    type: rw
+  name: ASICCTL
+  offset: '0x00000144'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register is a write-only register. It can be used to set the value
+    of the CTCHINACK outputs.
+  field:
+  - bits: '3:0'
+    name: CTCHINACK
+    type: wo
+  name: ITCHINACK
+  offset: '0x00000EDC'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: This register is a write-only register. It can be used to set the value
+    of the CTTRIGINACK outputs.
+  field:
+  - bits: '7:0'
+    name: CTTRIGINACK
+    type: wo
+  name: ITTRIGINACK
+  offset: '0x00000EE0'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: This register is a write-only register. It can be used to set the value
+    of the CTCHOUT outputs.
+  field:
+  - bits: '3:0'
+    name: CTCHOUT
+    type: wo
+  name: ITCHOUT
+  offset: '0x00000EE4'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: This register is a write-only register. It can be used to set the value
+    of the CTTRIGOUT outputs.
+  field:
+  - bits: '7:0'
+    name: CTTRIGOUT
+    type: wo
+  name: ITTRIGOUT
+  offset: '0x00000EE8'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: This register is a read-only register. It can be used to read the values
+    of the CTCHOUTACK inputs.
+  field:
+  - bits: '3:0'
+    name: CTCHOUTACK
+    type: ro
+  name: ITCHOUTACK
+  offset: '0x00000EEC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: This register is a read-only register. It can be used to read the values
+    of the CTTRIGOUTACK inputs.
+  field:
+  - bits: '7:0'
+    name: CTTRIGOUTACK
+    type: ro
+  name: ITTRIGOUTACK
+  offset: '0x00000EF0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: This register is a read-only register. It can be used to read the values
+    of the CTCHIN inputs.
+  field:
+  - bits: '3:0'
+    name: CTCHIN
+    type: ro
+  name: ITCHIN
+  offset: '0x00000EF4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: This register is a read-only register. It can be used to read the values
+    of the CTTRIGIN inputs.
+  field:
+  - bits: '7:0'
+    name: CTTRIGIN
+    type: ro
+  name: ITTRIGIN
+  offset: '0x00000EF8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'This register is used to enable topology detection. For more information
+    see the CoreSight Architecture Specification. This register enables the component
+    to switch from a functional mode, the default behavior, to integration mode where
+    the inputs and outputs of the component can be directly controlled for the purpose
+    of integration testing and topology solving. Note: When a device has been in integration
+    mode, it might not function with the original behavior. After performing integration
+    or topology detection, you must reset the system to ensure correct behavior of
+    CoreSight and other connected system components that are affected by the integration
+    or topology detection.'
+  field:
+  - bits: '0'
+    name: IME
+    type: rw
+  name: ITCTRL
+  offset: '0x00000F00'
+  type: rw
+  width: 32
+- default: '0x0000000F'
+  description: This is used in conjunction with Claim Tag Clear Register, CLAIMCLR.
+    This register forms one half of the Claim Tag value. This location allows individual
+    bits to be set, write, and returns the number of bits that can be set, read.
+  field:
+  - bits: '3:0'
+    name: CLAIMSET
+    type: rw
+  name: CLAIMSET
+  offset: '0x00000FA0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register is used in conjunction with Claim Tag Set Register, CLAIMSET.
+    This register forms one half of the Claim Tag value. This location enables individual
+    bits to be cleared, write, and returns the current Claim Tag value, read.
+  field:
+  - bits: '3:0'
+    name: CLAIMCLR
+    type: rw
+  name: CLAIMCLR
+  offset: '0x00000FA4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This is used to enable write access to device registers. External accesses
+    from a debugger (paddrdbg31 = 1) are not subject to the Lock Registers. A debugger
+    does not have to unlock the component in order to write and modify the registers
+    in the component.
+  field:
+  - bits: '31:0'
+    longdesc: A write of any value other than 0xC5ACCE55 will have the affect of removing
+      write access.
+    name: KEY
+    shortdesc: A write of 0xC5ACCE55 enables further write access to this device.
+    type: wo
+  name: LAR
+  offset: '0x00000FB0'
+  type: wo
+  width: 32
+- default: '0x00000003'
+  description: This indicates the status of the Lock control mechanism. This lock
+    prevents accidental writes by code under debug. When locked, write access is blocked
+    to all registers, except the Lock Access Register.External accesses from a debugger
+    (paddrdbg31 = 1) are not subject to the Lock Registers. This register reads as
+    0 when read from an external debugger (paddrdbg31 = 1).
+  field:
+  - bits: '2'
+    name: LOCKTYPE
+    type: ro
+  - bits: '1'
+    longdesc: This bit reads as 0 when read from an external debugger (paddrdbg31
+      = 1) since external debugger accesses are not subject to Lock Registers.
+    name: LOCKGRANT
+    shortdesc: Returns the current status of the Lock.
+    type: ro
+  - bits: '0'
+    longdesc: This bit reads as 0 when read from an external debugger (paddrdbg31
+      = 1) since external debugger accesses are not subject to Lock Registers.
+    name: LOCKEXIST
+    shortdesc: Indicates that a lock control mechanism exists for this device.
+    type: ro
+  name: LSR
+  offset: '0x00000FB4'
+  type: ro
+  width: 32
+- default: '0x0000000A'
+  description: Reports what functionality is currently permitted by the authentication
+    interface.
+  field:
+  - bits: '7:6'
+    name: SNID
+    type: ro
+  - bits: '5:4'
+    name: SID
+    type: ro
+  - bits: '3:2'
+    name: NSNID
+    type: ro
+  - bits: '1:0'
+    name: NSID
+    type: ro
+  name: AUTHSTATUS
+  offset: '0x00000FB8'
+  type: ro
+  width: 32
+- default: '0x00040800'
+  description: This register indicates the capabilities of the CTI.
+  field:
+  - bits: '19:16'
+    name: NUMCH
+    type: ro
+  - bits: '15:8'
+    name: NUMTRIG
+    type: ro
+  - bits: '4:0'
+    longdesc: Default value of 5'b00000 indicating no multiplexing present. Reflects
+      the value of the Verilog `define EXTMUXNUM that the user must alter accordingly.
+    name: EXTMUXNUM
+    shortdesc: Indicates the number of multiplexing available on Trigger Inputs and
+      Trigger Outputs using asicctl.
+    type: ro
+  name: DEVID
+  offset: '0x00000FC8'
+  type: ro
+  width: 32
+- default: '0x00000014'
+  description: It provides a debugger with information about the component when the
+    Part Number field is not recognized. The debugger can then report this information.
+  field:
+  - bits: '7:4'
+    name: SUB_TYPE
+    type: ro
+  - bits: '3:0'
+    name: MAJOR_TYPE
+    type: ro
+  name: DEVTYPE
+  offset: '0x00000FCC'
+  type: ro
+  width: 32
+- default: '0x00000004'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer identity and the memory footprint indicator.
+  field:
+  - bits: '7:4'
+    longdesc: If a component only requires the standard 4KB then this should read
+      as 0x0, 4KB only, for 8KB set to 0x1, 16KB == 0x2, 32KB == 0x3, and so on.
+    name: SIZE
+    shortdesc: This is a 4-bit value that indicates the total contiguous size of the
+      memory window used by this component in powers of 2 from the standard 4KB.
+    type: ro
+  - bits: '3:0'
+    name: DES_2
+    type: ro
+  name: PIDR4
+  offset: '0x00000FD0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: PIDR5
+  offset: '0x00000FD4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: PIDR6
+  offset: '0x00000FD8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: PIDR7
+  offset: '0x00000FDC'
+  type: ro
+  width: 32
+- default: '0x00000006'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer specific part number.
+  field:
+  - bits: '7:0'
+    longdesc: This is selected by the designer of the component.
+    name: PART_0
+    shortdesc: Bits [7:0] of the component's part number.
+    type: ro
+  name: PIDR0
+  offset: '0x00000FE0'
+  type: ro
+  width: 32
+- default: '0x000000B9'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer specific part number and part of the designer identity.
+  field:
+  - bits: '7:4'
+    name: DES_0
+    type: ro
+  - bits: '3:0'
+    longdesc: This is selected by the designer of the component.
+    name: PART_1
+    shortdesc: Bits [11:8] of the component's part number.
+    type: ro
+  name: PIDR1
+  offset: '0x00000FE4'
+  type: ro
+  width: 32
+- default: '0x0000004B'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer identity and the product revision.
+  field:
+  - bits: '7:4'
+    longdesc: This only increases by 1 for both major and minor revisions and is simply
+      used as a look-up to establish the exact major/minor revision.
+    name: REVISION
+    shortdesc: The Revision field is an incremental value starting at 0x0 for the
+      first design of this component.
+    type: ro
+  - bits: '3'
+    longdesc: Indicates that a JEDEC assigned value is used
+    name: JEDEC
+    shortdesc: Always set.
+    type: ro
+  - bits: '2:0'
+    name: DES_1
+    type: ro
+  name: PIDR2
+  offset: '0x00000FE8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Part of the set of Peripheral Identification registers. Contains the
+    RevAnd and Customer Modified fields.
+  field:
+  - bits: '7:4'
+    longdesc: In most cases this field is zero. It is recommended that component designers
+      ensure this field can be changed by a metal fix if required, for example by
+      driving it from registers that reset to zero.
+    name: REVAND
+    shortdesc: This field indicates minor errata fixes specific to this design, for
+      example metal fixes after implementation.
+    type: ro
+  - bits: '3:0'
+    longdesc: In most cases this field is zero.
+    name: CMOD
+    shortdesc: Where the component is reusable IP, this value indicates if the customer
+      has modified the behavior of the component.
+    type: ro
+  name: PIDR3
+  offset: '0x00000FEC'
+  type: ro
+  width: 32
+- default: '0x0000000D'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_0
+    type: ro
+  name: CIDR0
+  offset: '0x00000FF0'
+  type: ro
+  width: 32
+- default: '0x00000090'
+  description: A component identification register, that indicates that the identification
+    registers are present. This register also indicates the component class.
+  field:
+  - bits: '7:4'
+    longdesc: E.g. ROM table, CoreSight component etc. Constitutes bits [15:12] of
+      the component identification.
+    name: CLASS
+    shortdesc: Class of the component.
+    type: ro
+  - bits: '3:0'
+    name: PRMBL_1
+    type: ro
+  name: CIDR1
+  offset: '0x00000FF4'
+  type: ro
+  width: 32
+- default: '0x00000005'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_2
+    type: ro
+  name: CIDR2
+  offset: '0x00000FF8'
+  type: ro
+  width: 32
+- default: '0x000000B1'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_3
+    type: ro
+  name: CIDR3
+  offset: '0x00000FFC'
+  type: ro
+  width: 32

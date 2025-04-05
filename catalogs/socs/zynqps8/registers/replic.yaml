@@ -1,0 +1,383 @@
+bank:
+- address: '0xfe960000'
+  name: CORESIGHT_SOC_REPLIC
+description: Replicator forks ATB data to multiple streams
+register:
+- default: '0x00000000'
+  description: Allows the setting of ID filter for Master 0.
+  field:
+  - bits: '7'
+    name: ID0_70_7F
+    type: rw
+  - bits: '6'
+    name: ID0_60_6F
+    type: rw
+  - bits: '5'
+    name: ID0_50_5F
+    type: rw
+  - bits: '4'
+    name: ID0_40_4F
+    type: rw
+  - bits: '3'
+    name: ID0_30_3F
+    type: rw
+  - bits: '2'
+    name: ID0_20_2F
+    type: rw
+  - bits: '1'
+    name: ID0_10_1F
+    type: rw
+  - bits: '0'
+    name: ID0_0_F
+    type: rw
+  name: IDFILTER0
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Allows the setting of ID filter for Master 1.
+  field:
+  - bits: '7'
+    name: ID1_70_7F
+    type: rw
+  - bits: '6'
+    name: ID1_60_6F
+    type: rw
+  - bits: '5'
+    name: ID1_50_5F
+    type: rw
+  - bits: '4'
+    name: ID1_40_4F
+    type: rw
+  - bits: '3'
+    name: ID1_30_3F
+    type: rw
+  - bits: '2'
+    name: ID1_20_2F
+    type: rw
+  - bits: '1'
+    name: ID1_10_1F
+    type: rw
+  - bits: '0'
+    name: ID1_0_F
+    type: rw
+  name: IDFILTER1
+  offset: '0x00000004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Returns the value of the ATREADYM0, ATREADYM1 and ATVALIDS inputs in
+    integration mode.
+  field:
+  - bits: '3'
+    name: ATVALIDS_R
+    type: ro
+  - bits: '1'
+    name: ATREADYM1_R
+    type: ro
+  - bits: '0'
+    name: ATREADYM0_R
+    type: ro
+  name: ITATBCTR1
+  offset: '0x00000EF8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Controls the value of the ATVALIDM0, ATVALIDM1 and ATREADYS outputs
+    in integration mode.
+  field:
+  - bits: '4'
+    name: ATREADYS_W
+    type: wo
+  - bits: '2'
+    name: ATVALIDM1_W
+    type: wo
+  - bits: '0'
+    name: ATVALIDM0_W
+    type: wo
+  name: ITATBCTR0
+  offset: '0x00000EFC'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Used to enable topology detection. See the CoreSight Architecture
+    Specification for more information. This register enables the component to switch
+    from a functional mode, the default behavior, to integration mode where the inputs
+    and outputs of the component can be directly controlled for integration testing
+    and topology solving. Note: When a device has been in integration mode, it might
+    not function with the original behavior. After performing integration or topology
+    detection, you must reset the system to ensure correct behavior of CoreSight and
+    other connected system components that are affected by the integration or topology
+    detection.'
+  field:
+  - bits: '0'
+    longdesc: If no integration functionality is implemented, this register must read
+      as zero.
+    name: INTEGRATION_MODE
+    shortdesc: Enables the component to switch from functional mode to integration
+      mode and back.
+    type: rw
+  name: ITCTRL
+  offset: '0x00000F00'
+  type: rw
+  width: 32
+- default: '0x0000000F'
+  description: This is used in conjunction with Claim Tag Clear Register, CLAIMCLR.
+    This register forms one half of the Claim Tag value. This location allows individual
+    bits to be set, write, and returns the number of bits that can be set, read.
+  field:
+  - bits: '3:0'
+    name: CLAIMSET
+    type: rw
+  name: CLAIMSET
+  offset: '0x00000FA0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register is used in conjunction with Claim Tag Set Register, CLAIMSET.
+    This register forms one half of the Claim Tag value. This location enables individual
+    bits to be cleared, write, and returns the current Claim Tag value, read.
+  field:
+  - bits: '3:0'
+    name: CLAIMCLR
+    type: rw
+  name: CLAIMCLR
+  offset: '0x00000FA4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This is used to enable write access to device registers.
+  field:
+  - bits: '31:0'
+    longdesc: An invalid write has the affect of removing write access.
+    name: ACCESS_W
+    shortdesc: A write of 0xC5ACCE55 enables further write access to this device.
+    type: wo
+  name: LAR
+  offset: '0x00000FB0'
+  type: wo
+  width: 32
+- default: '0x00000003'
+  description: This indicates the status of the lock control mechanism. This lock
+    prevents accidental writes by code under debug. This register must always be present
+    although there might not be any lock access control mechanism. The lock mechanism,
+    where present and locked, must block write accesses to any control register, except
+    the Lock Access Register. For most components this covers all registers except
+    for the Lock Access Register, 0xFB0.
+  field:
+  - bits: '2'
+    name: LOCKTYPE
+    type: ro
+  - bits: '1'
+    name: LOCKGRANT
+    type: ro
+  - bits: '0'
+    name: LOCKEXIST
+    type: ro
+  name: LSR
+  offset: '0x00000FB4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reports the required security level and current status of those enables.
+    Where functionality changes on a given security level then this change in status
+    must be reported in this register
+  field:
+  - bits: '7:6'
+    name: SNID
+    type: ro
+  - bits: '5:4'
+    name: SID
+    type: ro
+  - bits: '3:2'
+    name: NSNID
+    type: ro
+  - bits: '1:0'
+    name: NSID
+    type: ro
+  name: AUTHSTATUS
+  offset: '0x00000FB8'
+  type: ro
+  width: 32
+- default: '0x00000002'
+  description: Indicates the capabilities of the CoreSight Replicator.
+  field:
+  - bits: '3:0'
+    name: PORTNUM
+    type: ro
+  name: DEVID
+  offset: '0x00000FC8'
+  type: ro
+  width: 32
+- default: '0x00000022'
+  description: Provides a debugger with information about the component when the Part
+    Number field is not recognized. The debugger can then report this information.
+  field:
+  - bits: '7:4'
+    name: SUB_TYPE
+    type: ro
+  - bits: '3:0'
+    name: MAJOR_TYPE
+    type: ro
+  name: DEVTYPE
+  offset: '0x00000FCC'
+  type: ro
+  width: 32
+- default: '0x00000004'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer identity and the memory footprint indicator.
+  field:
+  - bits: '7:4'
+    longdesc: If a component only requires the standard 4KB, this must read as 0x0,
+      4KB only. For 8KB set to 0x1, for 16KB set to 0x2, for 32KB set to 0x3, and
+      so on.
+    name: FOURKB_COUNT
+    shortdesc: This is a 4-bit value that indicates the total contiguous size of the
+      memory window used by this component in powers of 2 from the standard 4KB.
+    type: ro
+  - bits: '3:0'
+    name: JEP106_CONT
+    type: ro
+  name: PIDR4
+  offset: '0x00000FD0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  name: PIDR5
+  offset: '0x00000FD4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  name: PIDR6
+  offset: '0x00000FD8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  name: PIDR7
+  offset: '0x00000FDC'
+  type: rw
+  width: 32
+- default: '0x00000009'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer specific part number.
+  field:
+  - bits: '7:0'
+    longdesc: This is selected by the designer of the component.
+    name: PART_NUMBER_BITS7TO0
+    shortdesc: Bits [7:0] of the component part number.
+    type: ro
+  name: PIDR0
+  offset: '0x00000FE0'
+  type: ro
+  width: 32
+- default: '0x000000B9'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer specific part number and part of the designer identity.
+  field:
+  - bits: '7:4'
+    name: JEP106_BITS3TO0
+    type: ro
+  - bits: '3:0'
+    longdesc: This is selected by the designer of the component.
+    name: PART_NUMBER_BITS11TO8
+    shortdesc: Bits [11:8] of the component part number.
+    type: ro
+  name: PIDR1
+  offset: '0x00000FE4'
+  type: ro
+  width: 32
+- default: '0x0000001B'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer identity and the product revision.
+  field:
+  - bits: '7:4'
+    longdesc: This only increases by 1 for both major and minor revisions and is used
+      as a look-up to establish the exact major and minor revision.
+    name: REVISION
+    shortdesc: The Revision field is an incremental value starting at 0x0 for the
+      first design of this component.
+    type: ro
+  - bits: '3'
+    longdesc: Indicates that a JEDEC assigned value is used.
+    name: JEDEC
+    shortdesc: Always set.
+    type: ro
+  - bits: '2:0'
+    name: JEP106_BITS6TO4
+    type: ro
+  name: PIDR2
+  offset: '0x00000FE8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Part of the set of Peripheral Identification registers. Contains the
+    RevAnd and Customer Modified fields.
+  field:
+  - bits: '7:4'
+    longdesc: In most cases this field is zero. It is recommended that component designers
+      ensure this field can be changed by a metal fix if required, for example by
+      driving it from registers that reset to zero.
+    name: REVAND
+    shortdesc: This field indicates minor errata fixes specific to this design, for
+      example metal fixes after implementation.
+    type: ro
+  - bits: '3:0'
+    longdesc: In most cases this field is zero.
+    name: CUSTOMER_MODIFIED
+    shortdesc: Where the component is reusable IP, this value indicates if the customer
+      has modified the behavior of the component.
+    type: ro
+  name: PIDR3
+  offset: '0x00000FEC'
+  type: ro
+  width: 32
+- default: '0x0000000D'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PREAMBLE
+    type: ro
+  name: CIDR0
+  offset: '0x00000FF0'
+  type: ro
+  width: 32
+- default: '0x00000090'
+  description: A component identification register, that indicates that the identification
+    registers are present. This register also indicates the component class.
+  field:
+  - bits: '7:4'
+    name: CLASS
+    type: ro
+  - bits: '3:0'
+    name: PREAMBLE
+    type: ro
+  name: CIDR1
+  offset: '0x00000FF4'
+  type: ro
+  width: 32
+- default: '0x00000005'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PREAMBLE
+    type: ro
+  name: CIDR2
+  offset: '0x00000FF8'
+  type: ro
+  width: 32
+- default: '0x000000B1'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PREAMBLE
+    type: ro
+  name: CIDR3
+  offset: '0x00000FFC'
+  type: ro
+  width: 32

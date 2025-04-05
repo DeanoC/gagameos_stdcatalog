@@ -1,0 +1,63 @@
+definition:
+- arch: arm7-a
+  buses:
+  - address_width: 32
+    base_address: '0xFD00_0000'
+    data_width: 64
+    name: rpu0
+    supplier: true
+  - address_width: 32
+    base_address: '0xFD00_0000'
+    data_width: 64
+    name: rpu1
+    supplier: true
+  core_count: 2
+  gcc_flags: -mcpu=cortex-r5 -mfloat-abi=hard -mfpu=vfpv3-d16 -Wl,--build-id
+  max_atomic_width: 64
+  max_bitop_type_width: 128
+  registers:
+  - base_address: '0xf900_0000'
+    name: RCPU_GIC
+    resource: registers/r5_pl390.toml
+  triple: arm-none-eabi
+  type: cpu.r5f.zynqps8
+  width: 32
+- buses:
+  - address_width: 18
+    data_width: 64
+    name: rputcm
+    supplier: false
+  ranges:
+  - address: '0x0_0000'
+    cpus: R5F
+    fixed_base_address: true
+    size: 64 KiB
+  - address: '0x2_0000'
+    cpus: R5F
+    fixed_base_address: true
+    size: 64 KiB
+  - address: '0x0_0000'
+    cpus: A53, PMU
+    size: 64 KiB
+  - address: '0x2_0000'
+    cpus: A53, PMU
+    size: 64 KiB
+  - address: '0x4_0000'
+    cpus: A53, PMU
+    size: 32 KiB
+  - address: '0x5_0000'
+    cpus: A53, PMU
+    size: 32 KiB
+  - address: '0x9_0000'
+    cpus: A53, PMU
+    size: 64 KiB
+  - address: '0xB_0000'
+    cpus: A53, PMU
+    size: 64 KiB
+  - address: '0xD_0000'
+    cpus: A53, PMU
+    size: 32 KiB
+  - address: '0xD_0000'
+    cpus: A53, PMU
+    size: 32 KiB
+  type: ram.sram.tcm.zynqps8

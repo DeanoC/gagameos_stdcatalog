@@ -1,0 +1,24 @@
+actions:
+- make_config
+- sbt_run
+- src
+- read_verilog_top
+process:
+- filename: config.toml
+  name: make_config
+  parameters:
+  - reset_clocks
+  processor: toml
+- args: +runMain Resetti config.toml .. ${name}
+  main_scala: resetti.scala
+  name: sbt_run
+  processor: sbt
+  with_build_sbt: true
+- name: src
+  processor: sources
+  sources:
+  - file: ${outPath}/${name}.v
+    language: verilog
+- name: read_verilog_top
+  processor: read_verilog_top
+  source: ${outPath}/${name}.v

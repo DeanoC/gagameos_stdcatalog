@@ -1,0 +1,853 @@
+bank:
+- address: '0xffcc0000'
+  name: EFUSE
+description: eFUSE Control
+register:
+- default: '0x00000001'
+  description: Write Lock
+  field:
+  - bits: '15:0'
+    longdesc: Any other value will lock access to the EFUSE registers. Reading this
+      register returns the lock status of the EFUSE registers. 0x0 = unlocked 0x1
+      = locked
+    name: LOCK
+    shortdesc: Write 0xDF0D to this regiter to enable writing to the EFUSE registers.
+    type: rw
+  name: WR_LOCK
+  offset: '0x00000000'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Configuration
+  field:
+  - bits: '5'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  - bits: '3:2'
+    name: MARGIN_RD
+    type: rw
+  - bits: '1'
+    name: PGM_EN
+    type: rw
+  - bits: '0'
+    longdesc: 'The PS_REF_CLK MUST be used when programming the eFuse and a very accurate
+      clock is required (+/- 5%). The default value of the timing parameters are set
+      for the Internal ring oscillator and must be changed when the clock source is
+      changed. 0: Internal Ring Oscillator 1: PS_REF_CLK'
+    name: EFUSE_CLK_SEL
+    shortdesc: Selects the source of the eFuse clock.
+    type: rw
+  name: CFG
+  offset: '0x00000004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Status
+  field:
+  - bits: '7'
+    longdesc: This bit is only valid when AES_CRC_DONE is set.
+    name: AES_CRC_PASS
+    shortdesc: Indicates that the AES key integrity check passed.
+    type: ro
+  - bits: '6'
+    longdesc: Pass/Fail is indicated in the AES_CRC_PASS bit.
+    name: AES_CRC_DONE
+    shortdesc: Indicates that the AES key integrity chck has finished.
+    type: ro
+  - bits: '5'
+    name: CACHE_DONE
+    type: ro
+  - bits: '4'
+    name: CACHE_LOAD
+    type: ro
+  - bits: '3'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'If the TBIT pattern fails, RSA Authentication and AES eFuse key are
+      disabled. 0: fail 1: pass'
+    name: EFUSE_0_TBIT
+    shortdesc: Indicates if the TBIT pattern was successfully read from eFuse 0.
+    type: ro
+  name: STATUS
+  offset: '0x00000008'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: eFuse Program Bit Address
+  field:
+  - bits: '12:11'
+    longdesc: '0: Main eFuse array. 1: reserved 2: PUF Syndrome data (LSB). 3: PUF
+      Syndrome data (MSB).'
+    name: EFUSE
+    shortdesc: Type of eFuse to write to.
+    type: wo
+  - bits: '10:5'
+    name: ROW
+    type: wo
+  - bits: '4:0'
+    name: COLUMN
+    type: wo
+  name: EFUSE_PGM_ADDR
+  offset: '0x0000000C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: eFuse Read Address
+  field:
+  - bits: '12:11'
+    longdesc: '0: Main eFuse array. 1: reserved 2: PUF Syndrome data (LSB). 3: PUF
+      Syndrome data (MSB).'
+    name: EFUSE
+    shortdesc: Type of eFuse to read from.
+    type: wo
+  - bits: '10:5'
+    name: ROW
+    type: wo
+  - bits: '4:0'
+    name: RESERVED
+    type: waz
+  name: EFUSE_RD_ADDR
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: eFuse Read Data
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: ro
+  name: EFUSE_RD_DATA
+  offset: '0x00000014'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Program Strobe Width
+  field:
+  - bits: '15:0'
+    longdesc: This value must be set before the EFUSE can be programmed. Set this
+      value to ceiling(5us / pss_ref_clk period)
+    name: VALUE
+    shortdesc: Count value for program strobe duration with resepct to reference clock.
+    type: rw
+  name: TPGM
+  offset: '0x00000018'
+  type: rw
+  width: 32
+- default: '0x0000001B'
+  description: Read Strobe Width
+  field:
+  - bits: '7:0'
+    longdesc: Default value assumes 220MHz reference clock and 150ns strobe width.
+      This value can be adjusted based on the following equation ceiling(150ns / efuse_clk
+      period) where efuse_clk is selected by the CFG register.
+    name: VALUE
+    shortdesc: Count value for read strobe duration with respect to the SYSOSC clock.
+    type: rw
+  name: TRD
+  offset: '0x0000001C'
+  type: rw
+  width: 32
+- default: '0x000000FF'
+  description: PS to STROBE timing
+  field:
+  - bits: '7:0'
+    longdesc: 'The default value is set to max and should be reconfigured for the
+      efuse_clk used to program the EFUSE. This value is calculated using the following
+      equation: ceiling(67ns / efuse_clk period)'
+    name: VALUE
+    shortdesc: Count value for the PS to STROBE setup/hold timing parameter.
+    type: rw
+  name: TSU_H_PS
+  offset: '0x00000020'
+  type: rw
+  width: 32
+- default: '0x0000000B'
+  description: PS to CS timing
+  field:
+  - bits: '7:0'
+    longdesc: 'The default value is set for a 220MHz clock. This value can be reconfigured
+      using the following equation: ceiling(46ns / efuse_clk period) where efuse_clk
+      is selected by the CFG register.'
+    name: VALUE
+    shortdesc: Count value for the PS to CSB setup/hold timing paramter.
+    type: rw
+  name: TSU_H_PS_CS
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00000007'
+  description: CS to STROBE timing
+  field:
+  - bits: '3:0'
+    longdesc: 'The default value is set for a 220MHz clock. This value can be reconfigured
+      using the following equation: ceiling(30ns / efuse_clk period) where efuse_clk
+      is selected by the CFG register.'
+    name: VALUE
+    shortdesc: Count value for the CSB/LOAD/PGENB to STROBE setup/hold timing parameter.
+    type: rw
+  name: TSU_H_CS
+  offset: '0x0000002C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: eFuse Interrupt Status
+  field:
+  - bits: '31'
+    name: APB_SLVERR
+    type: wtc
+  - bits: '30:5'
+    name: RESERVED
+    type: raz
+  - bits: '4'
+    name: CACHE_ERROR
+    type: wtc
+  - bits: '3'
+    longdesc: RD operation aborted.
+    name: RD_ERROR
+    shortdesc: Indicatest that a RD was requested to a restricted FUSE.
+    type: wtc
+  - bits: '2'
+    longdesc: RD data is now available in the EFUSE_RD_DATA register.
+    name: RD_DONE
+    shortdesc: Indicates that the RD operation has completed.
+    type: wtc
+  - bits: '1'
+    longdesc: PGM operation was aborted.
+    name: PGM_ERROR
+    shortdesc: Inidcates that PGM was requested to a restricted FUSE.
+    type: wtc
+  - bits: '0'
+    name: PGM_DONE
+    type: wtc
+  name: EFUSE_ISR
+  offset: '0x00000030'
+  type: mixed
+  width: 32
+- default: '0x8000001F'
+  description: eFuse Interrupt Mask Status
+  field:
+  - bits: '31'
+    name: APB_SLVERR
+    type: ro
+  - bits: '30:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: CACHE_ERROR
+    type: ro
+  - bits: '3'
+    name: RD_ERROR
+    type: ro
+  - bits: '2'
+    name: RD_DONE
+    type: ro
+  - bits: '1'
+    name: PGM_ERROR
+    type: ro
+  - bits: '0'
+    name: PGM_DONE
+    type: ro
+  name: EFUSE_IMR
+  offset: '0x00000034'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: eFuse Interrupt Enable
+  field:
+  - bits: '31'
+    name: APB_SLVERR
+    type: wo
+  - bits: '30:5'
+    name: RESERVED
+    type: wo
+  - bits: '4'
+    name: CACHE_ERROR
+    type: wo
+  - bits: '3'
+    name: RD_ERROR
+    type: wo
+  - bits: '2'
+    name: RD_DONE
+    type: wo
+  - bits: '1'
+    name: PGM_ERROR
+    type: wo
+  - bits: '0'
+    name: PGM_DONE
+    type: wo
+  name: EFUSE_IER
+  offset: '0x00000038'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: eFuse Interrupt Disable
+  field:
+  - bits: '31'
+    name: APB_SLVERR
+    type: wo
+  - bits: '30:5'
+    name: RESERVED
+    type: wo
+  - bits: '4'
+    name: CACHE_ERROR
+    type: wo
+  - bits: '3'
+    name: RD_ERROR
+    type: wo
+  - bits: '2'
+    name: RD_DONE
+    type: wo
+  - bits: '1'
+    name: PGM_ERROR
+    type: wo
+  - bits: '0'
+    name: PGM_DONE
+    type: wo
+  name: EFUSE_IDR
+  offset: '0x0000003C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: eFuse Cache Load
+  field:
+  - bits: '0'
+    longdesc: This should only be done if a cache error occurs. Excessive reading
+      of the eFuse can degrade the values. This bit is self-clearing.
+    name: LOAD
+    shortdesc: Writing to this bit will reload the eFuse cache.
+    type: wo
+  name: EFUSE_CACHE_LOAD
+  offset: '0x00000040'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: eFuse Program Lock
+  field:
+  - bits: '0'
+    longdesc: This bit is set only and can only be cleared by POR reset.
+    name: SPK_ID_LOCK
+    shortdesc: Setting this bit prevents programming the SPK_ID fuses.
+    type: rwso
+  name: EFUSE_PGM_LOCK
+  offset: '0x00000044'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: EFUSE AES Key Integrity Check
+  field:
+  - bits: '31:0'
+    longdesc: When the check is finished, the AES_CRC_DONE bit in the EFUSE_STATUS
+      register will be set. If the value calculated by the EFUSE controller matches
+      the value writen to this register, then the AES_CRC_PASS bit will also be set.
+      The AES key must be cached in the EFUSE controller for this feature to work.
+      After burning the key, reload the cache then write the CRC value to this register.
+      The CRC check can be disabled by blowing the AES_RD_LOCK fuse.
+    name: AES_CRC_VALUE
+    shortdesc: Writing the AES key CRC value to this register will start the AES integrity
+      check.
+    type: wo
+  name: EFUSE_AES_CRC
+  offset: '0x00000048'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: eFuse Miscellaneous Control
+  field:
+  - bits: '3:0'
+    longdesc: Default is 0 delay. Valid values are from 0x2 to 0xF. Recommended setting
+      is 0x6 or 0x7 for a 1ms filter.
+    name: GF_STAGES
+    shortdesc: Configures the number of stages to be used for the PL -> PS security
+      signals passing through the glitch filters.
+    type: rw
+  name: EFUSE_MISC
+  offset: '0x000000FC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Device DNA 0
+  field:
+  - bits: '31:0'
+    name: DNA
+    type: ro
+  name: DNA_0
+  offset: '0x0000100C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Device DNA 1
+  field:
+  - bits: '31:0'
+    name: DNA
+    type: ro
+  name: DNA_1
+  offset: '0x00001010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Device DNA 2
+  field:
+  - bits: '31:0'
+    name: DNA
+    type: ro
+  name: DNA_2
+  offset: '0x00001014'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Available Functionality
+  field:
+  - bits: '8'
+    name: VCU_DIS
+    type: ro
+  - bits: '5'
+    name: GPU_DIS
+    type: ro
+  - bits: '3'
+    name: APU3_DIS
+    type: ro
+  - bits: '2'
+    name: APU2_DIS
+    type: ro
+  - bits: '1'
+    name: APU1_DIS
+    type: ro
+  - bits: '0'
+    name: APU0_DIS
+    type: ro
+  name: EXTENDED_IDCODE
+  offset: '0x00001018'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: User Fuses 0
+  field:
+  - bits: '31:0'
+    name: USER
+    type: ro
+  name: USER_0
+  offset: '0x00001020'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: User Fuses 1
+  field:
+  - bits: '31:0'
+    name: USER
+    type: ro
+  name: USER_1
+  offset: '0x00001024'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: User Fuses 2
+  field:
+  - bits: '31:0'
+    name: USER
+    type: ro
+  name: USER_2
+  offset: '0x00001028'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: User Fuses 3
+  field:
+  - bits: '31:0'
+    name: USER
+    type: ro
+  name: USER_3
+  offset: '0x0000102C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: User Fuses 4
+  field:
+  - bits: '31:0'
+    name: USER
+    type: ro
+  name: USER_4
+  offset: '0x00001030'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: User Fuses 5
+  field:
+  - bits: '31:0'
+    name: USER
+    type: ro
+  name: USER_5
+  offset: '0x00001034'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: User Fuses 6
+  field:
+  - bits: '31:0'
+    name: USER
+    type: ro
+  name: USER_6
+  offset: '0x00001038'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: User Fuses 7
+  field:
+  - bits: '31:0'
+    name: USER
+    type: ro
+  name: USER_7
+  offset: '0x0000103C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Miscellaneous User Control
+  field:
+  - bits: '7'
+    name: USR_WRLK_7
+    type: ro
+  - bits: '6'
+    name: USR_WRLK_6
+    type: ro
+  - bits: '5'
+    name: USR_WRLK_5
+    type: ro
+  - bits: '4'
+    name: USR_WRLK_4
+    type: ro
+  - bits: '3'
+    name: USR_WRLK_3
+    type: ro
+  - bits: '2'
+    name: USR_WRLK_2
+    type: ro
+  - bits: '1'
+    name: USR_WRLK_1
+    type: ro
+  - bits: '0'
+    name: USR_WRLK_0
+    type: ro
+  name: MISC_USER_CTRL
+  offset: '0x00001040'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Security Control
+  field:
+  - bits: '31:30'
+    name: PPK1_INVLD
+    type: ro
+  - bits: '29'
+    name: PPK1_WRLK
+    type: ro
+  - bits: '28:27'
+    name: PPK0_INVLD
+    type: ro
+  - bits: '26'
+    name: PPK0_WRLK
+    type: ro
+  - bits: '25:11'
+    longdesc: All boots must be authenticated
+    name: RSA_EN
+    shortdesc: Enabels RSA Authentication during boot.
+    type: ro
+  - bits: '10'
+    name: SEC_LOCK
+    type: ro
+  - bits: '9'
+    name: PROG_GATE_2
+    type: ro
+  - bits: '8'
+    name: PROG_GATE_1
+    type: ro
+  - bits: '7'
+    name: PROG_GATE_0
+    type: ro
+  - bits: '6'
+    longdesc: This boot mode does not execute the PMU / CSU ROM
+    name: DFT_DIS
+    shortdesc: Disables DFT boot mode.
+    type: ro
+  - bits: '5'
+    longdesc: The only instructions available are BYPASS and IDCODE.
+    name: JTAG_DIS
+    shortdesc: Disables the JTAG controller.
+    type: ro
+  - bits: '4'
+    name: ERROR_DIS
+    type: ro
+  - bits: '3'
+    name: BBRAM_DIS
+    type: ro
+  - bits: '2'
+    name: ENC_ONLY
+    type: ro
+  - bits: '1'
+    name: AES_WRLK
+    type: ro
+  - bits: '0'
+    name: AES_RDLK
+    type: ro
+  name: SEC_CTRL
+  offset: '0x00001058'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SPK Identification code
+  field:
+  - bits: '31:0'
+    longdesc: This must match with the authenticated identification code in the boot
+      image or the SPK will be rejected.
+    name: SPK_ID
+    shortdesc: SPK Identification code.
+    type: ro
+  name: SPK_ID
+  offset: '0x0000105C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 0
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_0
+  offset: '0x000010A0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 1
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_1
+  offset: '0x000010A4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 2
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_2
+  offset: '0x000010A8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 3
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_3
+  offset: '0x000010AC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 4
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_4
+  offset: '0x000010B0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 5
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_5
+  offset: '0x000010B4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 6
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_6
+  offset: '0x000010B8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 7
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_7
+  offset: '0x000010BC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 8
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_8
+  offset: '0x000010C0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 9
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_9
+  offset: '0x000010C4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 10
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_10
+  offset: '0x000010C8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK0 11
+  field:
+  - bits: '31:0'
+    name: PPK0
+    type: ro
+  name: PPK0_11
+  offset: '0x000010CC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 0
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_0
+  offset: '0x000010D0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 1
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_1
+  offset: '0x000010D4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 2
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_2
+  offset: '0x000010D8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 3
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_3
+  offset: '0x000010DC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 4
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_4
+  offset: '0x000010E0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 5
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_5
+  offset: '0x000010E4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 6
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_6
+  offset: '0x000010E8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 7
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_7
+  offset: '0x000010EC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 8
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_8
+  offset: '0x000010F0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 9
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_9
+  offset: '0x000010F4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 10
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_10
+  offset: '0x000010F8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PPK1 11
+  field:
+  - bits: '31:0'
+    name: PPK1
+    type: ro
+  name: PPK1_11
+  offset: '0x000010FC'
+  type: ro
+  width: 32

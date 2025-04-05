@@ -1,0 +1,193 @@
+description: A53 Integration ROM
+register:
+- default: '0x00010003'
+  description: CPU 0 Debug Component
+  name: ENTRY00
+  offset: '0x00000000'
+  type: ro
+  width: 32
+- default: '0x00020003'
+  description: CPU 0 CTI Component
+  name: ENTRY01
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x00030003'
+  description: CPU 0 PMU Component
+  name: ENTRY02
+  offset: '0x00000008'
+  type: ro
+  width: 32
+- default: '0x00040003'
+  description: CPU 0 ETM Component
+  name: ENTRY03
+  offset: '0x0000000C'
+  type: ro
+  width: 32
+- default: '0x00110003'
+  description: CPU 1 Debug Component
+  name: ENTRY04
+  offset: '0x00000010'
+  type: ro
+  width: 32
+- default: '0x00120003'
+  description: CPU 1 CTI Component
+  name: ENTRY05
+  offset: '0x00000014'
+  type: ro
+  width: 32
+- default: '0x00130003'
+  description: CPU 1 PMU Component
+  name: ENTRY06
+  offset: '0x00000018'
+  type: ro
+  width: 32
+- default: '0x00140003'
+  description: CPU 1 ETM Component
+  name: ENTRY07
+  offset: '0x0000001C'
+  type: ro
+  width: 32
+- default: '0x00210003'
+  description: CPU 2 Debug Component
+  name: ENTRY08
+  offset: '0x00000020'
+  type: ro
+  width: 32
+- default: '0x00220003'
+  description: CPU 2 CTI Component
+  name: ENTRY09
+  offset: '0x00000024'
+  type: ro
+  width: 32
+- default: '0x00230003'
+  description: CPU 2 PMU Component
+  name: ENTRY10
+  offset: '0x00000028'
+  type: ro
+  width: 32
+- default: '0x00240003'
+  description: CPU 2 ETM Component
+  name: ENTRY11
+  offset: '0x0000002C'
+  type: ro
+  width: 32
+- default: '0x00310003'
+  description: CPU 3 Debug Component
+  name: ENTRY12
+  offset: '0x00000030'
+  type: ro
+  width: 32
+- default: '0x00320003'
+  description: CPU 3 CTI Component
+  name: ENTRY13
+  offset: '0x00000034'
+  type: ro
+  width: 32
+- default: '0x00330003'
+  description: CPU 3 PMU Component
+  name: ENTRY14
+  offset: '0x00000038'
+  type: ro
+  width: 32
+- default: '0x00340003'
+  description: CPU 3 ETM Component
+  name: ENTRY15
+  offset: '0x0000003C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: This register indicates the capabilities.
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: DEVID
+  offset: '0x00000FC8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: It provides a debugger with information about the component.
+  field:
+  - bits: '7:4'
+    name: SUB_TYPE
+    type: ro
+  - bits: '3:0'
+    name: MAJOR_TYPE
+    type: ro
+  name: DEVTYPE
+  offset: '0x00000FCC'
+  type: ro
+  width: 32
+- default: '0x00000004'
+  description: ROM Peripheral ID 4
+  name: PIDR4
+  offset: '0x00000FD0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: ROM Peripheral ID 5
+  name: PIDR5
+  offset: '0x00000FD4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: ROM Peripheral ID 6
+  name: PIDR6
+  offset: '0x00000FD8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: ROM Peripheral ID 7
+  name: PIDR7
+  offset: '0x00000FDC'
+  type: ro
+  width: 32
+- default: '0x000000A1'
+  description: ROM Peripheral ID 0
+  name: PIDR0
+  offset: '0x00000FE0'
+  type: ro
+  width: 32
+- default: '0x000000B4'
+  description: ROM Peripheral ID 1
+  name: PIDR1
+  offset: '0x00000FE4'
+  type: ro
+  width: 32
+- default: '0x0000004B'
+  description: ROM Peripheral ID 2
+  name: PIDR2
+  offset: '0x00000FE8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: ROM Peripheral ID 3
+  name: PIDR3
+  offset: '0x00000FEC'
+  type: ro
+  width: 32
+- default: '0x0000000D'
+  description: ROM Component ID 0
+  name: CIDR0
+  offset: '0x00000FF0'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: ROM Component ID 1
+  name: CIDR1
+  offset: '0x00000FF4'
+  type: ro
+  width: 32
+- default: '0x00000005'
+  description: ROM Component ID 2
+  name: CIDR2
+  offset: '0x00000FF8'
+  type: ro
+  width: 32
+- default: '0x000000B1'
+  description: ROM Component ID 3
+  name: CIDR3
+  offset: '0x00000FFC'
+  type: ro
+  width: 32

@@ -1,0 +1,103 @@
+definition:
+- cpus: a53
+  depends:
+  - core
+  - dbg
+  - osservices
+  - platform
+  - utils
+  software: libs/display_port/display_port.toml
+  type: library.zynqps8.display_port
+- cpus: a53,pmu,r5f
+  depends:
+  - core
+  - dbg
+  - platform
+  - osservices
+  - utils
+  software: libs/dma/dma.toml
+  type: library.zynqps8.dma
+- cpus: a53,pmu,r5f
+  depends:
+  - core
+  - dbg
+  - platform
+  - osservices
+  software: libs/triple_timer_counter/triple_timer_counter.toml
+  type: library.zynqps8.triple_timer_counter
+- cpus: a53,r5f
+  depends:
+  - core
+  - dbg
+  - multi_core
+  - platform
+  - utils
+  software: libs/gic_v2/gic_v2.toml
+  type: library.zynqps8.gic_v2
+- cpus: a53,r5f
+  depends:
+  - core
+  - dbg
+  - multi_core
+  - platform
+  - utils
+  - zynqps8.gic_v2
+  software: libs/i2c/i2c.toml
+  type: library.zynqps8.i2c
+- cpus: a53,r5f
+  depends:
+  - core
+  - dbg
+  - multi_core
+  - platform
+  - utils
+  software: libs/mmu/mmu.toml
+  type: library.zynqps8.mmu
+- cpus: a53
+  depends:
+  - core
+  - dbg
+  - multi_core
+  - platform
+  - utils
+  - usb
+  - zynqps8.gic_v2
+  - zynqps8.i2c
+  - zynqps8.mmu
+  software: libs/xhci/xhci.toml
+  type: library.zynqps8.xhci
+- cpus: a53,pmu,r5f
+  depends:
+  - core
+  - dbg
+  - utils
+  software: libs/xilinx/xilinx.toml
+  type: library.zynqps8.xilinx
+- cpus: a53
+  depends:
+  - core
+  - dbg
+  - gfxdebug
+  - osservices
+  - platform
+  - utils
+  - zynqps8.xilinx
+  - zynqps8.display_port
+  - zynqps8.mmu
+  - petitfatfs
+  - memory
+  name: ikuy_boot
+  software: programs_a53/ikuy_boot/ikuy_boot.toml
+  type: program.zynqps8.ikuy_boot
+- cpus: pmu
+  depends:
+  - core
+  - dbg
+  - gfxdebug
+  - osservices
+  - platform
+  - utils
+  - zynqps8.dma
+  name: pmu_monitor
+  software: programs_pmu/pmu_monitor/pmu_monitor.toml
+  type: program.zynqps8.pmu_monitor

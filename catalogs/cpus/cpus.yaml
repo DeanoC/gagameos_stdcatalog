@@ -1,0 +1,13 @@
+definition:
+- gateware: vexriscv/vexriscv_smallest.toml
+  supplier_prefix:
+  - dBus_
+  - iBus_
+  triple: riscv32-none-elf
+  type: cpu.riscv32im.vexriscv_smallest
+  width: 32
+include:
+- resource: x86_64_linux_host.toml
+- resource: zynqps8/a53.toml
+- resource: zynqps8/r5f.toml
+- resource: zynqps8/pmu.toml

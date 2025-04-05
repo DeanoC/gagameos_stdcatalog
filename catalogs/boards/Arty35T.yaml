@@ -1,0 +1,446 @@
+defaults:
+  drive: 8
+  pullup: false
+  slew: Slow
+  standard: LVCMOS33
+instance:
+- board_device: xc7a35tcsg324-1
+  board_family: Artix 7
+  board_type: Xilinx
+  name: Arty35T
+  type: board.arty35t
+- name: clk.100MHz
+  period: 10.0
+  pin: E3
+  type: clock.ref
+  waveform: '{0 5}'
+- names:
+  - tms
+  - tdo
+  - tdi
+  - tck
+  pins:
+  - T18
+  - R18
+  - P18
+  - N17
+  prefix: jtag
+  type: pin.jtag
+- direction: In
+  name: board.switches
+  pins:
+  - A8
+  - C11
+  - C10
+  - A10
+  type: pin.switch
+- direction: In
+  name: board.buttons
+  pins:
+  - D9
+  - C9
+  - B9
+  - B8
+  type: pin.button
+- direction: Out
+  name: board.leds.rgb0
+  pins:
+  - G6
+  - F6
+  - E1
+  type: pin.led
+- direction: Out
+  name: board.leds.rgb1
+  pins:
+  - G3
+  - J4
+  - G4
+  type: pin.led
+- direction: Out
+  name: board.leds.rgb2
+  pins:
+  - J3
+  - J2
+  - H4
+  type: pin.led
+- direction: Out
+  name: board.leds.rgb3
+  pins:
+  - K1
+  - H6
+  - K2
+  type: pin.led
+- name: board.leds
+  pins:
+  - H5
+  - J5
+  - T9
+  - T10
+  type: pin.led
+- name: board.pmod.a
+  pins:
+  - G13
+  - B11
+  - A11
+  - D12
+  - D13
+  - B18
+  - A18
+  - K16
+  type: pin.pmod
+- name: board.pmod.b
+  pins:
+  - E13
+  - E16
+  - D15
+  - C15
+  - J17
+  - J18
+  - K15
+  - J15
+  type: pin.pmod
+- name: board.pmod.c
+  pins:
+  - U12
+  - V12
+  - V10
+  - V11
+  - U14
+  - V14
+  - T13
+  - U13
+  type: pin.pmod
+- name: board.pmod.d
+  pins:
+  - D4
+  - D3
+  - F4
+  - F3
+  - E2
+  - D2
+  - H2
+  - G2
+  type: pin.pmod
+- directions:
+  - In
+  - Out
+  names:
+  - rx
+  - tx
+  pins:
+  - D10
+  - A9
+  prefix: board.uart0
+  pullup: true
+  type: pin.uart
+- name: chipkit_io.outer
+  pins:
+  - V15
+  - U16
+  - P14,
+  - T11
+  - R12
+  - T14
+  - T15
+  - T16
+  - N15,
+  - M16
+  - V17
+  - U18
+  - R17
+  - P17
+  type: pin.chipkit
+- name: chipkit_io.outer.analog
+  pins:
+  - C5
+  - C6
+  - A5
+  - A6
+  - B4
+  - C4
+  - A1
+  - B1
+  - B2
+  - B3
+  - C14
+  - D14
+  type: pin.chipkit
+- name: chipkit_io.outer.analog_as_digital
+  pins:
+  - F5
+  - D8
+  - C7
+  - E7
+  - D7
+  - D5
+  type: pin.chipkit
+- name: chipkit_io.inner
+  pins:
+  - U11
+  - V16
+  - M13,
+  - R10
+  - R11
+  - R13
+  - R15
+  - P15
+  - R16
+  - N16
+  - N14
+  - U17
+  - T18
+  - R18
+  - P18
+  - N17
+  type: pin.chipkit
+- name: chipkit_io.inner.diff_analog
+  pin_ns:
+  - B6
+  - E5
+  - A3
+  pin_ps:
+  - B7
+  - E6
+  - A4
+  type: pin.chipkit
+- name: chipkit_io.inner.analog_as_digital
+  pins:
+  - B7
+  - B6
+  - E6
+  - E5
+  - A4
+  - A3
+  type: pin.chipkit
+- directions:
+  - In
+  - Out
+  - Out
+  - Out
+  names:
+  - cipo
+  - copi
+  - scl
+  - cs
+  pins:
+  - G1
+  - H1
+  - F1
+  - C1
+  prefix: spi0
+  pullups:
+  - true
+  - false
+  - false
+  - false
+  type: pin.spi
+- names:
+  - scl
+  - sda
+  - scl_pullup
+  - sda_pullup
+  pins:
+  - L18
+  - M18
+  - A14
+  - A14
+  prefix: i2c
+  type: pin.i2c
+- name: ck_ioa
+  pin: M17
+  type: pin.other
+- name: ck_rst
+  pin: C2
+  type: pin.async_reset
+- direction: Out
+  names:
+  - reset
+  - tx_clk
+  - tx_ctrl
+  pins:
+  - C16
+  - H16
+  - H15
+  prefix: enet0
+  pullup: true
+  type: pin.net.ether
+- direction: In
+  names:
+  - rx_clk
+  - rx_ctrl
+  pins:
+  - F15
+  - C17
+  prefix: enet0
+  pullup: true
+  type: pin.net.ether
+- direction: Out
+  name: enet0.txd
+  pins:
+  - H14
+  - J14
+  - J13
+  - H17
+  pullup: true
+  type: pin.net.ether
+- direction: In
+  name: enet0.rxd
+  pins:
+  - D18
+  - E17
+  - E18
+  - G17
+  pullup: true
+  type: pin.net.ether
+- direction: Bi
+  name: enet0.mdio
+  pins:
+  - K13
+  - F16
+  pullup: true
+  type: pin.net.ether
+- directions:
+  - Out
+  - Bi
+  - Bi
+  - Bi
+  - Bi
+  names:
+  - cs
+  - dq0
+  - dq1
+  - dq2
+  - dq3
+  pins:
+  - L13
+  - K17
+  - K18
+  - L14
+  - M14
+  prefix: qspi0
+  pullups:
+  - true
+  - false
+  - false
+  - false
+  - false
+  type: pin.qspi
+- direction: Out
+  name: addr
+  pins:
+  - R2
+  - M6
+  - N4
+  - T1
+  - N6
+  - R7
+  - V6
+  - U7
+  - R8
+  - V7
+  - R6
+  - U6
+  - T6
+  - T8
+  prefix: ram.ddr3
+  pullup: true
+  slew: Fast
+  standard: SSTL135
+  type: pin.ram.ddr3
+- direction: Bi
+  name: DQ
+  pins:
+  - K5
+  - L3
+  - K3
+  - L6
+  - M3
+  - M1
+  - L4
+  - M2
+  - V4
+  - T5
+  - U4
+  - V5
+  - V1
+  - T3
+  - U3
+  - R3
+  prefix: ram.ddr3
+  pullup: true
+  slew: Fast
+  standard: SSTL135
+  type: pin.ram.ddr3
+- direction: Bi
+  name: DQS
+  pin_ns:
+  - N1
+  - V2
+  pin_ps:
+  - N2
+  - U2
+  prefix: ram.ddr3
+  pullup: true
+  slew: Fast
+  standard: DIFF_SSTL135
+  type: pin.ram.ddr3
+- direction: Bi
+  name: BA
+  pins:
+  - R1
+  - P4
+  - P2
+  prefix: ram.ddr3
+  pullup: true
+  slew: Fast
+  standard: SSTL135
+  type: pin.ram.ddr3
+- direction: Bi
+  name: DM
+  pins:
+  - L1
+  - U1
+  prefix: ram.ddr3
+  pullup: true
+  slew: Fast
+  standard: SSTL135
+  type: pin.ram.ddr3
+- direction: Bi
+  names:
+  - RASn
+  - CASn
+  - WEn
+  - CSn
+  pins:
+  - P3
+  - M4
+  - P5
+  - U8
+  prefix: ram.ddr3
+  pullup: true
+  slew: Fast
+  standard: SSTL135
+  type: pin.ram.ddr3
+- direction: Bi
+  name: CK
+  pin_n: V9
+  pin_p: U9
+  prefix: ram.ddr3
+  pullup: true
+  slew: Fast
+  standard: DIFF_SSTL135
+  type: pin.ram.ddr3
+- direction: Bi
+  names:
+  - CKE
+  - ODT
+  - RESETn
+  pins:
+  - N5
+  - R5
+  - K6
+  prefix: ram.ddr3
+  pullup: true
+  slew: Fast
+  standard: SSTL135
+  type: pin.ram.ddr3

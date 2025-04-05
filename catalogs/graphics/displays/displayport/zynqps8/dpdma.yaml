@@ -1,0 +1,1989 @@
+description: DisplayPort DMA
+register:
+- default: '0x00000000'
+  description: Enable/Disable a error response
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: APB_ERR_RES
+    type: rw
+  name: ERR_CTRL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '27'
+    name: VSYNC_INT
+    type: wtc
+  - bits: '26'
+    name: AXI_RD_4K_CROSS
+    type: wtc
+  - bits: '25'
+    name: WR_DATA_FIFO_FULL
+    type: wtc
+  - bits: '24'
+    name: WR_CMD_FIFO_FULL
+    type: wtc
+  - bits: '23'
+    name: DSCR_ERR5
+    type: wtc
+  - bits: '22'
+    name: DSCR_ERR4
+    type: wtc
+  - bits: '21'
+    name: DSCR_ERR3
+    type: wtc
+  - bits: '20'
+    name: DSCR_ERR2
+    type: wtc
+  - bits: '19'
+    name: DSCR_ERR1
+    type: wtc
+  - bits: '18'
+    name: DSCR_ERR0
+    type: wtc
+  - bits: '17'
+    name: DATA_AXI_ERR5
+    type: wtc
+  - bits: '16'
+    name: DATA_AXI_ERR4
+    type: wtc
+  - bits: '15'
+    name: DATA_AXI_ERR3
+    type: wtc
+  - bits: '14'
+    name: DATA_AXI_ERR2
+    type: wtc
+  - bits: '13'
+    name: DATA_AXI_ERR1
+    type: wtc
+  - bits: '12'
+    name: DATA_AXI_ERR0
+    type: wtc
+  - bits: '11'
+    name: NO_OSTAND_TRAN5
+    type: wtc
+  - bits: '10'
+    name: NO_OSTAND_TRAN4
+    type: wtc
+  - bits: '9'
+    name: NO_OSTAND_TRAN3
+    type: wtc
+  - bits: '8'
+    name: NO_OSTAND_TRAN2
+    type: wtc
+  - bits: '7'
+    name: NO_OSTAND_TRAN1
+    type: wtc
+  - bits: '6'
+    name: NO_OSTAND_TRAN0
+    type: wtc
+  - bits: '5'
+    name: DSCR_DONE5
+    type: wtc
+  - bits: '4'
+    name: DSCR_DONE4
+    type: wtc
+  - bits: '3'
+    name: DSCR_DONE3
+    type: wtc
+  - bits: '2'
+    name: DSCR_DONE2
+    type: wtc
+  - bits: '1'
+    name: DSCR_DONE1
+    type: wtc
+  - bits: '0'
+    name: DSCR_DONE0
+    type: wtc
+  name: ISR
+  offset: '0x00000004'
+  type: wtc
+  width: 32
+- default: '0x0FFFFFFF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '27'
+    name: VSYNC_INT
+    type: ro
+  - bits: '26'
+    name: AXI_RD_4K_CROSS
+    type: ro
+  - bits: '25'
+    name: WR_DATA_FIFO_FULL
+    type: ro
+  - bits: '24'
+    name: WR_CMD_FIFO_FULL
+    type: ro
+  - bits: '23'
+    name: DSCR_ERR5
+    type: ro
+  - bits: '22'
+    name: DSCR_ERR4
+    type: ro
+  - bits: '21'
+    name: DSCR_ERR3
+    type: ro
+  - bits: '20'
+    name: DSCR_ERR2
+    type: ro
+  - bits: '19'
+    name: DSCR_ERR1
+    type: ro
+  - bits: '18'
+    name: DSCR_ERR0
+    type: ro
+  - bits: '17'
+    name: DATA_AXI_ERR5
+    type: ro
+  - bits: '16'
+    name: DATA_AXI_ERR4
+    type: ro
+  - bits: '15'
+    name: DATA_AXI_ERR3
+    type: ro
+  - bits: '14'
+    name: DATA_AXI_ERR2
+    type: ro
+  - bits: '13'
+    name: DATA_AXI_ERR1
+    type: ro
+  - bits: '12'
+    name: DATA_AXI_ERR0
+    type: ro
+  - bits: '11'
+    name: NO_OSTAND_TRAN5
+    type: ro
+  - bits: '10'
+    name: NO_OSTAND_TRAN4
+    type: ro
+  - bits: '9'
+    name: NO_OSTAND_TRAN3
+    type: ro
+  - bits: '8'
+    name: NO_OSTAND_TRAN2
+    type: ro
+  - bits: '7'
+    name: NO_OSTAND_TRAN1
+    type: ro
+  - bits: '6'
+    name: NO_OSTAND_TRAN0
+    type: ro
+  - bits: '5'
+    name: DSCR_DONE5
+    type: ro
+  - bits: '4'
+    name: DSCR_DONE4
+    type: ro
+  - bits: '3'
+    name: DSCR_DONE3
+    type: ro
+  - bits: '2'
+    name: DSCR_DONE2
+    type: ro
+  - bits: '1'
+    name: DSCR_DONE1
+    type: ro
+  - bits: '0'
+    name: DSCR_DONE0
+    type: ro
+  name: IMR
+  offset: '0x00000008'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of 1 to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '27'
+    name: VSYNC_INT
+    type: wo
+  - bits: '26'
+    name: AXI_RD_4K_CROSS
+    type: wo
+  - bits: '25'
+    name: WR_DATA_FIFO_FULL
+    type: wo
+  - bits: '24'
+    name: WR_CMD_FIFO_FULL
+    type: wo
+  - bits: '23'
+    name: DSCR_ERR5
+    type: wo
+  - bits: '22'
+    name: DSCR_ERR4
+    type: wo
+  - bits: '21'
+    name: DSCR_ERR3
+    type: wo
+  - bits: '20'
+    name: DSCR_ERR2
+    type: wo
+  - bits: '19'
+    name: DSCR_ERR1
+    type: wo
+  - bits: '18'
+    name: DSCR_ERR0
+    type: wo
+  - bits: '17'
+    name: DATA_AXI_ERR5
+    type: wo
+  - bits: '16'
+    name: DATA_AXI_ERR4
+    type: wo
+  - bits: '15'
+    name: DATA_AXI_ERR3
+    type: wo
+  - bits: '14'
+    name: DATA_AXI_ERR2
+    type: wo
+  - bits: '13'
+    name: DATA_AXI_ERR1
+    type: wo
+  - bits: '12'
+    name: DATA_AXI_ERR0
+    type: wo
+  - bits: '11'
+    name: NO_OSTAND_TRAN5
+    type: wo
+  - bits: '10'
+    name: NO_OSTAND_TRAN4
+    type: wo
+  - bits: '9'
+    name: NO_OSTAND_TRAN3
+    type: wo
+  - bits: '8'
+    name: NO_OSTAND_TRAN2
+    type: wo
+  - bits: '7'
+    name: NO_OSTAND_TRAN1
+    type: wo
+  - bits: '6'
+    name: NO_OSTAND_TRAN0
+    type: wo
+  - bits: '5'
+    name: DSCR_DONE5
+    type: wo
+  - bits: '4'
+    name: DSCR_DONE4
+    type: wo
+  - bits: '3'
+    name: DSCR_DONE3
+    type: wo
+  - bits: '2'
+    name: DSCR_DONE2
+    type: wo
+  - bits: '1'
+    name: DSCR_DONE1
+    type: wo
+  - bits: '0'
+    name: DSCR_DONE0
+    type: wo
+  name: IEN
+  offset: '0x0000000C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of 1 one to this location will
+    mask the interrupt. (IMR: 1)'
+  field:
+  - bits: '27'
+    name: VSYNC_INT
+    type: wo
+  - bits: '26'
+    name: AXI_RD_4K_CROSS
+    type: wo
+  - bits: '25'
+    name: WR_DATA_FIFO_FULL
+    type: wo
+  - bits: '24'
+    name: WR_CMD_FIFO_FULL
+    type: wo
+  - bits: '23'
+    name: DSCR_ERR5
+    type: wo
+  - bits: '22'
+    name: DSCR_ERR4
+    type: wo
+  - bits: '21'
+    name: DSCR_ERR3
+    type: wo
+  - bits: '20'
+    name: DSCR_ERR2
+    type: wo
+  - bits: '19'
+    name: DSCR_ERR1
+    type: wo
+  - bits: '18'
+    name: DSCR_ERR0
+    type: wo
+  - bits: '17'
+    name: DATA_AXI_ERR5
+    type: wo
+  - bits: '16'
+    name: DATA_AXI_ERR4
+    type: wo
+  - bits: '15'
+    name: DATA_AXI_ERR3
+    type: wo
+  - bits: '14'
+    name: DATA_AXI_ERR2
+    type: wo
+  - bits: '13'
+    name: DATA_AXI_ERR1
+    type: wo
+  - bits: '12'
+    name: DATA_AXI_ERR0
+    type: wo
+  - bits: '11'
+    name: NO_OSTAND_TRAN5
+    type: wo
+  - bits: '10'
+    name: NO_OSTAND_TRAN4
+    type: wo
+  - bits: '9'
+    name: NO_OSTAND_TRAN3
+    type: wo
+  - bits: '8'
+    name: NO_OSTAND_TRAN2
+    type: wo
+  - bits: '7'
+    name: NO_OSTAND_TRAN1
+    type: wo
+  - bits: '6'
+    name: NO_OSTAND_TRAN0
+    type: wo
+  - bits: '5'
+    name: DSCR_DONE5
+    type: wo
+  - bits: '4'
+    name: DSCR_DONE4
+    type: wo
+  - bits: '3'
+    name: DSCR_DONE3
+    type: wo
+  - bits: '2'
+    name: DSCR_DONE2
+    type: wo
+  - bits: '1'
+    name: DSCR_DONE1
+    type: wo
+  - bits: '0'
+    name: DSCR_DONE0
+    type: wo
+  name: IDS
+  offset: '0x00000010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31'
+    name: RD_CMD_FIFO_FULL
+    type: wtc
+  - bits: '30'
+    name: DSCR_DONE_ERR5
+    type: wtc
+  - bits: '29'
+    name: DSCR_DONE_ERR4
+    type: wtc
+  - bits: '28'
+    name: DSCR_DONE_ERR3
+    type: wtc
+  - bits: '27'
+    name: DSCR_DONE_ERR2
+    type: wtc
+  - bits: '26'
+    name: DSCR_DONE_ERR1
+    type: wtc
+  - bits: '25'
+    name: DSCR_DONE_ERR0
+    type: wtc
+  - bits: '24'
+    name: DSCR_WR_AXI_ERR5
+    type: wtc
+  - bits: '23'
+    name: DSCR_WR_AXI_ERR4
+    type: wtc
+  - bits: '22'
+    name: DSCR_WR_AXI_ERR3
+    type: wtc
+  - bits: '21'
+    name: DSCR_WR_AXI_ERR2
+    type: wtc
+  - bits: '20'
+    name: DSCR_WR_AXI_ERR1
+    type: wtc
+  - bits: '19'
+    name: DSCR_WR_AXI_ERR0
+    type: wtc
+  - bits: '18'
+    name: DSCR_CRC_ERR5
+    type: wtc
+  - bits: '17'
+    name: DSCR_CRC_ERR4
+    type: wtc
+  - bits: '16'
+    name: DSCR_CRC_ERR3
+    type: wtc
+  - bits: '15'
+    name: DSCR_CRC_ERR2
+    type: wtc
+  - bits: '14'
+    name: DSCR_CRC_ERR1
+    type: wtc
+  - bits: '13'
+    name: DSCR_CRC_ERR0
+    type: wtc
+  - bits: '12'
+    name: DSCR_PRE_ERR5
+    type: wtc
+  - bits: '11'
+    name: DSCR_PRE_ERR4
+    type: wtc
+  - bits: '10'
+    name: DSCR_PRE_ERR3
+    type: wtc
+  - bits: '9'
+    name: DSCR_PRE_ERR2
+    type: wtc
+  - bits: '8'
+    name: DSCR_PRE_ERR1
+    type: wtc
+  - bits: '7'
+    name: DSCR_PRE_ERR0
+    type: wtc
+  - bits: '6'
+    name: DSCR_RD_AXI_ERR5
+    type: wtc
+  - bits: '5'
+    name: DSCR_RD_AXI_ERR4
+    type: wtc
+  - bits: '4'
+    name: DSCR_RD_AXI_ERR3
+    type: wtc
+  - bits: '3'
+    name: DSCR_RD_AXI_ERR2
+    type: wtc
+  - bits: '2'
+    name: DSCR_RD_AXI_ERR1
+    type: wtc
+  - bits: '1'
+    name: DSCR_RD_AXI_ERR0
+    type: wtc
+  - bits: '0'
+    name: INV_APB
+    type: wtc
+  name: EISR
+  offset: '0x00000014'
+  type: wtc
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31'
+    name: RD_CMD_FIFO_FULL
+    type: ro
+  - bits: '30'
+    name: DSCR_DONE_ERR5
+    type: ro
+  - bits: '29'
+    name: DSCR_DONE_ERR4
+    type: ro
+  - bits: '28'
+    name: DSCR_DONE_ERR3
+    type: ro
+  - bits: '27'
+    name: DSCR_DONE_ERR2
+    type: ro
+  - bits: '26'
+    name: DSCR_DONE_ERR1
+    type: ro
+  - bits: '25'
+    name: DSCR_DONE_ERR0
+    type: ro
+  - bits: '24'
+    name: DSCR_WR_AXI_ERR5
+    type: ro
+  - bits: '23'
+    name: DSCR_WR_AXI_ERR4
+    type: ro
+  - bits: '22'
+    name: DSCR_WR_AXI_ERR3
+    type: ro
+  - bits: '21'
+    name: DSCR_WR_AXI_ERR2
+    type: ro
+  - bits: '20'
+    name: DSCR_WR_AXI_ERR1
+    type: ro
+  - bits: '19'
+    name: DSCR_WR_AXI_ERR0
+    type: ro
+  - bits: '18'
+    name: DSCR_CRC_ERR5
+    type: ro
+  - bits: '17'
+    name: DSCR_CRC_ERR4
+    type: ro
+  - bits: '16'
+    name: DSCR_CRC_ERR3
+    type: ro
+  - bits: '15'
+    name: DSCR_CRC_ERR2
+    type: ro
+  - bits: '14'
+    name: DSCR_CRC_ERR1
+    type: ro
+  - bits: '13'
+    name: DSCR_CRC_ERR0
+    type: ro
+  - bits: '12'
+    name: DSCR_PRE_ERR5
+    type: ro
+  - bits: '11'
+    name: DSCR_PRE_ERR4
+    type: ro
+  - bits: '10'
+    name: DSCR_PRE_ERR3
+    type: ro
+  - bits: '9'
+    name: DSCR_PRE_ERR2
+    type: ro
+  - bits: '8'
+    name: DSCR_PRE_ERR1
+    type: ro
+  - bits: '7'
+    name: DSCR_PRE_ERR0
+    type: ro
+  - bits: '6'
+    name: DSCR_RD_AXI_ERR5
+    type: ro
+  - bits: '5'
+    name: DSCR_RD_AXI_ERR4
+    type: ro
+  - bits: '4'
+    name: DSCR_RD_AXI_ERR3
+    type: ro
+  - bits: '3'
+    name: DSCR_RD_AXI_ERR2
+    type: ro
+  - bits: '2'
+    name: DSCR_RD_AXI_ERR1
+    type: ro
+  - bits: '1'
+    name: DSCR_RD_AXI_ERR0
+    type: ro
+  - bits: '0'
+    name: INV_APB
+    type: ro
+  name: EIMR
+  offset: '0x00000018'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of 1 to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31'
+    name: RD_CMD_FIFO_FULL
+    type: wo
+  - bits: '30'
+    name: DSCR_DONE_ERR5
+    type: wo
+  - bits: '29'
+    name: DSCR_DONE_ERR4
+    type: wo
+  - bits: '28'
+    name: DSCR_DONE_ERR3
+    type: wo
+  - bits: '27'
+    name: DSCR_DONE_ERR2
+    type: wo
+  - bits: '26'
+    name: DSCR_DONE_ERR1
+    type: wo
+  - bits: '25'
+    name: DSCR_DONE_ERR0
+    type: wo
+  - bits: '24'
+    name: DSCR_WR_AXI_ERR5
+    type: wo
+  - bits: '23'
+    name: DSCR_WR_AXI_ERR4
+    type: wo
+  - bits: '22'
+    name: DSCR_WR_AXI_ERR3
+    type: wo
+  - bits: '21'
+    name: DSCR_WR_AXI_ERR2
+    type: wo
+  - bits: '20'
+    name: DSCR_WR_AXI_ERR1
+    type: wo
+  - bits: '19'
+    name: DSCR_WR_AXI_ERR0
+    type: wo
+  - bits: '18'
+    name: DSCR_CRC_ERR5
+    type: wo
+  - bits: '17'
+    name: DSCR_CRC_ERR4
+    type: wo
+  - bits: '16'
+    name: DSCR_CRC_ERR3
+    type: wo
+  - bits: '15'
+    name: DSCR_CRC_ERR2
+    type: wo
+  - bits: '14'
+    name: DSCR_CRC_ERR1
+    type: wo
+  - bits: '13'
+    name: DSCR_CRC_ERR0
+    type: wo
+  - bits: '12'
+    name: DSCR_PRE_ERR5
+    type: wo
+  - bits: '11'
+    name: DSCR_PRE_ERR4
+    type: wo
+  - bits: '10'
+    name: DSCR_PRE_ERR3
+    type: wo
+  - bits: '9'
+    name: DSCR_PRE_ERR2
+    type: wo
+  - bits: '8'
+    name: DSCR_PRE_ERR1
+    type: wo
+  - bits: '7'
+    name: DSCR_PRE_ERR0
+    type: wo
+  - bits: '6'
+    name: DSCR_RD_AXI_ERR5
+    type: wo
+  - bits: '5'
+    name: DSCR_RD_AXI_ERR4
+    type: wo
+  - bits: '4'
+    name: DSCR_RD_AXI_ERR3
+    type: wo
+  - bits: '3'
+    name: DSCR_RD_AXI_ERR2
+    type: wo
+  - bits: '2'
+    name: DSCR_RD_AXI_ERR1
+    type: wo
+  - bits: '1'
+    name: DSCR_RD_AXI_ERR0
+    type: wo
+  - bits: '0'
+    name: INV_APB
+    type: wo
+  name: EIEN
+  offset: '0x0000001C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31'
+    name: RD_CMD_FIFO_FULL
+    type: wo
+  - bits: '30'
+    name: DSCR_DONE_ERR5
+    type: wo
+  - bits: '29'
+    name: DSCR_DONE_ERR4
+    type: wo
+  - bits: '28'
+    name: DSCR_DONE_ERR3
+    type: wo
+  - bits: '27'
+    name: DSCR_DONE_ERR2
+    type: wo
+  - bits: '26'
+    name: DSCR_DONE_ERR1
+    type: wo
+  - bits: '25'
+    name: DSCR_DONE_ERR0
+    type: wo
+  - bits: '24'
+    name: DSCR_WR_AXI_ERR5
+    type: wo
+  - bits: '23'
+    name: DSCR_WR_AXI_ERR4
+    type: wo
+  - bits: '22'
+    name: DSCR_WR_AXI_ERR3
+    type: wo
+  - bits: '21'
+    name: DSCR_WR_AXI_ERR2
+    type: wo
+  - bits: '20'
+    name: DSCR_WR_AXI_ERR1
+    type: wo
+  - bits: '19'
+    name: DSCR_WR_AXI_ERR0
+    type: wo
+  - bits: '18'
+    name: DSCR_CRC_ERR5
+    type: wo
+  - bits: '17'
+    name: DSCR_CRC_ERR4
+    type: wo
+  - bits: '16'
+    name: DSCR_CRC_ERR3
+    type: wo
+  - bits: '15'
+    name: DSCR_CRC_ERR2
+    type: wo
+  - bits: '14'
+    name: DSCR_CRC_ERR1
+    type: wo
+  - bits: '13'
+    name: DSCR_CRC_ERR0
+    type: wo
+  - bits: '12'
+    name: DSCR_PRE_ERR5
+    type: wo
+  - bits: '11'
+    name: DSCR_PRE_ERR4
+    type: wo
+  - bits: '10'
+    name: DSCR_PRE_ERR3
+    type: wo
+  - bits: '9'
+    name: DSCR_PRE_ERR2
+    type: wo
+  - bits: '8'
+    name: DSCR_PRE_ERR1
+    type: wo
+  - bits: '7'
+    name: DSCR_PRE_ERR0
+    type: wo
+  - bits: '6'
+    name: DSCR_RD_AXI_ERR5
+    type: wo
+  - bits: '5'
+    name: DSCR_RD_AXI_ERR4
+    type: wo
+  - bits: '4'
+    name: DSCR_RD_AXI_ERR3
+    type: wo
+  - bits: '3'
+    name: DSCR_RD_AXI_ERR2
+    type: wo
+  - bits: '2'
+    name: DSCR_RD_AXI_ERR1
+    type: wo
+  - bits: '1'
+    name: DSCR_RD_AXI_ERR0
+    type: wo
+  - bits: '0'
+    name: INV_APB
+    type: wo
+  name: EIDS
+  offset: '0x00000020'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: DPDMA Global control register, holds fields which control all 6 channels
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: raz
+  name: CNTL
+  offset: '0x00000100'
+  type: raz
+  width: 32
+- default: '0x00000000'
+  description: Global control register provides control to start or redirect any channel
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11'
+    longdesc: Instead of using NEXT ADDRESS at the end of FRAME, DPDMA uses start
+      address to fetch the next descriptor if this bit is written (hardware has a
+      internal sticky copy). This is self clearing bit.
+    name: RTRG_CH5
+    shortdesc: Software can redirect channel 5 by writing 1 to this bit.
+    type: wo
+  - bits: '10'
+    longdesc: Instead of using NEXT ADDRESS at the end of FRAME, DPDMA uses start
+      address to fetch the next descriptor if this bit is written (hardware has a
+      internal sticky copy). This is self clearing bit.
+    name: RTRG_CH4
+    shortdesc: Software can redirect channel 4 by writing 1 to this bit.
+    type: wo
+  - bits: '9'
+    longdesc: Instead of using NEXT ADDRESS at the end of FRAME, DPDMA uses start
+      address to fetch the next descriptor if this bit is written (hardware has a
+      internal sticky copy). This is self clearing bit.
+    name: RTRG_CH3
+    shortdesc: Software can redirect channel 3 by writing 1 to this bit.
+    type: wo
+  - bits: '8'
+    longdesc: Instead of using NEXT ADDRESS at the end of FRAME, DPDMA uses start
+      address to fetch the next descriptor if this bit is written (hardware has a
+      internal sticky copy). This is self clearing bit.
+    name: RTRG_CH2
+    shortdesc: Software can redirect channel 2 by writing 1 to this bit.
+    type: wo
+  - bits: '7'
+    longdesc: Instead of using NEXT ADDRESS at the end of FRAME, DPDMA uses start
+      address to fetch the next descriptor if this bit is written (hardware has a
+      internal sticky copy). This is self clearing bit.
+    name: RTRG_CH1
+    shortdesc: Software can redirect channel 1 by writing 1 to this bit.
+    type: wo
+  - bits: '6'
+    longdesc: Instead of using NEXT ADDRESS at the end of FRAME, DPDMA uses start
+      address to fetch the next descriptor if this bit is written (hardware has a
+      internal sticky copy). This is self clearing bit.
+    name: RTRG_CH0
+    shortdesc: Software can redirect channel 0 by writing 1 to this bit.
+    type: wo
+  - bits: '5'
+    name: TRG_CH5
+    type: wo
+  - bits: '4'
+    name: TRG_CH4
+    type: wo
+  - bits: '3'
+    name: TRG_CH3
+    type: wo
+  - bits: '2'
+    name: TRG_CH2
+    type: wo
+  - bits: '1'
+    name: TRG_CH1
+    type: wo
+  - bits: '0'
+    name: TRG_CH0
+    type: wo
+  name: GBL
+  offset: '0x00000104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Global control register provides control to start or redirect any channel
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: raz
+  - bits: '5:2'
+    name: MON_ID
+    type: rw
+  - bits: '1'
+    name: CLEAR
+    type: wo
+  - bits: '0'
+    name: EN
+    type: rw
+  name: ALC0_CNTL
+  offset: '0x00000108'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Status Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: OFLOW
+    type: ro
+  name: ALC0_STATUS
+  offset: '0x0000010C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ALC0 Max latency Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: LATENCY
+    type: ro
+  name: ALC0_MAX
+  offset: '0x00000110'
+  type: mixed
+  width: 32
+- default: '0x0000FFFF'
+  description: ALC0 Min Latency Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: LATENCY
+    type: ro
+  name: ALC0_MIN
+  offset: '0x00000114'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ALC0 Accumulated Transaction Latency Register
+  field:
+  - bits: '31:0'
+    name: LATENCY
+    type: ro
+  name: ALC0_ACC
+  offset: '0x00000118'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: ALC1 Accumulated Transaction Count Register
+  field:
+  - bits: '31:0'
+    name: COUNT
+    type: ro
+  name: ALC0_ACC_TRAN
+  offset: '0x0000011C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Global control register provides control to start or redirect any channel
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: raz
+  - bits: '5:2'
+    name: MON_ID
+    type: rw
+  - bits: '1'
+    name: CLEAR
+    type: wo
+  - bits: '0'
+    name: EN
+    type: rw
+  name: ALC1_CNTL
+  offset: '0x00000120'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Status Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: OFLOW
+    type: ro
+  name: ALC1_STATUS
+  offset: '0x00000124'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ALC1 Max latency Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: LATENCY
+    type: ro
+  name: ALC1_MAX
+  offset: '0x00000128'
+  type: mixed
+  width: 32
+- default: '0x0000FFFF'
+  description: ALC1 Min Latency Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: LATENCY
+    type: ro
+  name: ALC1_MIN
+  offset: '0x0000012C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ALC1 Accumulated Transaction Latency Register
+  field:
+  - bits: '31:0'
+    name: LATENCY
+    type: ro
+  name: ALC1_ACC
+  offset: '0x00000130'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: ALC1 Accumulated Transaction Count Register
+  field:
+  - bits: '31:0'
+    name: COUNT
+    type: ro
+  name: ALC1_ACC_TRAN
+  offset: '0x00000134'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: rw
+  name: CH0_DSCR_STRT_ADDRE
+  offset: '0x00000200'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: rw
+  name: CH0_DSCR_STRT_ADDR
+  offset: '0x00000204'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Extention Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH0_DSCR_NEXT_ADDRE
+  offset: '0x00000208'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH0_DSCR_NEXT_ADDR
+  offset: '0x0000020C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH0_PYLD_CUR_ADDRE
+  offset: '0x00000210'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH0_PYLD_CUR_ADDR
+  offset: '0x00000214'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Channel 0 Control Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '29:20'
+    name: DSCR_DLY_CNT
+    type: rw
+  - bits: '19:16'
+    name: DSCR_AXCACHE
+    type: rw
+  - bits: '15:14'
+    name: DSCR_AXPROT
+    type: rw
+  - bits: '13:10'
+    name: QOS_DATA_RD
+    type: rw
+  - bits: '9:6'
+    name: QOS_DSCR_RD
+    type: rw
+  - bits: '5:2'
+    name: QOS_DSCR_WR
+    type: rw
+  - bits: '1'
+    longdesc: 'It stopes generating new fetch request untill Pause is High. 1: DMA
+      Channel is paused 0: Normar operation'
+    name: PAUSE
+    shortdesc: Pause for DMA channel, pause preserves the DMA state.
+    type: rw
+  - bits: '0'
+    longdesc: 'Once DMA channel is disable, it goes to idle and can be restarted using
+      trigger after enableing the channel 1: DMA Channel is enable 0: DMA Channel
+      is desable'
+    name: EN
+    shortdesc: Enable/Disable for DMA Channel, Trigger generated by start trigger
+      register is only respected if DMA channel is enabled.
+    type: rw
+  name: CH0_CNTL
+  offset: '0x00000218'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Channel 0 Status Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24:21'
+    name: OTRAN_CNT
+    type: ro
+  - bits: '20:13'
+    name: PREAMBLE
+    type: ro
+  - bits: '12'
+    name: EN_DSCR_INTR
+    type: ro
+  - bits: '11'
+    name: EN_DSCR_UP
+    type: ro
+  - bits: '10'
+    name: DSCR_DONE
+    type: ro
+  - bits: '9'
+    name: IGNR_DONE
+    type: ro
+  - bits: '8'
+    longdesc: Next descriptor it the first descriptor of next frame 1 = This is last
+      descriptor of Frame 0 = Intermediate descriptor
+    name: LDSCR_FRAME
+    shortdesc: Current descriptor is last descriptor of the Frame.
+    type: ro
+  - bits: '7'
+    name: LAST_DSCR
+    type: ro
+  - bits: '6'
+    name: EN_CRC
+    type: ro
+  - bits: '5'
+    name: MODE
+    type: ro
+  - bits: '4'
+    name: BURST_TYPE
+    type: ro
+  - bits: '3:0'
+    name: BURST_LEN
+    type: ro
+  name: CH0_STATUS
+  offset: '0x0000021C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: rw
+  name: CH1_DSCR_STRT_ADDRE
+  offset: '0x00000300'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: rw
+  name: CH1_DSCR_STRT_ADDR
+  offset: '0x00000304'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH1_DSCR_NEXT_ADDRE
+  offset: '0x00000308'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH1_DSCR_NEXT_ADDR
+  offset: '0x0000030C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH1_PYLD_CUR_ADDRE
+  offset: '0x00000310'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH1_PYLD_CUR_ADDR
+  offset: '0x00000314'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Channel 1 Control Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '29:20'
+    name: DSCR_DLY_CNT
+    type: rw
+  - bits: '19:16'
+    name: DSCR_AXCACHE
+    type: rw
+  - bits: '15:14'
+    name: DSCR_AXPROT
+    type: rw
+  - bits: '13:10'
+    name: QOS_DATA_RD
+    type: rw
+  - bits: '9:6'
+    name: QOS_DSCR_RD
+    type: rw
+  - bits: '5:2'
+    name: QOS_DSCR_WR
+    type: rw
+  - bits: '1'
+    longdesc: 'It stops generating new fetch request until Pause is High. 1: DMA Channel
+      is paused 0: Normar operation'
+    name: PAUSE
+    shortdesc: Pause for DMA channel, pause preserves the DMA state.
+    type: rw
+  - bits: '0'
+    longdesc: 'Once DMA channel is disable, it goes to idle and can be restarted using
+      trigger after enabling the channel 1: DMA Channel is enable 0: DMA Channel is
+      disable'
+    name: EN
+    shortdesc: Enable/Disable for DMA Channel, Trigger generated by start trigger
+      register is only respected if DMA channel is enabled.
+    type: rw
+  name: CH1_CNTL
+  offset: '0x00000318'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Channel 1 Status Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24:21'
+    name: OTRAN_CNT
+    type: ro
+  - bits: '20:13'
+    name: PREAMBLE
+    type: ro
+  - bits: '12'
+    name: EN_DSCR_INTR
+    type: ro
+  - bits: '11'
+    name: EN_DSCR_UP
+    type: ro
+  - bits: '10'
+    name: DSCR_DONE
+    type: ro
+  - bits: '9'
+    name: IGNR_DONE
+    type: ro
+  - bits: '8'
+    longdesc: Next descriptor it the first descriptor of next frame 1 = This is last
+      descriptor of Frame 0 = Intermediate descriptor
+    name: LDSCR_FRAME
+    shortdesc: Current descriptor is last descriptor of the Frame.
+    type: ro
+  - bits: '7'
+    name: LAST_DSCR
+    type: ro
+  - bits: '6'
+    name: EN_CRC
+    type: ro
+  - bits: '5'
+    name: MODE
+    type: ro
+  - bits: '4'
+    name: BURST_TYPE
+    type: ro
+  - bits: '3:0'
+    name: BURST_LEN
+    type: ro
+  name: CH1_STATUS
+  offset: '0x0000031C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: rw
+  name: CH2_DSCR_STRT_ADDRE
+  offset: '0x00000400'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: rw
+  name: CH2_DSCR_STRT_ADDR
+  offset: '0x00000404'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH2_DSCR_NEXT_ADDRE
+  offset: '0x00000408'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH2_DSCR_NEXT_ADDR
+  offset: '0x0000040C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH2_PYLD_CUR_ADDRE
+  offset: '0x00000410'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH2_PYLD_CUR_ADDR
+  offset: '0x00000414'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Channel 2 Control Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '29:20'
+    name: DSCR_DLY_CNT
+    type: rw
+  - bits: '19:16'
+    name: DSCR_AXCACHE
+    type: rw
+  - bits: '15:14'
+    name: DSCR_AXPROT
+    type: rw
+  - bits: '13:10'
+    name: QOS_DATA_RD
+    type: rw
+  - bits: '9:6'
+    name: QOS_DSCR_RD
+    type: rw
+  - bits: '5:2'
+    name: QOS_DSCR_WR
+    type: rw
+  - bits: '1'
+    longdesc: 'It stops generating new fetch request until Pause is High. 1: DMA Channel
+      is paused 0: Normar operation'
+    name: PAUSE
+    shortdesc: Pause for DMA channel, pause preserves the DMA state.
+    type: rw
+  - bits: '0'
+    longdesc: 'Once DMA channel is disable, it goes to idle and can be restarted using
+      trigger after enabling the channel 1: DMA Channel is enable 0: DMA Channel is
+      disable'
+    name: EN
+    shortdesc: Enable/Disable for DMA Channel, Trigger generated by start trigger
+      register is only respected if DMA channel is enabled.
+    type: rw
+  name: CH2_CNTL
+  offset: '0x00000418'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Channel 2 Status Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24:21'
+    name: OTRAN_CNT
+    type: ro
+  - bits: '20:13'
+    name: PREAMBLE
+    type: ro
+  - bits: '12'
+    name: EN_DSCR_INTR
+    type: ro
+  - bits: '11'
+    name: EN_DSCR_UP
+    type: ro
+  - bits: '10'
+    name: DSCR_DONE
+    type: ro
+  - bits: '9'
+    name: IGNR_DONE
+    type: ro
+  - bits: '8'
+    longdesc: Next descriptor it the first descriptor of next frame 1 = This is last
+      descriptor of Frame 0 = Intermediate descriptor
+    name: LDSCR_FRAME
+    shortdesc: Current descriptor is last descriptor of the Frame.
+    type: ro
+  - bits: '7'
+    name: LAST_DSCR
+    type: ro
+  - bits: '6'
+    name: EN_CRC
+    type: ro
+  - bits: '5'
+    name: MODE
+    type: ro
+  - bits: '4'
+    name: BURST_TYPE
+    type: ro
+  - bits: '3:0'
+    name: BURST_LEN
+    type: ro
+  name: CH2_STATUS
+  offset: '0x0000041C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: rw
+  name: CH3_DSCR_STRT_ADDRE
+  offset: '0x00000500'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: rw
+  name: CH3_DSCR_STRT_ADDR
+  offset: '0x00000504'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH3_DSCR_NEXT_ADDRE
+  offset: '0x00000508'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH3_DSCR_NEXT_ADDR
+  offset: '0x0000050C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH3_PYLD_CUR_ADDRE
+  offset: '0x00000510'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH3_PYLD_CUR_ADDR
+  offset: '0x00000514'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Channel 3 Control Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '29:20'
+    name: DSCR_DLY_CNT
+    type: rw
+  - bits: '19:16'
+    name: DSCR_AXCACHE
+    type: rw
+  - bits: '15:14'
+    name: DSCR_AXPROT
+    type: rw
+  - bits: '13:10'
+    name: QOS_DATA_RD
+    type: rw
+  - bits: '9:6'
+    name: QOS_DSCR_RD
+    type: rw
+  - bits: '5:2'
+    name: QOS_DSCR_WR
+    type: rw
+  - bits: '1'
+    longdesc: 'It stops generating new fetch request until Pause is High. 1: DMA Channel
+      is paused 0: Normar operation'
+    name: PAUSE
+    shortdesc: Pause for DMA channel, pause preserves the DMA state.
+    type: rw
+  - bits: '0'
+    longdesc: 'Once DMA channel is disable, it goes to idle and can be restarted using
+      trigger after enabling the channel 1: DMA Channel is enable 0: DMA Channel is
+      disable'
+    name: EN
+    shortdesc: Enable/Disable for DMA Channel, Trigger generated by start trigger
+      register is only respected if DMA channel is enabled.
+    type: rw
+  name: CH3_CNTL
+  offset: '0x00000518'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Channel 3 Status Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24:21'
+    name: OTRAN_CNT
+    type: ro
+  - bits: '20:13'
+    name: PREAMBLE
+    type: ro
+  - bits: '12'
+    name: EN_DSCR_INTR
+    type: ro
+  - bits: '11'
+    name: EN_DSCR_UP
+    type: ro
+  - bits: '10'
+    name: DSCR_DONE
+    type: ro
+  - bits: '9'
+    name: IGNR_DONE
+    type: ro
+  - bits: '8'
+    longdesc: Next descriptor it the first descriptor of next frame 1 = This is last
+      descriptor of Frame 0 = Intermediate descriptor
+    name: LDSCR_FRAME
+    shortdesc: Current descriptor is last descriptor of the Frame.
+    type: ro
+  - bits: '7'
+    name: LAST_DSCR
+    type: ro
+  - bits: '6'
+    name: EN_CRC
+    type: ro
+  - bits: '5'
+    name: MODE
+    type: ro
+  - bits: '4'
+    name: BURST_TYPE
+    type: ro
+  - bits: '3:0'
+    name: BURST_LEN
+    type: ro
+  name: CH3_STATUS
+  offset: '0x0000051C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: rw
+  name: CH4_DSCR_STRT_ADDRE
+  offset: '0x00000600'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: rw
+  name: CH4_DSCR_STRT_ADDR
+  offset: '0x00000604'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH4_DSCR_NEXT_ADDRE
+  offset: '0x00000608'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH4_DSCR_NEXT_ADDR
+  offset: '0x0000060C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH4_PYLD_CUR_ADDRE
+  offset: '0x00000610'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH4_PYLD_CUR_ADDR
+  offset: '0x00000614'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Channel 4 Control Register
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: raz
+  - bits: '19:16'
+    name: DSCR_AXCACHE
+    type: rw
+  - bits: '15:14'
+    name: DSCR_AXPROT
+    type: rw
+  - bits: '13:10'
+    name: QOS_DATA_RD
+    type: rw
+  - bits: '9:6'
+    name: QOS_DSCR_RD
+    type: rw
+  - bits: '5:2'
+    name: QOS_DSCR_WR
+    type: rw
+  - bits: '1'
+    longdesc: 'It stops generating new fetch request until Pause is High. 1: DMA Channel
+      is paused 0: Normar operation'
+    name: PAUSE
+    shortdesc: Pause for DMA channel, pause preserves the DMA state.
+    type: rw
+  - bits: '0'
+    longdesc: 'Once DMA channel is disable, it goes to idle and can be restarted using
+      trigger after enabling the channel 1: DMA Channel is enable 0: DMA Channel is
+      disable'
+    name: EN
+    shortdesc: Enable/Disable for DMA Channel, Trigger generated by start trigger
+      register is only respected if DMA channel is enabled.
+    type: rw
+  name: CH4_CNTL
+  offset: '0x00000618'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Channel 4 Status Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24:21'
+    name: OTRAN_CNT
+    type: ro
+  - bits: '20:13'
+    name: PREAMBLE
+    type: ro
+  - bits: '12'
+    name: EN_DSCR_INTR
+    type: ro
+  - bits: '11'
+    name: EN_DSCR_UP
+    type: ro
+  - bits: '10'
+    name: DSCR_DONE
+    type: ro
+  - bits: '9'
+    name: IGNR_DONE
+    type: ro
+  - bits: '8'
+    longdesc: Next descriptor it the first descriptor of next frame 1 = This is last
+      descriptor of Frame 0 = Intermediate descriptor
+    name: LDSCR_FRAME
+    shortdesc: Current descriptor is last descriptor of the Frame.
+    type: ro
+  - bits: '7'
+    name: LAST_DSCR
+    type: ro
+  - bits: '6'
+    name: EN_CRC
+    type: ro
+  - bits: '5'
+    name: MODE
+    type: ro
+  - bits: '4'
+    name: BURST_TYPE
+    type: ro
+  - bits: '3:0'
+    name: BURST_LEN
+    type: ro
+  name: CH4_STATUS
+  offset: '0x0000061C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: rw
+  name: CH5_DSCR_STRT_ADDRE
+  offset: '0x00000700'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Descriptor Start Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: rw
+  name: CH5_DSCR_STRT_ADDR
+  offset: '0x00000704'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH5_DSCR_NEXT_ADDRE
+  offset: '0x00000708'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Next Descriptor Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH5_DSCR_NEXT_ADDR
+  offset: '0x0000070C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Extension Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: MSB
+    type: ro
+  name: CH5_PYLD_CUR_ADDRE
+  offset: '0x00000710'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Current Payload Address Register
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: CH5_PYLD_CUR_ADDR
+  offset: '0x00000714'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Channel 4 Control Register
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: raz
+  - bits: '19:16'
+    name: DSCR_AXCACHE
+    type: rw
+  - bits: '15:14'
+    name: DSCR_AXPROT
+    type: rw
+  - bits: '13:10'
+    name: QOS_DATA_RD
+    type: rw
+  - bits: '9:6'
+    name: QOS_DSCR_RD
+    type: rw
+  - bits: '5:2'
+    name: QOS_DSCR_WR
+    type: rw
+  - bits: '1'
+    longdesc: 'It stops generating new fetch request until Pause is High. 1: DMA Channel
+      is paused 0: Normar operation'
+    name: PAUSE
+    shortdesc: Pause for DMA channel, pause preserves the DMA state.
+    type: rw
+  - bits: '0'
+    longdesc: 'Once DMA channel is disable, it goes to idle and can be restarted using
+      trigger after enabling the channel 1: DMA Channel is enable 0: DMA Channel is
+      disable'
+    name: EN
+    shortdesc: Enable/Disable for DMA Channel, Trigger generated by start trigger
+      register is only respected if DMA channel is enabled.
+    type: rw
+  name: CH5_CNTL
+  offset: '0x00000718'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Channel 4 Status Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24:21'
+    name: OTRAN_CNT
+    type: ro
+  - bits: '20:13'
+    name: PREAMBLE
+    type: ro
+  - bits: '12'
+    name: EN_DSCR_INTR
+    type: ro
+  - bits: '11'
+    name: EN_DSCR_UP
+    type: ro
+  - bits: '10'
+    name: DSCR_DONE
+    type: ro
+  - bits: '9'
+    name: IGNR_DONE
+    type: ro
+  - bits: '8'
+    longdesc: Next descriptor it the first descriptor of next frame 1 = This is last
+      descriptor of Frame 0 = Intermediate descriptor
+    name: LDSCR_FRAME
+    shortdesc: Current descriptor is last descriptor of the Frame.
+    type: ro
+  - bits: '7'
+    name: LAST_DSCR
+    type: ro
+  - bits: '6'
+    name: EN_CRC
+    type: ro
+  - bits: '5'
+    name: MODE
+    type: ro
+  - bits: '4'
+    name: BURST_TYPE
+    type: ro
+  - bits: '3:0'
+    name: BURST_LEN
+    type: ro
+  name: CH5_STATUS
+  offset: '0x0000071C'
+  type: mixed
+  width: 32

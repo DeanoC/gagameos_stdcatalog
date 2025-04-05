@@ -1,0 +1,39 @@
+definition:
+- buses:
+  - address_width: 32
+    data_width: 64
+    name: lpd_ddrc
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: cci0_ddrc
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: cci1_ddrc
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: splitter0_ddrc
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: splitter1_ddrc
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: splitter2_ddrc
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    protocol: internal_ddr
+    supplier: false
+  registers:
+  - base_address: '0x0007_0000'
+    name: DDRC
+    resource: registers/ddrc.toml
+  type: switch.ddrc.zynqps8
+include:
+- resource: lpd.toml
+- resource: fpd.toml
+- resource: iop.toml

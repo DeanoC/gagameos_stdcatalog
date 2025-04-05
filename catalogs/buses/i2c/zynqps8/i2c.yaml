@@ -1,0 +1,342 @@
+description: I2C Controller
+register:
+- default: '0x00000000'
+  description: Control Register
+  field:
+  - bits: '15:14'
+    longdesc: '0 - 3: Divides the input pclk frequency by divisor_a + 1.'
+    name: DIVISOR_A
+    shortdesc: Divisor for stage A clock divider.
+    type: rw
+  - bits: '13:8'
+    longdesc: '0 - 63: Divides the output frequency from divisor_a by divisor_b +
+      1.'
+    name: DIVISOR_B
+    shortdesc: Divisor for stage B clock divider.
+    type: rw
+  - bits: '7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    longdesc: Automatically gets cleared on the next APB clock after being set.
+    name: CLR_FIFO
+    shortdesc: 1 - initializes the FIFO to all zeros and clears the transfer size
+      register.
+    type: rw
+  - bits: '5'
+    longdesc: 0 - normal operation.
+    name: SLVMON
+    shortdesc: Slave monitor mode 1 - monitor mode.
+    type: rw
+  - bits: '4'
+    longdesc: 0 - allow the transfer to terminate as soon as all the data has been
+      transmitted or received.
+    name: HOLD
+    shortdesc: hold_bus 1 - when no more data is available for transmit or no more
+      data can be received, hold the sclk line low until serviced by the host.
+    type: rw
+  - bits: '3'
+    name: ACK_EN
+    type: rw
+  - bits: '2'
+    longdesc: 1 - normal (7-bit) address 0 - reserved
+    name: NEA
+    shortdesc: 'Addressing mode: This bit is used in master mode only.'
+    type: rw
+  - bits: '1'
+    name: MS
+    type: rw
+  - bits: '0'
+    longdesc: 1 - master receiver 0 - master transmitter.
+    name: RW
+    shortdesc: 'Direction of transfer: This bit is used in master mode only.'
+    type: rw
+  name: CONTROL_REG
+  offset: '0x00000000'
+  type: mixed
+  width: 16
+- default: '0x00000000'
+  description: Status register
+  field:
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: BA
+    type: ro
+  - bits: '7'
+    longdesc: The new byte is not acknowledged and contents of the FIFO remains unchanged.
+    name: RXOVF
+    shortdesc: Receiver Overflow 1 - This bit is set whenever FIFO is full and a new
+      byte is received.
+    type: ro
+  - bits: '6'
+    longdesc: Please use COMP in the ISR. 1 - still a byte of data to be transmitted
+      by the interface.
+    name: TXDV
+    shortdesc: Transmit Data Valid - SW should not use this to determine data completion,
+      it is the RAW value on the interface.
+    type: ro
+  - bits: '5'
+    name: RXDV
+    type: ro
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: RXRW
+    type: ro
+  - bits: '2:0'
+    name: RESERVED
+    type: ro
+  name: STATUS_REG
+  offset: '0x00000004'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: IIC Address register
+  field:
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    longdesc: Extended addressing mode uses add[9:0].
+    name: ADD
+    shortdesc: 'Address 0 - 1024: Normal addressing mode uses add[6:0].'
+    type: rw
+  name: I2C_ADDRESS
+  offset: '0x00000008'
+  type: mixed
+  width: 16
+- default: '0x00000000'
+  description: IIC data register
+  field:
+  - bits: '15:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    longdesc: When read from, the data register reads the last received byte of data.
+    name: DATA
+    shortdesc: 'data 0 -255: When written to, the data register sets data to transmit.'
+    type: rw
+  name: I2C_DATA
+  offset: '0x0000000C'
+  type: mixed
+  width: 16
+- default: '0x00000000'
+  description: IIC interrupt status register
+  field:
+  - bits: '15:10'
+    name: RESERVED
+    type: wtc
+  - bits: '9'
+    name: ARB_LOST
+    type: wtc
+  - bits: '8'
+    name: RESERVED
+    type: wtc
+  - bits: '7'
+    name: RX_UNF
+    type: wtc
+  - bits: '6'
+    name: TX_OVF
+    type: wtc
+  - bits: '5'
+    longdesc: The new byte is not acknowledged and contents of the FIFO remains unchanged.
+    name: RX_OVF
+    shortdesc: Receive overflow 1 = This bit is set whenever FIFO is full and a new
+      byte is received.
+    type: wtc
+  - bits: '4'
+    name: SLV_RDY
+    type: wtc
+  - bits: '3'
+    name: TO
+    type: wtc
+  - bits: '2'
+    name: NACK
+    type: wtc
+  - bits: '1'
+    name: DATA
+    type: wtc
+  - bits: '0'
+    name: COMP
+    type: wtc
+  name: INTERRUPT_STATUS
+  offset: '0x00000010'
+  type: wtc
+  width: 16
+- default: '0x00000000'
+  description: Transfer Size Register
+  field:
+  - bits: '7:0'
+    name: TRANSFER_SIZE
+    type: rw
+  name: TRANSFER_SIZE
+  offset: '0x00000014'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Slave Monitor Pause Register
+  field:
+  - bits: '7:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    name: PAUSE
+    type: rw
+  name: SLAVE_MON_PAUSE
+  offset: '0x00000018'
+  type: mixed
+  width: 8
+- default: '0x0000001F'
+  description: Time out register. This bit is set whenever the SCL line is held Low
+    by the master or the accessed slave for more than the period specified in the
+    timeout register, a TO interrupt is generated to avoid stall conditions.
+  field:
+  - bits: '7:0'
+    name: TO
+    type: rw
+  name: TIME_OUT
+  offset: '0x0000001C'
+  type: rw
+  width: 8
+- default: '0x000002FF'
+  description: Interrupt mask register
+  field:
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: ARB_LOST
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: RX_UNF
+    type: ro
+  - bits: '6'
+    name: TX_OVF
+    type: ro
+  - bits: '5'
+    name: RX_OVF
+    type: ro
+  - bits: '4'
+    name: SLV_RDY
+    type: ro
+  - bits: '3'
+    name: TO
+    type: ro
+  - bits: '2'
+    name: NACK
+    type: ro
+  - bits: '1'
+    name: DATA
+    type: ro
+  - bits: '0'
+    name: COMP
+    type: ro
+  name: INTRPT_MASK
+  offset: '0x00000020'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Interrupt Enable Register
+  field:
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: ARB_LOST
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: RX_UNF
+    type: wo
+  - bits: '6'
+    name: TX_OVF
+    type: wo
+  - bits: '5'
+    name: RX_OVF
+    type: wo
+  - bits: '4'
+    name: SLV_RDY
+    type: wo
+  - bits: '3'
+    name: TO
+    type: wo
+  - bits: '2'
+    name: NACK
+    type: wo
+  - bits: '1'
+    name: DATA
+    type: wo
+  - bits: '0'
+    name: COMP
+    type: wo
+  name: INTRPT_ENABLE
+  offset: '0x00000024'
+  type: mixed
+  width: 16
+- default: '0x00000000'
+  description: Interrupt Disable Register
+  field:
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: ARB_LOST
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: RX_UNF
+    type: wo
+  - bits: '6'
+    name: TX_OVF
+    type: wo
+  - bits: '5'
+    name: RX_OVF
+    type: wo
+  - bits: '4'
+    name: SLV_RDY
+    type: wo
+  - bits: '3'
+    name: TO
+    type: wo
+  - bits: '2'
+    name: NACK
+    type: wo
+  - bits: '1'
+    name: DATA
+    type: wo
+  - bits: '0'
+    name: COMP
+    type: wo
+  name: INTRPT_DISABLE
+  offset: '0x00000028'
+  type: mixed
+  width: 16
+- default: '0x00000005'
+  description: Glitch Filter Control Register It is used for setting the length of
+    the glitch filter shift register. If the length of glitch filter shift register
+    is set to zero (0x0) then the glitch filter is bypassed.
+  field:
+  - bits: '15:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    longdesc: The filter length is specified in terms of APB interface clock cycles
+      (LPD_LSBUS). The default value is 5. If it is set to zero (0x0) then the glitch
+      filter is bypassed.
+    name: GF
+    shortdesc: Length of the glitch filter shift register.
+    type: rw
+  name: GLITCH_FILTER
+  offset: '0x0000002C'
+  type: mixed
+  width: 16

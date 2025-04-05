@@ -1,0 +1,1026 @@
+description: CCI-400 GPV
+register:
+- default: '0x00000000'
+  description: Control_Override_Register
+  field:
+  - bits: '5'
+    name: DISABLE_RETRY_REDUCTION_BUFFERS
+    type: rw
+  - bits: '4'
+    name: DISABLE_PRIORITY_PROMOTION
+    type: rw
+  - bits: '3'
+    name: TERMINATE_BARRIERS
+    type: rw
+  - bits: '2'
+    name: DISABLE_SPECULATIVE_FETCHES
+    type: rw
+  - bits: '1'
+    name: DVM_MESSAGE_DISABLE
+    type: rw
+  - bits: '0'
+    name: SNOOP_DISABLE
+    type: rw
+  name: CONTROL_OVERRIDE_REGISTER
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Speculation_Control_Register
+  field:
+  - bits: '20'
+    name: DISABLE_SPECULATIVE_FETCHES_S4
+    type: rw
+  - bits: '19'
+    name: DISABLE_SPECULATIVE_FETCHES_S3
+    type: rw
+  - bits: '18'
+    name: DISABLE_SPECULATIVE_FETCHES_S2
+    type: rw
+  - bits: '17'
+    name: DISABLE_SPECULATIVE_FETCHES_S1
+    type: rw
+  - bits: '16'
+    name: DISABLE_SPECULATIVE_FETCHES_S0
+    type: rw
+  - bits: '2'
+    name: DISABLE_SPECULATIVE_FETCHES_M2
+    type: rw
+  - bits: '1'
+    name: DISABLE_SPECULATIVE_FETCHES_M1
+    type: rw
+  - bits: '0'
+    name: DISABLE_SPECULATIVE_FETCHES_M0
+    type: rw
+  name: SPECULATION_CONTROL_REGISTER
+  offset: '0x00000004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Secure_Access_Register
+  field:
+  - bits: '0'
+    name: SECURE_ACCESS_CONTROL
+    type: rw
+  name: SECURE_ACCESS_REGISTER
+  offset: '0x00000008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Status_Register
+  field:
+  - bits: '0'
+    name: CCI_STATUS
+    type: ro
+  name: STATUS_REGISTER
+  offset: '0x0000000C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Imprecise_Error_Register
+  field:
+  - bits: '20'
+    longdesc: Write 1 to clear
+    name: IMP_ERR_S4
+    shortdesc: Imprecise error indicator for slave interface S4.
+    type: wtc
+  - bits: '19'
+    longdesc: Write 1 to clear
+    name: IMP_ERR_S3
+    shortdesc: Imprecise error indicator for slave interface S3.
+    type: wtc
+  - bits: '18'
+    longdesc: Write 1 to clear
+    name: IMP_ERR_S2
+    shortdesc: Imprecise error indicator for slave interface S2.
+    type: wtc
+  - bits: '17'
+    longdesc: Write 1 to clear
+    name: IMP_ERR_S1
+    shortdesc: Imprecise error indicator for slave interface S1.
+    type: wtc
+  - bits: '16'
+    longdesc: Write 1 to clear
+    name: IMP_ERR_S0
+    shortdesc: Imprecise error indicator for slave interface S0.
+    type: wtc
+  - bits: '2'
+    longdesc: Write 1 to clear
+    name: IMP_ERR_M2
+    shortdesc: Imprecise error indicator for master interface M2.
+    type: wtc
+  - bits: '1'
+    longdesc: Write 1 to clear
+    name: IMP_ERR_M1
+    shortdesc: Imprecise error indicator for master interface M1.
+    type: wtc
+  - bits: '0'
+    longdesc: Write 1 to clear
+    name: IMP_ERR_M0
+    shortdesc: Imprecise error indicator for master interface M0.
+    type: wtc
+  name: IMPRECISE_ERROR_REGISTER
+  offset: '0x00000010'
+  type: wtc
+  width: 32
+- default: '0x00002000'
+  description: Performance_Monitor_Control_Register
+  field:
+  - bits: '15:11'
+    name: PMU_COUNT_NUM
+    type: ro
+  - bits: '5'
+    name: DP
+    type: rw
+  - bits: '4'
+    name: EX
+    type: rw
+  - bits: '3'
+    name: CCD
+    type: rw
+  - bits: '2'
+    name: CCR
+    type: wo
+  - bits: '1'
+    name: RST
+    type: wo
+  - bits: '0'
+    name: CEN
+    type: rw
+  name: PERFORMANCE_MONITOR_CONTROL_REGISTER
+  offset: '0x00000100'
+  type: mixed
+  width: 32
+- default: '0x80000000'
+  description: Snoop_Control_Register_S0
+  field:
+  - bits: '31'
+    name: SUPPORT_DVMS
+    type: ro
+  - bits: '30'
+    name: SUPPORT_SNOOPS
+    type: ro
+  - bits: '1'
+    name: ENABLE_DVMS
+    type: rw
+  name: SNOOP_CONTROL_REGISTER_S0
+  offset: '0x00001000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Shareable_Override_Register_S0
+  field:
+  - bits: '1:0'
+    name: AXDOMAIN_OVERRIDE
+    type: rw
+  name: SHAREABLE_OVERRIDE_REGISTER_S0
+  offset: '0x00001004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Read_Qos_Override_Register_S0
+  field:
+  - bits: '11:8'
+    name: ARQOS_OVERRIDE_READBACK
+    type: ro
+  - bits: '3:0'
+    name: ARQOS_VALUE
+    type: rw
+  name: READ_QOS_OVERRIDE_REGISTER_S0
+  offset: '0x00001100'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Write_Qos_Override_Register_S0
+  field:
+  - bits: '11:8'
+    name: AWQOS_OVERRIDE_READBACK
+    type: ro
+  - bits: '3:0'
+    name: AWQOS_VALUE
+    type: rw
+  name: WRITE_QOS_OVERRIDE_REGISTER_S0
+  offset: '0x00001104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Qos_Control_Register_S0
+  field:
+  - bits: '31'
+    name: QOS_REGULATION_DISABLED
+    type: ro
+  - bits: '21'
+    name: BANDWIDTH_REGULATION_MODE
+    type: rw
+  - bits: '20'
+    name: ARQOS_REGULATION_MODE
+    type: rw
+  - bits: '16'
+    name: AWQOS_REGULATION_MODE
+    type: rw
+  - bits: '3'
+    name: AR_OT_REGULATION
+    type: rw
+  - bits: '2'
+    name: AW_OT_REGULATION
+    type: rw
+  - bits: '1'
+    name: ARQOS_REGULATION
+    type: rw
+  - bits: '0'
+    name: AWQOS_REGULATION
+    type: rw
+  name: QOS_CONTROL_REGISTER_S0
+  offset: '0x0000110C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Max_OT_Register_S0
+  field:
+  - bits: '29:24'
+    name: INT_OT_AR
+    type: rw
+  - bits: '23:16'
+    name: FRAC_OT_AR
+    type: rw
+  - bits: '13:8'
+    name: INT_OT_AW
+    type: rw
+  - bits: '7:0'
+    name: FRAC_OT_AW
+    type: rw
+  name: MAX_OT_REGISTER_S0
+  offset: '0x00001110'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Target_Latency_Register_S0
+  field:
+  - bits: '27:16'
+    name: AR_LAT
+    type: rw
+  - bits: '11:0'
+    name: AW_LAT
+    type: rw
+  name: TARGET_LATENCY_REGISTER_S0
+  offset: '0x00001130'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Latency_Regulation_Register_S0
+  field:
+  - bits: '10:8'
+    name: AR_SCALE_FACT
+    type: rw
+  - bits: '2:0'
+    name: AW_SCALE_FACT
+    type: rw
+  name: LATENCY_REGULATION_REGISTER_S0
+  offset: '0x00001134'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Qos_Range_Register_S0
+  field:
+  - bits: '27:24'
+    name: MAX_ARQOS
+    type: rw
+  - bits: '19:16'
+    name: MIN_ARQOS
+    type: rw
+  - bits: '11:8'
+    name: MAX_AWQOS
+    type: rw
+  - bits: '3:0'
+    name: MIN_AWQOS
+    type: rw
+  name: QOS_RANGE_REGISTER_S0
+  offset: '0x00001138'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Snoop_Control_Register_S1
+  field:
+  - bits: '31'
+    name: SUPPORT_DVMS
+    type: ro
+  - bits: '30'
+    name: SUPPORT_SNOOPS
+    type: ro
+  - bits: '1'
+    name: ENABLE_DVMS
+    type: ro
+  name: SNOOP_CONTROL_REGISTER_S1
+  offset: '0x00002000'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Shareable_Override_Register_S1
+  field:
+  - bits: '1:0'
+    name: AXDOMAIN_OVERRIDE
+    type: rw
+  name: SHAREABLE_OVERRIDE_REGISTER_S1
+  offset: '0x00002004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Read_Qos_Override_Register_S1
+  field:
+  - bits: '11:8'
+    name: ARQOS_OVERRIDE_READBACK
+    type: ro
+  - bits: '3:0'
+    name: ARQOS_VALUE
+    type: rw
+  name: READ_QOS_OVERRIDE_REGISTER_S1
+  offset: '0x00002100'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Write_Qos_Override_Register_S1
+  field:
+  - bits: '11:8'
+    name: AWQOS_OVERRIDE_READBACK
+    type: ro
+  - bits: '3:0'
+    name: AWQOS_VALUE
+    type: rw
+  name: WRITE_QOS_OVERRIDE_REGISTER_S1
+  offset: '0x00002104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Qos_Control_Register_S1
+  field:
+  - bits: '31'
+    name: QOS_REGULATION_DISABLED
+    type: ro
+  - bits: '21'
+    name: BANDWIDTH_REGULATION_MODE
+    type: rw
+  - bits: '20'
+    name: ARQOS_REGULATION_MODE
+    type: rw
+  - bits: '16'
+    name: AWQOS_REGULATION_MODE
+    type: rw
+  - bits: '3'
+    name: AR_OT_REGULATION
+    type: rw
+  - bits: '2'
+    name: AW_OT_REGULATION
+    type: rw
+  - bits: '1'
+    name: ARQOS_REGULATION
+    type: rw
+  - bits: '0'
+    name: AWQOS_REGULATION
+    type: rw
+  name: QOS_CONTROL_REGISTER_S1
+  offset: '0x0000210C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Max_OT_Register_S1
+  field:
+  - bits: '29:24'
+    name: INT_OT_AR
+    type: rw
+  - bits: '23:16'
+    name: FRAC_OT_AR
+    type: rw
+  - bits: '13:8'
+    name: INT_OT_AW
+    type: rw
+  - bits: '7:0'
+    name: FRAC_OT_AW
+    type: rw
+  name: MAX_OT_REGISTER_S1
+  offset: '0x00002110'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Target_Latency_Register_S1
+  field:
+  - bits: '27:16'
+    name: AR_LAT
+    type: rw
+  - bits: '11:0'
+    name: AW_LAT
+    type: rw
+  name: TARGET_LATENCY_REGISTER_S1
+  offset: '0x00002130'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Latency_Regulation_Register_S1
+  field:
+  - bits: '10:8'
+    name: AR_SCALE_FACT
+    type: rw
+  - bits: '2:0'
+    name: AW_SCALE_FACT
+    type: rw
+  name: LATENCY_REGULATION_REGISTER_S1
+  offset: '0x00002134'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Qos_Range_Register_S1
+  field:
+  - bits: '27:24'
+    name: MAX_ARQOS
+    type: rw
+  - bits: '19:16'
+    name: MIN_ARQOS
+    type: rw
+  - bits: '11:8'
+    name: MAX_AWQOS
+    type: rw
+  - bits: '3:0'
+    name: MIN_AWQOS
+    type: rw
+  name: QOS_RANGE_REGISTER_S1
+  offset: '0x00002138'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Snoop_Control_Register_S2
+  field:
+  - bits: '31'
+    name: SUPPORT_DVMS
+    type: ro
+  - bits: '30'
+    name: SUPPORT_SNOOPS
+    type: ro
+  - bits: '1'
+    name: ENABLE_DVMS
+    type: ro
+  name: SNOOP_CONTROL_REGISTER_S2
+  offset: '0x00003000'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Shareable_Override_Register_S2
+  field:
+  - bits: '1:0'
+    name: AXDOMAIN_OVERRIDE
+    type: rw
+  name: SHAREABLE_OVERRIDE_REGISTER_S2
+  offset: '0x00003004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Read_Qos_Override_Register_S2
+  field:
+  - bits: '11:8'
+    name: ARQOS_OVERRIDE_READBACK
+    type: ro
+  - bits: '3:0'
+    name: ARQOS_VALUE
+    type: rw
+  name: READ_QOS_OVERRIDE_REGISTER_S2
+  offset: '0x00003100'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Write_Qos_Override_Register_S2
+  field:
+  - bits: '11:8'
+    name: AWQOS_OVERRIDE_READBACK
+    type: ro
+  - bits: '3:0'
+    name: AWQOS_VALUE
+    type: rw
+  name: WRITE_QOS_OVERRIDE_REGISTER_S2
+  offset: '0x00003104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Qos_Control_Register_S2
+  field:
+  - bits: '31'
+    name: QOS_REGULATION_DISABLED
+    type: ro
+  - bits: '21'
+    name: BANDWIDTH_REGULATION_MODE
+    type: rw
+  - bits: '20'
+    name: ARQOS_REGULATION_MODE
+    type: rw
+  - bits: '16'
+    name: AWQOS_REGULATION_MODE
+    type: rw
+  - bits: '3'
+    name: AR_OT_REGULATION
+    type: rw
+  - bits: '2'
+    name: AW_OT_REGULATION
+    type: rw
+  - bits: '1'
+    name: ARQOS_REGULATION
+    type: rw
+  - bits: '0'
+    name: AWQOS_REGULATION
+    type: rw
+  name: QOS_CONTROL_REGISTER_S2
+  offset: '0x0000310C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Max_OT_Register_S2
+  field:
+  - bits: '29:24'
+    name: INT_OT_AR
+    type: rw
+  - bits: '23:16'
+    name: FRAC_OT_AR
+    type: rw
+  - bits: '13:8'
+    name: INT_OT_AW
+    type: rw
+  - bits: '7:0'
+    name: FRAC_OT_AW
+    type: rw
+  name: MAX_OT_REGISTER_S2
+  offset: '0x00003110'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Target_Latency_Register_S2
+  field:
+  - bits: '27:16'
+    name: AR_LAT
+    type: rw
+  - bits: '11:0'
+    name: AW_LAT
+    type: rw
+  name: TARGET_LATENCY_REGISTER_S2
+  offset: '0x00003130'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Latency_Regulation_Register_S2
+  field:
+  - bits: '10:8'
+    name: AR_SCALE_FACT
+    type: rw
+  - bits: '2:0'
+    name: AW_SCALE_FACT
+    type: rw
+  name: LATENCY_REGULATION_REGISTER_S2
+  offset: '0x00003134'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Qos_Range_Register_S2
+  field:
+  - bits: '27:24'
+    name: MAX_ARQOS
+    type: rw
+  - bits: '19:16'
+    name: MIN_ARQOS
+    type: rw
+  - bits: '11:8'
+    name: MAX_AWQOS
+    type: rw
+  - bits: '3:0'
+    name: MIN_AWQOS
+    type: rw
+  name: QOS_RANGE_REGISTER_S2
+  offset: '0x00003138'
+  type: rw
+  width: 32
+- default: '0xC0000000'
+  description: Snoop_Control_Register_S3
+  field:
+  - bits: '31'
+    name: SUPPORT_DVMS
+    type: ro
+  - bits: '30'
+    name: SUPPORT_SNOOPS
+    type: ro
+  - bits: '1'
+    name: ENABLE_DVMS
+    type: rw
+  - bits: '0'
+    name: ENABLE_SNOOPS
+    type: rw
+  name: SNOOP_CONTROL_REGISTER_S3
+  offset: '0x00004000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Read_Qos_Override_Register_S3
+  field:
+  - bits: '11:8'
+    name: ARQOS_OVERRIDE_READBACK
+    type: ro
+  - bits: '3:0'
+    name: ARQOS_VALUE
+    type: rw
+  name: READ_QOS_OVERRIDE_REGISTER_S3
+  offset: '0x00004100'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Write_Qos_Override_Register_S3
+  field:
+  - bits: '11:8'
+    name: AWQOS_OVERRIDE_READBACK
+    type: ro
+  - bits: '3:0'
+    name: AWQOS_VALUE
+    type: rw
+  name: WRITE_QOS_OVERRIDE_REGISTER_S3
+  offset: '0x00004104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Qos_Control_Register_S3
+  field:
+  - bits: '31'
+    name: QOS_REGULATION_DISABLED
+    type: ro
+  - bits: '21'
+    name: BANDWIDTH_REGULATION_MODE
+    type: rw
+  - bits: '20'
+    name: ARQOS_REGULATION_MODE
+    type: rw
+  - bits: '16'
+    name: AWQOS_REGULATION_MODE
+    type: rw
+  - bits: '1'
+    name: ARQOS_REGULATION
+    type: rw
+  - bits: '0'
+    name: AWQOS_REGULATION
+    type: rw
+  name: QOS_CONTROL_REGISTER_S3
+  offset: '0x0000410C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Target_Latency_Register_S3
+  field:
+  - bits: '27:16'
+    name: AR_LAT
+    type: rw
+  - bits: '11:0'
+    name: AW_LAT
+    type: rw
+  name: TARGET_LATENCY_REGISTER_S3
+  offset: '0x00004130'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Latency_Regulation_Register_S3
+  field:
+  - bits: '10:8'
+    name: AR_SCALE_FACT
+    type: rw
+  - bits: '2:0'
+    name: AW_SCALE_FACT
+    type: rw
+  name: LATENCY_REGULATION_REGISTER_S3
+  offset: '0x00004134'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Qos_Range_Register_S3
+  field:
+  - bits: '27:24'
+    name: MAX_ARQOS
+    type: rw
+  - bits: '19:16'
+    name: MIN_ARQOS
+    type: rw
+  - bits: '11:8'
+    name: MAX_AWQOS
+    type: rw
+  - bits: '3:0'
+    name: MIN_AWQOS
+    type: rw
+  name: QOS_RANGE_REGISTER_S3
+  offset: '0x00004138'
+  type: rw
+  width: 32
+- default: '0xC0000000'
+  description: Snoop_Control_Register_S4
+  field:
+  - bits: '31'
+    name: SUPPORT_DVMS
+    type: ro
+  - bits: '30'
+    name: SUPPORT_SNOOPS
+    type: ro
+  - bits: '1'
+    name: ENABLE_DVMS
+    type: rw
+  - bits: '0'
+    name: ENABLE_SNOOPS
+    type: rw
+  name: SNOOP_CONTROL_REGISTER_S4
+  offset: '0x00005000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Read_Qos_Override_Register_S4
+  field:
+  - bits: '11:8'
+    name: ARQOS_OVERRIDE_READBACK
+    type: ro
+  - bits: '3:0'
+    name: ARQOS_VALUE
+    type: rw
+  name: READ_QOS_OVERRIDE_REGISTER_S4
+  offset: '0x00005100'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Write_Qos_Override_Register_S4
+  field:
+  - bits: '11:8'
+    name: AWQOS_OVERRIDE_READBACK
+    type: ro
+  - bits: '3:0'
+    name: AWQOS_VALUE
+    type: rw
+  name: WRITE_QOS_OVERRIDE_REGISTER_S4
+  offset: '0x00005104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Qos_Control_Register_S4
+  field:
+  - bits: '31'
+    name: QOS_REGULATION_DISABLED
+    type: ro
+  - bits: '21'
+    name: BANDWIDTH_REGULATION_MODE
+    type: rw
+  - bits: '20'
+    name: ARQOS_REGULATION_MODE
+    type: rw
+  - bits: '16'
+    name: AWQOS_REGULATION_MODE
+    type: rw
+  - bits: '1'
+    name: ARQOS_REGULATION
+    type: rw
+  - bits: '0'
+    name: AWQOS_REGULATION
+    type: rw
+  name: QOS_CONTROL_REGISTER_S4
+  offset: '0x0000510C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Target_Latency_Register_S4
+  field:
+  - bits: '27:16'
+    name: AR_LAT
+    type: rw
+  - bits: '11:0'
+    name: AW_LAT
+    type: rw
+  name: TARGET_LATENCY_REGISTER_S4
+  offset: '0x00005130'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Latency_Regulation_Register_S4
+  field:
+  - bits: '10:8'
+    name: AR_SCALE_FACT
+    type: rw
+  - bits: '2:0'
+    name: AW_SCALE_FACT
+    type: rw
+  name: LATENCY_REGULATION_REGISTER_S4
+  offset: '0x00005134'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Qos_Range_Register_S4
+  field:
+  - bits: '27:24'
+    name: MAX_ARQOS
+    type: rw
+  - bits: '19:16'
+    name: MIN_ARQOS
+    type: rw
+  - bits: '11:8'
+    name: MAX_AWQOS
+    type: rw
+  - bits: '3:0'
+    name: MIN_AWQOS
+    type: rw
+  name: QOS_RANGE_REGISTER_S4
+  offset: '0x00005138'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Cycle_Counter
+  field:
+  - bits: '31:0'
+    name: CCNT
+    type: rw
+  name: CYCLE_COUNTER
+  offset: '0x00009004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Cycle_Counter_Control
+  field:
+  - bits: '0'
+    name: CCNT_EN
+    type: rw
+  name: CYCLE_COUNTER_CONTROL
+  offset: '0x00009008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Cycle_Count_Overflow
+  field:
+  - bits: '0'
+    name: CCNT_OVERFLOW
+    type: wtc
+  name: CYCLE_COUNT_OVERFLOW
+  offset: '0x0000900C'
+  type: wtc
+  width: 32
+- default: '0x00000000'
+  description: ESR0
+  field:
+  - bits: '7:5'
+    name: EVT_IF0
+    type: rw
+  - bits: '4:0'
+    name: EVT_CNT0
+    type: rw
+  name: ESR0
+  offset: '0x0000A000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter0
+  field:
+  - bits: '31:0'
+    name: CNT0
+    type: rw
+  name: EVENT_COUNTER0
+  offset: '0x0000A004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter0_Control
+  field:
+  - bits: '0'
+    name: CNT0_EN
+    type: rw
+  name: EVENT_COUNTER0_CONTROL
+  offset: '0x0000A008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter0_Overflow
+  field:
+  - bits: '0'
+    name: CNT0_OVERFLOW
+    type: wtc
+  name: EVENT_COUNTER0_OVERFLOW
+  offset: '0x0000A00C'
+  type: wtc
+  width: 32
+- default: '0x00000000'
+  description: ESR1
+  field:
+  - bits: '7:5'
+    name: EVT_IF1
+    type: rw
+  - bits: '4:0'
+    name: EVT_CNT1
+    type: rw
+  name: ESR1
+  offset: '0x0000B000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter1
+  field:
+  - bits: '31:0'
+    name: CNT1
+    type: rw
+  name: EVENT_COUNTER1
+  offset: '0x0000B004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter1_Control
+  field:
+  - bits: '0'
+    name: CNT1_EN
+    type: rw
+  name: EVENT_COUNTER1_CONTROL
+  offset: '0x0000B008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter1_Overflow
+  field:
+  - bits: '0'
+    name: CNT1_OVERFLOW
+    type: wtc
+  name: EVENT_COUNTER1_OVERFLOW
+  offset: '0x0000B00C'
+  type: wtc
+  width: 32
+- default: '0x00000000'
+  description: ESR2
+  field:
+  - bits: '7:5'
+    name: EVT_IF2
+    type: rw
+  - bits: '4:0'
+    name: EVT_CNT2
+    type: rw
+  name: ESR2
+  offset: '0x0000C000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter2
+  field:
+  - bits: '31:0'
+    name: CNT2
+    type: rw
+  name: EVENT_COUNTER2
+  offset: '0x0000C004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter2_Control
+  field:
+  - bits: '0'
+    name: CNT2_EN
+    type: rw
+  name: EVENT_COUNTER2_CONTROL
+  offset: '0x0000C008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter2_Overflow
+  field:
+  - bits: '0'
+    name: CNT2_OVERFLOW
+    type: wtc
+  name: EVENT_COUNTER2_OVERFLOW
+  offset: '0x0000C00C'
+  type: wtc
+  width: 32
+- default: '0x00000000'
+  description: ESR3
+  field:
+  - bits: '7:5'
+    name: EVT_IF3
+    type: rw
+  - bits: '4:0'
+    name: EVT_CNT3
+    type: rw
+  name: ESR3
+  offset: '0x0000D000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter3
+  field:
+  - bits: '31:0'
+    name: CNT3
+    type: rw
+  name: EVENT_COUNTER3
+  offset: '0x0000D004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter3_Control
+  field:
+  - bits: '0'
+    name: CNT3_EN
+    type: rw
+  name: EVENT_COUNTER3_CONTROL
+  offset: '0x0000D008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Event_Counter3_Overflow
+  field:
+  - bits: '0'
+    name: CNT3_OVERFLOW
+    type: wtc
+  name: EVENT_COUNTER3_OVERFLOW
+  offset: '0x0000D00C'
+  type: wtc
+  width: 32

@@ -1,0 +1,521 @@
+description: Triple Timer Counter
+register:
+- default: '0x00000000'
+  description: Clock Control register
+  field:
+  - bits: '6'
+    name: EX_E
+    type: rw
+  - bits: '5'
+    name: C_SRC
+    type: rw
+  - bits: '4:1'
+    name: PS_V
+    type: rw
+  - bits: '0'
+    longdesc: the default
+    name: PS_EN
+    shortdesc: 'Prescale enable: when this bit is set the counter, clock source is
+      prescaled; the default clock source is that defined by C_Src.'
+    type: rw
+  name: CLOCK_CONTROL_1
+  offset: '0x00000000'
+  type: rw
+  width: 7
+- default: '0x00000000'
+  description: Clock Control register
+  field:
+  - bits: '6'
+    name: EX_E
+    type: rw
+  - bits: '5'
+    name: C_SRC
+    type: rw
+  - bits: '4:1'
+    name: PS_V
+    type: rw
+  - bits: '0'
+    longdesc: the default
+    name: PS_EN
+    shortdesc: 'Prescale enable: when this bit is set the counter, clock source is
+      prescaled; the default clock source is that defined by C_Src.'
+    type: rw
+  name: CLOCK_CONTROL_2
+  offset: '0x00000004'
+  type: rw
+  width: 7
+- default: '0x00000000'
+  description: Clock Control register
+  field:
+  - bits: '6'
+    name: EX_E
+    type: rw
+  - bits: '5'
+    name: C_SRC
+    type: rw
+  - bits: '4:1'
+    name: PS_V
+    type: rw
+  - bits: '0'
+    longdesc: the default
+    name: PS_EN
+    shortdesc: 'Prescale enable: when this bit is set the counter, clock source is
+      prescaled; the default clock source is that defined by C_Src.'
+    type: rw
+  name: CLOCK_CONTROL_3
+  offset: '0x00000008'
+  type: rw
+  width: 7
+- default: '0x00000021'
+  description: Operational mode and reset
+  field:
+  - bits: '6'
+    name: WAVE_POL
+    type: rw
+  - bits: '5'
+    name: WAVE_EN
+    type: rw
+  - bits: '4'
+    name: RST
+    type: rw
+  - bits: '3'
+    name: MATCH
+    type: rw
+  - bits: '2'
+    name: DEC
+    type: rw
+  - bits: '1'
+    name: INT
+    type: rw
+  - bits: '0'
+    name: DIS
+    type: rw
+  name: COUNTER_CONTROL_1
+  offset: '0x0000000C'
+  type: rw
+  width: 7
+- default: '0x00000021'
+  description: Operational mode and reset
+  field:
+  - bits: '6'
+    name: WAVE_POL
+    type: rw
+  - bits: '5'
+    name: WAVE_EN
+    type: rw
+  - bits: '4'
+    name: RST
+    type: rw
+  - bits: '3'
+    name: MATCH
+    type: rw
+  - bits: '2'
+    name: DEC
+    type: rw
+  - bits: '1'
+    name: INT
+    type: rw
+  - bits: '0'
+    name: DIS
+    type: rw
+  name: COUNTER_CONTROL_2
+  offset: '0x00000010'
+  type: rw
+  width: 7
+- default: '0x00000021'
+  description: Operational mode and reset
+  field:
+  - bits: '6'
+    name: WAVE_POL
+    type: rw
+  - bits: '5'
+    name: WAVE_EN
+    type: rw
+  - bits: '4'
+    name: RST
+    type: rw
+  - bits: '3'
+    name: MATCH
+    type: rw
+  - bits: '2'
+    name: DEC
+    type: rw
+  - bits: '1'
+    name: INT
+    type: rw
+  - bits: '0'
+    name: DIS
+    type: rw
+  name: COUNTER_CONTROL_3
+  offset: '0x00000014'
+  type: rw
+  width: 7
+- default: '0x00000000'
+  description: Current counter value
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: ro
+  name: COUNTER_VALUE_1
+  offset: '0x00000018'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Current counter value
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: ro
+  name: COUNTER_VALUE_2
+  offset: '0x0000001C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Current counter value
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: ro
+  name: COUNTER_VALUE_3
+  offset: '0x00000020'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interval value
+  field:
+  - bits: '31:0'
+    name: INTERVAL
+    type: rw
+  name: INTERVAL_COUNTER_1
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interval value
+  field:
+  - bits: '31:0'
+    name: INTERVAL
+    type: rw
+  name: INTERVAL_COUNTER_2
+  offset: '0x00000028'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interval value
+  field:
+  - bits: '31:0'
+    name: INTERVAL
+    type: rw
+  name: INTERVAL_COUNTER_3
+  offset: '0x0000002C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Match value
+  field:
+  - bits: '31:0'
+    longdesc: Each counter has three match registers.
+    name: MATCH
+    shortdesc: When a counter has the same value as is stored in one of its match
+      registers and match mode is enabled, a match interrupt is generated.
+    type: rw
+  name: MATCH_1_COUNTER_1
+  offset: '0x00000030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Match value
+  field:
+  - bits: '31:0'
+    longdesc: Each counter has three match registers.
+    name: MATCH
+    shortdesc: When a counter has the same value as is stored in one of its match
+      registers and match mode is enabled, a match interrupt is generated.
+    type: rw
+  name: MATCH_1_COUNTER_2
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Match value
+  field:
+  - bits: '31:0'
+    longdesc: Each counter has three match registers.
+    name: MATCH
+    shortdesc: When a counter has the same value as is stored in one of its match
+      registers and match mode is enabled, a match interrupt is generated.
+    type: rw
+  name: MATCH_1_COUNTER_3
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Match value
+  field:
+  - bits: '31:0'
+    longdesc: Each counter has three match registers.
+    name: MATCH
+    shortdesc: When a counter has the same value as is stored in one of its match
+      registers and match mode is enabled, a match interrupt is generated.
+    type: rw
+  name: MATCH_2_COUNTER_1
+  offset: '0x0000003C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Match value
+  field:
+  - bits: '31:0'
+    longdesc: Each counter has three match registers.
+    name: MATCH
+    shortdesc: When a counter has the same value as is stored in one of its match
+      registers and match mode is enabled, a match interrupt is generated.
+    type: rw
+  name: MATCH_2_COUNTER_2
+  offset: '0x00000040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Match value
+  field:
+  - bits: '31:0'
+    longdesc: Each counter has three match registers.
+    name: MATCH
+    shortdesc: When a counter has the same value as is stored in one of its match
+      registers and match mode is enabled, a match interrupt is generated.
+    type: rw
+  name: MATCH_2_COUNTER_3
+  offset: '0x00000044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Match value
+  field:
+  - bits: '31:0'
+    longdesc: Each counter has three match registers.
+    name: MATCH
+    shortdesc: When a counter has the same value as is stored in one of its match
+      registers and match mode is enabled, a match interrupt is generated.
+    type: rw
+  name: MATCH_3_COUNTER_1
+  offset: '0x00000048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Match value
+  field:
+  - bits: '31:0'
+    longdesc: Each counter has three match registers.
+    name: MATCH
+    shortdesc: When a counter has the same value as is stored in one of its match
+      registers and match mode is enabled, a match interrupt is generated.
+    type: rw
+  name: MATCH_3_COUNTER_2
+  offset: '0x0000004C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Match value
+  field:
+  - bits: '31:0'
+    longdesc: Each counter has three match registers.
+    name: MATCH
+    shortdesc: When a counter has the same value as is stored in one of its match
+      registers and match mode is enabled, a match interrupt is generated.
+    type: rw
+  name: MATCH_3_COUNTER_3
+  offset: '0x00000050'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Counter 1 Interval, Match, Overflow and Event interrupts
+  field:
+  - bits: '5'
+    name: EV
+    type: clronrd
+  - bits: '4'
+    name: OV
+    type: clronrd
+  - bits: '3'
+    name: M3
+    type: clronrd
+  - bits: '2'
+    name: M2
+    type: clronrd
+  - bits: '1'
+    name: M1
+    type: clronrd
+  - bits: '0'
+    name: IV
+    type: clronrd
+  name: INTERRUPT_REGISTER_1
+  offset: '0x00000054'
+  type: clronrd
+  width: 6
+- default: '0x00000000'
+  description: Counter 2 Interval, Match, Overflow and Event interrupts
+  field:
+  - bits: '5'
+    name: EV
+    type: clronrd
+  - bits: '4'
+    name: OV
+    type: clronrd
+  - bits: '3'
+    name: M3
+    type: clronrd
+  - bits: '2'
+    name: M2
+    type: clronrd
+  - bits: '1'
+    name: M1
+    type: clronrd
+  - bits: '0'
+    name: IV
+    type: clronrd
+  name: INTERRUPT_REGISTER_2
+  offset: '0x00000058'
+  type: clronrd
+  width: 6
+- default: '0x00000000'
+  description: Counter 3 Interval, Match, Overflow and Event interrupts
+  field:
+  - bits: '5'
+    name: EV
+    type: clronrd
+  - bits: '4'
+    name: OV
+    type: clronrd
+  - bits: '3'
+    name: M3
+    type: clronrd
+  - bits: '2'
+    name: M2
+    type: clronrd
+  - bits: '1'
+    name: M1
+    type: clronrd
+  - bits: '0'
+    name: IV
+    type: clronrd
+  name: INTERRUPT_REGISTER_3
+  offset: '0x0000005C'
+  type: clronrd
+  width: 6
+- default: '0x00000000'
+  description: ANDed with corresponding Interrupt Register
+  field:
+  - bits: '5:0'
+    name: IEN
+    type: rw
+  name: INTERRUPT_ENABLE_1
+  offset: '0x00000060'
+  type: rw
+  width: 6
+- default: '0x00000000'
+  description: ANDed with corresponding Interrupt Register
+  field:
+  - bits: '5:0'
+    name: IEN
+    type: rw
+  name: INTERRUPT_ENABLE_2
+  offset: '0x00000064'
+  type: rw
+  width: 6
+- default: '0x00000000'
+  description: ANDed with corresponding Interrupt Register
+  field:
+  - bits: '5:0'
+    name: IEN
+    type: rw
+  name: INTERRUPT_ENABLE_3
+  offset: '0x00000068'
+  type: rw
+  width: 6
+- default: '0x00000000'
+  description: Enable, pulse and overflow
+  field:
+  - bits: '3'
+    name: E_TM
+    type: rw
+  - bits: '2'
+    name: E_OV
+    type: rw
+  - bits: '1'
+    name: E_LO
+    type: rw
+  - bits: '0'
+    name: E_EN
+    type: rw
+  name: EVENT_CONTROL_TIMER_1
+  offset: '0x0000006C'
+  type: rw
+  width: 4
+- default: '0x00000000'
+  description: Enable, pulse and overflow
+  field:
+  - bits: '3'
+    name: E_TM
+    type: rw
+  - bits: '2'
+    name: E_OV
+    type: rw
+  - bits: '1'
+    name: E_LO
+    type: rw
+  - bits: '0'
+    name: E_EN
+    type: rw
+  name: EVENT_CONTROL_TIMER_2
+  offset: '0x00000070'
+  type: rw
+  width: 4
+- default: '0x00000000'
+  description: Enable, pulse and overflow
+  field:
+  - bits: '3'
+    name: E_TM
+    type: rw
+  - bits: '2'
+    name: E_OV
+    type: rw
+  - bits: '1'
+    name: E_LO
+    type: rw
+  - bits: '0'
+    name: E_EN
+    type: rw
+  name: EVENT_CONTROL_TIMER_3
+  offset: '0x00000074'
+  type: rw
+  width: 4
+- default: '0x00000000'
+  description: pclk cycle count for event
+  field:
+  - bits: '31:0'
+    name: EVENT
+    type: ro
+  name: EVENT_REGISTER_1
+  offset: '0x00000078'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: pclk cycle count for event
+  field:
+  - bits: '31:0'
+    name: EVENT
+    type: ro
+  name: EVENT_REGISTER_2
+  offset: '0x0000007C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: pclk cycle count for event
+  field:
+  - bits: '31:0'
+    name: EVENT
+    type: ro
+  name: EVENT_REGISTER_3
+  offset: '0x00000080'
+  type: ro
+  width: 32

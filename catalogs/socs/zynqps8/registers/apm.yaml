@@ -1,0 +1,791 @@
+bank:
+- address: '0xfd490000'
+  name: APM_CCI_INTC
+- address: '0xffa00000'
+  name: APM_INTC_OCM
+- address: '0xffa10000'
+  name: APM_LPD_FPD
+description: CCI APM Control and Configuration
+register:
+- default: '0x00000000'
+  description: Global Clock Counter
+  field:
+  - bits: '31:0'
+    longdesc: If C_GLOBAL_COUNT_WIDTH=32, only Lower 32 bits of the register are valid
+    name: GLBCLKCNT_HIGHER
+    shortdesc: Higher 32-bit data of the Global Clock Counter Register.
+    type: ro
+  name: GCCR_H
+  offset: '0x00000000'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Global Clock Counter
+  field:
+  - bits: '31:0'
+    longdesc: If C_GLOBAL_COUNT_WIDTH=32, only Lower 32 Bits of the register are valid
+    name: GLBCLKCNT_LOWER
+    shortdesc: Lower 32-bit data of the Global Clock Counter Register.
+    type: ro
+  name: GCCR_L
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sample Interval Time Configuration
+  field:
+  - bits: '31:0'
+    name: SMPL_INTRVL_SIR
+    type: rw
+  name: SIR
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00000100'
+  description: Sample Interval Control
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: raz
+  - bits: '8'
+    longdesc: '0: Metric Counters are not reset when sample interval counter lapses
+      or when the sample register is read.'
+    name: MET_CNT_RST
+    shortdesc: '1: Resets metric counters when sample interval timer expires or when
+      the sample register is read.'
+    type: rw
+  - bits: '7:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: LOAD
+    type: rw
+  - bits: '0'
+    longdesc: Before enabling, the counter should be loaded with the sample Interval
+      Register value.
+    name: ENABLE
+    shortdesc: '1: Enables the down counter.'
+    type: rw
+  name: SICR
+  offset: '0x00000028'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Sample Interval Sample. Reading this initiates sampling of Metric Counters
+    data to the Sample Metric Counters.
+  field:
+  - bits: '31:0'
+    name: SMPL_READ
+    type: rw
+  name: SISR
+  offset: '0x0000002C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Global Interrupt Enable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: '0: Disabled'
+    name: GIE
+    shortdesc: 'Master enable for the device interrupt output to the system interrupt
+      controller: 1: Enabled.'
+    type: rw
+  name: GIER
+  offset: '0x00000030'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable
+  field:
+  - bits: '10'
+    name: MET_CT7_OVFLINT_EN
+    type: rw
+  - bits: '9'
+    name: MET_CT6_OVFLINT_EN
+    type: rw
+  - bits: '8'
+    name: MET_CT5_OVFLINT_EN
+    type: rw
+  - bits: '7'
+    name: MET_CT4_OVFLINT_EN
+    type: rw
+  - bits: '6'
+    name: MET_CT3_OVFLINT_EN
+    type: rw
+  - bits: '5'
+    name: MET_CT2_OVFLINT_EN
+    type: rw
+  - bits: '4'
+    name: MET_CT1_OVFLINT_EN
+    type: rw
+  - bits: '3'
+    name: MET_CT0_OVFLINT_EN
+    type: rw
+  - bits: '1'
+    name: SMPL_INTRVL_OVFLINT_EN
+    type: rw
+  - bits: '0'
+    name: GLBCLKCNT_OVFLINT_EN
+    type: rw
+  name: IER
+  offset: '0x00000034'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status
+  field:
+  - bits: '10'
+    name: MET_CT7_OVFLINT
+    type: rw
+  - bits: '9'
+    name: MET_CT6_OVFLINT
+    type: rw
+  - bits: '8'
+    name: MET_CT5_OVFLINT
+    type: rw
+  - bits: '7'
+    name: MET_CT4_OVFLINT
+    type: rw
+  - bits: '6'
+    name: MET_CT3_OVFLINT
+    type: rw
+  - bits: '5'
+    name: MET_CT2_OVFLINT
+    type: rw
+  - bits: '4'
+    name: MET_CT1_OVFLINT
+    type: rw
+  - bits: '3'
+    name: MET_CT0_OVFLINT
+    type: rw
+  - bits: '1'
+    name: SMPL_INTRVL_OVFLINT
+    type: rw
+  - bits: '0'
+    name: GLBCLKCNT_OVFLINT
+    type: rw
+  name: ISR
+  offset: '0x00000038'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Metric Selector, Counters 0, 1, 2, and 3
+  field:
+  - bits: '31:29'
+    name: MET_CT3_SLOT
+    type: rw
+  - bits: '28:24'
+    name: MET_CT3_SEL
+    type: rw
+  - bits: '23:21'
+    name: MET_CT2_SLOT
+    type: rw
+  - bits: '20:16'
+    name: MET_CT2_SEL
+    type: rw
+  - bits: '15:13'
+    name: MET_CT1_SLOT
+    type: rw
+  - bits: '12:8'
+    name: MET_CT1_SEL
+    type: rw
+  - bits: '7:5'
+    name: MET_CT0_SLOT
+    type: rw
+  - bits: '4:0'
+    name: MET_CT0_SEL
+    type: rw
+  name: MSR_0
+  offset: '0x00000044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Metric Selector, Counters 4, 5, 6, and 7
+  field:
+  - bits: '31:29'
+    name: MET_CT7_SLOT
+    type: rw
+  - bits: '28:24'
+    name: MET_CT7_SEL
+    type: rw
+  - bits: '23:21'
+    name: MET_CT6_SLOT
+    type: rw
+  - bits: '20:16'
+    name: MET_CT6_SEL
+    type: rw
+  - bits: '15:13'
+    name: MET_CT5_SLOT
+    type: rw
+  - bits: '12:8'
+    name: MET_CT5_SEL
+    type: rw
+  - bits: '7:5'
+    name: MET_CT4_SLOT
+    type: rw
+  - bits: '4:0'
+    name: MET_CT4_SEL
+    type: rw
+  name: MSR_1
+  offset: '0x00000048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Incrementer
+  field:
+  - bits: '31:0'
+    name: MET_INC
+    type: ro
+  name: IR_0
+  offset: '0x00000104'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Range
+  field:
+  - bits: '31:16'
+    name: RANGE_HIGH
+    type: rw
+  - bits: '15:0'
+    name: RANGE_LOW
+    type: rw
+  name: RR_0
+  offset: '0x00000108'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Metric Count Log Enable
+  field:
+  - bits: '31:0'
+    name: MET_CUTOFF
+    type: rw
+  name: MCLER_0
+  offset: '0x0000010C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Incrementer
+  field:
+  - bits: '31:0'
+    name: MET_INC
+    type: ro
+  name: IR_1
+  offset: '0x00000114'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Range
+  field:
+  - bits: '31:16'
+    name: RANGE_HIGH
+    type: rw
+  - bits: '15:0'
+    name: RANGE_LOW
+    type: rw
+  name: RR_1
+  offset: '0x00000118'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Metric Count Log Enable
+  field:
+  - bits: '31:0'
+    name: MET_CUTOFF
+    type: rw
+  name: MCLER_1
+  offset: '0x0000011C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Incrementer
+  field:
+  - bits: '31:0'
+    name: MET_INC
+    type: ro
+  name: IR_2
+  offset: '0x00000124'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Range
+  field:
+  - bits: '31:16'
+    name: RANGE_HIGH
+    type: rw
+  - bits: '15:0'
+    name: RANGE_LOW
+    type: rw
+  name: RR_2
+  offset: '0x00000128'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Metric Count Log Enable
+  field:
+  - bits: '31:0'
+    name: MET_CUTOFF
+    type: rw
+  name: MCLER_2
+  offset: '0x0000012C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Incrementer
+  field:
+  - bits: '31:0'
+    name: MET_INC
+    type: ro
+  name: IR_3
+  offset: '0x00000134'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Range
+  field:
+  - bits: '31:16'
+    name: RANGE_HIGH
+    type: rw
+  - bits: '15:0'
+    name: RANGE_LOW
+    type: rw
+  name: RR_3
+  offset: '0x00000138'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Metric Count Log Enable
+  field:
+  - bits: '31:0'
+    name: MET_CUTOFF
+    type: rw
+  name: MCLER_3
+  offset: '0x0000013C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Incrementer
+  field:
+  - bits: '31:0'
+    name: MET_INC
+    type: ro
+  name: IR_4
+  offset: '0x00000144'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Range
+  field:
+  - bits: '31:16'
+    name: RANGE_HIGH
+    type: rw
+  - bits: '15:0'
+    name: RANGE_LOW
+    type: rw
+  name: RR_4
+  offset: '0x00000148'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Metric Count Log Enable
+  field:
+  - bits: '31:0'
+    name: MET_CUTOFF
+    type: rw
+  name: MCLER_4
+  offset: '0x0000014C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Incrementer
+  field:
+  - bits: '31:0'
+    name: MET_INC
+    type: ro
+  name: IR_5
+  offset: '0x00000154'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Range
+  field:
+  - bits: '31:16'
+    name: RANGE_HIGH
+    type: rw
+  - bits: '15:0'
+    name: RANGE_LOW
+    type: rw
+  name: RR_5
+  offset: '0x00000158'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Metric Count Log Enable
+  field:
+  - bits: '31:0'
+    name: MET_CUTOFF
+    type: rw
+  name: MCLER_5
+  offset: '0x0000015C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Incrementer
+  field:
+  - bits: '31:0'
+    name: MET_INC
+    type: ro
+  name: IR_6
+  offset: '0x00000164'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Range
+  field:
+  - bits: '31:16'
+    name: RANGE_HIGH
+    type: rw
+  - bits: '15:0'
+    name: RANGE_LOW
+    type: rw
+  name: RR_6
+  offset: '0x00000168'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Metric Count Log Enable
+  field:
+  - bits: '31:0'
+    name: MET_CUTOFF
+    type: rw
+  name: MCLER_6
+  offset: '0x0000016C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Incrementer
+  field:
+  - bits: '31:0'
+    name: MET_INC
+    type: ro
+  name: IR_7
+  offset: '0x00000174'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Range
+  field:
+  - bits: '31:16'
+    name: RANGE_HIGH
+    type: rw
+  - bits: '15:0'
+    name: RANGE_LOW
+    type: rw
+  name: RR_7
+  offset: '0x00000178'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Metric Count Log Enable
+  field:
+  - bits: '31:0'
+    name: MET_CUTOFF
+    type: rw
+  name: MCLER_7
+  offset: '0x0000017C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Sampled Metric Counter
+  field:
+  - bits: '31:0'
+    name: SMPL_CNT
+    type: ro
+  name: SMCR_0
+  offset: '0x00000200'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Incrementer
+  field:
+  - bits: '31:0'
+    name: SMPL_INC
+    type: ro
+  name: SIR_0
+  offset: '0x00000204'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Metric Counter
+  field:
+  - bits: '31:0'
+    name: SMPL_CNT
+    type: ro
+  name: SMCR_1
+  offset: '0x00000210'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Incrementer
+  field:
+  - bits: '31:0'
+    name: SMPL_INC
+    type: ro
+  name: SIR_1
+  offset: '0x00000214'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Metric Counter
+  field:
+  - bits: '31:0'
+    name: SMPL_CNT
+    type: ro
+  name: SMCR_2
+  offset: '0x00000220'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Incrementer
+  field:
+  - bits: '31:0'
+    name: SMPL_INC
+    type: ro
+  name: SIR_2
+  offset: '0x00000224'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Metric Counter
+  field:
+  - bits: '31:0'
+    name: SMPL_CNT
+    type: ro
+  name: SMCR_3
+  offset: '0x00000230'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Incrementer
+  field:
+  - bits: '31:0'
+    name: SMPL_INC
+    type: ro
+  name: SIR_3
+  offset: '0x00000234'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Metric Counter
+  field:
+  - bits: '31:0'
+    name: SMPL_CNT
+    type: ro
+  name: SMCR_4
+  offset: '0x00000240'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Incrementer
+  field:
+  - bits: '31:0'
+    name: SMPL_INC
+    type: ro
+  name: SIR_4
+  offset: '0x00000244'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Metric Counter
+  field:
+  - bits: '31:0'
+    name: SMPL_CNT
+    type: ro
+  name: SMCR_5
+  offset: '0x00000250'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Incrementer
+  field:
+  - bits: '31:0'
+    name: SMPL_INC
+    type: ro
+  name: SIR_5
+  offset: '0x00000254'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Metric Counter
+  field:
+  - bits: '31:0'
+    name: SMPL_CNT
+    type: ro
+  name: SMCR_6
+  offset: '0x00000260'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Incrementer
+  field:
+  - bits: '31:0'
+    name: SMPL_INC
+    type: ro
+  name: SIR_6
+  offset: '0x00000264'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Metric Counter
+  field:
+  - bits: '31:0'
+    name: SMPL_CNT
+    type: ro
+  name: SMCR_7
+  offset: '0x00000270'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Sampled Incrementer
+  field:
+  - bits: '31:0'
+    name: SMPL_INC
+    type: ro
+  name: SIR_7
+  offset: '0x00000274'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Control
+  field:
+  - bits: '25'
+    name: STR_FIFO_RST
+    type: rw
+  - bits: '17'
+    name: GCCR_RST
+    type: rw
+  - bits: '16'
+    name: GCCR_EN
+    type: rw
+  - bits: '7'
+    longdesc: '1: Enables first read as read latency end point 0: Enables last read
+      as read latency end point'
+    name: LATENCY_READ_END
+    shortdesc: Read Latency End Point.
+    type: rw
+  - bits: '6'
+    longdesc: '0: Enables address issuance by the master interface as read latency
+      start point (ARVALID)1: Enables address acceptance by slave as read latency
+      start point (ARVALID and ARREADY)'
+    name: LATENCY_READ_START
+    shortdesc: Read Latency Start Point.
+    type: rw
+  - bits: '5'
+    longdesc: '1: Enables first write as write latency end point. 0: Enables Last
+      write as write latency end point'
+    name: LATENCY_WRITE_END
+    shortdesc: Write Latency End Point.
+    type: rw
+  - bits: '4'
+    longdesc: '0: Enables address issuance by master interface as write latency start
+      point (AWVALID). 1: Enables address acceptance by the slave interface as write
+      latency start point (AWVALID and AWREADY)'
+    name: LATENCY_WRITE_START
+    shortdesc: Write Latency Start Point.
+    type: rw
+  - bits: '3'
+    longdesc: 'This bit is only valid in Advanced mode.0: Ignore ID for metric calculation
+      1: Enables ID filtering and masking. When enabled, all metric corresponds to
+      the ID configured in the IDR and IDMR registers.'
+    name: ID_MASKING_EN
+    shortdesc: Enable ID Based Filtering/Masking.
+    type: rw
+  - bits: '1'
+    name: MET_CNT_RST
+    type: rw
+  - bits: '0'
+    name: MET_CNT_EN
+    type: rw
+  name: CR
+  offset: '0x00000300'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: WID
+  field:
+  - bits: '31:0'
+    name: WID
+    type: rw
+  name: WIDR
+  offset: '0x00000304'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WID Mask
+  field:
+  - bits: '31:0'
+    name: WIDM
+    type: rw
+  name: WIDMR
+  offset: '0x00000308'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RID
+  field:
+  - bits: '31:0'
+    name: RID
+    type: rw
+  name: RIDR
+  offset: '0x0000030C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RID Mask
+  field:
+  - bits: '31:0'
+    name: RIDM
+    type: rw
+  name: RIDMR
+  offset: '0x00000310'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Flag Enable
+  field:
+  - bits: '21'
+    name: SMP_CNT_LAPSE_FLG
+    type: rw
+  - bits: '20'
+    name: GCC_OFVL_FLG
+    type: rw
+  - bits: '16'
+    name: SFT_DATA_FLG_EN
+    type: rw
+  - bits: '6'
+    name: LAST_READ_FLG
+    type: rw
+  - bits: '5'
+    name: FIRST_READ_FLG
+    type: rw
+  - bits: '4'
+    name: READ_ADDR_FLG
+    type: rw
+  - bits: '3'
+    name: RESPONSE_FLG
+    type: rw
+  - bits: '2'
+    name: LAST_WRITE_FLG
+    type: rw
+  - bits: '1'
+    name: FIRST_WRITE_FLG
+    type: rw
+  - bits: '0'
+    name: WRITE_ADDR_FLG
+    type: rw
+  name: FECR
+  offset: '0x00000400'
+  type: mixed
+  width: 32

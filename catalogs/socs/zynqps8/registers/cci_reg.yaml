@@ -1,0 +1,162 @@
+description: AXI Cache Coherent Interconnect Configuration
+register:
+- default: '0x00000000'
+  description: Controls for the register block.
+  field:
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: MISC_CTRL
+  offset: '0x00000000'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Status Register. This is a sticky register that holds the
+    value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: wtc
+  - bits: '30:6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: CCNT_OFLW
+    type: wtc
+  - bits: '4'
+    name: EC3_OFLW
+    type: wtc
+  - bits: '3'
+    name: EC2_OFLW
+    type: wtc
+  - bits: '2'
+    name: EC1_OFLW
+    type: wtc
+  - bits: '1'
+    name: EC0_OFLW
+    type: wtc
+  - bits: '0'
+    name: ERRORIRQ
+    type: wtc
+  name: ISR_0
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x8000003F'
+  description: Interrupt Mask Register. This is a read-only location and can be atomically
+    altered by either the IDR or the IER.
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: ro
+  - bits: '30:6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: CCNT_OFLW
+    type: ro
+  - bits: '4'
+    name: EC3_OFLW
+    type: ro
+  - bits: '3'
+    name: EC2_OFLW
+    type: ro
+  - bits: '2'
+    name: EC1_OFLW
+    type: ro
+  - bits: '1'
+    name: EC0_OFLW
+    type: ro
+  - bits: '0'
+    name: ERRORIRQ
+    type: ro
+  name: IMR_0
+  offset: '0x00000014'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable Register. A write of 1 to this location will unmask
+    the interrupt
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: wo
+  - bits: '30:6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: CCNT_OFLW
+    type: wo
+  - bits: '4'
+    name: EC3_OFLW
+    type: wo
+  - bits: '3'
+    name: EC2_OFLW
+    type: wo
+  - bits: '2'
+    name: EC1_OFLW
+    type: wo
+  - bits: '1'
+    name: EC0_OFLW
+    type: wo
+  - bits: '0'
+    name: ERRORIRQ
+    type: wo
+  name: IER_0
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable Register. A write of 1 to this location will mask
+    the interrupt
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: wo
+  - bits: '30:6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: CCNT_OFLW
+    type: wo
+  - bits: '4'
+    name: EC3_OFLW
+    type: wo
+  - bits: '3'
+    name: EC2_OFLW
+    type: wo
+  - bits: '2'
+    name: EC1_OFLW
+    type: wo
+  - bits: '1'
+    name: EC0_OFLW
+    type: wo
+  - bits: '0'
+    name: ERRORIRQ
+    type: wo
+  name: IDR_0
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Misc control registesr
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: NIDEN
+    type: rw
+  - bits: '0'
+    name: SPINDEN
+    type: rw
+  name: CCI_MISC_CTRL
+  offset: '0x00000040'
+  type: mixed
+  width: 32

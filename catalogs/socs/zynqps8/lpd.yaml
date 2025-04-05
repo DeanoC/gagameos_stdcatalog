@@ -1,0 +1,168 @@
+definition:
+- buses:
+  - address_width: 32
+    data_width: 64
+    name: rpu_lpd
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: lpdoutbound_lpd
+    supplier: false
+  - address_width: 40
+    data_width: 64
+    name: iooutbound_lpd
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: rpuio_lpd
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: lpd_cci
+    supplier: true
+  - address_width: 40
+    data_width: 64
+    name: lpd_ddrc
+    supplier: true
+  - address_width: 18
+    base_address: '0x0200_0000'
+    data_width: 64
+    name: lpd_ocm
+    supplier: true
+  - address_width: 40
+    data_width: 128
+    name: lpd_lpdinbound
+    supplier: true
+  registers:
+  - base_address: '0x110_0000'
+    name: LPD_GPV
+    resource: registers/lpd/lpd_gpv.toml
+  - base_address: '0x241_0000'
+    name: LPD_SLCR
+    resource: registers/lpd/lpd_slcr.toml
+  - base_address: '0x24b_0000'
+    name: LPD_SLCR_SECURE
+    resource: registers/lpd/lpd_slcr_secure.toml
+  - base_address: '0x25e_0000'
+    name: CRL_APB
+    resource: registers/lpd/crl_apb.toml
+  type: switch.internal.lpd.zynqps8
+- buses:
+  - data_width: 32
+    name: iopinbound_lpdunitsswitch
+    supplier: false
+  - data_width: 32
+    name: lpdunitsswitch_pssysmon
+    supplier: true
+  - data_width: 32
+    name: lpdunitsswitch_ipi
+    supplier: true
+  - data_width: 32
+    name: lpdunitsswitch_efuse
+    supplier: true
+  - data_width: 32
+    name: lpdunitsswitch_spi${index}
+    supplier: true
+  - data_width: 32
+    protocol: internal_ttc
+    supplier: true
+  - data_width: 32
+    protocol: internal_swdt
+    supplier: true
+  - data_width: 32
+    name: lpdunitsswitch_lpdslcr
+    supplier: true
+  - data_width: 32
+    name: lpdunitsswitch_gpio
+    supplier: true
+  - data_width: 32
+    name: lpdunitsswitch_rtc
+    supplier: true
+  type: switch.internal.lpdunitsswitch.zynqps8
+- buses:
+  - address_width: 40
+    data_width: 128
+    name: lpd_lpdinbound
+    supplier: false
+  - address_width: 40
+    data_width: 64
+    name: fpd_lpdinbound
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: lpdinbound_rpuio
+    supplier: true
+  type: switch.internal.lpdinbound.zynqps8
+- buses:
+  - address_width: 40
+    data_width: 128
+    name: usb${index}_lpdoutbound
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: lpddma_lpdoutbound
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: lpdoutbound_lpd
+    supplier: true
+  type: switch.internal.lpdoutbound.zynqps8
+- buses:
+  - address_width: 40
+    data_width: 128
+    name: lpdinbound_rpuio
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: rpuio_lpd
+    supplier: true
+  - address_width: 32
+    data_width: 64
+    name: rpuio_rpu
+    supplier: true
+  - address_width: 32
+    data_width: 64
+    name: rpuio_iopinbound
+    supplier: true
+  - address_width: 32
+    data_width: 64
+    name: rpuio_rpuswitch
+    supplier: true
+  type: switch.internal.rpuio.zynqps8
+- buses:
+  - address_width: 32
+    data_width: 64
+    name: rpu${index}
+    supplier: false
+  - address_width: 32
+    data_width: 64
+    name: rpuio_rpuswitch
+    supplier: false
+  - address_width: 18
+    data_width: 64
+    name: rputcm
+    supplier: true
+  - address_width: 18
+    data_width: 128
+    name: rpu_ocm
+    supplier: true
+  - address_width: 32
+    data_width: 64
+    name: rpu_lpd
+    supplier: true
+  registers: []
+  type: switch.internal.rpuswitch.zynqps8
+- buses:
+  - address_width: 18
+    data_width: 64
+    name: rpu_ocm
+    supplier: false
+  - address_width: 18
+    data_width: 64
+    name: lpd_ocm
+    supplier: false
+  - address_width: 18
+    data_width: 128
+    name: fpd_ocm
+    supplier: false
+  type: switch.internal.ocm.zynqps8

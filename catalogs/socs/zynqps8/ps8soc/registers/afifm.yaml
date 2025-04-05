@@ -1,0 +1,235 @@
+description: S_AXI_HP0_FPD QoS and FIFO Configuration
+register:
+- default: '0x000003B0'
+  description: Read Channel Control Register
+  field:
+  - bits: '31:11'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '3'
+    longdesc: Existing outstanding commands will continue to be processed.
+    name: PAUSE
+    shortdesc: Pause the issuing of new read commands to the PS-side.
+    type: rw
+  - bits: '2'
+    longdesc: 'staticQoS 1: The QoS bits are dynamically driven from the fabric input,
+      axds_arQoS[3:0]'
+    name: FABRIC_QOS_EN
+    shortdesc: 'Enable control of QoS from the fabric 0: The QoS bits are derived
+      from APB register, AFIFM_RDQoS.'
+    type: rw
+  - bits: '1:0'
+    longdesc: '2''b11: Reserved 2''b10: 32-bit Fabric 2''b01: 64-bit enabled 2''b00:
+      128-bit enabled'
+    name: FABRIC_WIDTH
+    shortdesc: Configures the Read Channel Fabric interface width.
+    type: rw
+  name: RDCTRL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000007'
+  description: Read Issuing Capability Register
+  field:
+  - bits: '31:5'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '3:0'
+    name: CAPABILITY
+    type: rw
+  name: RDISSUE
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000007'
+  description: QoS Read Channel Register
+  field:
+  - bits: '31:4'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '3:0'
+    name: VALUE
+    type: rw
+  name: RDQOS
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x40000000'
+  description: Read Channel Debug Register
+  field:
+  - bits: '31:30'
+    name: AFI_VERSION
+    type: ro
+  - bits: '29:6'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  name: RDDEBUG
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x000003B0'
+  description: Write Channel Control Register
+  field:
+  - bits: '31:13'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '12'
+    longdesc: '1''b0: Release Wr Command on ''Wlast'' enqueue into Write Data FIFO
+      (Or, in the case of longer AXI4 style bursts, release when 16 beats are enqueued
+      in to the Write Data FIFO) 1''b1: Release write command immediately it becomes
+      available'
+    name: WR_RELEASE_MODE
+    shortdesc: Mode of Write Command Release.
+    type: rw
+  - bits: '11'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '3'
+    longdesc: Existing write commands will continue to be processed.
+    name: PAUSE
+    shortdesc: Pause the issuing of new write commands to the PS-side.
+    type: rw
+  - bits: '2'
+    longdesc: 'staticQoS 1: The QoS bits are dynamically driven from the fabric input,
+      axds_awQoS[3:0]'
+    name: FABRIC_QOS_EN
+    shortdesc: 'Enable control of QoS from the fabric 0: The QoS bits are derived
+      from APB register, AFIFM_WRQoS.'
+    type: rw
+  - bits: '1:0'
+    longdesc: '2''b11: Reserved 2''b10: 32-bit Fabric 2''b01: 64-bit enabled 2''b00:
+      128-bit enabled'
+    name: FABRIC_WIDTH
+    shortdesc: Configures the Write Channel Fabric interface width.
+    type: rw
+  name: WRCTRL
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000007'
+  description: Write Issuing Capability Register
+  field:
+  - bits: '31:4'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '3:0'
+    name: CAPABILITY
+    type: rw
+  name: WRISSUE
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000007'
+  description: QoS Write Channel Register
+  field:
+  - bits: '31:4'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '3:0'
+    name: VALUE
+    type: rw
+  name: WRQOS
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register
+  field:
+  - bits: '31:1'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '0'
+    name: INVALID_APB
+    type: wtc
+  name: I_STS
+  offset: '0x00000E00'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable
+  field:
+  - bits: '31:1'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '0'
+    name: INVALID_APB
+    type: wo
+  name: I_EN
+  offset: '0x00000E04'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable
+  field:
+  - bits: '31:1'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '0'
+    name: INVALID_APB
+    type: wo
+  name: I_DIS
+  offset: '0x00000E08'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: Interrupt Mask
+  field:
+  - bits: '31:1'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '0'
+    name: INVALID_APB
+    type: ro
+  name: I_MASK
+  offset: '0x00000E0C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: General Control Register
+  field:
+  - bits: '31:1'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '0'
+    name: APB_ERR_RESP
+    type: rw
+  name: CONTROL
+  offset: '0x00000F04'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Safety endpoint connectivity check Register
+  field:
+  - bits: '31:0'
+    name: CHK_VAL
+    type: rw
+  name: SAFETY_CHK
+  offset: '0x00000F0C'
+  type: rw
+  width: 32

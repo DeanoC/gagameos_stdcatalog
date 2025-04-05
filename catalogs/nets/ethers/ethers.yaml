@@ -1,0 +1,8 @@
+definition:
+- max_instances: 4
+  registers:
+  - address_increment: '0x1_0000'
+    base_address: '0x010B_0000'
+    name: GEM
+    resource: zynqps8/gem.toml
+  type: net.ethernet.zynqps8

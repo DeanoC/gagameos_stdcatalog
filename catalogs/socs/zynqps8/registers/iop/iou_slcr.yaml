@@ -1,0 +1,4150 @@
+description: IOP System-level Control
+register:
+- default: '0x00000000'
+  description: MIO Device Pin 0 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: PJTAG TCK input
+      clock. 4: SPI0 SCLK clock input/output. 5: TTC3 clock input. 6: UART1 TxD output.
+      7: TracePort clock output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Signal Select: 0: GPIO [0] input/output Bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '1: reserved. 2: Scan Test [0] input/output. 3: reserved.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux output.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: reserved.'
+    name: L1_SEL
+    shortdesc: 'Level 1 Mux Select: 0: Level 2 Mux output.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: Quad-SPI SCLK Clock output.'
+    name: L0_SEL
+    shortdesc: 'Level 0 Mux Select: 0: Level 1 Mux output.'
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_0
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 1 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: PJTAG TDI input. 4:
+      SPI0 SS [2] output. 5: TTC3 Waveform output. 6: UART1 RxD input. 7: TracePort
+      Control output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [1] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [1] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux output.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: reserved.'
+    name: L1_SEL
+    shortdesc: 'Level 1 Mux Select: 0: Level 2 Mux output.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: Quad-SPI Data [1] input/output.'
+    name: L0_SEL
+    shortdesc: 'Level 0 Mux Select: 0: Level 1 Mux output.'
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_1
+  offset: '0x00000004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 2 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN 0 RX input. 2: I2C1 SCL input/output clock. 3: PJTAG TDO output.
+      4: SPI0 SS [1] output. 5: TTC2 clock input. 6: UART0 RxD input. 7: TracePort
+      DQ[0] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [2] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [2] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    longdesc: '1: Quad-SPI Data [2] input/output.'
+    name: L0_SEL
+    shortdesc: 'Level 0 Mux Select: 0: Level 1 Mux Output.'
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_2
+  offset: '0x00000008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 3 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: PJTAG TMS input. 4:
+      SPI0 SS [0] input/output. 5: TTC2 waveform output. 6: UART0 TxD output. 7: TracePort
+      DQ[1] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [3] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [3] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_3
+  offset: '0x0000000C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 4 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI0 MISO input/output. 5: TTC1 clock input. 6: UART1 TxD output.
+      7: TracePort DQ[2] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [4] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [4] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    longdesc: '1: Quad-SPI Data [0] input/output.'
+    name: L0_SEL
+    shortdesc: 'Level 0 Mux Select: 0: Level 1 Mux Output.'
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_4
+  offset: '0x00000010'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Configures MIO Pin 5 peripheral interface mapping
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output clock. 3: FPD SWDT reset
+      output. 4: SPI0 MOSI input/output. 5: TTC1 waveform output. 6: UART1 RxD input.
+      7: TracePort DQ[3] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [5] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [5] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_5
+  offset: '0x00000014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 6 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX Input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI1 SCLK clock input/output. 5: TTC0 clock input. 6: UART0 RxD input.
+      7: TracePort DQ[4] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [6] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [6] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_6
+  offset: '0x00000018'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 7 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI1 SS [2] output. 5: TTC0 waveform output. 6: UART0 TxD output. 7: TracePort
+      DQ[5] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [7] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [7] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_7
+  offset: '0x0000001C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Configures MIO Pin 8 peripheral interface mapping
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI1 SS [1] output. 5: TTC3 clock input. 6: UART1 TxD output. 7:
+      TracePort DQ[6] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [8] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [8] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_8
+  offset: '0x00000020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 9 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI1 SS [0] input/output. 5: TTC3 waveform output. 6: UART1 RxD input. 7:
+      TracePort DQ[7] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [9] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [9] input/output.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: NAND Chip Enable output.'
+    name: L1_SEL
+    shortdesc: 'Level 1 Mux Select: 0: Level 2 Mux Output.'
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_9
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 10 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI1 MISO input/output. 5: TTC2 clock input. 6: UART0 RxD input.
+      7: TracePort DQ[8] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [10] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [10] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_10
+  offset: '0x00000028'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 11 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI1 MOSI input/output. 5: TTC2 waveform output. 6: UART0 TxD output. 7:
+      TracePort DQ[9] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [11] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [11] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_11
+  offset: '0x0000002C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 12 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: PJTAG TCK input
+      clock. 4: SPI0 SCLK clock input/output. 5: TTC1 clock input. 6: UART1 TxD output.
+      7: TracePort DQ[10] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [12] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: Scan Test
+      [12] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_12
+  offset: '0x00000030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 13 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: PJTAG TDI input. 4:
+      SPI0 SS [2] output. 5: TTC1 waveform output. 6: UART1 RxD input. 7: TracePort
+      DQ[11] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [13] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [13] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [0] intput/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_13
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 14 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: PJTAG TDO output.
+      4: SPI0 SS[1] output. 5: TTC0 clock input. 6: UART0 RxD input. 7: TracePort
+      DQ[12] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [14] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [14] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [1] intput/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_14
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 15 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: PJTAG TMS input. 4:
+      SPI0 SS [0] input/output. 5: TTC0 waveform output. 6: UART0 TxD output. 7: TracePort
+      DQ[13] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [15] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [15] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [2] intput/output.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: NAND Address Latch Enable output.'
+    name: L1_SEL
+    shortdesc: 'Level 1 Mux Select: 0: Level 2 Mux Output.'
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_15
+  offset: '0x0000003C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 16 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI0 MISO input/output. 5: TTC3 clock input. 6: UART1 TxD output.
+      7: TracePort DQ[14] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [16] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [16] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [3] input/output.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: NAND Data [0] input/output.'
+    name: L1_SEL
+    shortdesc: 'Level 1 Mux Select: 0: Level 2 Mux Output.'
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_16
+  offset: '0x00000040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 17 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI0 MOSI input/output. 5: TTC3 waveform output. 6: UART1 RxD input. 7: TracePort
+      DQ[15] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [17] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [17] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [4] intput/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_17
+  offset: '0x00000044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 18 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI1 MISO input/output. 5: TTC2 clock input. 6: UART0 RxD input.
+      7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [18] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [18] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [5] intput/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_18
+  offset: '0x00000048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 19 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI1 SS [2] output. 5: TTC2 waveform output. 6: UART0 TxD output. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [19] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [19] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [6] intput/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_19
+  offset: '0x0000004C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 20 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI1 SS [1] output. 5: TTC1 clock input. 6: UART1 TxD output. 7:
+      reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [20] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [20] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [7] intput/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_20
+  offset: '0x00000050'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 21 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI1 SS [0] input/output. 5: TTC1 waveform output. 6: UART1 RxD input. 7:
+      reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [21] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [21] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO 0 Command input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_21
+  offset: '0x00000054'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 22 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI1 SCLK clock input/output. 5: TTC0 clock input. 6: UART0 RxD input.
+      7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [22] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [22] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Clock output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_22
+  offset: '0x00000058'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 23 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI1 MOSI input/output. 5: TTC0 waveform output. 6: UART0 TxD output. 7:
+      reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [23] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [23] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Card Bus Power
+      output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_23
+  offset: '0x0000005C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 24 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: reserved 5: TTC3 clock input. 6: UART1 TxD output. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [24] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [24] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Card Detect input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_24
+  offset: '0x00000060'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 25 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: reserved 5: TTC3 waveform output. 6: UART1 RxD input. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [25] input/output bank 0.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [25] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Write Protect input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_25
+  offset: '0x00000064'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 26 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: PJTAG TCK input
+      clock. 4: SPI0 SCLK clock input/output. 5: TTC2 clock input. 6: UART0 RxD input.
+      7: TracePort DQ[4] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [26] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [26] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPI1 [10] input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_26
+  offset: '0x00000068'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 27 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: PJTAG TDI input. 4:
+      SPI0 SS [2] output. 5: TTC2 waveform output. 6: UART0 TxD output. 7: TracePort
+      DQ[5] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [27] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [27] input/output. 3: DisplayPort Aux Data output.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPI1 [11] input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_27
+  offset: '0x0000006C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 28 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C0 SCL input/output clock. 3: PJTAG TDO output.
+      4: SPI0 SS [1] output. 5: TTC1 clock input. 6: UART1 TxD output. 7: TracePort
+      DQ[6] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [28] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [28] input/output. 3: DisplayPort Aux Hot Plug input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPI1 [12] input.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: NAND Ready/Busy input.'
+    name: L1_SEL
+    shortdesc: 'Level 1 Mux Select: 0: Level 2 Mux Output.'
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_28
+  offset: '0x00000070'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 29 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: PJTAG TMS input. 4:
+      SPI0 SS [0] input/output. 5: TTC1 waveform output. 6: UART1 RxD input. 7: TracePort
+      DQ[7] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [29] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [29] input/output. 3: DisplayPort Aux Output Enable output.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPI1 [13] input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_29
+  offset: '0x00000074'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 30 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI0 MISO input/output. 5: TTC0 clock input. 6: UART0 RxD input.
+      7: TracePort DQ[8] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [30] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [30] input/output. 3: DisplayPort Aux Data input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPI1 [14] input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_30
+  offset: '0x00000078'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 31 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI0 MOSI input/output. 5: TTC0 waveform output. 6: UART0 TxD output. 7:
+      TracePort DQ[9] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [31] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [31] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPI1 [15] input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_31
+  offset: '0x0000007C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 32 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI1 SCLK clock input/output. 5: TTC3 clock input. 6: UART1 TxD output.
+      7: TracePort DQ[10] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [32] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [32] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPO1 [0] output.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: J260NAND Data Strobe input/output.'
+    name: L1_SEL
+    shortdesc: 'Level 1 Mux Select: 0: Level 2 Mux Output.'
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_32
+  offset: '0x00000080'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 33 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI1 SS [2] output. 5: TTC3 waveform output. 6: UART1 RxD input. 7: TracePort
+      DQ[11] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [33] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [33] input/output. 3: CSU MIO External Tamper input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPO1 [1] output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_33
+  offset: '0x00000084'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 34 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI1 SS [1] output. 5: TTC2 clock input. 6: UART0 RxD input. 7: TracePort
+      DQ[12] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [34] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [34] input/output. 3: DisplayPort Aux Data output.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPO1 [2] output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    longdesc: '1: GEM0 RGMII Rx Data [1] input.'
+    name: L0_SEL
+    shortdesc: 'Level 0 Mux Select: 0: Level 1 Mux Output.'
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_34
+  offset: '0x00000088'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 35 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI1 SS [0] input/output. 5: TTC2 waveform output. 6: UART0 TxD output. 7:
+      TracePort DQ[13] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [35] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [35] input/output. 3: DisplayPort Aux Hot Plug Detect
+      input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPO1 [3] output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    longdesc: '1: GEM0 RGMII Rx Data [2] input.'
+    name: L0_SEL
+    shortdesc: 'Level 0 Mux Select: 0: Level 1 Mux Output.'
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_35
+  offset: '0x0000008C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 36 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI1 MISO input/output. 5: TTC1 clock input. 6: UART1 TxD output.
+      7: TracePort DQ[14] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [36] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [36] input/output. 3: DisplayPort Aux Output Enable output.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPO1 [4] output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_36
+  offset: '0x00000090'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 37 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI1 MOSI output. 5: TTC1 waveform output. 6: UART1 RxD input. 7: TracePort
+      DQ[15] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [37] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: Scan Test [37] input/output. 3: DisplayPort Aux Data input.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: PMU GPO1 [5] output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_37
+  offset: '0x00000094'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 38 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: PJTAG TCK input
+      clock. 4: SPI0 SCLK clock input/output. 5: TTC0 clock input. 6: UART0 RxD input.
+      7: TracePort clock output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [38] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: reserved 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Clock output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_38
+  offset: '0x00000098'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 39 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: PJTAG TDI input. 4:
+      SPI0 SS [2] output. 5: TTC0 waveform output. 6: UART0 TxD output. 7: TracePort
+      control output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [39] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [4] input/ output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Card Detect input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_39
+  offset: '0x0000009C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 40 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: PJTAG TDO output.
+      4: SPI0 SS [1] output. 5: TTC3 clock input. 6: UART1 TxD output. 7: TracePort
+      DQ[0] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [40] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [5] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Command input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_40
+  offset: '0x000000A0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 41 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: PJTAG TMS input. 4:
+      SPI0 SS [0] input/output. 5: TTC3 waveform output. 6: UART1 RxD input. 7: TracePort
+      DQ[1] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [41] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [6] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [0] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_41
+  offset: '0x000000A4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 42 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI0 MISO input/output. 5: TTC2 clock input. 6: UART0 RxD input.
+      7: TracePort DQ[2] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [42] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [7] input/ output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [1] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_42
+  offset: '0x000000A8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 43 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI0 MOSI input/output. 5: TTC2 waveform output. 6: UART0 TxD output. 7:
+      TracePort DQ[3] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [43] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Card Bus Power output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [2] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_43
+  offset: '0x000000AC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 44 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI1 SCLK clock input/output. 5: TTC1 clock input. 6: UART1 TxD output.
+      7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [44] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Write Protect input. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [3] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_44
+  offset: '0x000000B0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 45 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI1 SS [2] output. 5: TTC1 waveform output. 6: UART1 RxD input. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [45] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Card Detect input. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [4] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_45
+  offset: '0x000000B4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 46 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI1 SS [1] output. 5: TTC0 clock input. 6: UART0 RxD input. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [46] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [0] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [5] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_46
+  offset: '0x000000B8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 47 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI1 SS [0] input/output. 5: TTC0 waveform output. 6: UART0 TxD output. 7:
+      reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [47] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [1] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [6] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_47
+  offset: '0x000000BC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 48 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI1 MISO input/output. 5: TTC3 clock input. 6: UART1 TxD output.
+      7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [48] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [2] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [7] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_48
+  offset: '0x000000C0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 49 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI1 MOSI input/output. 5: TTC3 waveform output. 6: UART1 RxD input. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [49] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [3] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Card Bus Power
+      output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_49
+  offset: '0x000000C4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 50 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: MDIO1 Clock output. 5: TTC2 clock input. 6: UART0 RxD input. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [50] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Command input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Write Protect input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_50
+  offset: '0x000000C8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 51 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: MDIO1 Data input/output. 5: TTC2 waveform output. 6: UART0 TxD output. 7:
+      reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [51] input/output bank 1.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: reserved 2: SDIO1 Clock
+      output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_51
+  offset: '0x000000CC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 52 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: PJTAG TCK input
+      clock. 4: SPI0 SCLK clock input/output. 5: TTC1 clock input. 6: UART1 TxD output.
+      7: TracePort clock output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [52] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_52
+  offset: '0x000000D0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 53 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: PJTAG TDI input. 4:
+      SPI0 SS [2] output. 5: TTC1 waveform output. 6: UART1 RxD input. 7: TracePort
+      control output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [53] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_53
+  offset: '0x000000D4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 54 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: PJTAG TDO output.
+      4: SPI0 SS [1] output. 5: TTC0 clock input. 6: UART0 RxD input. 7: TracePort
+      DQ[0] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [54] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_54
+  offset: '0x000000D8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 55 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: PJTAG TMS input. 4:
+      SPI0 SS [0] input/output. 5: TTC0 waveform output. 6: UART0 TxD output. 7: TracePort
+      DQ[1] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [55] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_55
+  offset: '0x000000DC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 56 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI0 MISO input/output. 5: TTC3 clock input. 6: UART1 TxD output.
+      7: TracePort DQ[2] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [56] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_56
+  offset: '0x000000E0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 57 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI0 MOSI input/output. 5: TTC3 waveform output. 6: UART1 RxD input. 7: TracePort
+      DQ[3] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [57] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_57
+  offset: '0x000000E4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 58 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '2) 1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: PJTAG TCK input
+      clock. 4: SPI1 SCLK clock input/output. 5: TTC2 clock input. 6: UART0 RxD input.
+      7: TracePort DQ[4] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [58] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_58
+  offset: '0x000000E8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 59 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: PJTAG TDI input. 4:
+      SPI1 SS [2] output. 5: TTC2 waveform output. 6: UART0 TxD output. 7: TracePort
+      DQ[5] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [59] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_59
+  offset: '0x000000EC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 60 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: PJTAG TDO output.
+      4: SPI1 SS [1] output. 5: TTC1 clock input. 6: UART1 TxD output. 7: TracePort
+      DQ[6] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [60] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_60
+  offset: '0x000000F0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 61 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: ') 1: CAN1 RX input. 2: I2C1 SDA input/output. 3: PJTAG TMS input. 4:
+      SPI1 SS [0] input/output. 5: TTC1 waveform output. 6: UART1 RxD input. 7: TracePort
+      DQ[7] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [61] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_61
+  offset: '0x000000F4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 62 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI1 MISO input/output. 5: TTC0 clock input. 6: UART0 RxD input.
+      7: TracePort DQ[8] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [62] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_62
+  offset: '0x000000F8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 63 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI1 MOSI input/output. 5: TTC0 waveform output. 6: UART0 TxD output. 7:
+      TracePort DQ[9] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [63] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    name: L2_SEL
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_63
+  offset: '0x000000FC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 64 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI0 SCLK clock input/output. 5: TTC3 clock input. 6: UART1 TxD output.
+      7: TracePort DQ[10] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [64] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: reserved 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Clock output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_64
+  offset: '0x00000100'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 65 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI0 SS [2] output. 5: TTC3 waveform output. 6: UART1 RxD input. 7: TracePort
+      DQ[11] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [65] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: reserved 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Card Detect input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_65
+  offset: '0x00000104'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 66 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI0 SS [1] output. 5: TTC2 clock input. 6: UART0 RxD input. 7: TracePort
+      DQ[12] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [66] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: reserved 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Command input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_66
+  offset: '0x00000108'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 67 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI0 SS [0] input/output. 5: TTC2 waveform output. 6: UART0 TxD output. 7:
+      TracePort DQ[13] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [67] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: reserved 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [0] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_67
+  offset: '0x0000010C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 68 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI0 MISO input/output. 5: TTC1 clock input. 6: UART1 TxD output.
+      7: TracePort DQ[14] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [68] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: reserved 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [1] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_68
+  offset: '0x00000110'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 69 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI0 MOSI input/output. 5: TTC1 waveform output. 6: UART1 RxD input. 7: TracePort
+      DQ[15] output.'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [69] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Write Protect. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [2] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_69
+  offset: '0x00000114'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 70 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI1 SCLK clock input/output. 5: TTC0 clock input. 6: UART0 RxD input.
+      7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [70] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Power Control output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [3] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_70
+  offset: '0x00000118'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 71 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI1 SS [2] output. 5: TTC0 waveform output. 6: UART0 TxD output. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [71] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [0] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [4] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_71
+  offset: '0x0000011C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 72 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: FPD SWDT clock
+      output. 4: SPI1 SS [1] output. 5: reserved 6: UART1 TxD output. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [72] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [1] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [5] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_72
+  offset: '0x00000120'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 73 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: FPD SWDT reset output.
+      4: SPI1 SS [0] input/output. 5: reserved 6: UART1 RxD input. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [73] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [2] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [6] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_73
+  offset: '0x00000124'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 74 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 RX input. 2: I2C0 SCL input/output clock. 3: LPD SWDT clock
+      output. 4: SPI1 MISO input/output. 5: reserved 6: UART0 RxD input. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [74] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Data [3] input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Data [7] input/output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_74
+  offset: '0x00000128'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 75 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN0 TX output. 2: I2C0 SDA input/output. 3: LPD SWDT reset output.
+      4: SPI1 MOSI input/output. 5: reserved 6: UART0 TxD output. 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [75] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Command input/output. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Card Bus Power
+      output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_75
+  offset: '0x0000012C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 76 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 TX output. 2: I2C1 SCL input/output clock. 3: mdio0 Output
+      gem0_mdc- (MDIO Clock) 4: mdio1 Output gem1_mdc- (MDIO Clock) 5: mdio2 Output
+      gem2_mdc- (MDIO Clock) 6: mdio3 Output gem3_mdc- (MDIO Clock) 7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [76] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '2: SDIO1 Clock output.'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output 1: SDIO0 Write Protect input.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_76
+  offset: '0x00000130'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MIO Device Pin 77 Multiplexer Controls.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:5'
+    longdesc: '1: CAN1 RX input. 2: I2C1 SDA input/output. 3: MDIO0 Data input/output.
+      4: MDIO1 Data input/output. 5: MDIO2 Data input/output. 6: MDIO3 Data input/output.
+      7: reserved'
+    name: L3_SEL
+    shortdesc: 'Level 3 Mux Select: 0: GPIO [77] input/output bank 2.'
+    type: rw
+  - bits: '4:3'
+    longdesc: '1: reserved 2: SDIO1 Card Detect intput. 3: reserved'
+    name: L2_SEL
+    shortdesc: 'Level 2 Mux Select: 0: Level 3 Mux Output.'
+    type: rw
+  - bits: '2'
+    name: L1_SEL
+    type: rw
+  - bits: '1'
+    name: L0_SEL
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MIO_PIN_77
+  offset: '0x00000134'
+  type: rw
+  width: 32
+- default: '0x03FFFFFF'
+  description: MIO Bank 0, Drive 0 control.
+  field:
+  - bits: '25:0'
+    longdesc: 'Drive table for [drive0], [drive1]: 00 = 2 mA 01 = 4 mA 10 = 8 mA 11
+      = 12 mA Bit [0] controls MIO pin 0. .. Bit [25] controls MIO pin 25. Bits [26]
+      to [31] are reserved.'
+    name: DRIVE0
+    shortdesc: Together with the bank0_ctrl1 [drive1] bit field, controls the output
+      drive strength of MIO pins [0:25].
+    type: rw
+  name: BANK0_CTRL0
+  offset: '0x00000138'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 0, Drive 1 control.
+  field:
+  - bits: '25:0'
+    longdesc: Refer to the bank0_ctrl0 register for a drive table. Bit [0] controls
+      MIO pin 0. .. Bit [25] controls MIO pin 25. Bits [26] to [31] are reserved.
+    name: DRIVE1
+    shortdesc: Together with the bank0_ctrl0 [drive0] bit field, controls the output
+      drive strength of MIO pins [0:25].
+    type: rw
+  name: BANK0_CTRL1
+  offset: '0x0000013C'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 0, CMOS input type control.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = CMOS. 1 = Schmitt (hysteresis). Bit [0] controls MIO pin 0. .. Bit
+      [25] controls MIO pin 25. Bits [26] to [31] are reserved.
+    name: SCHMITT_CMOS_N
+    shortdesc: Select between Schmitt Trigger or CMOS input for MIO pins [0:25].
+    type: rw
+  name: BANK0_CTRL3
+  offset: '0x00000140'
+  type: rw
+  width: 26
+- default: '0x03FFFFFF'
+  description: MIO Bank 0, Pull up/down select.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = pull-down. 1 = pull-up. Enable the internal resistor using the bank0_ctrl5
+      register. Bit [0] controls MIO pin 0. .. Bit [25] controls MIO pin 25. Bits
+      [26] to [31] are reserved.
+    name: PULL_HIGH_LOW_N
+    shortdesc: Select between internal pull-up and pull-down on MIO pins [0:25].
+    type: rw
+  name: BANK0_CTRL4
+  offset: '0x00000144'
+  type: rw
+  width: 26
+- default: '0x03FFFFFF'
+  description: MIO Bank 0, Pull up/down enable.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = disable. 1 = enable. Select between a pull-up and pull-down using
+      the bank0_ctrl4 register. Bit [0] controls MIO pin 0. .. Bit [25] controls MIO
+      pin 25. Bits [26] to [31] are reserved.
+    name: PULL_ENABLE
+    shortdesc: Enable the internal pull-up or pull-down resistors on MIO pins [0:25].
+    type: rw
+  name: BANK0_CTRL5
+  offset: '0x00000148'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 0, Output slew rate select.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = fast slew rate. 1 = slow slew rate. Bit [0] controls MIO pin 0.
+      .. Bit [25] controls MIO pin 25. Bits [26] to [31] are reserved.
+    name: SLOW_FAST_SLEW_N
+    shortdesc: Select between fast and slow output slew rates for MIO pins [0:25].
+    type: rw
+  name: BANK0_CTRL6
+  offset: '0x0000014C'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 0, Voltage detection.
+  field:
+  - bits: '0'
+    longdesc: 5 or 3.3V. 1= 1.8V. Bit [0] indicates voltage status. Bits [1:31] are
+      reserved. Read-only.
+    name: VOLTAGE_MODE
+    shortdesc: 'Voltage status on PSIO Bank 500: 0= 2.'
+    type: ro
+  name: BANK0_STATUS
+  offset: '0x00000150'
+  type: ro
+  width: 1
+- default: '0x03FFFFFF'
+  description: MIO Bank 1, Drive 0 control.
+  field:
+  - bits: '25:0'
+    longdesc: 'Truthtable for [drive0], [drive1]: 00 = 2 mA 01 = 4 mA 10 = 8 mA 11
+      = 12 mA Bit [0] controls MIO pin 26. .. Bit [25] controls MIO pin 51. Bits [26]
+      to [31] are reserved.'
+    name: DRIVE0
+    shortdesc: Together with the bank1_ctrl1 [drive1] bit field, controls the output
+      drive strength of MIO pins [26:51].
+    type: rw
+  name: BANK1_CTRL0
+  offset: '0x00000154'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 1, Drive 1 control.
+  field:
+  - bits: '25:0'
+    longdesc: Refer to the bank1_ctrl0 register for a drive table. Bit [0] controls
+      MIO pin 26. .. Bit [25] controls MIO pin 51. Bits [26] to [31] are reserved.
+    name: DRIVE1
+    shortdesc: Together with the bank1_ctrl0 [drive0] bit field, controls the output
+      drive strength of MIO pins [26:51].
+    type: rw
+  name: BANK1_CTRL1
+  offset: '0x00000158'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 1, CMOS input type control.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = CMOS. 1 = Schmitt (hysteresis). Bit [0] controls MIO pin 26. ..
+      Bit [25] controls MIO pin 51. Bits [26] to [31] are reserved.
+    name: SCHMITT_CMOS_N
+    shortdesc: Select between Schmitt Trigger or CMOS input for MIO pins [26:51].
+    type: rw
+  name: BANK1_CTRL3
+  offset: '0x0000015C'
+  type: rw
+  width: 26
+- default: '0x03FFFFFF'
+  description: MIO Bank 1, Pull up/down select.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = pull-down. 1 = pull-up. Enable the internal resistor using the bank1_ctrl5
+      register. Bit [0] controls MIO pin 26. .. Bit [25] controls MIO pin 51. Bits
+      [26] to [31] are reserved.
+    name: PULL_HIGH_LOW_N
+    shortdesc: Select between internal pull-up and pull-down on MIO pins [26:51].
+    type: rw
+  name: BANK1_CTRL4
+  offset: '0x00000160'
+  type: rw
+  width: 26
+- default: '0x03FFFFFF'
+  description: MIO Bank 1, Pull up/down enable.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = disable. 1 = enable. Select between a pull-up and pull-down using
+      the bank1_ctrl4 register. Bit [0] controls MIO pin 26. .. Bit [25] controls
+      MIO pin 51. Bits [26] to [31] are reserved.
+    name: PULL_ENABLE
+    shortdesc: Enable the internal pull-up or pull-down resistors on MIO pins [26:51].
+    type: rw
+  name: BANK1_CTRL5
+  offset: '0x00000164'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 1, Output slew rate select.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = fast slew rate. 1 = slow slew rate. Bit [0] controls MIO pin 26.
+      .. Bit [25] controls MIO pin 51. Bits [26] to [31] are reserved.
+    name: SLOW_FAST_SLEW_N
+    shortdesc: Select between fast and slow output slew rates for MIO pins [26:51].
+    type: rw
+  name: BANK1_CTRL6
+  offset: '0x00000168'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 1, Voltage detection.
+  field:
+  - bits: '0'
+    longdesc: 5 or 3.3V. 1= 1.8V. Bit [0] indicates voltage status. Bits [1:31] are
+      reserved. Read-only.
+    name: VOLTAGE_MODE
+    shortdesc: 'Voltage status on PSIO Bank 501: 0= 2.'
+    type: ro
+  name: BANK1_STATUS
+  offset: '0x0000016C'
+  type: ro
+  width: 1
+- default: '0x03FFFFFF'
+  description: MIO Bank 2, Drive 0 control.
+  field:
+  - bits: '25:0'
+    longdesc: 'Truthtable for [drive0], [drive1]: 00 = 2 mA 01 = 4 mA 10 = 8 mA 11
+      = 12 mA Bit [0] controls MIO pin 52. .. Bit [25] controls MIO pin 77. Bits [26]
+      to [31] are reserved.'
+    name: DRIVE0
+    shortdesc: Together with the bank2_ctrl1 [drive1] bit field, controls the output
+      drive strength of MIO pins [52:77].
+    type: rw
+  name: BANK2_CTRL0
+  offset: '0x00000170'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 2, Drive 1 control.
+  field:
+  - bits: '25:0'
+    longdesc: Refer to the bank2_ctrl0 register for a drive table. Bit [0] controls
+      MIO pin 52. .. Bit [25] controls MIO pin 77. Bits [26] to [31] are reserved.
+    name: DRIVE1
+    shortdesc: Together with the bank2_ctrl0 [drive0] bit field, controls the output
+      drive strength of MIO pins [52:77].
+    type: rw
+  name: BANK2_CTRL1
+  offset: '0x00000174'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 2, CMOS input type control.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = CMOS. 1 = Schmitt (hysteresis). Bit [0] controls MIO pin 52. ..
+      Bit [25] controls MIO pin 77. Bits [26] to [31] are reserved.
+    name: SCHMITT_CMOS_N
+    shortdesc: Select between Schmitt Trigger or CMOS input for MIO pins [52:77].
+    type: rw
+  name: BANK2_CTRL3
+  offset: '0x00000178'
+  type: rw
+  width: 26
+- default: '0x03FFFFFF'
+  description: MIO Bank 2, Pull up/down select.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = pull-down. 1 = pull-up. Enable the internal resistor using the bank2_ctrl5
+      register. Bit [0] controls MIO pin 52. .. Bit [25] controls MIO pin 77. Bits
+      [26] to [31] are reserved.
+    name: PULL_HIGH_LOW_N
+    shortdesc: Select between internal pull-up and pull-down on MIO pins [52:77].
+    type: rw
+  name: BANK2_CTRL4
+  offset: '0x0000017C'
+  type: rw
+  width: 26
+- default: '0x03FFFFFF'
+  description: MIO Bank 2, Pull up/down enable.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = disable. 1 = enable. Select between a pull-up and pull-down using
+      the bank2_ctrl4 register. Bit [0] controls MIO pin 52. .. Bit [25] controls
+      MIO pin 77. Bits [26] to [31] are reserved.
+    name: PULL_ENABLE
+    shortdesc: Enable the internal pull-up or pull-down resistors on MIO pins [52:77].
+    type: rw
+  name: BANK2_CTRL5
+  offset: '0x00000180'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 2, Output slew rate select.
+  field:
+  - bits: '25:0'
+    longdesc: 0 = fast slew rate. 1 = slow slew rate. Bit [0] controls MIO pin 52.
+      .. Bit [25] controls MIO pin 77. Bits [26] to [31] are reserved.
+    name: SLOW_FAST_SLEW_N
+    shortdesc: Select between fast and slow output slew rates for MIO pins [52:77].
+    type: rw
+  name: BANK2_CTRL6
+  offset: '0x00000184'
+  type: rw
+  width: 26
+- default: '0x00000000'
+  description: MIO Bank 2, Voltage detection.
+  field:
+  - bits: '0'
+    longdesc: 5 or 3.3V. 1= 1.8V. Bit [0] indicates voltage status. Bits [1:31] are
+      reserved. Read-only.
+    name: VOLTAGE_MODE
+    shortdesc: 'Voltage status on PSIO Bank 502: 0= 2.'
+    type: ro
+  name: BANK2_STATUS
+  offset: '0x00000188'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Loopback function within MIO
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3'
+    longdesc: 0 = Connect I2C inputs according to MIO mapping. 1 = Loop I2C 0 outputs
+      to I2C 1 inputs, and I2C 1 outputs to I2C 0 inputs.
+    name: I2C0_LOOP_I2C1
+    shortdesc: I2C Loopback Control.
+    type: rw
+  - bits: '2'
+    longdesc: 0 = Connect CAN inputs according to MIO mapping. 1 = Loop CAN 0 Tx to
+      CAN 1 Rx, and CAN 1 Tx to CAN 0 Rx.
+    name: CAN0_LOOP_CAN1
+    shortdesc: CAN Loopback Control.
+    type: rw
+  - bits: '1'
+    longdesc: 0 = Connect UART inputs according to MIO mapping. 1 = Loop UART 0 outputs
+      to UART 1 inputs, and UART 1 outputs to UART 0 inputs. RXD/TXD cross-connected.
+      RTS/CTS cross-connected. DSR, DTR, DCD and RI not used.
+    name: UA0_LOOP_UA1
+    shortdesc: UART Loopback Control.
+    type: rw
+  - bits: '0'
+    longdesc: 0 = Connect SPI inputs according to MIO mapping. 1 = Loop SPI 0 outputs
+      to SPI 1 inputs, and SPI 1 outputs to SPI 0 inputs. The other SPI core will
+      appear on the LS Slave Select.
+    name: SPI0_LOOP_SPI1
+    shortdesc: SPI Loopback Control.
+    type: rw
+  name: MIO_LOOPBACK
+  offset: '0x00000200'
+  type: mixed
+  width: 32
+- default: '0xFFFFFFFF'
+  description: MIO pin Tri-state Enables, 31:0
+  field:
+  - bits: '31'
+    name: PIN_31_TRI
+    type: rw
+  - bits: '30'
+    name: PIN_30_TRI
+    type: rw
+  - bits: '29'
+    name: PIN_29_TRI
+    type: rw
+  - bits: '28'
+    name: PIN_28_TRI
+    type: rw
+  - bits: '27'
+    name: PIN_27_TRI
+    type: rw
+  - bits: '26'
+    name: PIN_26_TRI
+    type: rw
+  - bits: '25'
+    name: PIN_25_TRI
+    type: rw
+  - bits: '24'
+    name: PIN_24_TRI
+    type: rw
+  - bits: '23'
+    name: PIN_23_TRI
+    type: rw
+  - bits: '22'
+    name: PIN_22_TRI
+    type: rw
+  - bits: '21'
+    name: PIN_21_TRI
+    type: rw
+  - bits: '20'
+    name: PIN_20_TRI
+    type: rw
+  - bits: '19'
+    name: PIN_19_TRI
+    type: rw
+  - bits: '18'
+    name: PIN_18_TRI
+    type: rw
+  - bits: '17'
+    name: PIN_17_TRI
+    type: rw
+  - bits: '16'
+    name: PIN_16_TRI
+    type: rw
+  - bits: '15'
+    name: PIN_15_TRI
+    type: rw
+  - bits: '14'
+    name: PIN_14_TRI
+    type: rw
+  - bits: '13'
+    name: PIN_13_TRI
+    type: rw
+  - bits: '12'
+    name: PIN_12_TRI
+    type: rw
+  - bits: '11'
+    name: PIN_11_TRI
+    type: rw
+  - bits: '10'
+    name: PIN_10_TRI
+    type: rw
+  - bits: '9'
+    name: PIN_09_TRI
+    type: rw
+  - bits: '8'
+    name: PIN_08_TRI
+    type: rw
+  - bits: '7'
+    name: PIN_07_TRI
+    type: rw
+  - bits: '6'
+    name: PIN_06_TRI
+    type: rw
+  - bits: '5'
+    name: PIN_05_TRI
+    type: rw
+  - bits: '4'
+    name: PIN_04_TRI
+    type: rw
+  - bits: '3'
+    name: PIN_03_TRI
+    type: rw
+  - bits: '2'
+    name: PIN_02_TRI
+    type: rw
+  - bits: '1'
+    name: PIN_01_TRI
+    type: rw
+  - bits: '0'
+    name: PIN_00_TRI
+    type: rw
+  name: MIO_MST_TRI0
+  offset: '0x00000204'
+  type: rw
+  width: 32
+- default: '0xFFFFFFFF'
+  description: MIO pin Tri-state Enables, 63:32
+  field:
+  - bits: '31'
+    name: PIN_63_TRI
+    type: rw
+  - bits: '30'
+    name: PIN_62_TRI
+    type: rw
+  - bits: '29'
+    name: PIN_61_TRI
+    type: rw
+  - bits: '28'
+    name: PIN_60_TRI
+    type: rw
+  - bits: '27'
+    name: PIN_59_TRI
+    type: rw
+  - bits: '26'
+    name: PIN_58_TRI
+    type: rw
+  - bits: '25'
+    name: PIN_57_TRI
+    type: rw
+  - bits: '24'
+    name: PIN_56_TRI
+    type: rw
+  - bits: '23'
+    name: PIN_55_TRI
+    type: rw
+  - bits: '22'
+    name: PIN_54_TRI
+    type: rw
+  - bits: '21'
+    name: PIN_53_TRI
+    type: rw
+  - bits: '20'
+    name: PIN_52_TRI
+    type: rw
+  - bits: '19'
+    name: PIN_51_TRI
+    type: rw
+  - bits: '18'
+    name: PIN_50_TRI
+    type: rw
+  - bits: '17'
+    name: PIN_49_TRI
+    type: rw
+  - bits: '16'
+    name: PIN_48_TRI
+    type: rw
+  - bits: '15'
+    name: PIN_47_TRI
+    type: rw
+  - bits: '14'
+    name: PIN_46_TRI
+    type: rw
+  - bits: '13'
+    name: PIN_45_TRI
+    type: rw
+  - bits: '12'
+    name: PIN_44_TRI
+    type: rw
+  - bits: '11'
+    name: PIN_43_TRI
+    type: rw
+  - bits: '10'
+    name: PIN_42_TRI
+    type: rw
+  - bits: '9'
+    name: PIN_41_TRI
+    type: rw
+  - bits: '8'
+    name: PIN_40_TRI
+    type: rw
+  - bits: '7'
+    name: PIN_39_TRI
+    type: rw
+  - bits: '6'
+    name: PIN_38_TRI
+    type: rw
+  - bits: '5'
+    name: PIN_37_TRI
+    type: rw
+  - bits: '4'
+    name: PIN_36_TRI
+    type: rw
+  - bits: '3'
+    name: PIN_35_TRI
+    type: rw
+  - bits: '2'
+    name: PIN_34_TRI
+    type: rw
+  - bits: '1'
+    name: PIN_33_TRI
+    type: rw
+  - bits: '0'
+    name: PIN_32_TRI
+    type: rw
+  name: MIO_MST_TRI1
+  offset: '0x00000208'
+  type: rw
+  width: 32
+- default: '0x00003FFF'
+  description: MIO pin Tri-state Enables, 77:64
+  field:
+  - bits: '31:14'
+    name: RESERVED
+    type: raz
+  - bits: '13'
+    name: PIN_77_TRI
+    type: rw
+  - bits: '12'
+    name: PIN_76_TRI
+    type: rw
+  - bits: '11'
+    name: PIN_75_TRI
+    type: rw
+  - bits: '10'
+    name: PIN_74_TRI
+    type: rw
+  - bits: '9'
+    name: PIN_73_TRI
+    type: rw
+  - bits: '8'
+    name: PIN_72_TRI
+    type: rw
+  - bits: '7'
+    name: PIN_71_TRI
+    type: rw
+  - bits: '6'
+    name: PIN_70_TRI
+    type: rw
+  - bits: '5'
+    name: PIN_69_TRI
+    type: rw
+  - bits: '4'
+    name: PIN_68_TRI
+    type: rw
+  - bits: '3'
+    name: PIN_67_TRI
+    type: rw
+  - bits: '2'
+    name: PIN_66_TRI
+    type: rw
+  - bits: '1'
+    name: PIN_65_TRI
+    type: rw
+  - bits: '0'
+    name: PIN_64_TRI
+    type: rw
+  name: MIO_MST_TRI2
+  offset: '0x0000020C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: SWDT clock source select
+  field:
+  - bits: '31:1'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '0'
+    enum:
+    - name: APB_CLOCK
+      value: 0
+    - name: EXTERNAL_CLOCK
+      value: 1
+    name: SELECT
+    type: rw
+  name: WDT_CLK_SEL
+  offset: '0x00000300'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: CAN MIO Control
+  field:
+  - bits: '31:24'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '23'
+    longdesc: '0: Clock CAN PHY input on falling edge of clock.'
+    name: CAN1_RXIN_REG
+    shortdesc: 'CAN1 Reference Clock selection: 1: Clock CAN PHY input on rising edge
+      of clock.'
+    type: rw
+  - bits: '22'
+    longdesc: '1: From MIO based on the [CAN1_MUX] bit field.'
+    name: CAN1_REF_SEL
+    shortdesc: 'CAN1 Reference Clock selection: 0: From internal PLL.'
+    type: rw
+  - bits: '21:15'
+    longdesc: '0: select MIO[0] 1: select MIO[1] .. 4C: select MIO[76] 4D: select
+      MIO[77] Others are reserved.'
+    name: CAN1_MUX
+    shortdesc: CAN1 clock selection when using MIO as source.
+    type: rw
+  - bits: '14:9'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: rw
+  - bits: '8'
+    longdesc: '0: Clock CAN PHY input on falling edge of clock.'
+    name: CAN0_RXIN_REG
+    shortdesc: 'CAN0 Reference Clock selection: 1: Clock CAN PHY input on rising edge
+      of clock.'
+    type: rw
+  - bits: '7'
+    name: CAN0_REF_SEL
+    type: rw
+  - bits: '6:0'
+    longdesc: '0: select MIO[0] 1: select MIO[1] .. 4C: select MIO[76] 4D: select
+      MIO[77] Others are reserved.'
+    name: CAN0_MUX
+    shortdesc: CAN0 clock selection when using MIO as source.
+    type: rw
+  name: CAN_MIO_CTRL
+  offset: '0x00000304'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: SoC Debug Clock Control
+  field:
+  - bits: '31:23'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '22'
+    name: TSU_CLK_LB_SEL
+    type: rw
+  - bits: '21:20'
+    longdesc: 'TSU clock is common for all the GEMs 00: TSU clock from PLL 10: TSU
+      clock from PLL 01: TSU clock from MIO[26] 11: TSU clock from MIO[50] or MIO[51]'
+    name: TSU_CLK_SEL
+    shortdesc: Selection of TSU clock source.
+    type: rw
+  - bits: '19'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '18'
+    name: GEM3_FIFO_CLK_SEL
+    type: rw
+  - bits: '17'
+    name: GEM3_SGMII_MODE
+    type: rw
+  - bits: '16'
+    name: GEM3_REF_SRC_SEL
+    type: rw
+  - bits: '15'
+    name: GEM3_RX_SRC_SEL
+    type: rw
+  - bits: '14'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '13'
+    name: GEM2_FIFO_CLK_SEL
+    type: rw
+  - bits: '12'
+    name: GEM2_SGMII_MODE
+    type: rw
+  - bits: '11'
+    name: GEM2_REF_SRC_SEL
+    type: rw
+  - bits: '10'
+    name: GEM2_RX_SRC_SEL
+    type: rw
+  - bits: '9'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '8'
+    name: GEM1_FIFO_CLK_SEL
+    type: rw
+  - bits: '7'
+    name: GEM1_SGMII_MODE
+    type: rw
+  - bits: '6'
+    name: GEM1_REF_SRC_SEL
+    type: rw
+  - bits: '5'
+    name: GEM1_RX_SRC_SEL
+    type: rw
+  - bits: '4'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '3'
+    name: GEM0_FIFO_CLK_SEL
+    type: rw
+  - bits: '2'
+    name: GEM0_SGMII_MODE
+    type: rw
+  - bits: '1'
+    name: GEM0_REF_SRC_SEL
+    type: rw
+  - bits: '0'
+    longdesc: '1: EMIO clock. Valid when [GEM0_REF_SRC_SEL] = 1.'
+    name: GEM0_RX_SRC_SEL
+    shortdesc: 'Select external source for GEM0_RX_CLK: 0: MIO clock (route using
+      MIO_PIN_xx registers).'
+    type: rw
+  name: GEM_CLK_CTRL
+  offset: '0x00000308'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: SoC Debug Clock Control
+  field:
+  - bits: '31:19'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '18'
+    name: SDIO1_FBCLK_SEL
+    type: rw
+  - bits: '17'
+    name: SDIO1_RX_SRC_SEL
+    type: rw
+  - bits: '16:3'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '2'
+    name: SDIO0_FBCLK_SEL
+    type: rw
+  - bits: '1:0'
+    name: SDIO0_RX_SRC_SEL
+    type: rw
+  name: SDIO_CLK_CTRL
+  offset: '0x0000030C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: SD eMMC selection
+  field:
+  - bits: '31:16'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '15'
+    name: SD1_EMMC_SEL
+    type: rw
+  - bits: '14:1'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: rw
+  - bits: '0'
+    name: SD0_EMMC_SEL
+    type: rw
+  name: CTRL_REG_SD
+  offset: '0x00000310'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Input Tap Delay Select
+  field:
+  - bits: '31:26'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '25'
+    longdesc: This signal should be asserted few clocks before the corectrl_itapdlysel
+      changes and should be asserted for few clocks after.
+    name: SD1_ITAPCHGWIN
+    shortdesc: This is used to gate the output of the Tap Delay lines so as to avoid
+      glithches being propagated into the Core.
+    type: rw
+  - bits: '24'
+    name: SD1_ITAPDLYENA
+    type: rw
+  - bits: '23:16'
+    longdesc: 'This is effective only when corectrl_itapdlyena is asserted and Tuning
+      is not enabled. For the SD frequency of - 200 MHz: 30 taps are available 100
+      MHz: 60 taps are available 50 MHz: 120 taps are available 33 MHz: 180 taps are
+      available'
+    name: SD1_ITAPDLYSEL
+    shortdesc: Selects optimal number of Taps on the rxclk_in line.
+    type: rw
+  - bits: '15:10'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '9'
+    longdesc: This signal should be asserted few clocks before the corectrl_itapdlysel
+      changes and should be asserted for few clocks after.
+    name: SD0_ITAPCHGWIN
+    shortdesc: This is used to gate the output of the Tap Delay lines so as to avoid
+      glithches being propagated into the Core.
+    type: rw
+  - bits: '8'
+    name: SD0_ITAPDLYENA
+    type: rw
+  - bits: '7:0'
+    longdesc: 'This is effective only when corectrl_itapdlyena is asserted and Tuning
+      is not enabled. For the SD frequency of - 200 MHz: 30 taps are available 100
+      MHz: 60 taps are available 50 MHz: 120 taps are available'
+    name: SD0_ITAPDLYSEL
+    shortdesc: Selects optimal number of Taps on the rxclk_in line.
+    type: rw
+  name: SD_ITAPDLY
+  offset: '0x00000314'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Output Tap Delay Select
+  field:
+  - bits: '31:23'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '22'
+    longdesc: Leave this bit set = 0.
+    name: SD1_OTAPDLYENA
+    shortdesc: Reserved.
+    type: rw
+  - bits: '21:16'
+    longdesc: 'This is effective only when corectrl_otapdlyena is asserted. For the
+      SD frequency od - 200 MHz: 8 taps are available 100 MHz: 15 taps are available
+      50 MHz: 30 taps are available 33 MHz: 45 taps are available'
+    name: SD1_OTAPDLYSEL
+    shortdesc: Selects optimal number of taps on the sdcard_clk.
+    type: rw
+  - bits: '15:7'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '6'
+    longdesc: Leave this bit set = 0.
+    name: SD0_OTAPDLYENA
+    shortdesc: Reserved.
+    type: rw
+  - bits: '5:0'
+    longdesc: 'This is effective only when [SD_OTAPDLYENA] is asserted. For the SD
+      frequency od - 200 MHz: 8 taps are available 100 MHz: 15 taps are available
+      50 MHz: 30 taps are available 33 MHz: 45 taps are available'
+    name: SD0_OTAPDLYSEL
+    shortdesc: Selects optimal number of taps on the sdcard_clk.
+    type: rw
+  name: SD_OTAPDLYSEL
+  offset: '0x00000318'
+  type: mixed
+  width: 32
+- default: '0x32403240'
+  description: SD Configuration, Reg 1.
+  field:
+  - bits: '31'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '30:23'
+    longdesc: This is the frequency of the xin_clk. This field is primarily used for
+      defining the input base clock frequency value to the DLL lookup table. The DLL
+      Lookup table ( from RTL) requires a precise value to be programmed
+    name: SD1_BASECLK
+    shortdesc: Base Clock Frequency for SD Clock.
+    type: rw
+  - bits: '22:17'
+    name: SD1_TUNIGCOUNT
+    type: rw
+  - bits: '16'
+    longdesc: '0: Synchronous Wakeup Mode: The xin_clk has to be running for this
+      mode. The Card Insertion/ Removal/Interrupt events are detected synchronously
+      on the xin_clk and the Wakeup Event is generated. The Assertion and deassertion
+      of the wakeup Event signal synchronous to xin_clk. 1: Asyncrhonous Wakeup Mode:
+      The xin_clk and the host_clk can be stopped in this mode and the Wake up Event
+      is asynchronously generated based on the Card Insertion/Removal/Interrupt Events.
+      The Assertion and deassertion of the wakeup Event signal is asynchronous.'
+    name: SD1_ASYNCWKPENA
+    shortdesc: Determines the Wakeup Signal Generation Mode.
+    type: rw
+  - bits: '15'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '14:7'
+    longdesc: This is the frequency of the xin_clk. This field is primarily used for
+      defining the input base clock frequency value to the DLL lookup table. The DLL
+      Lookup table ( from RTL) requires a precise value to be programmed so that it
+      chooses appropriate divisor. The valid range of values for this field is 50
+      or 100 or 200 any other value other than this will not result in a proper look
+      up of the DLL to choose the divisor value appropriately.
+    name: SD0_BASECLK
+    shortdesc: Base Clock Frequency for SD Clock.
+    type: rw
+  - bits: '6:1'
+    name: SD0_TUNIGCOUNT
+    type: rw
+  - bits: '0'
+    longdesc: '0: Synchronous Wakeup Mode: The xin_clk has to be running for this
+      mode. The Card Insertion/Removal/Interrupt events are detected synchronously
+      on the xin_clk and the Wakeup Event is generated. The Assertion and deassertion
+      of the wakeup Event signal synchronous to xin_clk. 1: Asyncrhonous Wakeup Mode:
+      The xin_clk and the host_clk can be stopped in this mode and the Wake up Event
+      is asynchronously generated based on the Card Insertion/Removal/Interrupt Events.
+      The Assertion and deassertion of the wakeup Event signal is asynchronous.'
+    name: SD0_ASYNCWKPENA
+    shortdesc: Select the Wakeup Signal Generation Mode.
+    type: rw
+  name: SD_CONFIG_REG1
+  offset: '0x0000031C'
+  type: mixed
+  width: 32
+- default: '0x0FFC0FFC'
+  description: SD Configuration, Reg 2.
+  field:
+  - bits: '31:30'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '29:28'
+    name: SD1_SLOTTYPE
+    type: rw
+  - bits: '27'
+    name: SD1_ASYCINTR
+    type: rw
+  - bits: '26'
+    longdesc: When set to 1'b0 the Core supports only 32-bit System Bus. When set
+      to 1'b1 the Core supports 64-bit System Address.
+    name: SD1_64BIT
+    shortdesc: 64-bit System Bus Support This should be set based on the System Address
+      Bus.
+    type: rw
+  - bits: '25'
+    longdesc: '8V Support 1: 1.8V supported 0: 1.8V not supported support'
+    name: SD1_1P8V
+    shortdesc: '1.'
+    type: rw
+  - bits: '24'
+    longdesc: '0V Support 1: 3.0V supported 0: 3.0V not supported support'
+    name: SD1_3P0V
+    shortdesc: '3.'
+    type: rw
+  - bits: '23'
+    longdesc: '3V Support 1: 3.3V supported 0: 3.3V not supported support'
+    name: SD1_3P3V
+    shortdesc: '3.'
+    type: rw
+  - bits: '22'
+    name: SD1_SUSPRES
+    type: rw
+  - bits: '21'
+    name: SD1_SDMA
+    type: rw
+  - bits: '20'
+    name: SD1_HIGHSPEED
+    type: rw
+  - bits: '19'
+    name: SD1_LPD_DMA2
+    type: rw
+  - bits: '18'
+    name: SD1_8BIT
+    type: rw
+  - bits: '17:16'
+    name: SD1_MAXBLK
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: raz
+  - bits: '13:12'
+    name: SD0_SLOTTYPE
+    type: rw
+  - bits: '11'
+    name: SD0_ASYCINTR
+    type: rw
+  - bits: '10'
+    longdesc: When set to 1'b0 the Core supports only 32-bit System Bus. When set
+      to 1'b1 the Core supports 64-bit System Address.
+    name: SD0_64BIT
+    shortdesc: 64-bit System Bus Support This should be set based on the System Address
+      Bus.
+    type: rw
+  - bits: '9'
+    longdesc: '8V Support 1: 1.8V supported 0: 1.8V not supported support'
+    name: SD0_1P8V
+    shortdesc: '1.'
+    type: rw
+  - bits: '8'
+    longdesc: '0V Support 1: 3.0V supported 0: 3.0V not supported support'
+    name: SD0_3P0V
+    shortdesc: '3.'
+    type: rw
+  - bits: '7'
+    longdesc: '3V Support 1: 3.3V supported 0: 3.3V not supported support'
+    name: SD0_3P3V
+    shortdesc: '3.'
+    type: rw
+  - bits: '6'
+    name: SD0_SUSPRES
+    type: rw
+  - bits: '5'
+    name: SD0_SDMA
+    type: rw
+  - bits: '4'
+    name: SD0_HIGHSPEED
+    type: rw
+  - bits: '3'
+    name: SD0_ADMA2
+    type: rw
+  - bits: '2'
+    name: SD0_8BIT
+    type: rw
+  - bits: '1:0'
+    name: SD0_MAXBLK
+    type: rw
+  name: SD_CONFIG_REG2
+  offset: '0x00000320'
+  type: mixed
+  width: 32
+- default: '0x06070607'
+  description: SD Configuration, Reg 3.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: raz
+  - bits: '26'
+    longdesc: The Core operates with or with out tuning for SDR50 mode as long as
+      the Clock can be manually tuned using tap delay.
+    name: SD1_TUNINGSDR50
+    shortdesc: Use Tuning for SDR50 This bit should be set if the Application wants
+      Tuning be used for SDR50 Modes.
+    type: rw
+  - bits: '25:22'
+    longdesc: Setting to 4'b0 disables Re-Tuning Timer. 0h - Get information via other
+      source 1h = 1 seconds 2h = 2 seconds 3h = 4 seconds 4h = 8 seconds -- n = 2(n-1)
+      seconds -- Bh = 1024 seconds Fh - Ch = Reserved
+    name: SD1_RETUNETMR
+    shortdesc: This is the Timer Count for Re-Tuning Timer for Re-Tuning Mode 1 to
+      3.
+    type: rw
+  - bits: '21'
+    name: SD1_DDRIVER
+    type: rw
+  - bits: '20'
+    name: SD1_CDRIVER
+    type: rw
+  - bits: '19'
+    name: SD1_ADRIVER
+    type: rw
+  - bits: '18'
+    name: SD1_DDR50
+    type: rw
+  - bits: '17'
+    name: SD1_SDR104
+    type: rw
+  - bits: '16'
+    name: SD1_SDR50
+    type: rw
+  - bits: '15:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    longdesc: The Core operates with or with out tuning for SDR50 mode as long as
+      the Clock can be manually tuned using tap delay.
+    name: SD0_TUNINGSDR50
+    shortdesc: Use Tuning for SDR50 This bit should be set if the Application wants
+      Tuning be used for SDR50 Modes.
+    type: rw
+  - bits: '9:6'
+    longdesc: Setting to 4'b0 disables Re-Tuning Timer. 0h - Get information via other
+      source 1h = 1 seconds 2h = 2 seconds 3h = 4 seconds 4h = 8 seconds -- n = 2(n-1)
+      seconds -- Bh = 1024 seconds Fh - Ch = Reserved
+    name: SD0_RETUNETMR
+    shortdesc: This is the Timer Count for Re-Tuning Timer for Re-Tuning Mode 1 to
+      3.
+    type: rw
+  - bits: '5'
+    longdesc: 8 Signalling is supported or not.
+    name: SD0_DDRIVER
+    shortdesc: Driver Type D Support This bit should be set based on whether Driver
+      Type D for 1.
+    type: rw
+  - bits: '4'
+    longdesc: 8 Signalling is supported or not.
+    name: SD0_CDRIVER
+    shortdesc: Driver Type C Support This bit should be set based on whether Driver
+      Type C for 1.
+    type: rw
+  - bits: '3'
+    longdesc: 8 Signalling is supported or not.
+    name: SD0_ADRIVER
+    shortdesc: Driver Type A Support This bit should be set based on whether Driver
+      Type A for 1.
+    type: rw
+  - bits: '2'
+    name: SD0_DDR50
+    type: rw
+  - bits: '1'
+    name: SD0_SDR104
+    type: rw
+  - bits: '0'
+    name: SD0_SDR50
+    type: rw
+  name: SD_CONFIG_REG3
+  offset: '0x00000324'
+  type: mixed
+  width: 32
+- default: '0x01000100'
+  description: Preset Value for Initialization
+  field:
+  - bits: '31:29'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: SD1_INITPRESET
+    type: rw
+  - bits: '15:13'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: SD0_INITPRESET
+    type: rw
+  name: SD_INITPRESET
+  offset: '0x00000328'
+  type: mixed
+  width: 32
+- default: '0x00040004'
+  description: Preset Value for Default Speed
+  field:
+  - bits: '31:29'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: SD1_DSPPRESET
+    type: rw
+  - bits: '15:13'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: SD0_DSPPRESET
+    type: rw
+  name: SD_DSPPRESET
+  offset: '0x0000032C'
+  type: mixed
+  width: 32
+- default: '0x00020002'
+  description: Preset Value for High Speed
+  field:
+  - bits: '31:29'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: SD1_HSPDPRESET
+    type: rw
+  - bits: '15:13'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: SD0_HSPDPRESET
+    type: rw
+  name: SD_HSPDPRESET
+  offset: '0x00000330'
+  type: mixed
+  width: 32
+- default: '0x00040004'
+  description: Preset Value for SDR12
+  field:
+  - bits: '31:29'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: SD1_SDR12PRESET
+    type: rw
+  - bits: '15:13'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: SD0_SDR12PRESET
+    type: rw
+  name: SD_SDR12PRESET
+  offset: '0x00000334'
+  type: mixed
+  width: 32
+- default: '0x00020002'
+  description: Preset Value for SDR25
+  field:
+  - bits: '31:29'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '28:16'
+    name: SD1_SDR25PRESET
+    type: rw
+  - bits: '15:13'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '12:0'
+    name: SD0_SDR25PRESET
+    type: rw
+  name: SD_SDR25PRESET
+  offset: '0x00000338'
+  type: mixed
+  width: 32
+- default: '0x00010001'
+  description: Preset Value for SDR50
+  field:
+  - bits: '31:29'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '28:16'
+    name: SD1_SDR50PRESET
+    type: rw
+  - bits: '15:13'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '12:0'
+    name: SD0_SDR50PRESET
+    type: rw
+  name: SD_SDR50PRSET
+  offset: '0x0000033C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Preset Value for SDR104
+  field:
+  - bits: '31:29'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '28:16'
+    name: SD1_SDR104PRESET
+    type: rw
+  - bits: '15:13'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '12:0'
+    name: SD0_SDR104PRESET
+    type: rw
+  name: SD_SDR104PRST
+  offset: '0x00000340'
+  type: mixed
+  width: 32
+- default: '0x00020002'
+  description: Preset Value for DDR50
+  field:
+  - bits: '31:29'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '28:16'
+    name: SD1_DDR50PRESET
+    type: rw
+  - bits: '15:13'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '12:0'
+    name: SD0_DDR50PRESET
+    type: rw
+  name: SD_DDR50PRESET
+  offset: '0x00000344'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maximum Current for 1.8V
+  field:
+  - bits: '31:24'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '23:16'
+    longdesc: 8V
+    name: SD1_MAXCUR1P8
+    shortdesc: SD1 Maximum Current for 1.
+    type: rw
+  - bits: '15:8'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '7:0'
+    longdesc: 8V
+    name: SD0_MAXCUR1P8
+    shortdesc: SD0 Maximum Current for 1.
+    type: rw
+  name: SD_MAXCUR1P8
+  offset: '0x0000034C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maximum Current for 3.0V
+  field:
+  - bits: '31:24'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '23:16'
+    longdesc: 0V
+    name: SD1_MAXCUR3P0
+    shortdesc: SD1 Maximum Current for 3.
+    type: rw
+  - bits: '15:8'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '7:0'
+    longdesc: 0V
+    name: SD0_MAXCUR3P0
+    shortdesc: SD0 Maximum Current for 3.
+    type: rw
+  name: SD_MAXCUR3P0
+  offset: '0x00000350'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maximum Current for 3.3V
+  field:
+  - bits: '31:24'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '23:16'
+    longdesc: 3V
+    name: SD1_MAXCUR3P3
+    shortdesc: SD1 Maximum Current for 3.
+    type: rw
+  - bits: '15:8'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '7:0'
+    longdesc: 3V
+    name: SD0_MAXCUR3P3
+    shortdesc: SD0 Maximum Current for 3.
+    type: rw
+  name: SD_MAXCUR3P3
+  offset: '0x00000354'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: SDIO status register
+  field:
+  - bits: '31:20'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '19'
+    name: SD1_DLL_RST_DIS
+    type: rw
+  - bits: '18'
+    name: SD1_DLL_RST
+    type: rw
+  - bits: '17'
+    name: SD1_DLL_TESTMODE
+    type: rw
+  - bits: '16'
+    name: SD1_DLL_LOCK
+    type: ro
+  - bits: '15:4'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '3'
+    name: SD0_DLL_RST_DIS
+    type: rw
+  - bits: '2'
+    name: SD0_DLL_RST
+    type: rw
+  - bits: '1'
+    name: SD0_DLL_TESTMODE
+    type: rw
+  - bits: '0'
+    name: SD0_DLL_LOCK
+    type: ro
+  name: SD_DLL_CTRL
+  offset: '0x00000358'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'SDIO Card Detect (CDn) connection:'
+  field:
+  - bits: '31:17'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '16'
+    name: SD1_CDN_CTRL
+    type: rw
+  - bits: '15:1'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '0'
+    name: SD0_CDN_CTRL
+    type: rw
+  name: SD_CDN_CTRL
+  offset: '0x0000035C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'GEM SGMII Signal Detect (PCS) connection:'
+  field:
+  - bits: '31:8'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '7:6'
+    name: GEM3_SGMII_SD
+    type: rw
+  - bits: '5:4'
+    name: GEM2_SGMII_SD
+    type: rw
+  - bits: '3:2'
+    name: GEM1_SGMII_SD
+    type: rw
+  - bits: '1:0'
+    name: GEM0_SGMII_SD
+    type: rw
+  name: GEM_CTRL
+  offset: '0x00000360'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: TTC APB Interface Clock Select
+  field:
+  - bits: '31:8'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '7:6'
+    enum:
+    - name: APB_SWITCH_CLK
+      value: 0
+    - name: PLL_REF_CLOCK
+      value: 1
+    - name: R5_CLK
+      value: 2
+    name: TTC3_SEL
+    type: rw
+  - bits: '5:4'
+    enum:
+    - name: APB_SWITCH_CLK
+      value: 0
+    - name: PLL_REF_CLOCK
+      value: 1
+    - name: R5_CLK
+      value: 2
+    name: TTC2_SEL
+    type: rw
+  - bits: '3:2'
+    enum:
+    - name: APB_SWITCH_CLK
+      value: 0
+    - name: PLL_REF_CLOCK
+      value: 1
+    - name: R5_CLK
+      value: 2
+    name: TTC1_SEL
+    type: rw
+  - bits: '1:0'
+    enum:
+    - name: APB_SWITCH_CLK
+      value: 0
+    - name: PLL_REF_CLOCK
+      value: 1
+    - name: R5_CLK
+      value: 2
+    name: TTC0_SEL
+    type: rw
+  name: IOU_TTC_APB_CLK
+  offset: '0x00000380'
+  type: mixed
+  width: 32
+- default: '0x00000007'
+  description: Tap Delay enables for the LQSPI and NAND controllers.
+  field:
+  - bits: '31:3'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '2'
+    longdesc: '0: enable. 1: disable (bypass tap delay).'
+    name: LQSPI_RX
+    shortdesc: LQSPI Tap Delay Enable on Rx Clock signal.
+    type: rw
+  - bits: '1'
+    longdesc: '0: enable. 1: disable (bypass tap delay).'
+    name: NAND_DQS_OUT
+    shortdesc: NAND Tap Delay Enable on DQS Output signal.
+    type: rw
+  - bits: '0'
+    longdesc: '0: enable. 1: disable (bypass tap delay).'
+    name: NAND_DQS_IN
+    shortdesc: NAND Tap Delay Enable on DQS Input signal.
+    type: rw
+  name: IOU_TAPDLY_BYPASS
+  offset: '0x00000390'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AXI Coherency selection
+  field:
+  - bits: '31:28'
+    name: QSPI_AXI_COH
+    type: rw
+  - bits: '27:24'
+    name: NAND_AXI_COH
+    type: rw
+  - bits: '23:20'
+    name: SD1_AXI_COH
+    type: rw
+  - bits: '19:16'
+    name: SD0_AXI_COH
+    type: rw
+  - bits: '15:12'
+    name: GEM3_AXI_COH
+    type: rw
+  - bits: '11:8'
+    name: GEM2_AXI_COH
+    type: rw
+  - bits: '7:4'
+    name: GEM1_AXI_COH
+    type: rw
+  - bits: '3:0'
+    name: GEM0_AXI_COH
+    type: rw
+  name: IOU_COHERENT_CTRL
+  offset: '0x00000400'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Select VIDEO_REF_CLK and ALT_REF_CLK from MIO.
+  field:
+  - bits: '31:2'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '1'
+    longdesc: '1: MIO[51].'
+    name: PSS_ALT_CLK
+    shortdesc: 'PS Alternate Reference Clock source selection: 0: MIO[28].'
+    type: rw
+  - bits: '0'
+    name: VIDEO_CLK
+    type: rw
+  name: VIDEO_PSS_CLK_SEL
+  offset: '0x00000404'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Transaction Routing to Memory for DMA masters in IOP.
+  field:
+  - bits: '31:8'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '7'
+    name: NAND
+    type: rw
+  - bits: '6'
+    name: QSPI
+    type: rw
+  - bits: '5'
+    name: SD1
+    type: rw
+  - bits: '4'
+    name: SD0
+    type: rw
+  - bits: '3'
+    name: GEM3
+    type: rw
+  - bits: '2'
+    name: GEM2
+    type: rw
+  - bits: '1'
+    name: GEM1
+    type: rw
+  - bits: '0'
+    name: GEM0
+    type: rw
+  name: IOU_INTERCONNECT_ROUTE
+  offset: '0x00000408'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: General control register for the IOU SLCR
+  field:
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: CTRL
+  offset: '0x00000600'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: Address Decode Error Interrupt Status
+  field:
+  - bits: '0'
+    longdesc: '0: No Event 1: Event Occurred'
+    name: ADDR_DECODE_ERR
+    shortdesc: Status for an address decode error interrupt.
+    type: wtc
+  name: ISR
+  offset: '0x00000700'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Address Decode Error Interrupt Mask
+  field:
+  - bits: '0'
+    longdesc: '0: interrupt is enabled. 1: interrupt is disabled.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error interrupt.
+    type: ro
+  name: IMR
+  offset: '0x00000704'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Address Decode Error Interrupt Enable
+  field:
+  - bits: '0'
+    longdesc: '0: no effect. 1: Clears mask register, imr to a 0.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Enable for an address decode error.
+    type: wo
+  name: IER
+  offset: '0x00000708'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Address Decode Error Interrupt Disable
+  field:
+  - bits: '0'
+    longdesc: '0: no effect. 1: Sets mask register, imr to a 1.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error interrupt.
+    type: wo
+  name: IDR
+  offset: '0x0000070C'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Address Decode Error Interrupt Trigger
+  field:
+  - bits: '0'
+    longdesc: '0: Ignored 1: Sets status register, isr to a 1.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Trigger an address decode error interrupt.
+    type: wo
+  name: ITR
+  offset: '0x00000710'
+  type: wo
+  width: 1

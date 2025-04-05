@@ -1,0 +1,42 @@
+connection:
+- connection: SDIO0._ <- sdcard.slot0
+  type: port
+- connection: sdcard -> sdcard.slot0
+  type: logical
+- connection: DDRController -> DDR
+  type: logical
+- connection: I2C0 -> BOARD.I2C0._
+  type: port_group
+- connection: kv260 -> PS8
+  type: logical
+instance:
+- instance: 0
+  name: SDIO0
+  type: storage.sdio.zynqps8
+- name: sdcard.slot0
+  type: storage.sdio.sdcard.slot
+- name: DDR
+  ranges:
+  - address: '0x0_0000_0000'
+    fixed_address: true
+    size: 2 GiB
+  - address: '0x8_0000_0000'
+    fixed_address: true
+    size: 2 GiB
+  type: ram.ddr.ddr4.zynqps8
+- instance: 0
+  name: I2C0
+  type: switch.i2c.zynqps8
+  visible_to_software: true
+- instance: 1
+  name: I2C1
+  type: switch.i2c.zynqps8
+  visible_to_software: true
+- instance: 1
+  name: UART1
+  type: io.uart.zynqps8
+- instance: 0
+  name: USB0
+  type: io.internal.usb.zynqps8
+- name: QSPI
+  type: storage.qspi.zynqps8

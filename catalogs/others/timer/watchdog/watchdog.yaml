@@ -1,0 +1,10 @@
+definition:
+- buses:
+  - data_width: 32
+    protocol: internal_swdt
+    supplier: false
+  max_instances: 3
+  registers:
+  - base_address: '0x1cb0000'
+    resource: zynqps8/swdt.toml
+  type: other.timer.watchdog.zynqps8

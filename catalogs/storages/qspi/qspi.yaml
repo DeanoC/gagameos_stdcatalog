@@ -1,0 +1,16 @@
+definition:
+- buses:
+  - address_width: 32
+    data_width: 64
+    name: iopunitsswitch_quadspi
+    supplier: false
+  - address_width: 32
+    data_width: 32
+    name: quadspi_iopoutbound
+    supplier: true
+  registers:
+  - base_address: '0x020f_0000'
+    name: QSPI
+    resource: zynqps8/qspi.toml
+  type: storage.qspi.zynqps8
+path: qspi

@@ -1,0 +1,18 @@
+definition:
+- buses:
+  - name: iopinbound_usb${index}
+    supplier: false
+  - name: usb${index}_lpdoutbound
+    supplier: true
+  max_instances: 2
+  registers:
+  - address_increment: '0x10_0000'
+    base_address: '0x120_0000'
+    name: USB3${index}_XHCI
+    resource: zynqps8/usb3_xhci.toml
+  - address_increment: '0x1_0000'
+    base_address: '0x29d_0000'
+    name: USB3${index}_REGS
+    resource: zynqps8/usb3_regs.toml
+  type: io.internal.usb.zynqps8
+path: usbs

@@ -1,0 +1,31 @@
+bank:
+- address: 0xffd50000U
+  name: PMU_LMB_BRAM
+description: PMU LMB ECC bram Control - Private
+register:
+- default: '0x00000000'
+  description: ECC status of local memory bus.
+  field:
+  - bits: '1'
+    name: CE
+    type: ro
+  name: ECC_STATUS
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ECC interrupt enable.
+  field:
+  - bits: '1'
+    name: CE
+    type: ro
+  name: ECC_IRQ_EN
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Correctable Error Counts.
+  name: CE_CNT
+  offset: '0x00000008'
+  type: ro
+  width: 32

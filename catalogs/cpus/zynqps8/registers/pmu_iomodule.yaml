@@ -1,0 +1,1170 @@
+bank:
+- address: '0xffd40000'
+  name: PMU_IOMODULE
+description: PMU IO Module - Private
+register:
+- default: '0x00000000'
+  description: Interrupt Mode Register
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: wo
+  name: IRQ_MODE
+  offset: '0x0000000C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: IOModule Misc Control Register (GPO0)
+  field:
+  - bits: '31:24'
+    longdesc: 'To be used for nominal TMR commands, like clearing Fault Tolerance
+      Status register. 10100100: Magic Word Applied (0xA4)'
+    name: MAGIC_WORD_1
+    shortdesc: 'Used as magic word #1 to reduce the risk of accidental commands controlling
+      TMR operation being issued.'
+    type: wo
+  - bits: '23:16'
+    longdesc: 'To be used for testing purpose to disable failure mechanism and perform
+      fault injection. 01011110: Magic Word Applied (0x5E)'
+    name: MAGIC_WORD_2
+    shortdesc: 'Used as magic word #2 to reduce the risk of accidental commands controlling
+      TMR operation being issued.'
+    type: wo
+  - bits: '15:13'
+    longdesc: '000: No failures injected 001: With magic word #2 applied Failure injected
+      in MicroBlaze #2. 010: With magic word #2 applied Failure injected in MicroBlaze
+      #1. 100: With magic word #2 applied Failure injected in MicroBlaze #0.'
+    name: FT_INJECT_FAILURE
+    shortdesc: 'Used to inject failures in MicroBlaze #0, #1 or #2.'
+    type: wo
+  - bits: '12'
+    longdesc: '0: Reset of MicroBlaze from Fault Tolerance state machine is enabled
+      1: With magic word #2 applied Reset of MicroBlaze from Fault Tolerance state
+      machine is disabled'
+    name: DISABLE_RST_FTSM
+    shortdesc: Used to control if Fault Tolerance state machine reset of MicroBlaze
+      is generated or not.
+    type: wo
+  - bits: '11'
+    longdesc: '0: No effect 1: With magic word #2 applied Reset Fault Tolerance State
+      machine'
+    name: RST_FTSM
+    shortdesc: Used to reset the Fault Tolerance State machine.
+    type: wo
+  - bits: '10'
+    longdesc: '0: No effect 1: With magic word #1 applied Clear value of Fault Tolerance
+      Status register'
+    name: CLR_FTSTS
+    shortdesc: Used to clear the value of the Fault Tolerance Status register.
+    type: wo
+  - bits: '9'
+    longdesc: '0: Nominal sleep mode operation 1: With magic word #1 applied Executing
+      SLEEP instruction triggers HW reset of MicroBlaze'
+    name: RST_ON_SLEEP
+    shortdesc: Used to control if MicroBlaze SLEEP instruction will cause a MicroBlaze
+      HW reset, to recover from Lockstep mode to Voting mode.
+    type: wo
+  - bits: '8'
+    longdesc: 'This is to not immediately hit a Trace Bus mis-compare during fault
+      injection. 0: Nominal Trace Bus comparison 1: With Magic word #2 applied Trace
+      Bus comparison suppressed'
+    name: DISABLE_TRACE_COMP
+    shortdesc: Used to suppress the comparison of the MicroBlaze Trace Bus.
+    type: wo
+  - bits: '7'
+    longdesc: 00 = PIT3 not prescaled 01 = PIT3 uses external prescaler
+    name: PIT3_PRESCALE
+    shortdesc: Used to control PIT3 prescaler selection.
+    type: wo
+  - bits: '6:5'
+    longdesc: 00 = PIT2 not prescaled 01 = PIT2 uses external prescaler 11 = PIT2
+      prescaled by PIT3
+    name: PIT2_PRESCALE
+    shortdesc: Used to control PIT2 prescaler selection.
+    type: wo
+  - bits: '4:3'
+    longdesc: 00 = PIT1 not prescaled 01 = PIT1 uses external prescaler
+    name: PIT1_PRESCALE
+    shortdesc: Used to control PIT1 prescaler selection.
+    type: wo
+  - bits: '2:1'
+    longdesc: 00 = PIT0 not prescaled 01 = PIT0 uses external prescaler 11 = PIT0
+      prescaled by PIT1
+    name: PIT0_PRESCALE
+    shortdesc: Used to control PIT0 prescaler selection.
+    type: wo
+  - bits: '0'
+    longdesc: 0 = Base Vectors in ROM (default) 1 = Base Vectors in RAM
+    name: DEBUG_REMAP
+    shortdesc: Used during debug to remap the 64-byte base-vectors region to the RAM
+      starting address.
+    type: wo
+  name: GPO0
+  offset: '0x00000010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: PMU to MIO Signals (GPO1)
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    name: RESERVED
+    type: raz
+  - bits: '9:6'
+    name: RESERVED
+    type: raz
+  - bits: '5'
+    name: MIO_5
+    type: wo
+  - bits: '4'
+    name: MIO_4
+    type: wo
+  - bits: '3'
+    name: MIO_3
+    type: wo
+  - bits: '2'
+    name: MIO_2
+    type: wo
+  - bits: '1'
+    name: MIO_1
+    type: wo
+  - bits: '0'
+    name: MIO_0
+    type: wo
+  name: GPO1
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PMU Acknowlegements (GPO2)
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9'
+    name: DAP_RPU_WAKE_ACK
+    type: wo
+  - bits: '8'
+    name: DAP_FP_WAKE_ACK
+    type: wo
+  - bits: '7'
+    name: PS_STATUS
+    type: wo
+  - bits: '6'
+    name: PCAP_EN
+    type: wo
+  - bits: '5:0'
+    name: RESERVED
+    type: raz
+  name: GPO2
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PMU to PL Signals (GPO3)
+  field:
+  - bits: '31'
+    name: PL_GPO_31
+    type: wo
+  - bits: '30'
+    name: PL_GPO_30
+    type: wo
+  - bits: '29'
+    name: PL_GPO_29
+    type: wo
+  - bits: '28'
+    name: PL_GPO_28
+    type: wo
+  - bits: '27'
+    name: PL_GPO_27
+    type: wo
+  - bits: '26'
+    name: PL_GPO_26
+    type: wo
+  - bits: '25'
+    name: PL_GPO_25
+    type: wo
+  - bits: '24'
+    name: PL_GPO_24
+    type: wo
+  - bits: '23'
+    name: PL_GPO_23
+    type: wo
+  - bits: '22'
+    name: PL_GPO_22
+    type: wo
+  - bits: '21'
+    name: PL_GPO_21
+    type: wo
+  - bits: '20'
+    name: PL_GPO_20
+    type: wo
+  - bits: '19'
+    name: PL_GPO_19
+    type: wo
+  - bits: '18'
+    name: PL_GPO_18
+    type: wo
+  - bits: '17'
+    name: PL_GPO_17
+    type: wo
+  - bits: '16'
+    name: PL_GPO_16
+    type: wo
+  - bits: '15'
+    name: PL_GPO_15
+    type: wo
+  - bits: '14'
+    name: PL_GPO_14
+    type: wo
+  - bits: '13'
+    name: PL_GPO_13
+    type: wo
+  - bits: '12'
+    name: PL_GPO_12
+    type: wo
+  - bits: '11'
+    name: PL_GPO_11
+    type: wo
+  - bits: '10'
+    name: PL_GPO_10
+    type: wo
+  - bits: '9'
+    name: PL_GPO_9
+    type: wo
+  - bits: '8'
+    name: PL_GPO_8
+    type: wo
+  - bits: '7'
+    name: PL_GPO_7
+    type: wo
+  - bits: '6'
+    name: PL_GPO_6
+    type: wo
+  - bits: '5'
+    name: PL_GPO_5
+    type: wo
+  - bits: '4'
+    name: PL_GPO_4
+    type: wo
+  - bits: '3'
+    name: PL_GPO_3
+    type: wo
+  - bits: '2'
+    name: PL_GPO_2
+    type: wo
+  - bits: '1'
+    name: PL_GPO_1
+    type: wo
+  - bits: '0'
+    name: PL_GPO_0
+    type: wo
+  name: GPO3
+  offset: '0x0000001C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Fault Tolerance Status Register (GPI0)
+  field:
+  - bits: '31'
+    name: RFT_ECC_FATAL_ERR
+    type: ro
+  - bits: '30'
+    name: RFT_VOTER_ERR
+    type: ro
+  - bits: '29'
+    name: RFT_COMPARE_ERR_23
+    type: ro
+  - bits: '28'
+    name: RFT_COMPARE_ERR_13
+    type: ro
+  - bits: '27'
+    name: RFT_COMPARE_ERR_12
+    type: ro
+  - bits: '26'
+    name: RFT_LS_MISMATCH_23_B
+    type: ro
+  - bits: '25'
+    name: RFT_LS_MISMATCH_13_B
+    type: ro
+  - bits: '24'
+    name: RFT_LS_MISMATCH_12_B
+    type: ro
+  - bits: '23'
+    name: RFT_MISMATCH_STATE
+    type: ro
+  - bits: '22'
+    name: RFT_MISMATCH_CPU
+    type: ro
+  - bits: '21'
+    name: RESERVED
+    type: raz
+  - bits: '20'
+    name: RESERVED
+    type: raz
+  - bits: '19'
+    name: RFT_SLEEP_RESET
+    type: ro
+  - bits: '18'
+    name: RFT_LS_MISMATCH_23_A
+    type: ro
+  - bits: '17'
+    name: RFT_LS_MISMATCH_13_A
+    type: ro
+  - bits: '16'
+    name: RFT_LS_MISMATCH_12_A
+    type: ro
+  - bits: '15'
+    name: NFT_ECC_FATAL_ERR
+    type: ro
+  - bits: '14'
+    name: NFT_VOTER_ERR
+    type: ro
+  - bits: '13'
+    name: NFT_COMPARE_ERR_23
+    type: ro
+  - bits: '12'
+    name: NFT_COMPARE_ERR_13
+    type: ro
+  - bits: '11'
+    name: NFT_COMPARE_ERR_12
+    type: ro
+  - bits: '10'
+    name: NFT_LS_MISMATCH_23_B
+    type: ro
+  - bits: '9'
+    name: NFT_LS_MISMATCH_13_B
+    type: ro
+  - bits: '8'
+    name: NFT_LS_MISMATCH_12_B
+    type: ro
+  - bits: '7'
+    name: NFT_MISMATCH_STATE
+    type: ro
+  - bits: '6'
+    name: NFT_MISMATCH_CPU
+    type: ro
+  - bits: '5'
+    name: RESERVED
+    type: raz
+  - bits: '4'
+    name: RESERVED
+    type: raz
+  - bits: '3'
+    name: NFT_SLEEP_RESET
+    type: ro
+  - bits: '2'
+    name: NFT_LS_MISMATCH_23_A
+    type: ro
+  - bits: '1'
+    name: NFT_LS_MISMATCH_13_A
+    type: ro
+  - bits: '0'
+    name: NFT_LS_MISMATCH_12_A
+    type: ro
+  name: GPI0
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: General Purpose Input Register 1
+  field:
+  - bits: '31'
+    longdesc: A powered-down block is accessed through APB.
+    name: APB_AIB_ERROR
+    shortdesc: APB AIB Access Error.
+    type: ro
+  - bits: '30'
+    longdesc: A powered-down block is accessed through AXI
+    name: AXI_AIB_ERROR
+    shortdesc: AXI AIB Access Error.
+    type: ro
+  - bits: '29'
+    name: ERROR_2
+    type: ro
+  - bits: '28'
+    name: ERROR_1
+    type: ro
+  - bits: '27:24'
+    name: RESERVED
+    type: raz
+  - bits: '23'
+    name: ACPU_3_DBG_PWRUP
+    type: ro
+  - bits: '22'
+    name: ACPU_2_DBG_PWRUP
+    type: ro
+  - bits: '21'
+    name: ACPU_1_DBG_PWRUP
+    type: ro
+  - bits: '20'
+    name: ACPU_0_DBG_PWRUP
+    type: ro
+  - bits: '19:17'
+    name: RESERVED
+    type: raz
+  - bits: '16'
+    name: FPD_WAKE_GIC_PROXY
+    type: ro
+  - bits: '15'
+    name: MIO_WAKE_5
+    type: ro
+  - bits: '14'
+    name: MIO_WAKE_4
+    type: ro
+  - bits: '13'
+    name: MIO_WAKE_3
+    type: ro
+  - bits: '12'
+    name: MIO_WAKE_2
+    type: ro
+  - bits: '11'
+    name: MIO_WAKE_1
+    type: ro
+  - bits: '10'
+    name: MIO_WAKE_0
+    type: ro
+  - bits: '9'
+    name: DAP_RPU_WAKE
+    type: ro
+  - bits: '8'
+    name: DAP_FPD_WAKE
+    type: ro
+  - bits: '7'
+    name: USB_1_WAKE
+    type: ro
+  - bits: '6'
+    name: USB_0_WAKE
+    type: ro
+  - bits: '5'
+    name: R5_1_WAKE
+    type: ro
+  - bits: '4'
+    name: R5_0_WAKE
+    type: ro
+  - bits: '3'
+    name: ACPU_3_WAKE
+    type: ro
+  - bits: '2'
+    name: ACPU_2_WAKE
+    type: ro
+  - bits: '1'
+    name: ACPU_1_WAKE
+    type: ro
+  - bits: '0'
+    name: ACPU_0_WAKE
+    type: ro
+  name: GPI1
+  offset: '0x00000024'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: General Purpose Input Register 2
+  field:
+  - bits: '31'
+    name: VCC_INT_FP_DISCONNECT
+    type: ro
+  - bits: '30'
+    name: VCC_INT_DISCONNECT
+    type: ro
+  - bits: '29'
+    name: VCC_AUX_DISCONNECT
+    type: ro
+  - bits: '28:24'
+    name: RESERVED
+    type: raz
+  - bits: '23'
+    name: DBG_ACPU3_RST_REQ
+    type: ro
+  - bits: '22'
+    name: DBG_ACPU2_RST_REQ
+    type: ro
+  - bits: '21'
+    name: DBG_ACPU1_RST_REQ
+    type: ro
+  - bits: '20'
+    name: DBG_ACPU0_RST_REQ
+    type: ro
+  - bits: '19'
+    name: CP_ACPU3_RST_REQ
+    type: ro
+  - bits: '18'
+    name: CP_ACPU2_RST_REQ
+    type: ro
+  - bits: '17'
+    name: CP_ACPU1_RST_REQ
+    type: ro
+  - bits: '16'
+    name: CP_ACPU0_RST_REQ
+    type: ro
+  - bits: '15:10'
+    name: RESERVED
+    type: raz
+  - bits: '9'
+    name: DBG_RCPU1_RST_REQ
+    type: ro
+  - bits: '8'
+    name: DBG_RCPU0_RST_REQ
+    type: ro
+  - bits: '7:6'
+    name: RESERVED
+    type: raz
+  - bits: '5'
+    name: R5_1_SLEEP
+    type: ro
+  - bits: '4'
+    name: R5_0_SLEEP
+    type: ro
+  - bits: '3'
+    name: ACPU_3_SLEEP
+    type: ro
+  - bits: '2'
+    name: ACPU_2_SLEEP
+    type: ro
+  - bits: '1'
+    name: ACPU_1_SLEEP
+    type: ro
+  - bits: '0'
+    name: ACPU_0_SLEEP
+    type: ro
+  name: GPI2
+  offset: '0x00000028'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: General Purpose Input Register 3
+  field:
+  - bits: '31'
+    name: PL_GPI_31
+    type: ro
+  - bits: '30'
+    name: PL_GPI_30
+    type: ro
+  - bits: '29'
+    name: PL_GPI_29
+    type: ro
+  - bits: '28'
+    name: PL_GPI_28
+    type: ro
+  - bits: '27'
+    name: PL_GPI_27
+    type: ro
+  - bits: '26'
+    name: PL_GPI_26
+    type: ro
+  - bits: '25'
+    name: PL_GPI_25
+    type: ro
+  - bits: '24'
+    name: PL_GPI_24
+    type: ro
+  - bits: '23'
+    name: PL_GPI_23
+    type: ro
+  - bits: '22'
+    name: PL_GPI_22
+    type: ro
+  - bits: '21'
+    name: PL_GPI_21
+    type: ro
+  - bits: '20'
+    name: PL_GPI_20
+    type: ro
+  - bits: '19'
+    name: PL_GPI_19
+    type: ro
+  - bits: '18'
+    name: PL_GPI_18
+    type: ro
+  - bits: '17'
+    name: PL_GPI_17
+    type: ro
+  - bits: '16'
+    name: PL_GPI_16
+    type: ro
+  - bits: '15'
+    name: PL_GPI_15
+    type: ro
+  - bits: '14'
+    name: PL_GPI_14
+    type: ro
+  - bits: '13'
+    name: PL_GPI_13
+    type: ro
+  - bits: '12'
+    name: PL_GPI_12
+    type: ro
+  - bits: '11'
+    name: PL_GPI_11
+    type: ro
+  - bits: '10'
+    name: PL_GPI_10
+    type: ro
+  - bits: '9'
+    name: PL_GPI_9
+    type: ro
+  - bits: '8'
+    name: PL_GPI_8
+    type: ro
+  - bits: '7'
+    name: PL_GPI_7
+    type: ro
+  - bits: '6'
+    name: PL_GPI_6
+    type: ro
+  - bits: '5'
+    name: PL_GPI_5
+    type: ro
+  - bits: '4'
+    name: PL_GPI_4
+    type: ro
+  - bits: '3'
+    name: PL_GPI_3
+    type: ro
+  - bits: '2'
+    name: PL_GPI_2
+    type: ro
+  - bits: '1'
+    name: PL_GPI_1
+    type: ro
+  - bits: '0'
+    name: PL_GPI_0
+    type: ro
+  name: GPI3
+  offset: '0x0000002C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register
+  field:
+  - bits: '31'
+    name: CSU_PMU_SEC_LOCK
+    type: ro
+  - bits: '30'
+    name: RESERVED
+    type: raz
+  - bits: '29'
+    name: INV_ADDR
+    type: ro
+  - bits: '28'
+    name: PWR_DN_REQ
+    type: ro
+  - bits: '27'
+    name: PWR_UP_REQ
+    type: ro
+  - bits: '26'
+    name: SW_RST_REQ
+    type: ro
+  - bits: '25'
+    name: HW_RST_REQ
+    type: ro
+  - bits: '24'
+    name: ISO_REQ
+    type: ro
+  - bits: '23'
+    name: FW_REQ
+    type: ro
+  - bits: '22'
+    name: IPI3
+    type: ro
+  - bits: '21'
+    name: IPI2
+    type: ro
+  - bits: '20'
+    name: IPI1
+    type: ro
+  - bits: '19'
+    name: IPI0
+    type: ro
+  - bits: '18'
+    name: RTC_ALARM
+    type: ro
+  - bits: '17'
+    name: RTC_EVERY_SECOND
+    type: ro
+  - bits: '16'
+    name: CORRECTABLE_ECC
+    type: ro
+  - bits: '15'
+    name: RESERVED
+    type: raz
+  - bits: '14'
+    name: GPI3
+    type: ro
+  - bits: '13'
+    name: GPI2
+    type: ro
+  - bits: '12'
+    name: GPI1
+    type: ro
+  - bits: '11'
+    name: GPI0
+    type: ro
+  - bits: '10:7'
+    name: RESERVED
+    type: raz
+  - bits: '6'
+    name: PIT3
+    type: ro
+  - bits: '5'
+    name: PIT2
+    type: ro
+  - bits: '4'
+    name: PIT1
+    type: ro
+  - bits: '3'
+    name: PIT0
+    type: ro
+  - bits: '2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: RESERVED
+    type: raz
+  name: IRQ_STATUS
+  offset: '0x00000030'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Pending Register
+  field:
+  - bits: '31'
+    name: CSU_PMU_SEC_LOCK
+    type: ro
+  - bits: '30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    name: INV_ADDR
+    type: raz
+  - bits: '28'
+    name: PWR_DN_REQ
+    type: ro
+  - bits: '27'
+    name: PWR_UP_REQ
+    type: ro
+  - bits: '26'
+    name: SW_RST_REQ
+    type: ro
+  - bits: '25'
+    name: HW_RST_REQ
+    type: ro
+  - bits: '24'
+    name: ISO_REQ
+    type: ro
+  - bits: '23'
+    name: FW_REQ
+    type: ro
+  - bits: '22'
+    name: IPI3
+    type: ro
+  - bits: '21'
+    name: IPI2
+    type: ro
+  - bits: '20'
+    name: IPI1
+    type: ro
+  - bits: '19'
+    name: IPI0
+    type: ro
+  - bits: '18'
+    name: RTC_ALARM
+    type: ro
+  - bits: '17'
+    name: RTC_EVERY_SECOND
+    type: ro
+  - bits: '16'
+    name: CORRECTABLE_ECC
+    type: ro
+  - bits: '15'
+    name: RESERVED
+    type: raz
+  - bits: '14'
+    name: GPI3
+    type: ro
+  - bits: '13'
+    name: GPI2
+    type: ro
+  - bits: '12'
+    name: GPI1
+    type: ro
+  - bits: '11'
+    name: GPI0
+    type: ro
+  - bits: '10:7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    name: PIT3
+    type: ro
+  - bits: '5'
+    name: PIT2
+    type: ro
+  - bits: '4'
+    name: PIT1
+    type: ro
+  - bits: '3'
+    name: PIT0
+    type: ro
+  - bits: '2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: RESERVED
+    type: raz
+  name: IRQ_PENDING
+  offset: '0x00000034'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable Register
+  field:
+  - bits: '31'
+    name: CSU_PMU_SEC_LOCK
+    type: wo
+  - bits: '30'
+    name: RESERVED
+    type: wo
+  - bits: '29'
+    name: INV_ADDR
+    type: raz
+  - bits: '28'
+    name: PWR_DN_REQ
+    type: wo
+  - bits: '27'
+    name: PWR_UP_REQ
+    type: wo
+  - bits: '26'
+    name: SW_RST_REQ
+    type: wo
+  - bits: '25'
+    name: HW_RST_REQ
+    type: wo
+  - bits: '24'
+    name: ISO_REQ
+    type: wo
+  - bits: '23'
+    name: FW_REQ
+    type: wo
+  - bits: '22'
+    name: IPI3
+    type: wo
+  - bits: '21'
+    name: IPI2
+    type: wo
+  - bits: '20'
+    name: IPI1
+    type: wo
+  - bits: '19'
+    name: IPI0
+    type: wo
+  - bits: '18'
+    name: RTC_ALARM
+    type: wo
+  - bits: '17'
+    name: RTC_EVERY_SECOND
+    type: wo
+  - bits: '16'
+    name: CORRECTABLE_ECC
+    type: wo
+  - bits: '15'
+    name: RESERVED
+    type: raz
+  - bits: '14'
+    name: GPI3
+    type: ro
+  - bits: '13'
+    name: GPI2
+    type: ro
+  - bits: '12'
+    name: GPI1
+    type: ro
+  - bits: '11'
+    name: GPI0
+    type: ro
+  - bits: '10:7'
+    name: RESERVED
+    type: raz
+  - bits: '6'
+    name: PIT3
+    type: wo
+  - bits: '5'
+    name: PIT2
+    type: wo
+  - bits: '4'
+    name: PIT1
+    type: wo
+  - bits: '3'
+    name: PIT0
+    type: wo
+  - bits: '2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: RESERVED
+    type: raz
+  name: IRQ_ENABLE
+  offset: '0x00000038'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Acknowledge Register
+  field:
+  - bits: '31'
+    name: CSU_PMU_SEC_LOCK
+    type: wo
+  - bits: '30'
+    name: RESERVED
+    type: wo
+  - bits: '29'
+    name: INV_ADDR
+    type: raz
+  - bits: '28'
+    name: PWR_DN_REQ
+    type: wo
+  - bits: '27'
+    name: PWR_UP_REQ
+    type: wo
+  - bits: '26'
+    name: SW_RST_REQ
+    type: wo
+  - bits: '25'
+    name: HW_RST_REQ
+    type: wo
+  - bits: '24'
+    name: ISO_REQ
+    type: wo
+  - bits: '23'
+    name: FW_REQ
+    type: wo
+  - bits: '22'
+    name: IPI3
+    type: wo
+  - bits: '21'
+    name: IPI2
+    type: wo
+  - bits: '20'
+    name: IPI1
+    type: wo
+  - bits: '19'
+    name: IPI0
+    type: wo
+  - bits: '18'
+    name: RTC_ALARM
+    type: wo
+  - bits: '17'
+    name: RTC_EVERY_SECOND
+    type: wo
+  - bits: '16'
+    name: CORRECTABLE_ECC
+    type: wo
+  - bits: '15'
+    name: RESERVED
+    type: raz
+  - bits: '14'
+    name: GPI3
+    type: wo
+  - bits: '13'
+    name: GPI2
+    type: wo
+  - bits: '12'
+    name: GPI1
+    type: wo
+  - bits: '11'
+    name: GPI0
+    type: wo
+  - bits: '10:7'
+    name: RESERVED
+    type: raz
+  - bits: '6'
+    name: PIT3
+    type: wo
+  - bits: '5'
+    name: PIT2
+    type: wo
+  - bits: '4'
+    name: PIT1
+    type: wo
+  - bits: '3'
+    name: PIT0
+    type: wo
+  - bits: '2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: RESERVED
+    type: raz
+  name: IRQ_ACK
+  offset: '0x0000003C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PIT0 Preload Register
+  field:
+  - bits: '31:0'
+    name: PIT0_PRELOAD
+    type: ro
+  name: PIT0_PRELOAD
+  offset: '0x00000040'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PIT0 Counter Register
+  field:
+  - bits: '31:0'
+    name: PIT0_COUNTER
+    type: ro
+  name: PIT0_COUNTER
+  offset: '0x00000044'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PIT0 Control Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: PRELOAD
+    type: wo
+  - bits: '0'
+    name: EN
+    type: wo
+  name: PIT0_CONTROL
+  offset: '0x00000048'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PIT1 Preload Register
+  field:
+  - bits: '31:0'
+    name: PIT1_PRELOAD
+    type: ro
+  name: PIT1_PRELOAD
+  offset: '0x00000050'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PIT1 Counter Register
+  field:
+  - bits: '31:0'
+    name: PIT1_COUNTER
+    type: ro
+  name: PIT1_COUNTER
+  offset: '0x00000054'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PIT1 Control Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: PRELOAD
+    type: wo
+  - bits: '0'
+    name: EN
+    type: wo
+  name: PIT1_CONTROL
+  offset: '0x00000058'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PIT2 Preload Register
+  field:
+  - bits: '31:0'
+    name: PIT2_PRELOAD
+    type: ro
+  name: PIT2_PRELOAD
+  offset: '0x00000060'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PIT2 Counter Register
+  field:
+  - bits: '31:0'
+    name: PIT2_COUNTER
+    type: ro
+  name: PIT2_COUNTER
+  offset: '0x00000064'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PIT2 Control Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: PRELOAD
+    type: wo
+  - bits: '0'
+    name: EN
+    type: wo
+  name: PIT2_CONTROL
+  offset: '0x00000068'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PIT3 Preload Register
+  field:
+  - bits: '31:0'
+    name: PIT3_PRELOAD
+    type: ro
+  name: PIT3_PRELOAD
+  offset: '0x00000070'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PIT3 Counter Register
+  field:
+  - bits: '31:0'
+    name: PIT3_COUNTER
+    type: ro
+  name: PIT3_COUNTER
+  offset: '0x00000074'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PIT3 Control Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: PRELOAD
+    type: wo
+  - bits: '0'
+    name: EN
+    type: wo
+  name: PIT3_CONTROL
+  offset: '0x00000078'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Instruction Injection Address (IOModule_1.GPO1)
+  name: INSTRUCTION_INJECT_ADDR
+  offset: '0x00001014'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Instruction Injection (IOModule_1.GPO2)
+  name: INSTRUCTION_INJECT
+  offset: '0x00001018'
+  type: wo
+  width: 32

@@ -1,0 +1,23 @@
+actions:
+- src
+- read_verilog_top
+parameters:
+  ADDR_WIDTH: 32
+  AXIL_DATA_WIDTH: 32
+  AXI_DATA_WIDTH: 32
+  AXI_ID_WIDTH: 8
+  CONVERT_BURST: 1
+  CONVERT_NARROW_BURST: 0
+process:
+- name: src
+  processor: sources
+  sources:
+  - file: rtl/axi_axil_adapter.v
+    language: verilog
+  - file: rtl/axi_axil_adapter_rd.v
+    language: verilog
+  - file: rtl/axi_axil_adapter_wr.v
+    language: verilog
+- name: read_verilog_top
+  processor: read_verilog_top
+  source: rtl/axi_axil_adapter.v

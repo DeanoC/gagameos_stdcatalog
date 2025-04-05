@@ -1,0 +1,271 @@
+bank:
+- address: '0xffce002c'
+  name: RSA
+description: RSA Data and Configuration
+register:
+- default: '0x00000000'
+  description: Write Data 0
+  field:
+  - bits: '31:0'
+    longdesc: Once all WR_DATA registers are written to, a write to the WR_ADDR register
+      will commit the data to the RAM. This register contains the LSB of the 192-bit
+      word.
+    name: WR_DATA
+    shortdesc: Write to all 6 WR_DATA registers to complete the 192-bit word required
+      by the RSA core.
+    type: wo
+  name: WR_DATA_0
+  offset: '0x00000000'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Write Data 1
+  field:
+  - bits: '31:0'
+    longdesc: Once all WR_DATA registers are written to, a write to the WR_ADDR register
+      will commit the data to the RAM.
+    name: WR_DATA
+    shortdesc: Write to all 6 WR_DATA registers to complete the 192-bit word required
+      by the RSA core.
+    type: wo
+  name: WR_DATA_1
+  offset: '0x00000004'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Write Data 2
+  field:
+  - bits: '31:0'
+    longdesc: Once all WR_DATA registers are written to, a write to the WR_ADDR register
+      will commit the data to the RAM.
+    name: WR_DATA
+    shortdesc: Write to all 6 WR_DATA registers to complete the 192-bit word required
+      by the RSA core.
+    type: wo
+  name: WR_DATA_2
+  offset: '0x00000008'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Write Data 3
+  field:
+  - bits: '31:0'
+    longdesc: Once all WR_DATA registers are written to, a write to the WR_ADDR register
+      will commit the data to the RAM.
+    name: WR_DATA
+    shortdesc: Write to all 6 WR_DATA registers to complete the 192-bit word required
+      by the RSA core.
+    type: wo
+  name: WR_DATA_3
+  offset: '0x0000000C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Write Data 4
+  field:
+  - bits: '31:0'
+    longdesc: Once all WR_DATA registers are written to, a write to the WR_ADDR register
+      will commit the data to the RAM.
+    name: WR_DATA
+    shortdesc: Write to all 6 WR_DATA registers to complete the 192-bit word required
+      by the RSA core.
+    type: wo
+  name: WR_DATA_4
+  offset: '0x00000010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Write Data 5
+  field:
+  - bits: '31:0'
+    longdesc: Once all WR_DATA registers are written to, a write to the WR_ADDR register
+      will commit the data to the RAM. This register contains the MSB of the 192-bit
+      word.
+    name: WR_DATA
+    shortdesc: Write to all 6 WR_DATA registers to complete the 192-bit word required
+      by the RSA core.
+    type: wo
+  name: WR_DATA_5
+  offset: '0x00000014'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Write Address
+  field:
+  - bits: '31:0'
+    longdesc: The memory organization is detailed in the RAM map.
+    name: WR_ADDR
+    shortdesc: Write the memory address to this register to commit the 192-bit word
+      stored in WR_DATA[5:0] registers.
+    type: wo
+  name: WR_ADDR
+  offset: '0x00000018'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Read Data 0
+  field:
+  - bits: '31:0'
+    longdesc: This register is loaded when a RAM address is written to the RD_ADDR
+      register. This register contains the LSB of the 192-bit word.
+    name: RD_DATA
+    shortdesc: Read data register.
+    type: ro
+  name: RD_DATA_0
+  offset: '0x0000001C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Read Data 1
+  field:
+  - bits: '31:0'
+    longdesc: This register is loaded when a RAM address is written to the RD_ADDR
+      register.
+    name: RD_DATA
+    shortdesc: Read data register.
+    type: ro
+  name: RD_DATA_1
+  offset: '0x00000020'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Read Data 2
+  field:
+  - bits: '31:0'
+    longdesc: This register is loaded when a RAM address is written to the RD_ADDR
+      register.
+    name: RD_DATA
+    shortdesc: Read data register.
+    type: ro
+  name: RD_DATA_2
+  offset: '0x00000024'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Read Data 3
+  field:
+  - bits: '31:0'
+    longdesc: This register is loaded when a RAM address is written to the RD_ADDR
+      register.
+    name: RD_DATA
+    shortdesc: Read data register.
+    type: ro
+  name: RD_DATA_3
+  offset: '0x00000028'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Read Data 4
+  field:
+  - bits: '31:0'
+    longdesc: This register is loaded when a RAM address is written to the RD_ADDR
+      register.
+    name: RD_DATA
+    shortdesc: Read data register.
+    type: ro
+  name: RD_DATA_4
+  offset: '0x0000002C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Read Data 5
+  field:
+  - bits: '31:0'
+    longdesc: This register is loaded when a RAM address is written to the RD_ADDR
+      register. This register contains the MSB of the 192-bit word.
+    name: RD_DATA
+    shortdesc: Read data register.
+    type: ro
+  name: RD_DATA_5
+  offset: '0x00000030'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Read Address
+  field:
+  - bits: '31:0'
+    longdesc: Writing a RAM address to this register loads the 192-bit RAM word into
+      the RD_DATA registers.
+    name: RD_ADDR
+    shortdesc: Read address register.
+    type: wo
+  name: RD_ADDR
+  offset: '0x00000034'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: RSA Control
+  field:
+  - bits: '2'
+    longdesc: 'When set (1), the incomming APB byte locations will be flipped before
+      saving to the RAM. The byte flip is as follows: - Byte[3] -> Byte[0] - Byte[2]
+      -> Byte[1] - Byte[1] -> Byte[2] - Byte[0] -> Byte[3] This is a static signal
+      and should not be changed while data is being written or read to the RSA data
+      registers.'
+    name: RD_ENDIANNESS
+    shortdesc: When cleared (0), the RD_DATA registers will not change the incoming
+      APB byte ordering.
+    type: rw
+  - bits: '1'
+    longdesc: 'When set (1), the incomming APB byte locations will be flipped before
+      saving to the RAM. The byte flip is as follows: - Byte[3] -> Byte[0] - Byte[2]
+      -> Byte[1] - Byte[1] -> Byte[2] - Byte[0] -> Byte[3] This is a static signal
+      and should not be changed while data is being written or read to the RSA data
+      registers.'
+    name: WR_ENDIANNESS
+    shortdesc: When cleared (0), the WR_DATA registers will not change the incoming
+      APB byte ordering.
+    type: rw
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: SLVERR_EN
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: RSA_CFG
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RSA Interrupt Status
+  field:
+  - bits: '0'
+    name: APB_SLVERR
+    type: wtc
+  name: RSA_ISR
+  offset: '0x0000003C'
+  type: wtc
+  width: 32
+- default: '0x00000001'
+  description: RSA Interrupt Mask
+  field:
+  - bits: '0'
+    name: APB_SLVERR
+    type: ro
+  name: RSA_IMR
+  offset: '0x00000040'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: RSA Interrupt Enable
+  field:
+  - bits: '0'
+    name: APB_SLVERR
+    type: wo
+  name: RSA_IER
+  offset: '0x00000044'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: RSA Interrupt Disable
+  field:
+  - bits: '0'
+    name: APB_SLVERR
+    type: wo
+  name: RSA_IDR
+  offset: '0x00000048'
+  type: wo
+  width: 32

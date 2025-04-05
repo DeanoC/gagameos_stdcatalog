@@ -1,0 +1,22 @@
+connection:
+- bus_name: rputcm
+  connection: RPUSwitch -> RPUTCM
+  type: bus
+- bus_name: rpu0
+  connection: RPU -> RPUSwitch
+  type: bus
+- bus_name: rpu1
+  connection: RPU -> RPUSwitch
+  type: bus
+- bus_name: rpuio_rpuswitch
+  connection: RPUIOSwitch -> RPUSwitch
+  type: bus
+- bus_name: rpuio_lpd
+  connection: RPUIOSwitch -> LPDMainSwitch
+  type: bus
+instance:
+- name: RPU
+  type: cpu.r5f.zynqps8
+- name: RPUTCM
+  type: ram.sram.tcm.zynqps8
+path: prefabs/socs/zynqps8

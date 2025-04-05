@@ -1,0 +1,51 @@
+definition:
+- board_device: xck26-sfvc784-2lv-c
+  board_family: UltraScale+
+  board_type: Xilinx
+  clocks:
+  - frequency: 33Mhz
+    name: clock.ref.33MHz
+    pin: M6
+    standard: LVCMOS18
+  defaults:
+    drive: 4
+    pullup: true
+    slew: Slow
+    standard: LVCMOS18
+  pingroups:
+  - name: BOARD.AP1302_RST
+    pin: J11
+    standard: LVCMOS33
+  - name: BOARD.AP1302_STANDBY
+    pin: J10
+    standard: LVCMOS33
+  - name: BOARD.FAN_EN
+    pin: A12
+    standard: LVCMOS33
+  - names:
+    - BOARD.I2C0.SCL
+    - BOARD.I2C0.SDA
+    pins:
+    - G11
+    - F10
+    standard: LVCMOS33
+  - names:
+    - BOARD.PMOD0.0
+    - BOARD.PMOD0.1
+    - BOARD.PMOD0.2
+    - BOARD.PMOD0.3
+    - BOARD.PMOD0.4
+    - BOARD.PMOD0.5
+    - BOARD.PMOD0.6
+    - BOARD.PMOD0.7
+    pins:
+    - H12
+    - E10
+    - D10
+    - C11
+    - B10
+    - E12
+    - D11
+    - B11
+    standard: LVCMOS33
+  type: board.kv260

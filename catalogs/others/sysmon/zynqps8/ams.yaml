@@ -1,0 +1,775 @@
+bank:
+- address: '0xffa50000'
+  name: AMS_CTRL
+description: PS/PL SysMon Units Control and Status
+register:
+- default: '0x00000000'
+  description: Register Access Error Signal Enables.
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    longdesc: '0: disable error signal (default). 1: assert error signal for access
+      violations. Note: The [addr_decode_err] interrupt bit is set in the ISR_1 register
+      regardless of the setting of this bit.'
+    name: SLVERR_ENABLE_DRP
+    shortdesc: Enable the Error signal back to DRP connection when a register access
+      violation occurs.
+    type: rw
+  - bits: '0'
+    longdesc: '0: disable error signal (default). 1: assert error signal for access
+      violations. Note: The [addr_decode_err] interrupt bit is set in the ISR_1 register
+      regardless of the setting of this bit.'
+    name: SLVERR_ENABLE
+    shortdesc: Enable the SLVERR signal back to APB interconnect when a register access
+      violation occurs.
+    type: rw
+  name: MISC_CTRL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Alarm Interrupt Status and Clear, Reg 0. PS and PL.
+  field:
+  - bits: '31'
+    name: PL_ALM_15
+    type: wtc
+  - bits: '28'
+    name: PL_ALM_12
+    type: wtc
+  - bits: '27'
+    name: PL_ALM_11
+    type: wtc
+  - bits: '26'
+    name: PL_ALM_10
+    type: wtc
+  - bits: '25'
+    name: PL_ALM_9
+    type: wtc
+  - bits: '24'
+    name: PL_ALM_8
+    type: wtc
+  - bits: '23'
+    name: PL_ALM_7
+    type: wtc
+  - bits: '22'
+    name: PL_ALM_6
+    type: wtc
+  - bits: '21'
+    name: PL_ALM_5
+    type: wtc
+  - bits: '20'
+    name: PL_ALM_4
+    type: wtc
+  - bits: '19'
+    name: PL_ALM_3
+    type: wtc
+  - bits: '18'
+    name: PL_ALM_2
+    type: wtc
+  - bits: '17'
+    name: PL_ALM_1
+    type: wtc
+  - bits: '16'
+    name: PL_ALM_0
+    type: wtc
+  - bits: '15'
+    name: PS_ALM_15
+    type: wtc
+  - bits: '14'
+    name: PS_ALM_14
+    type: wtc
+  - bits: '13'
+    name: PS_ALM_13
+    type: wtc
+  - bits: '12'
+    name: PS_ALM_12
+    type: wtc
+  - bits: '11'
+    name: PS_ALM_11
+    type: wtc
+  - bits: '10'
+    name: PS_ALM_10
+    type: wtc
+  - bits: '9'
+    name: PS_ALM_9
+    type: wtc
+  - bits: '8'
+    name: PS_ALM_8
+    type: wtc
+  - bits: '7'
+    name: PS_ALM_7
+    type: wtc
+  - bits: '6'
+    name: PS_ALM_6
+    type: wtc
+  - bits: '5'
+    name: PS_ALM_5
+    type: wtc
+  - bits: '4'
+    name: PS_ALM_4
+    type: wtc
+  - bits: '3'
+    name: PS_ALM_3
+    type: wtc
+  - bits: '2'
+    name: PS_ALM_2
+    type: wtc
+  - bits: '1'
+    name: PS_ALM_1
+    type: wtc
+  - bits: '0'
+    name: PS_ALM_0
+    type: wtc
+  name: ISR_0
+  offset: '0x00000010'
+  type: wtc
+  width: 32
+- default: '0x00000000'
+  description: Alarm and Access Error Interrupt Status and Clear, Reg 1.
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: wtc
+  - bits: '30'
+    name: ADDR_DECODE_ERR_PL_SYSMON
+    type: wtc
+  - bits: '29'
+    name: ADDR_DECODE_ERR_PS_SYSMON
+    type: wtc
+  - bits: '28:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: EOS
+    type: wtc
+  - bits: '3'
+    name: EOC
+    type: wtc
+  - bits: '2'
+    name: PL_OT
+    type: wtc
+  - bits: '1'
+    name: PS_LPD_OT
+    type: wtc
+  - bits: '0'
+    name: PS_FPD_OT
+    type: wtc
+  name: ISR_1
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Mask, Reg 0.
+  field:
+  - bits: '31'
+    name: PL_ALM_15
+    type: ro
+  - bits: '30'
+    name: PL_ALM_14
+    type: ro
+  - bits: '28'
+    name: PL_ALM_12
+    type: ro
+  - bits: '27'
+    name: PL_ALM_11
+    type: ro
+  - bits: '26'
+    name: PL_ALM_10
+    type: ro
+  - bits: '25'
+    name: PL_ALM_9
+    type: ro
+  - bits: '24'
+    name: PL_ALM_8
+    type: ro
+  - bits: '23'
+    name: PL_ALM_7
+    type: ro
+  - bits: '22'
+    name: PL_ALM_6
+    type: ro
+  - bits: '21'
+    name: PL_ALM_5
+    type: ro
+  - bits: '20'
+    name: PL_ALM_4
+    type: ro
+  - bits: '19'
+    name: PL_ALM_3
+    type: ro
+  - bits: '18'
+    name: PL_ALM_2
+    type: ro
+  - bits: '17'
+    name: PL_ALM_1
+    type: ro
+  - bits: '16'
+    name: PL_ALM_0
+    type: ro
+  - bits: '15'
+    name: PS_ALM_15
+    type: ro
+  - bits: '14'
+    name: PS_ALM_14
+    type: ro
+  - bits: '13'
+    name: PS_ALM_13
+    type: ro
+  - bits: '12'
+    name: PS_ALM_12
+    type: ro
+  - bits: '11'
+    name: PS_ALM_11
+    type: ro
+  - bits: '10'
+    name: PS_ALM_10
+    type: ro
+  - bits: '9'
+    name: PS_ALM_9
+    type: ro
+  - bits: '8'
+    name: PS_ALM_8
+    type: ro
+  - bits: '7'
+    name: PS_ALM_7
+    type: ro
+  - bits: '6'
+    name: PS_ALM_6
+    type: ro
+  - bits: '5'
+    name: PS_ALM_5
+    type: ro
+  - bits: '4'
+    name: PS_ALM_4
+    type: ro
+  - bits: '3'
+    name: PS_ALM_3
+    type: ro
+  - bits: '2'
+    name: PS_ALM_2
+    type: ro
+  - bits: '1'
+    name: PS_ALM_1
+    type: ro
+  - bits: '0'
+    name: PS_ALM_0
+    type: ro
+  name: IMR_0
+  offset: '0x00000018'
+  type: ro
+  width: 32
+- default: '0xE000001F'
+  description: Interrupt Mask, Reg 1.
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: ro
+  - bits: '30'
+    name: ADDR_DECODE_ERR_PL_SYSMON
+    type: ro
+  - bits: '29'
+    name: ADDR_DECODE_ERR_PS_SYSMON
+    type: ro
+  - bits: '28:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: EOS
+    type: ro
+  - bits: '3'
+    name: EOC
+    type: ro
+  - bits: '2'
+    name: PL_OT
+    type: ro
+  - bits: '1'
+    name: PS_LPD_OT
+    type: ro
+  - bits: '0'
+    name: PS_FPD_OT
+    type: ro
+  name: IMR_1
+  offset: '0x0000001C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable, Reg 0.
+  field:
+  - bits: '31'
+    name: PL_ALM_15
+    type: wo
+  - bits: '30'
+    name: PL_ALM_14
+    type: wo
+  - bits: '28'
+    name: PL_ALM_12
+    type: wo
+  - bits: '27'
+    name: PL_ALM_11
+    type: wo
+  - bits: '26'
+    name: PL_ALM_10
+    type: wo
+  - bits: '25'
+    name: PL_ALM_9
+    type: wo
+  - bits: '24'
+    name: PL_ALM_8
+    type: wo
+  - bits: '23'
+    name: PL_ALM_7
+    type: wo
+  - bits: '22'
+    name: PL_ALM_6
+    type: wo
+  - bits: '21'
+    name: PL_ALM_5
+    type: wo
+  - bits: '20'
+    name: PL_ALM_4
+    type: wo
+  - bits: '19'
+    name: PL_ALM_3
+    type: wo
+  - bits: '18'
+    name: PL_ALM_2
+    type: wo
+  - bits: '17'
+    name: PL_ALM_1
+    type: wo
+  - bits: '16'
+    name: PL_ALM_0
+    type: wo
+  - bits: '15'
+    name: PS_ALM_15
+    type: wo
+  - bits: '14'
+    name: PS_ALM_14
+    type: wo
+  - bits: '13'
+    name: PS_ALM_13
+    type: wo
+  - bits: '12'
+    name: PS_ALM_12
+    type: wo
+  - bits: '11'
+    name: PS_ALM_11
+    type: wo
+  - bits: '10'
+    name: PS_ALM_10
+    type: wo
+  - bits: '9'
+    name: PS_ALM_9
+    type: wo
+  - bits: '8'
+    name: PS_ALM_8
+    type: wo
+  - bits: '7'
+    name: PS_ALM_7
+    type: wo
+  - bits: '6'
+    name: PS_ALM_6
+    type: wo
+  - bits: '5'
+    name: PS_ALM_5
+    type: wo
+  - bits: '4'
+    name: PS_ALM_4
+    type: wo
+  - bits: '3'
+    name: PS_ALM_3
+    type: wo
+  - bits: '2'
+    name: PS_ALM_2
+    type: wo
+  - bits: '1'
+    name: PS_ALM_1
+    type: wo
+  - bits: '0'
+    name: PS_ALM_0
+    type: wo
+  name: IER_0
+  offset: '0x00000020'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable, Reg 1.
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: wo
+  - bits: '30'
+    name: ADDR_DECODE_ERR_PL_SYSMON
+    type: wo
+  - bits: '29'
+    name: ADDR_DECODE_ERR_PS_SYSMON
+    type: wo
+  - bits: '28:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: EOS
+    type: wo
+  - bits: '3'
+    name: EOC
+    type: wo
+  - bits: '2'
+    name: PL_OT
+    type: wo
+  - bits: '1'
+    name: PS_LPD_OT
+    type: wo
+  - bits: '0'
+    name: PS_FPD_OT
+    type: wo
+  name: IER_1
+  offset: '0x00000024'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable, Reg 0.
+  field:
+  - bits: '31'
+    name: PL_ALM_15
+    type: wo
+  - bits: '30'
+    name: PL_ALM_14
+    type: wo
+  - bits: '28'
+    name: PL_ALM_12
+    type: wo
+  - bits: '27'
+    name: PL_ALM_11
+    type: wo
+  - bits: '26'
+    name: PL_ALM_10
+    type: wo
+  - bits: '25'
+    name: PL_ALM_9
+    type: wo
+  - bits: '24'
+    name: PL_ALM_8
+    type: wo
+  - bits: '23'
+    name: PL_ALM_7
+    type: wo
+  - bits: '22'
+    name: PL_ALM_6
+    type: wo
+  - bits: '21'
+    name: PL_ALM_5
+    type: wo
+  - bits: '20'
+    name: PL_ALM_4
+    type: wo
+  - bits: '19'
+    name: PL_ALM_3
+    type: wo
+  - bits: '18'
+    name: PL_ALM_2
+    type: wo
+  - bits: '17'
+    name: PL_ALM_1
+    type: wo
+  - bits: '16'
+    name: PL_ALM_0
+    type: wo
+  - bits: '15'
+    name: PS_ALM_15
+    type: wo
+  - bits: '14'
+    name: PS_ALM_14
+    type: wo
+  - bits: '13'
+    name: PS_ALM_13
+    type: wo
+  - bits: '12'
+    name: PS_ALM_12
+    type: wo
+  - bits: '11'
+    name: PS_ALM_11
+    type: wo
+  - bits: '10'
+    name: PS_ALM_10
+    type: wo
+  - bits: '9'
+    name: PS_ALM_9
+    type: wo
+  - bits: '8'
+    name: PS_ALM_8
+    type: wo
+  - bits: '7'
+    name: PS_ALM_7
+    type: wo
+  - bits: '6'
+    name: PS_ALM_6
+    type: wo
+  - bits: '5'
+    name: PS_ALM_5
+    type: wo
+  - bits: '4'
+    name: PS_ALM_4
+    type: wo
+  - bits: '3'
+    name: PS_ALM_3
+    type: wo
+  - bits: '2'
+    name: PS_ALM_2
+    type: wo
+  - bits: '1'
+    name: PS_ALM_1
+    type: wo
+  - bits: '0'
+    name: PS_ALM_0
+    type: wo
+  name: IDR_0
+  offset: '0x00000028'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable, Reg 1.
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: wo
+  - bits: '30'
+    name: ADDR_DECODE_ERR_PL_SYSMON
+    type: wo
+  - bits: '29'
+    name: ADDR_DECODE_ERR_PS_SYSMON
+    type: wo
+  - bits: '28:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: EOS
+    type: wo
+  - bits: '3'
+    name: EOC
+    type: wo
+  - bits: '2'
+    name: PL_OT
+    type: wo
+  - bits: '1'
+    name: PS_LPD_OT
+    type: wo
+  - bits: '0'
+    name: PS_FPD_OT
+    type: wo
+  name: IDR_1
+  offset: '0x0000002C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PS SysMon Unit Control and Status
+  field:
+  - bits: '31:28'
+    name: RESERVED
+    type: ro
+  - bits: '27:24'
+    longdesc: 'State of the Configuration sequence, refer to the [startup_trigger]
+      bit for more information. 0: Pre-trim settle. 1: Wait. 2: Memory cell reset.
+      3: Wait for eFuse readout and oscillator to settle. 4: Pre-configuration wait.
+      5: Memory cell initialization. 6: Post-configuration wait. 7: Wait for MON_STAT.jtag_locked
+      = 0. 8: Idle (PS SysMon is Ready) 9: reserved 10: Prepare for scan mode 11:
+      Scan mode sequence Others: reserved'
+    name: STARTUP_STATE
+    shortdesc: Reserved.
+    type: ro
+  - bits: '23:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    longdesc: Global config sequence completed, refer to the [startup_trigger] bit
+      for more information.
+    name: STARTUP_DONE
+    shortdesc: Reserved.
+    type: ro
+  - bits: '15:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    longdesc: '0: One conversion (EOC). 1: Sequence of conversions (EOS). When enabled,
+      the PS SysMon unit will loop through once and set EOS if averaging is off. If
+      averaging is on, the PS SysMon unit will loop through the number times defined
+      for averaging.'
+    name: AUTO_CONVST
+    shortdesc: Enable a sequence of measurements.
+    type: rw
+  - bits: '2'
+    longdesc: 'Write-only. 0: no effect. 1: trigger conversion. This bit self-clears.
+      This mechanism is similar to the event trigger in the PL SysMon unit.'
+    name: CONVST
+    shortdesc: Trigger start-of-conversion.
+    type: wo
+  - bits: '1'
+    longdesc: '0: no reset. 1: reset asserted. Write a 1 than a 0 to reset and release
+      the PS system monitor.'
+    name: RESET_USER
+    shortdesc: Reset for the PS SysMon.
+    type: rw
+  - bits: '0'
+    longdesc: 'READ: 0: done. 1: in-process. WRITE: 0: no effect. 1: initiate the
+      configuration sequence. When the process is done, the hardware clears this bit
+      to 0. Note: this is similar to the automatic configuration routine run in the
+      PL SysMon after a power-up cycle.'
+    name: STARTUP_TRIGGER
+    shortdesc: Trigger PS Sysmon configuration sequence, if needed for test/debug.
+    type: rw
+  name: PS_CTRL_STATUS
+  offset: '0x00000040'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PL SysMon register access control status.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'Read-only. 0: not accessible. 1: accessible.'
+    name: ACCESSIBLE
+    shortdesc: Indicator for PS ability to access PL SysMon registers.
+    type: ro
+  name: PL_CTRL_STATUS
+  offset: '0x00000044'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: ADC SysMon status.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    longdesc: '0: clocking okay. 1: invalid clock frequency. The ADC clock frequency
+      must not be less than 1 MHz and not exceed 26 MHz. Also, the ams_ref_clk must
+      not exceed 52 MHz.'
+    name: JTAG_LOCKED
+    shortdesc: SysMon Invalid Clock Indicator.
+    type: ro
+  - bits: '22'
+    longdesc: '0: idle. 1: busy (or calibration is occurring). This bit will read
+      1 for an extended period of time during the ADC and sensor calibrations.'
+    name: BUSY
+    shortdesc: ADC busy indicator.
+    type: ro
+  - bits: '21:16'
+    longdesc: Refer to table in UG1085 for a list of channels.
+    name: CHANNEL
+    shortdesc: Current sensor channel.
+    type: ro
+  - bits: '15:0'
+    name: MON_DATA
+    type: ro
+  name: MON_STATUS
+  offset: '0x00000050'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: System PLLs voltage measurement, VCC_PSPLL.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VALUE
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSPLL
+  offset: '0x00000060'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Battery voltage measurement, VCC_PSBATT.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VALUE
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSBATT
+  offset: '0x0000006C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PL Internal voltage measurement, VCCINT.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VALUE
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCINT
+  offset: '0x00000078'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Block RAM voltage measurement, VCCBRAM.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VALUE
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCBRAM
+  offset: '0x0000007C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PL Aux voltage measurement, VCCAUX.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VALUE
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCAUX
+  offset: '0x00000080'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Voltage measurement for six DDR I/O PLLs, VCC_PSDDR_PLL.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VALUE
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSDDR_PLL
+  offset: '0x00000084'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: VCC_PSINTFP_DDR voltage measurement.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VALUE
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSINTFP_DDR
+  offset: '0x0000009C'
+  type: ro
+  width: 32

@@ -1,0 +1,1278 @@
+description: DisplayPort DPCD registers
+registe:
+  field:
+  - bits: 2
+    name: MAX_SWING_REACHED
+  - bits: 5
+    name: MAX_PRE_EMPHASIS_REACHED
+register:
+- description: DPCD revision.
+  field:
+  - bits: '3:0'
+    name: MIN
+    type: rw
+  - bits: '7:4'
+    enum:
+    - name: DP_REV_1_0
+      value: '0x10'
+    - name: DP_REV_1_1
+      value: '0x11'
+    - name: DP_REV_1_2
+      value: '0x12'
+    name: MJR
+    type: raz
+  name: REV
+  offset: '0x0'
+  width: 8
+- field:
+  - bits: '7:0'
+    description: value * 0.27Gps per line
+    enum:
+    - name: 1_62GBPS
+      value: '0x06'
+    - name: 2_70GBPS
+      value: '0x0A'
+    - name: 5_40GBPS
+      value: '0x14'
+    name: RATE
+  name: MAX_LINK_RATE
+  offset: '0x1'
+  width: 8
+- field:
+  - bits: '4:0'
+    enum:
+    - name: LANE_COUNT_1
+      value: '0x1'
+    - name: LANE_COUNT_2
+      value: '0x2'
+    - name: LANE_COUNT_4
+      value: '0x4'
+    name: MAX_LANE_COUNT
+  - bits: 6
+    description: Training Pattern Sequence 3 is supported
+    name: TPS3_SUPPORT
+  - bits: 7
+    description: Enhanced Frame supported is supported (required for dp1.2)
+    name: ENHANCED_FRAME_SUPPORT
+  name: MAX_LANE_COUNT
+  offset: '0x2'
+  width: 8
+- field:
+  - bits: 0
+    description: 0 = no down spread, 1 = upto 0.5% down spread
+    name: MAX_DOWNSPREAD
+  - bits: 6
+    description: 1 does not require AUX CH handshake if main link is known good
+    name: NO_AUX_HANDSHAKE_LINK_TRAINING
+  name: MAX_DOWNSPREAD
+  offset: '0x3'
+  width: 8
+- description: Number of reciever ports = value + 1
+  name: NORP
+  offset: '0x4'
+  width: 8
+- field:
+  - bits: 0
+    description: set to 1 when device has downstream ports
+    name: DOWNSTREAMPORT_PRESENT
+  - bits: '2:1'
+    description: Indiacates the downstream port type of port 0
+    enum:
+    - name: DISPLAY_PORT
+      value: 0
+    - name: ANALOG_VGA
+      value: 1
+    - name: DVI_OR_HDMI
+      value: 2
+    - name: OTHER
+      value: 3
+    name: DWN_STRM_PORT_TYPE
+  - bits: 3
+    description: 0 branch device doesn't have a format conversion, 1 it does
+    name: FORMAT_CONVERSION
+  - bits: 4
+    description: 0 = 1 byte per port starting at 0x80, 1 4 bytes per port from 0x80
+    name: DETAILED_CAP_INFO_AVAILABLE
+  name: DOWNSP_PRESENT
+  offset: '0x5'
+  width: 8
+- field:
+  - bits: 1
+    description: set to 1 if supports ANSI X3/230-1994 clause 11
+    name: ANSI_8B_10B
+  name: MAIN_LINK_CHANNEL_CODING
+  offset: '0x6'
+  width: 8
+- field:
+  - bits: '3:0'
+    description: Downstream port count
+    name: DWN_STRM_PORT_COUNT
+  - bits: 6
+    descriptions: Embedded Display Port only, 1 = doesn't need MSA timing parameters
+    name: MSA_TIMING_PAR_IGNORED
+  - bits: 8
+    description: 1 = UI Supported 0x400-40B and 0x500-502 address supported
+    name: OUI_SUPPORTED
+  name: DOWNSTEAM_PORT_COUNT
+  offset: '0x7'
+  width: 8
+- field:
+  - bits: 1
+    description: 1 = reciever port has a local EDID
+    name: LOCAL_EDID_PRESENT
+  - bits: 2
+    description: 0 = main stream, 1 = this port is secondary isochronous stream
+    name: ASSOCIATED_TO_PRECEDING_PORT
+  name: RX_PORT0_CAP_0
+  offset: '0x8'
+  width: 8
+- field:
+  - bits: '7:0'
+    description: Buffer Size = value+1 * 32 bytes per lane. Max 8KB
+    name: BUFFER_SIZE
+  name: RX_PORT0_CAP_1
+  offset: '0x9'
+  width: 8
+- field:
+  - bits: 1
+    description: 1 = reciever port has a local EDID
+    name: LOCAL_EDID_PRESENT
+  - bits: 2
+    description: 0 = main stream, 1 = this port is secondary isochronous stream
+    name: ASSOCIATED_TO_PRECEDING_PORT
+  name: RX_PORT1_CAP_0
+  offset: '0xA'
+  width: 8
+- field:
+  - bits: '7:0'
+    description: Buffer Size = value+1 * 32 bytes per lane. Max 8KB
+    name: BUFFER_SIZE
+  name: RX_PORT1_CAP_1
+  offset: '0xB'
+  width: 8
+- field:
+  - bits: '7:0'
+    description: Bitfield of speads supported with I2C over Aux
+    enum:
+    - name: NOT_SUPPORTED
+      value: 0
+    - name: 1KBPS
+      value: '0x1'
+    - name: 5KBPS
+      value: '0x2'
+    - name: 10KBPS
+      value: '0x4'
+    - name: 100KBPS
+      value: '0x8'
+    - name: 400KBPS
+      value: '0x10'
+    - name: 1MBPS
+      value: '0x20'
+    name: I2C_SPEED
+  name: I2C_SPEED_CTL_CAP
+  offset: '0xC'
+  width: 8
+- field:
+  - bits: 0
+    name: ALTERNATE_SCRAMBLER_RESET_CAPABLE
+  - bits: 1
+    name: FRAMING_CHANGE_CAPABLE
+  name: EDP_CFG_CAP
+  offset: '0xD'
+  width: 8
+- field:
+  - bits: '7:0'
+    description: Link Status/Adjust Request read interval during training
+    enum:
+    - name: 4MS
+      value: 1
+    - name: 8MS
+      value: 2
+    - name: 12MS
+      value: 3
+    - name: 16MS
+      value: 4
+    name: INTERVAL
+  name: TRAIN_AUX_RD_INTERVAL
+  offset: '0xE'
+  width: 8
+- field:
+  - bits: 0
+    description: 1 supports VGA force load adapter sense, 0 doesn't
+    name: FORCE_LOAD_SENSE_CAP
+  name: ADAPTER_CAP
+  offset: '0xF'
+  width: 8
+- field:
+  - bits: 0
+    name: FAUX_CAP
+  name: FAUX_CAP
+  offset: '0x20'
+  width: 8
+- field:
+  - bits: 0
+    description: 1 supports MST transport and has a branching unit
+    name: FAUX_CAP
+  name: MSTM_CAP
+  offset: '0x21'
+  width: 8
+- name: NUM_AUDIO_ENDPOINTS
+  offset: '0x22'
+  width: 8
+- field:
+  - bits: '3:0'
+    description: Audio Granularity Factor
+    enum:
+    - name: 3MS
+      value: 0
+    - name: 2MS
+      value: 1
+    - name: 1MS
+      value: 2
+    - name: 500us
+      value: 3
+    - name: 200us
+      value: 4
+    - name: 100us
+      value: 5
+    - name: 10us
+      value: 6
+    - name: 1us
+      value: 7
+    name: AG_FACTOR
+  - bits: '7:0'
+    enum:
+    - name: 3ms
+      value: 0
+    - name: 2ms
+      value: 1
+    - name: 1ms
+      value: 2
+    - name: 500us
+      value: 3
+    - name: 200us
+      value: 4
+    - name: 100us
+      value: 5
+    name: VG_FACTOR
+  name: AV_SYNC_DATA_BLOCK
+  offset: '0x23'
+  width: 8
+- name: AUD_DEC_LAT_7_0
+  offset: '0x24'
+  width: 8
+- name: AUD_DEC_LAT_15_8
+  offset: '0x25'
+  width: 8
+- name: AUD_PP_LAT_7_0
+  offset: '0x26'
+  width: 8
+- name: AUD_PP_LAT_15_8
+  offset: '0x27'
+  width: 8
+- name: VID_INTER_LAT
+  offset: '0x28'
+  width: 8
+- name: VID_PROG_LAT
+  offset: '0x29'
+  width: 8
+- name: REP_LAT
+  offset: '0x2A'
+  width: 8
+- name: AUD_DEL_INS_7_0
+  offset: '0x2B'
+  width: 8
+- name: AUD_DEL_INS_15_8
+  offset: '0x2C'
+  width: 8
+- name: AUD_DEL_INS_23_16
+  offset: '0x2D'
+  width: 8
+- name: GUID
+  offset: '0x30'
+  width: 8
+- name: RX_GTC_VALUE_7_0
+  offset: '0x54'
+  width: 8
+- name: RX_GTC_VALUE_15_8
+  offset: '0x55'
+  width: 8
+- name: RX_GTC_VALUE_23_16
+  offset: '0x56'
+  width: 8
+- name: RX_GTC_VALUE_31_24
+  offset: '0x57'
+  width: 8
+- name: RX_GTC_MSTR_REG
+  offset: '0x58'
+  width: 8
+- name: RX_GTC_FREQ_LOCK_DONE
+  offset: '0x59'
+  width: 8
+- field:
+  - bits: '2:0'
+    enum:
+    - name: DISPLAY_PORT
+      value: '0'
+    - name: ANALOG_VGA
+      value: '1'
+    - name: DVI
+      value: '2'
+    - name: HDMI
+      value: '3'
+    - name: OTHER_NO_EDID
+      value: '4'
+    name: DWN_STRM_PORT_TYPE
+  - bits: 3
+    name: DCIA0_DNW_STREAM_PORT_HPD
+  - bits: '7:4'
+    enum:
+    - name: 720_480I_60HZ
+      value: 1
+    - name: 720_480I_50HZ
+      value: 2
+    - name: 1920_1080I_60HZ
+      value: 3
+    - name: 1920_1080I_50HZ
+      value: 4
+    - name: 1280_720P_60HZ
+      value: 5
+    - name: 1280_720P_50HZ
+      value: 7
+    name: DCIA0_NON_EDID_DWN_STRM_PORT_ATTRIBUTE
+  longdesc: if DETAILED CAP INFO == 0 this is start of 16 1 byte registers, if 1 4
+    4 byte registers
+  name: CAP_INFO
+  offset: '0x80'
+  width: 8
+- longdesc: If downstream port is VGA and DETAILED_CAP_INFO_AVAILABLE == 1
+  name: VGA_CAP_INFO_MAX_PIXELRATE
+  offset: '0x81'
+  width: 8
+- field:
+  - bits: '2:0'
+    enum:
+    - name: 8BPC
+      value: 0
+    - name: 10BPC
+      value: 1
+    - name: 12BPC
+      value: 2
+    - name: 16BPC
+      value: 3
+    name: MAX_BPC
+  longdesc: If downstream port is VGA and DETAILED_CAP_INFO_AVAILABLE == 1
+  name: VGA_INFO_MAX_BITS_PER_COMPONENT
+  offset: '0x82'
+  width: 8
+- field:
+  - bits: '7:0'
+    enum:
+    - name: 1_62GBPS
+      value: '0x06'
+    - name: 2_70GBPS
+      value: '0x0A'
+    - name: 5_40GBPS
+      value: '0x14'
+    name: BANDWIDTH
+  longdesc: Main Link Bankwidth = value * 0.27 per lane
+  name: LINK_BW_SET
+  offset: '0x100'
+  width: 8
+- field:
+  - bits: '4:0'
+    enum:
+    - name: 1_LINE
+      value: 1
+    - name: 2_LINE
+      value: 2
+    - name: 4_LINE
+      value: 4
+    name: LANE_COUNT
+  - bits: 7
+    name: ENHANCED_FRAME_EN
+  longdesc: Main Link Bankwidth = value * 0.27 per lane
+  name: LANE_COUNT_SET
+  offset: '0x101'
+  width: 8
+- field:
+  - bits: '1:0'
+    enum:
+    - name: DISABLED
+      value: 0
+    - name: PATTERN_1
+      value: 1
+    - name: PATTERN_2
+      value: 2
+    - name: PATTERN_3
+      value: 3
+    name: PATTERN_SELECT
+  - bits: '3:2'
+    enum:
+    - name: NOT_TRANSMITTED
+      value: 0
+    - name: D10_2_PATTERN
+      value: 1
+    - name: SYMBOL_ERROR_RATE_PATTERN
+      value: 2
+    - name: PRBS7_PATTERN
+      value: 3
+    name: LINK_QUAL_PATTERN
+  - bits: 4
+    name: RECOVERED_CLOCK_OUT_EN
+  - bits: 5
+    name: SCRAMBLING_DISABLED
+  - bits: '7:6'
+    enum:
+    - name: DISPARITY_AND_ILLEGAL_SYMBOL_ERROR
+      value: 0
+    - name: DISPARITY_ERROR
+      value: 1
+    - name: ILLEGAL_SYMBOL_ERROR
+      value: 2
+    name: SYMBOL_ERROR_COUNT
+  longdesc: Link Training patterns
+  name: TRAINING_PATTERN_SET
+  offset: '0x102'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: VOLTAGE_SWING
+  - bits: 2
+    name: MAX_SWING_REACHED
+  - bits: '4:3'
+    name: PRE_EMPHASIS
+  - bits: 5
+    name: MAX_PRE_EMPHASIS_REACHED
+  longdesc: Link Training Control for Lane 0
+  name: TRAINING_LANE0_SET
+  offset: '0x103'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: VOLTAGE_SWING
+  - bits: 2
+    name: MAX_SWING_REACHED
+  - bits: '4:3'
+    name: PRE_EMPHASIS
+  - bits: 5
+    name: MAX_PRE_EMPHASIS_REACHED
+  longdesc: Link Training Control for Lane 0
+  name: TRAINING_LANE1_SET
+  offset: '0x104'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: VOLTAGE_SWING
+  - bits: 2
+    name: MAX_SWING_REACHED
+  - bits: '4:3'
+    name: PRE_EMPHASIS
+  - bits: 5
+    name: MAX_PRE_EMPHASIS_REACHED
+  longdesc: Link Training Control for Lane 0
+  name: TRAINING_LANE2_SET
+  offset: '0x105'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: VOLTAGE_SWING
+  - bits: 2
+    name: MAX_SWING_REACHED
+  - bits: '4:3'
+    name: PRE_EMPHASIS
+  - bits: 5
+    name: MAX_PRE_EMPHASIS_REACHED
+  longdesc: Link Training Control for Lane 0
+  name: TRAINING_LANE3_SET
+  offset: '0x106'
+  width: 8
+- field:
+  - bits: 4
+    name: SPREAD_AMP
+  - bits: 7
+    name: MSA_TIMING_PAR_IGNORED
+  longdesc: Down-spreading control
+  name: DOWNSPREAD_CTRL
+  offset: '0x107'
+  width: 8
+- field:
+  - bits: 0
+    name: SET_ANSI_8B10B
+  longdesc: Coding set for main link
+  name: MAIN_LINK_CODING_SET
+  offset: '0x108'
+  width: 8
+- field:
+  - bits: '7:0'
+    enum:
+    - name: NOT_SUPPORTED
+      value: 0
+    - name: 1KBPS
+      value: '0x1'
+    - name: 5KBPS
+      value: '0x2'
+    - name: 10KBPS
+      value: '0x3'
+    - name: 100KBPS
+      value: '0x4'
+    - name: 400KBPS
+      value: '0x5'
+    - name: 1MBPS
+      value: '0x6'
+    name: BITMAP
+  longdesc: I2C speed control status bit map
+  name: I2C_SPEED_CTRL
+  offset: '0x109'
+  width: 8
+- longdesc: eDP only configuration
+  name: EDP_CONFIGURATION_SET
+  offset: '0x10A'
+  width: 8
+- field:
+  - bits: '2:0'
+    enum:
+    - name: NOT_TRANSMITTED
+      value: 0
+    - name: D10_2_PATTERN
+      value: 1
+    - name: SYMBOL_ERROR_RATE_PATTERN
+      value: 2
+    - name: PRBS7_PATTERN
+      value: 3
+    - name: 80_BIT_CUSTOM_PATTERN
+      value: 4
+    - name: HBR2_PATTERN
+      value: 5
+    name: LINK_QUAL_PATTERN
+  longdesc: Supersides the controls in TRAINING_PATTERN_SET lane X
+  name: LINK_QUAL_LANE0_SET
+  offset: '0x10B'
+  width: 8
+- field:
+  - bits: '2:0'
+    enum:
+    - name: NOT_TRANSMITTED
+      value: 0
+    - name: D10_2_PATTERN
+      value: 1
+    - name: SYMBOL_ERROR_RATE_PATTERN
+      value: 2
+    - name: PRBS7_PATTERN
+      value: 3
+    - name: 80_BIT_CUSTOM_PATTERN
+      value: 4
+    - name: HBR2_PATTERN
+      value: 5
+    name: LINK_QUAL_PATTERN
+  longdesc: Supersides the controls in TRAINING_PATTERN_SET lane X
+  name: LINK_QUAL_LANE1_SET
+  offset: '0x10C'
+  width: 8
+- field:
+  - bits: '2:0'
+    enum:
+    - name: NOT_TRANSMITTED
+      value: 0
+    - name: D10_2_PATTERN
+      value: 1
+    - name: SYMBOL_ERROR_RATE_PATTERN
+      value: 2
+    - name: PRBS7_PATTERN
+      value: 3
+    - name: 80_BIT_CUSTOM_PATTERN
+      value: 4
+    - name: HBR2_PATTERN
+      value: 5
+    name: LINK_QUAL_PATTERN
+  longdesc: Supersides the controls in TRAINING_PATTERN_SET lane X
+  name: LINK_QUAL_LANE2_SET
+  offset: '0x10D'
+  width: 8
+- field:
+  - bits: '2:0'
+    enum:
+    - name: NOT_TRANSMITTED
+      value: 0
+    - name: D10_2_PATTERN
+      value: 1
+    - name: SYMBOL_ERROR_RATE_PATTERN
+      value: 2
+    - name: PRBS7_PATTERN
+      value: 3
+    - name: 80_BIT_CUSTOM_PATTERN
+      value: 4
+    - name: HBR2_PATTERN
+      value: 5
+    name: LINK_QUAL_PATTERN
+  longdesc: Supersides the controls in TRAINING_PATTERN_SET lane X
+  name: LINK_QUAL_LANE3_SET
+  offset: '0x10E'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: LANE0_POST_CURSOR2
+  - bits: 2
+    name: MAX_LANE0_POST_CURSOR2_REACHED
+  - bits: '5:4'
+    name: LANE1_POST_CURSOR2
+  - bits: 6
+    name: MAX_LANE1_POST_CURSOR2_REACHED
+  longdesc: Link Training Control Lane 0 and 1
+  name: TRAINING_LANE0_1_SET2
+  offset: '0x10F'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: LANE2_POST_CURSOR2
+  - bits: 2
+    name: MAX_LANE2_POST_CURSOR2_REACHED
+  - bits: '5:4'
+    name: LANE3_POST_CURSOR2
+  - bits: 6
+    name: MAX_LANE3_POST_CURSOR2_REACHED
+  longdesc: Link Training Control Lane 2 and 3
+  name: TRAINING_LANE2_3_SET2
+  offset: '0x110'
+  width: 8
+- field:
+  - bits: 0
+    name: MST_EN
+  - bits: 1
+    name: UP_REQ_EN
+  longdesc: Multi stream control
+  name: MSTM_CTRL
+  offset: '0x111'
+  width: 8
+- name: AUDIO_DELAY_7_0
+  offset: '0x112'
+  width: 8
+- name: AUDIO_DELAY_15_8
+  offset: '0x112'
+  width: 8
+- name: AUDIO_DELAY_23_6
+  offset: '0x114'
+  width: 8
+- field:
+  - bits: 0
+    name: DP_PWR_NO_NEEDED_BY_UPSTREAM_DEVICE
+  name: UPSTREAM_DEVICE_DP_PWR_NEEDED
+  offset: '0x118'
+  width: 8
+- field:
+  - bits: 0
+    name: FAUX_EN
+  - bits: 1
+    name: FAUX_FORWARD_CHANNEL_TRAINING_PATTERN_EN
+  - bits: 2
+    name: FAUX_BACK_CHANNEL_TRAINING_PATTERN_EN
+  - bits: 3
+    name: FAUX_SCRAMBLER_DIS
+  - bits: 4
+    name: FAUX_FORWARD_CHANNEL_SQUELCH_TRAINING_EN
+  - bits: '7:6'
+    enum:
+    - name: DISPARITY_AND_ILLEGAL_SYMBOL_ERROR
+      value: 0
+    - name: DISPARITY_ERROR
+      value: 1
+    - name: ILLEGAL_SYMBOL_ERROR
+      value: 2
+    name: FAUX_FORWARD_CHANNEL_SYMBOL_ERROR_COUNT_SEL
+  name: FAUX_MODE_CTRL
+  offset: '0x120'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: VOLTAGE_SWING
+  - bits: 2
+    name: MAX_SWING_REACHED
+  - bits: '4:3'
+    name: PRE_EMPHASIS
+  - bits: 5
+    name: MAX_PRE_EMPHASIS_REACHED
+  name: FAUX_FORWARD_CHANNEL_DRIVE_SET
+  offset: '0x121'
+  width: 8
+- field:
+  - bits: 0
+    name: SYMBOL_LOCK_DONE
+  - bits: '2:1'
+    name: VOLTAGE_SWING_ADJ_REQ
+  - bits: '4:3'
+    name: PRE_EMPHASIS_ADJ_REQ
+  name: FAUX_BACK_CHANNEL_STATUS
+  offset: '0x122'
+  width: 8
+- name: FAUX_BACK_CHANNEL_SYMBOL_ERROR_COUNT_7_0
+  offset: '0x123'
+  width: 8
+- name: FAUX_BACK_CHANNEL_SYMBOL_ERROR_COUNT_14_8
+  offset: '0x124'
+  width: 8
+- field:
+  - bits: '3:0'
+    enum:
+    - name: 400US
+      value: 0
+    - name: 4MS
+      value: 1
+    - name: 8MS
+      value: 2
+    - name: 12MS
+      value: 3
+    - name: 16MS
+      value: 8
+    name: TRAINING_PATTERN_TIME
+  name: FAUX_BACK_CHANNEL_TRAINING_PATTERN_TIME
+  offset: '0x125'
+  width: 8
+- name: TX_GTC_VALUE_7_0
+  offset: '0x154'
+  width: 8
+- name: TX_GTC_VALUE_15_8
+  offset: '0x155'
+  width: 8
+- name: TX_GTC_VALUE_23_16
+  offset: '0x156'
+  width: 8
+- name: TX_GTC_VALUE_31_24
+  offset: '0x157'
+  width: 8
+- field:
+  - bits: 0
+    name: EN
+  name: RX_GTC_VALUE_PHASE_SKEW_EN
+  offset: '0x158'
+  width: 8
+- field:
+  - bits: 0
+    name: DONE
+  name: TX_GTC_FREQ_LOCK_DONE
+  offset: '0x159'
+  width: 8
+- field:
+  - bits: 0
+    name: FORCE_SENSE_LOAD
+  name: ADAPTER_CTRL
+  offset: '0x1A0'
+  width: 8
+- field:
+  - bits: 0
+    name: HPD_LONG_PULSE_FOR_UPSTREAM
+  name: BRANCH_DEVICE_CTRL
+  offset: '0x1A1'
+  width: 8
+- field:
+  - bits: '6:0'
+    name: ID
+  name: PAYLOAD_ALLOCATE_SET
+  offset: '0x1C0'
+  width: 8
+- field:
+  - bits: '5:0'
+    name: TIME_SLOT
+  name: PAYLOAD_ALLOCATE_START_TIME_SLOT
+  offset: '0x1C1'
+  width: 8
+- field:
+  - bits: '5:0'
+    name: COUNT
+  name: PAYLOAD_ALLOCATE_TIME_SLOT_COUNT
+  offset: '0x1C2'
+  width: 8
+- field:
+  - bits: '5:0'
+    name: COUNT_5_0
+  - bits: 6
+    name: CP_READY
+  - bits: 7
+    name: COUNT_7
+  name: SINK_COUNT
+  offset: '0x200'
+  width: 8
+- field:
+  - bits: 0
+    name: REMOTE_CONTROL_COMMAND_PENDING
+  - bits: 1
+    name: AUTOMATED_TEST_REQUEST
+  - bits: 2
+    name: CP_IRQ
+  - bits: 3
+    name: MCCS_IRQ
+  - bits: 4
+    name: DOWN_REP_MSG_RDY
+  - bits: 5
+    name: UP_REQ_MSG_RDY
+  - bits: 6
+    name: SINK_SPECIFIC_IRQ
+  name: DEVICE_SERVICE_IRQ_VECTOR
+  offset: '0x201'
+  width: 8
+- field:
+  - bits: 0
+    name: LANE0_CR_DONE
+  - bits: 1
+    name: LANE0_CHANNEL_EQ_DONE
+  - bits: 2
+    name: LANE0_SYMBOL_LOCKED
+  - bits: 4
+    name: LANE1_CR_DONE
+  - bits: 5
+    name: LANE1_CHANNEL_EQ_DONE
+  - bits: 6
+    name: LANE1_SYMBOL_LOCKED
+  longdesc: Lane 0 and 1 status
+  name: LANE_0_1_STATUS
+  offset: '0x202'
+  width: 8
+- field:
+  - bits: 0
+    name: LANE2_CR_DONE
+  - bits: 1
+    name: LANE2_CHANNEL_EQ_DONE
+  - bits: 2
+    name: LANE2_SYMBOL_LOCKED
+  - bits: 4
+    name: LANE3_CR_DONE
+  - bits: 5
+    name: LANE3_CHANNEL_EQ_DONE
+  - bits: 6
+    name: LANE3_SYMBOL_LOCKED
+  longdesc: Lane 2 and 3 status
+  name: LANE_2_3_STATUS
+  offset: '0x203'
+  width: 8
+- field:
+  - bits: 0
+    name: INTERLANE_ALIGN_DONE
+  - bits: 6
+    name: DOWNSTREAM_PORT_STATUS_CHANGED
+  - bits: 7
+    name: LINK_STATUS_UPDATED
+  name: LANE_ALIGN_STATUS_UPDATED
+  offset: '0x204'
+  width: 8
+- field:
+  - bits: 0
+    name: RECEIVE_PORT_0_STATUS
+  - bits: 1
+    name: RECEIVE_PORT_1_STATUS
+  name: SINK_STATUS
+  offset: '0x205'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: VOLTAGE_SWING_LANE0
+  - bits: '3:2'
+    name: PRE_EMPHASIS_LANE0
+  - bits: '5:4'
+    name: VOLTAGE_SWING_LANE1
+  - bits: '7:6'
+    name: PRE_EMPHASIS_LANE1
+  name: ADJUST_REQUEST_LANE0_1
+  offset: '0x206'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: VOLTAGE_SWING_LANE2
+  - bits: '3:2'
+    name: PRE_EMPHASIS_LANE2
+  - bits: '5:4'
+    name: VOLTAGE_SWING_LANE3
+  - bits: '7:6'
+    name: PRE_EMPHASIS_LANE3
+  name: ADJUST_REQUEST_LANE2_3
+  offset: '0x207'
+  width: 8
+- name: TRAINING_SCORE_LANE0
+  offset: '0x208'
+  width: 8
+- name: TRAINING_SCORE_LANE1
+  offset: '0x209'
+  width: 8
+- name: TRAINING_SCORE_LANE2
+  offset: '0x20A'
+  width: 8
+- name: TRAINING_SCORE_LANE3
+  offset: '0x20B'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: POST_CURSOR2_LANE0
+  - bits: '3:2'
+    name: POST_CURSOR2_LANE1
+  - bits: '5:4'
+    name: POST_CURSOR2_LANE2
+  - bits: '7:6'
+    name: POST_CURSOR2_LANE3
+  name: ADJUST_REQUEST_POST_CURSOR2
+  offset: '0x20C'
+  width: 8
+- name: FAUX_FORWARD_CHANNEL_SYMBOL_ERROR_COUNT_7_0
+  offset: '0x20D'
+  width: 8
+- name: FAUX_FORWARD_CHANNEL_SYMBOL_ERROR_COUNT_14_8
+  offset: '0x20E'
+  width: 8
+- name: SYMBOL_ERROR_COUNT_LANE0_7_0
+  offset: '0x210'
+  width: 8
+- name: SYMBOL_ERROR_COUNT_LANE0_14_8
+  offset: '0x211'
+  width: 8
+- name: SYMBOL_ERROR_COUNT_LANE1_7_0
+  offset: '0x212'
+  width: 8
+- name: SYMBOL_ERROR_COUNT_LANE1_14_8
+  offset: '0x213'
+  width: 8
+- name: SYMBOL_ERROR_COUNT_LANE2_7_0
+  offset: '0x214'
+  width: 8
+- name: SYMBOL_ERROR_COUNT_LANE2_14_8
+  offset: '0x215'
+  width: 8
+- name: SYMBOL_ERROR_COUNT_LANE3_7_0
+  offset: '0x216'
+  width: 8
+- name: SYMBOL_ERROR_COUNT_LANE3_14_8
+  offset: '0x217'
+  width: 8
+- field:
+  - bits: 0
+    name: TEST_LINK_TRAINING
+  - bits: 1
+    name: TEST_PATTERN
+  - bits: 2
+    name: TEST_EDID_READ
+  - bits: 3
+    name: PHY_TEST_PATTERN
+  - bits: 4
+    name: FAUX_TEST_PATTERN
+  name: TEST_REQUEST
+  offset: '0x218'
+  width: 8
+- field:
+  - bits: '7:0'
+    enum:
+    - name: 1_62GBPS
+      value: '0x06'
+    - name: 2_70GBPS
+      value: '0x0A'
+    - name: 5_40GBPS
+      value: '0x14'
+    name: RATE
+  name: TEST_LINK_RATE
+  offset: '0x219'
+  width: 8
+- field:
+  - bits: '4:0'
+    name: COUNT
+  name: TEST_LINK_COUNT
+  offset: '0x220'
+  width: 8
+- field:
+  - bits: '7:0'
+    enum:
+    - name: NO_TEST_PATTERN
+      value: 0
+    - name: NO_TEST_PATTERN
+      value: 0
+    - name: COLOUR_RAMPS
+      value: 1
+    - name: BLACK_AND_WHITE_VERTICAL_LINES
+      value: 2
+    - name: COLOUR_SQUARE
+      value: 3
+    name: PATTERN
+  name: TEST_PATTERN
+  offset: '0x221'
+  width: 8
+- name: TEST_H_TOTAL_15_8
+  offset: '0x222'
+  width: 8
+- name: TEST_H_TOTAL_7_0
+  offset: '0x223'
+  width: 8
+- name: TEST_V_TOTAL_15_8
+  offset: '0x224'
+  width: 8
+- name: TEST_V_TOTAL_7_0
+  offset: '0x225'
+  width: 8
+- name: TEST_H_START_15_8
+  offset: '0x226'
+  width: 8
+- name: TEST_H_START_7_0
+  offset: '0x227'
+  width: 8
+- name: TEST_V_START_15_8
+  offset: '0x228'
+  width: 8
+- name: TEST_V_START_7_0
+  offset: '0x229'
+  width: 8
+- name: TEST_HSYNC_14_8
+  offset: '0x22A'
+  width: 8
+- name: TEST_HSYNC_7_0
+  offset: '0x22B'
+  width: 8
+- name: TEST_VSYNC_14_8
+  offset: '0x22C'
+  width: 8
+- name: TEST_VSYNC_7_0
+  offset: '0x22D'
+  width: 8
+- name: TEST_H_WIDTH_15_8
+  offset: '0x22E'
+  width: 8
+- name: TEST_H_WIDTH_7_0
+  offset: '0x22F'
+  width: 8
+- name: TEST_V_HEIGHT_15_8
+  offset: '0x230'
+  width: 8
+- name: TEST_V_HEIGHT_7_0
+  offset: '0x231'
+  width: 8
+- field:
+  - bits: 0
+    name: TEST_SYNCHRONOUS_CLOCK
+  - bits: '2:1'
+    enum:
+    - name: RGB
+      value: 0
+    - name: YCBCR_422
+      value: 1
+    - name: YCBCR_444
+      value: 2
+    name: TEST_COLOUR_FORMAT
+  - bits: 3
+    enum:
+    - name: VESA
+      value: 0
+    - name: CEA
+      value: 1
+    name: TEST_DYNAMIC_RANGE
+  - bits: 4
+    enum:
+    - name: ITU601
+      value: 0
+    - name: ITU709
+      value: 1
+    name: TEST_YCBCR_COEFFICIENTS
+  - bits: '7:5'
+    enum:
+    - name: 6BPC
+      value: 0
+    - name: 8BPC
+      value: 1
+    - name: 10BPC
+      value: 2
+    - name: 12BPC
+      value: 3
+    - name: 16BPC
+      value: 4
+    name: TEST_BIT_DEPTH
+  name: TEST_MISC_0
+  offset: '0x232'
+  width: 8
+- field:
+  - bits: 0
+    enum:
+    - name: '1'
+      value: 0
+    - name: '1_001'
+      value: 1
+    name: TEST_REFRESH_DENOMINATOR
+  - bits: 1
+    name: TEST_INTERLACED
+  name: TEST_MISC_1
+  offset: '0x233'
+  width: 8
+- name: TEST_REFRESH_RATE_NUMERATOR
+  offset: '0x234'
+  width: 8
+- name: TEST_CRC_R_CR_7_0
+  offset: '0x240'
+  width: 8
+- name: TEST_CRC_R_CR_15_8
+  offset: '0x241'
+  width: 8
+- name: TEST_CRC_G_Y_7_0
+  offset: '0x242'
+  width: 8
+- name: TEST_CRC_G_Y_15_8
+  offset: '0x243'
+  width: 8
+- name: TEST_CRC_B_CB_7_0
+  offset: '0x244'
+  width: 8
+- name: TEST_CRC_B_CB_15_8
+  offset: '0x245'
+  width: 8
+- field:
+  - bits: '3:0'
+    name: TEST_CRC_COUNT
+  - bits: 5
+    name: TEST_CRC_SUPPORTED
+  name: TEST_SINK_MISC
+  offset: '0x246'
+  width: 8
+- field:
+  - bits: '2:0'
+    enum:
+    - name: NO_PATTERN
+      value: 0
+    - name: D10_2_PATTERN
+      value: 1
+    - name: SYMBOL_ERROR_RATE_PATTERN
+      value: 2
+    - name: PRBS7_PATTERN
+      value: 3
+    - name: 80_BIT_CUSTOM_PATTERN
+      value: 4
+    - name: HBR2_PATTERN
+      value: 5
+    name: PATTERN
+  name: PHY_TEST_PATTERN
+  offset: '0x248'
+  width: 8
+- field:
+  - bits: '2:0'
+    enum:
+    - name: NO_PATTERN
+      value: 0
+    - name: D10_2_PATTERN
+      value: 1
+    - name: SYMBOL_ERROR_RATE_PATTERN
+      value: 2
+    - name: PRBS7_PATTERN
+      value: 3
+    name: FORWARD_CHANNEL_TEST_PATTERN
+  - bits: '3'
+    name: BACK_CHANNEL_ERROR_COUNT_REQUEST
+  name: TEST_FAUX
+  offset: '0x249'
+  width: 8
+- name: HBR2_COMPLIANCE_SCRAMBLER_RESET_7_0
+  offset: '0x24A'
+  width: 8
+- name: HBR2_COMPLIANCE_SCRAMBLER_RESET_15_8
+  offset: '0x24B'
+  width: 8
+- name: TEST_80BIT_CUSTOM_PATTERN_7_0
+  offset: '0x250'
+  width: 8
+- name: TEST_80BIT_CUSTOM_PATTERN_15_8
+  offset: '0x251'
+  width: 8
+- name: TEST_80BIT_CUSTOM_PATTERN_23_16
+  offset: '0x252'
+  width: 8
+- name: TEST_80BIT_CUSTOM_PATTERN_31_24
+  offset: '0x253'
+  width: 8
+- name: TEST_80BIT_CUSTOM_PATTERN_39_24
+  offset: '0x254'
+  width: 8
+- name: TEST_80BIT_CUSTOM_PATTERN_47_40
+  offset: '0x255'
+  width: 8
+- name: TEST_80BIT_CUSTOM_PATTERN_55_48
+  offset: '0x256'
+  width: 8
+- name: TEST_80BIT_CUSTOM_PATTERN_63_56
+  offset: '0x257'
+  width: 8
+- name: TEST_80BIT_CUSTOM_PATTERN_71_64
+  offset: '0x258'
+  width: 8
+- name: TEST_80BIT_CUSTOM_PATTERN_79_72
+  offset: '0x259'
+  width: 8
+- field:
+  - bits: 0
+    name: TEST_ACK
+  - bits: 1
+    name: TEST_NACK
+  - bits: 2
+    name: TEST_EDID_CHECKSUM_READ
+  name: TEST_RESPONSE
+  offset: '0x260'
+  width: 8
+- name: TEST_EDID_CHECKSUM
+  offset: '0x261'
+  width: 8
+- field:
+  - bits: '2:0'
+    enum:
+    - name: NO_PATTERN
+      value: 0
+    - name: D10_2_PATTERN
+      value: 1
+    - name: SYMBOL_ERROR_RATE_PATTERN
+      value: 2
+    - name: PRBS7_PATTERN
+      value: 3
+    name: BACK_CHANNEL_TEST_PATTERN
+  name: TEST_FAUX_BACK_CHANNEL_TEST_PATTERN
+  offset: '0x266'
+  width: 8
+- field:
+  - bits: 0
+    name: START
+  - bits: '5:4'
+    name: PHY_SINK_TEST_LANE
+  - bits: 7
+    name: PHY_SINK_TEST_LANE_EN
+  name: TEST_SINK
+  offset: '0x270'
+  width: 8
+- field:
+  - bits: 0
+    name: LOCK_DOWN
+  - bits: '2:1'
+    name: VOLTAGE_SWING_ADJ_REG
+  - bits: '4:3'
+    name: PRE_EMPHASIS_ADJ_REQ
+  - bits: 7
+    name: SQUELCH_THRESHOLD_DONE
+  name: FAUX_FORWARD_CHANNEL_STATUS
+  offset: '0x280'
+  width: 8
+- field:
+  - bits: '1:0'
+    name: VOLTAGE_SWING_SET
+  - bits: '4:3'
+    name: PRE_EMPHASIS_SET
+  name: FAUX_BACK_CHANNEL_DRIVE_SET
+  offset: '0x281'
+  width: 8
+- field:
+  - bits: '7:6'
+    enum:
+    - name: DISPARITY_AND_ILLEGAL_SYMBOL_ERROR
+      value: 0
+    - name: DISPARITY_ERROR
+      value: 1
+    - name: ILLEGAL_SYMBOL_ERROR
+      value: 2
+    name: SYMBOL_ERROR_COUNT
+  name: FAUX_BACK_SYMBOL_ERROR_COUNT_CONTROL
+  offset: '0x282'
+  width: 8
+- field:
+  - bits: 0
+    name: VC_TABLE_UPDATED
+  - bits: 1
+    name: ACT_HANDLED
+  name: PAYLOAD_TABLE_UPDATE_STATUS
+  offset: '0x2C0'
+  width: 8
+- longdesc: 1 to 63 table slots
+  name: VC_PAYLOAD_SLOT_1
+  offset: '0x2C1'
+  width: 8

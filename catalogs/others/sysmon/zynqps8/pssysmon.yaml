@@ -1,0 +1,1081 @@
+description: PS System Monitor
+register:
+- default: '0x00000000'
+  description: LPD temperature measurement.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: TEMPERATURE
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: TEMP_LPD
+  offset: '0x00000000'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: VCC PS LPD voltage measurement (supply1).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSINTLP
+  offset: '0x00000004'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: VCC PS FPD voltage measurement (supply2).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSINTFP
+  offset: '0x00000008'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: VP_VN voltage measurement.
+  field:
+  - bits: '15:0'
+    longdesc: Any write to this register causes a unit reset. Read and write data
+      have no meaning.
+    name: VP_VN
+    shortdesc: PS SysMon reset.
+    type: ro
+  name: VP_VN
+  offset: '0x0000000C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: PS Aux voltage reference (supply3).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSAUX
+  offset: '0x00000018'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: DDR I/O VCC voltage measurement.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCO_PSDDR
+  offset: '0x00000034'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: PS IO Bank 503 voltage measurement (supply5).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCO_PSIO3
+  offset: '0x00000038'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: PS IO Bank 500 voltage measurement (supply6).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCO_PSIO0
+  offset: '0x0000003C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max Temperature measured for LPD.
+  field:
+  - bits: '15:0'
+    longdesc: Read-only.
+    name: TEMPERATURE
+    shortdesc: Maximum value recorded in the temperature measurement register since
+      the last reset.
+    type: ro
+  name: MAX_TEMP_LPD
+  offset: '0x00000080'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VCC PS LPD (supply1).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since last
+      reset.
+    type: ro
+  name: MAX_VCC_PSINTLP
+  offset: '0x00000084'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VCC PS FPD (supply2).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCC_PSINTFP
+  offset: '0x00000088'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VCC PS Aux (supply3).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCC_PSAUX
+  offset: '0x0000008C'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min temperature measured for LPD.
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: TEMPERATURE
+    shortdesc: Minimum value recorded in the temperature measurement register since
+      the last reset.
+    type: ro
+  name: MIN_TEMP_LPD
+  offset: '0x00000090'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VCC PS LPD (supply1).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCC_PSINTLP
+  offset: '0x00000094'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VCC PS FPD (supply2).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCC_PSINTFP
+  offset: '0x00000098'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VCC PS Aux (supply3).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCC_PSAUX
+  offset: '0x0000009C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VCCO PS DDR (supply4).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since last
+      reset.
+    type: ro
+  name: MAX_VCCO_PSDDR
+  offset: '0x000000A0'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VCCO PSIO 3 (supply5).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since last
+      reset.
+    type: ro
+  name: MAX_VCCO_PSIO3
+  offset: '0x000000A4'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VCCO PSIO 0 (supply6).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since last
+      reset.
+    type: ro
+  name: MAX_VCCO_PSIO0
+  offset: '0x000000A8'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VCCO PS DDR (supply4).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCCO_PSDDR
+  offset: '0x000000B0'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VCCO PSIO 3 (supply5).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCCO_PSIO3
+  offset: '0x000000B4'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VCCO PSIO 0 (supply6).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCCO_PSIO0
+  offset: '0x000000B8'
+  type: ro
+  width: 16
+- default: '0x00000A00'
+  description: Alarm Status, Flag 0.
+  field:
+  - bits: '9'
+    name: INTERNAL_REF
+    type: ro
+  - bits: '8'
+    longdesc: '0: enabled. 1: disabled. State of VCC_PSADC voltage node.'
+    name: DISABLED
+    shortdesc: PS SysMon Power indicator.
+    type: ro
+  - bits: '7:4'
+    longdesc: Voltage out of range. Bit [4] Alarm 3, VCC_PSAUX. Bit [5] Alarm 4, VCCO_PSDDR.
+      Bit [6] Alarm 5, VCCO_PSIO3. Bit [7] Alarm 6,VCCO_PSIO0.
+    name: ALM_6_3
+    shortdesc: Alarm Status read-bit.
+    type: ro
+  - bits: '3'
+    name: OT
+    type: ro
+  - bits: '2:0'
+    longdesc: Bit [0] Alarm 0, Temp_LPD. Bit [1] Alarm 1, VCC_PSINTLP. Bit [2] Alarm
+      2, VCC_PSINTFP.
+    name: ALM_2_0
+    shortdesc: Alarm Status read-bit.
+    type: ro
+  name: STATUS_FLAG
+  offset: '0x000000FC'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Configuration, Reg 0.
+  field:
+  - bits: '13:12'
+    longdesc: '0: no averaging. 1: 16 samples. 2: 64 samples. 3: 256 samples. Applies
+      to sequencer looping.'
+    name: AVERAGING
+    shortdesc: Averaging mode enable and set.
+    type: rw
+  - bits: '9'
+    longdesc: Single sampling is triggered by the AMS.PS_SYSMON_CONTROL_STATUS register.
+    name: EC
+    shortdesc: Reserved.
+    type: rw
+  - bits: '8'
+    longdesc: '0: normal. 1: long acquisition time. Applies to single sampling mode
+      of single channel.'
+    name: ACQ
+    shortdesc: Long Acquisition Settling Time enable.
+    type: rw
+  - bits: '7:6'
+    name: RESERVED
+    type: rw
+  - bits: '5:0'
+    longdesc: Select the channel to measure. Bits[5:0] selects an analog channel listed
+      in the PS SysMon and AMS Sensor Channel tables of UG1085.
+    name: MUX_CHANNEL
+    shortdesc: Single-measurement Mode.
+    type: rw
+  name: CONFIG_REG0
+  offset: '0x00000100'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Configuration, Reg 1.
+  field:
+  - bits: '15:12'
+    longdesc: '0001: Selected channels; Single pass. 0010: Selected channgls; Loop
+      sequence (will include calibration and temperature). 0011: Single channel (sequencer
+      off), select channel in CONFIG_REG0 [mux_channel]. 11xx: Default mode. Others:
+      reserved'
+    name: SEQUENCE_MODE
+    shortdesc: 'Select Sequence Mode: 0000: Default channels; Loop sequence.'
+    type: rw
+  - bits: '11:8'
+    longdesc: Bit [8] Alarm 3, VCC_PSAUX. Bit [9] Alarm 4, VCCO_PSDDR. Bit [10] Alarm
+      5, VCCO_PSIO3. Bit [11] Alarm 6,VCCO_PSIO0.
+    name: ALARM_DISABLE6TO3
+    shortdesc: Alarm Disables.
+    type: rw
+  - bits: '7:4'
+    name: RESERVED
+    type: rw
+  - bits: '3:1'
+    longdesc: Bit [1] Alarm 0, Temp_LPD. Bit [2] Alarm 1, VCC_PSINTLP. Bit [3] Alarm
+      2, VCC_PSINTFP.
+    name: ALARM_DISABLE2TO0
+    shortdesc: Alarm Disables.
+    type: rw
+  - bits: '0'
+    name: OVER_TEMP_DISABLE
+    type: rw
+  name: CONFIG_REG1
+  offset: '0x00000104'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Configuration, Reg 2.
+  field:
+  - bits: '15:8'
+    longdesc: 'The reference clock is divided-down to generate the ADC clock. 00h:
+      divide by 8. 01h, 02h: divide by 2. 03h through FFh: divide by 3 through 255.
+      Note: for a value of 00h, this encoding is different than the PL SysMon unit.'
+    name: CLOCK_DIVIDER
+    shortdesc: ADC Clock Divide Ratio.
+    type: rw
+  - bits: '7:4'
+    longdesc: '0000: normal operation. 0001: partial sleep mode. SysOsc is operational,
+      but all other analog circuits are in power-down. The SysOsc is left running
+      for other units to utilize, as needed. 0010: reserved 0011: sleep mode. All
+      analog circuits are in power-down.'
+    name: POWER_DOWN
+    shortdesc: Enable Power-down Sleep Modes.
+    type: rw
+  name: CONFIG_REG2
+  offset: '0x00000108'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: 'Config Reg 3: Alarm disables.'
+  field:
+  - bits: '5:0'
+    longdesc: Bit [0] Alarm 8, VCCO_PSIO1. Bit [1] Alarm 9, VCCO_PSIO2. Bit [2] Alarm
+      10, PS_MGTRAVCC. Bit [3] Alarm 11, PS_MGTRAVTT. Bit [4] Alarm 12, VCC_PSADC.
+      Bit [5] Alarm 13, Temp_FPD (near APU).
+    name: ALARM_DISABLE13TO8
+    shortdesc: Alarm Disables.
+    type: rw
+  name: CONFIG_REG3
+  offset: '0x0000010C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Configuration, Reg 4.
+  field:
+  - bits: '11:10'
+    longdesc: 'End of sequence is from: 00: regular rate. 01: low-rate (slow). 10:
+      regular and low-rate (slow). 11: regular rate (default).'
+    name: LOW_RATE_EOS
+    shortdesc: Control generation of EOS relative to regular and low-rate (slow) sequencer.
+    type: rw
+  - bits: '9:8'
+    longdesc: 'Channels can be either a normal sample rate (SEQ_CHANNEL{0:2}) or a
+      less frequent sample rate (SEQ_LOW_RATE_CHANNEL{0:2}). 00: every sequence. 01:
+      every 4th Sequence. 10: every 16th Sequence 11: every 64th Sequence. When including
+      a channel in the sequence, the user must ensure that each selected channel is
+      either in the normal or low-rate sequence register, but not both. Channels not
+      in the sequence are not selected in either sequence channel type.'
+    name: SEQUENCE_RATE
+    shortdesc: When using the low-rate sample mode, this field determines the divided
+      down conversion rate from normal.
+    type: rw
+  name: CONFIG_REG4
+  offset: '0x00000110'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Channel Inclusion, Group 2.
+  field:
+  - bits: '15:6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: TEMPERATURE_REMOTE
+    type: rw
+  - bits: '4'
+    name: VCCAMS
+    type: rw
+  - bits: '3'
+    name: SUPPLY10
+    type: rw
+  - bits: '2'
+    name: SUPPLY9
+    type: rw
+  - bits: '1'
+    name: SUPPLY8
+    type: rw
+  - bits: '0'
+    name: SUPPLY7
+    type: rw
+  name: SEQ_CHANNEL2
+  offset: '0x00000118'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Average Enable, Group 2.
+  field:
+  - bits: '15:0'
+    name: AVERAGE2
+    type: rw
+  name: SEQ_AVERAGE2
+  offset: '0x0000011C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Channel Inclusion, Group 0.
+  field:
+  - bits: '14'
+    name: SUPPLY3
+    type: rw
+  - bits: '10'
+    name: SUPPLY2
+    type: rw
+  - bits: '9'
+    name: SUPPLY1
+    type: rw
+  - bits: '8'
+    name: TEMPERATURE
+    type: rw
+  - bits: '7'
+    name: SUPPLY6
+    type: rw
+  - bits: '6'
+    name: SUPPLY5
+    type: rw
+  - bits: '5'
+    name: SUPPLY4
+    type: rw
+  - bits: '0'
+    name: CALIBRATION
+    type: rw
+  name: SEQ_CHANNEL0
+  offset: '0x00000120'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Average Enable, Group 0.
+  field:
+  - bits: '15:0'
+    name: AVERAGE0
+    type: rw
+  name: SEQ_AVERAGE0
+  offset: '0x00000128'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Temperature Threshold for LPD.
+  field:
+  - bits: '15:0'
+    name: TEMPERATURE_ALARM
+    type: rw
+  name: ALARM_TEMP_LPD_UPPER
+  offset: '0x00000140'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Voltage Threshold for LPD (supply1).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSINTLP_UPPER
+  offset: '0x00000144'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Voltage Threshold for FPD (supply2).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSINTFP_UPPER
+  offset: '0x00000148'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Over-Temperature (OT) Threshold for LPD and FPD.
+  field:
+  - bits: '15:0'
+    name: TEMPERATURE_ALARM
+    type: rw
+  name: ALARM_OT_UPPER
+  offset: '0x0000014C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Temperature Threshold and Config for LPD.
+  field:
+  - bits: '15:1'
+    longdesc: Programmed register value is compared to the measurement register. Applies
+      only when [threshold_mode] = 0; when hysteresis is enabled, the LPD temperature
+      alarm is cleared when the temperature goes below the [temperature_alarm] threshold.
+    name: TEMPERATURE_ALARM
+    shortdesc: Alarm temperature threshold.
+    type: rw
+  - bits: '0'
+    longdesc: '0: enable hysteresis. 1: disable hysteresis.'
+    name: THRESHOLD_MODE
+    shortdesc: Lower Threshold Hysteresis Disable.
+    type: rw
+  name: ALARM_TEMP_LPD_LOWER
+  offset: '0x00000150'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Voltage Threshold for LPD (supply1).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_LOWER_VCC_PSINTLP
+  offset: '0x00000154'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Voltage Threshold for FPD (supply2).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSINTFP_LOWER
+  offset: '0x00000158'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Over-Temperature (OT) Threshold and Control for LPD and
+    FPD.
+  field:
+  - bits: '15:1'
+    longdesc: Programmed register value is compared to the measurement register. Applies
+      only when [threshold_mode] = 0; when hysteresis is enabled, the LPD and FPD
+      over temperature (OT) alarm is cleared when the temperature goes below the [temperature_alarm]
+      threshold.
+    name: TEMPERATURE_ALARM
+    shortdesc: Alarm temperature threshold.
+    type: rw
+  - bits: '0'
+    longdesc: '0: enable hysteresis. 1: disable hysteresis.'
+    name: THRESHOLD_MODE
+    shortdesc: Lower Threshold, Hysteresis Disable.
+    type: rw
+  name: ALARM_OT_LOWER
+  offset: '0x0000015C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold Setting for VCC_PSAUX (supply3).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSAUX_UPPER
+  offset: '0x00000160'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold for VCCO_PSDDR (supply4).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCO_PSDDR_UPPER
+  offset: '0x00000164'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold for VCCO_PSIO3 (supply5).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCO_PSIO3_UPPER
+  offset: '0x00000168'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold for VCCO_PSIO0 (supply6).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCO_PSIO0_UPPER
+  offset: '0x0000016C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold for VCC_PSAUX (supply3).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSAUX_LOWER
+  offset: '0x00000170'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold for VCCO_PSDDR (supply4).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCO_PSDDR_LOWER
+  offset: '0x00000174'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold for VCCO_PSIO3 (supply5).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCO_PSIO3_LOWER
+  offset: '0x00000178'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold for VCCO_PSIO0 (supply6).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCO_PSIO0_LOWER
+  offset: '0x0000017C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Alarm Upper Threshold for VCCO_PSIO1 (supply7).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCO_PSIO1_UPPER
+  offset: '0x00000180'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold for VCCO_PSIO2 (supply8).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCO_PSIO2_UPPER
+  offset: '0x00000184'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold for PS_MGTRAVCC (supply9).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_MGTRAVCC_UPPER
+  offset: '0x00000188'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold for PS_MGTRAVTT (supply10).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_MGTRAVTT_UPPER
+  offset: '0x0000018C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Alarm Upper Threshold for VCC_PSADC (vccams).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSADC_UPPER
+  offset: '0x00000190'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Alarm Upper Temperature Threshold for FPD (t-remote).
+  field:
+  - bits: '15:0'
+    name: TEMPERATURE_ALARM
+    type: rw
+  name: ALARM_TEMP_FPD_UPPER
+  offset: '0x00000194'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold for VCCO PSIO1 (supply7).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCO_PSIO1_LOWER
+  offset: '0x000001A0'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold for VCCO_PSIO2 (supply8).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCO_PSIO2_LOWER
+  offset: '0x000001A4'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold for PS_MGTRAVCC (supply9).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_MGTRAVCC_LOWER
+  offset: '0x000001A8'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold for PS_MGTRAVTT (supply10).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_MGTRAVTT_LOWER
+  offset: '0x000001AC'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold for VCC_PSADC (vccams).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSADC_LOWER
+  offset: '0x000001B0'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Temperature Threshold and Control for FPD (t-remote).
+  field:
+  - bits: '15:1'
+    longdesc: Programmed register value is compared to the measurement register. Applies
+      only when [threshold_mode] = 0; when hysteresis is enabled, the FPD temperature
+      alarm is cleared when the temperature goes below the [temperature_alarm] threshold.
+    name: TEMPERATURE_ALARM
+    shortdesc: Alarm temperature threshold.
+    type: rw
+  - bits: '0'
+    longdesc: '0: enable hysteresis. 1: disable hysteresis.'
+    name: THRESHOLD_MODE
+    shortdesc: Lower Threshold, Hysteresis Disable.
+    type: rw
+  name: ALARM_TEMP_FPD_LOWER
+  offset: '0x000001B4'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Low-Rate Sequence Channel, Group 0.
+  field:
+  - bits: '15:0'
+    longdesc: Refer to CONFIG_REG4 [sequence_rate] for more information. Refer to
+      SEQ_CHANNEL0 for bit assignments.
+    name: CHANNEL0
+    shortdesc: Set which full-featured group 0 channels are to have a low-rate of
+      sampling.
+    type: rw
+  name: SEQ_LOW_RATE_CHANNEL0
+  offset: '0x000001E8'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Low-Rate Sequence Channel, Group 2.
+  field:
+  - bits: '15:0'
+    longdesc: Refer to CONFIG_REG4 [sequence_rate] for more information. Refer to
+      SEQ_CHANNEL2 for bit assignments.
+    name: CHANNEL2
+    shortdesc: Set which full-featured group 2 channels are to have a low-rate of
+      sampling.
+    type: rw
+  name: SEQ_LOW_RATE_CHANNEL2
+  offset: '0x000001F0'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: VCCO_PSIO1 voltage measurement.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCO_PSIO1
+  offset: '0x00000200'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: VCCO_PSIO2 voltage measurement.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCO_PSIO2
+  offset: '0x00000204'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: VCC_PS_GTR voltage measurement (VPS_MGTRAVCC).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSGTR
+  offset: '0x00000208'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: VTT_PS_GTR voltage measurement (VPS_MGTRAVTT).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VTT_PSGTR
+  offset: '0x0000020C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: VCC_PSADC voltage measurement.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSADC
+  offset: '0x00000210'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: FPD Temperature Measurment (REMOTE).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: TEMPERATURE
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: TEMP_FPD
+  offset: '0x00000214'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VCCO_PSIO1.
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCCO_PSIO1
+  offset: '0x00000280'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VCCO_PSIO2.
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCCO_PSIO2
+  offset: '0x00000284'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VCC_PS_GTR (VPS_MGTRAVCC).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCC_PSGTR
+  offset: '0x00000288'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VTT_PS_GTR (VPS_MGTRAVTT).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VTT_PSGTR
+  offset: '0x0000028C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VCC_PSADC.
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_PSADC
+  offset: '0x00000290'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max temperature measured for FPD (remote).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: TEMPERATURE
+    shortdesc: Maximum value recorded in the temperature measurement register since
+      the last reset.
+    type: ro
+  name: MAX_TEMP_FPD
+  offset: '0x00000294'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VCCO_PSIO1.
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCCO_PSIO1
+  offset: '0x000002A0'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VCCO_PSIO2.
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCCO_PSIO2
+  offset: '0x000002A4'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VCC_PS_GTR (VPS_MGTRAVCC).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCC_PSGTR
+  offset: '0x000002A8'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VTT_PS_GTR (VPS_MGTRAVTT).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VTT_PSGTR
+  offset: '0x000002AC'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VCC_PSADC.
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCC_PSADC
+  offset: '0x000002B0'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min temperature measured for FPD (remote).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: TEMPERATURE
+    shortdesc: Minimum value recorded in the temperature measurement register since
+      the last reset.
+    type: ro
+  name: MIN_TEMP_FPD
+  offset: '0x000002B4'
+  type: ro
+  width: 16

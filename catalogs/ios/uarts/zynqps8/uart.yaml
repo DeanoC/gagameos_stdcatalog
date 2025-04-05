@@ -1,0 +1,678 @@
+description: UART 0 Controller
+register:
+- default: '0x00000128'
+  description: UART Control Register
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    longdesc: It can be set regardless of the value of STTBRK.
+    name: STPBRK
+    shortdesc: 'Stop transmitter break: 0: no affect 1: stop transmission of the break
+      after a minimum of one character length and transmit a high level during 12
+      bit periods.'
+    type: rw
+  - bits: '7'
+    longdesc: It can only be set if STPBRK (Stop transmitter break) is not high.
+    name: STTBRK
+    shortdesc: 'Start transmitter break: 0: no affect 1: start to transmit a break
+      after the characters currently present in the FIFO and the transmit shift register
+      have been transmitted.'
+    type: rw
+  - bits: '6'
+    longdesc: This bit is self clearing once the restart has completed.
+    name: RSTTO
+    shortdesc: 'Restart receiver timeout counter: 1: receiver timeout counter is restarted.'
+    type: rw
+  - bits: '5'
+    name: TXDIS
+    type: rw
+  - bits: '4'
+    name: TXEN
+    type: rw
+  - bits: '3'
+    name: RXDIS
+    type: rw
+  - bits: '2'
+    name: RXEN
+    type: rw
+  - bits: '1'
+    name: TXRES
+    type: rw
+  - bits: '0'
+    longdesc: This bit is self clearing once the reset has completed.
+    name: RXRES
+    shortdesc: 'Software reset for Rx data path: 0: no affect 1: receiver logic is
+      reset and all pending receiver data is discarded.'
+    type: rw
+  name: CONTROL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: UART Mode Register
+  field:
+  - bits: '31:14'
+    name: RESERVED
+    type: ro
+  - bits: '13:12'
+    longdesc: 'If byte_sel is high then one byte is written or read, if byte_sel is
+      low then two bytes are written or read (default legacy mode) 01: One byte is
+      always written or read from FIFOs, regardless of whether byte_sel is active
+      10: Two bytes are always written or read from FIFOs, regardless of whether byte_sel
+      is active 11: Four bytes are always written or read from FIFOs regardless of
+      byte_sel (assuming configured width of APB supports four bytes)'
+    name: WSIZE
+    shortdesc: 'Configure the size of FIFO access from the APB 00: One or two bytes
+      written to TX FIFO or read from RX FIFO.'
+    type: rw
+  - bits: '9:8'
+    longdesc: '00: normal 01: automatic echo 10: local loopback 11: remote loopback'
+    name: CHMODE
+    shortdesc: 'Channel mode: Defines the mode of operation of the UART.'
+    type: rw
+  - bits: '7:6'
+    longdesc: '00: 1 stop bit 01: 1.5 stop bits 10: 2 stop bits 11: reserved'
+    name: NBSTOP
+    shortdesc: 'Number of stop bits: Defines the number of stop bits to detect on
+      receive and to generate on transmit.'
+    type: rw
+  - bits: '5:3'
+    longdesc: '000: even parity 001: odd parity 010: forced to 0 parity (space) 011:
+      forced to 1 parity (mark) 1xx: no parity'
+    name: PAR
+    shortdesc: 'Parity type select: Defines the expected parity to check on receive
+      and the parity to generate on transmit.'
+    type: rw
+  - bits: '2:1'
+    longdesc: '11: 6 bits 10: 7 bits 0x: 8 bits'
+    name: CHRL
+    shortdesc: 'Character length select: Defines the number of bits in each character.'
+    type: rw
+  - bits: '0'
+    longdesc: '0: clock source is uart_ref_clk 1: clock source is uart_ref_clk/8'
+    name: CLKS
+    shortdesc: 'Clock source select: This field defines whether a pre-scalar of 8
+      is applied to the baud rate generator input clock.'
+    type: rw
+  name: MODE
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable Register
+  field:
+  - bits: '31:14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: RBRK
+    type: wo
+  - bits: '12'
+    name: TOVR
+    type: wo
+  - bits: '11'
+    name: TNFUL
+    type: wo
+  - bits: '10'
+    name: TTRIG
+    type: wo
+  - bits: '9'
+    name: DMSI
+    type: wo
+  - bits: '8'
+    name: TIMEOUT
+    type: wo
+  - bits: '7'
+    name: PARE
+    type: wo
+  - bits: '6'
+    name: FRAME
+    type: wo
+  - bits: '5'
+    name: ROVR
+    type: wo
+  - bits: '4'
+    name: TFUL
+    type: wo
+  - bits: '3'
+    name: TEMPTY
+    type: wo
+  - bits: '2'
+    name: RFUL
+    type: wo
+  - bits: '1'
+    name: REMPTY
+    type: wo
+  - bits: '0'
+    name: RTRIG
+    type: wo
+  name: INTRPT_EN
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable Register
+  field:
+  - bits: '31:14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: RBRK
+    type: wo
+  - bits: '12'
+    name: TOVR
+    type: wo
+  - bits: '11'
+    name: TNFUL
+    type: wo
+  - bits: '10'
+    name: TTRIG
+    type: wo
+  - bits: '9'
+    name: DMSI
+    type: wo
+  - bits: '8'
+    name: TIMEOUT
+    type: wo
+  - bits: '7'
+    name: PARE
+    type: wo
+  - bits: '6'
+    name: FRAME
+    type: wo
+  - bits: '5'
+    name: ROVR
+    type: wo
+  - bits: '4'
+    name: TFUL
+    type: wo
+  - bits: '3'
+    name: TEMPTY
+    type: wo
+  - bits: '2'
+    name: RFUL
+    type: wo
+  - bits: '1'
+    name: REMPTY
+    type: wo
+  - bits: '0'
+    name: RTRIG
+    type: wo
+  name: INTRPT_DIS
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Mask Register
+  field:
+  - bits: '31:14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: RBRK
+    type: wo
+  - bits: '12'
+    name: TOVR
+    type: ro
+  - bits: '11'
+    name: TNFUL
+    type: ro
+  - bits: '10'
+    name: TTRIG
+    type: ro
+  - bits: '9'
+    name: DMSI
+    type: ro
+  - bits: '8'
+    name: TIMEOUT
+    type: ro
+  - bits: '7'
+    name: PARE
+    type: ro
+  - bits: '6'
+    name: FRAME
+    type: ro
+  - bits: '5'
+    name: ROVR
+    type: ro
+  - bits: '4'
+    name: TFUL
+    type: ro
+  - bits: '3'
+    name: TEMPTY
+    type: ro
+  - bits: '2'
+    name: RFUL
+    type: ro
+  - bits: '1'
+    name: REMPTY
+    type: ro
+  - bits: '0'
+    name: RTRIG
+    type: ro
+  name: INTRPT_MASK
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000200'
+  description: Channel Interrupt Status Register
+  field:
+  - bits: '31:14'
+    name: RESERVED
+    type: wtc
+  - bits: '13'
+    longdesc: '0: no interrupt occurred 1: interrupt occurred'
+    name: RBRK
+    shortdesc: 'Receiver break detect interrupt status: This event is triggered whenever
+      the receiver detects ua_rxd low for more than a full frame (start + data + parity
+      + stop).'
+    type: wtc
+  - bits: '12'
+    longdesc: 'This will be set as a result of any write when the TFUL flag in Channel_sts_reg0
+      is already set, or a double byte write when the TNFUL flag in Channel_sts_reg0
+      is already set. 0: no interrupt occurred 1: interrupt occurred'
+    name: TOVR
+    shortdesc: 'Transmitter FIFO Overflow interrupt mask status: This event is triggered
+      whenever a new word is pushed into the transmit FIFO when there is not enough
+      room for all of the data.'
+    type: wtc
+  - bits: '11'
+    longdesc: 'If this further write were currently attempted it would cause an overflow.
+      Note that when WSIZE is 00, this assumes that a two byte write would be attempted
+      and hence a single byte write is still possible without overflow by driving
+      byte_sel low for the write. 0: no interrupt occurred 1: interrupt occurred'
+    name: TNFUL
+    shortdesc: 'Transmitter FIFO Nearly Full interrupt mask status: This event is
+      triggered whenever a new word is pushed into the transmit FIFO causing the fill
+      level to be such that there is not enough space for a further write of the number
+      of bytes currently specified in the WSIZE bits in the Mode register.'
+    type: wtc
+  - bits: '10'
+    longdesc: 'This event is triggered whenever a new word is pushed into the transmit
+      that causes the event to be triggered when the transmit FIFO level falls below
+      the value defined by TTRIG 0: no interrupt occurred 1: interrupt occurred'
+    name: TTRIG
+    shortdesc: Transmitter FIFO Trigger interrupt mask status.
+    type: wtc
+  - bits: '9'
+    longdesc: '0: no interrupt occurred 1: interrupt occurred'
+    name: DMSI
+    shortdesc: 'Delta Modem Status Indicator interrupt mask status: This event is
+      triggered whenever the DCTS, DDSR, TERI, or DDCD in the modem status register
+      are being set.'
+    type: wtc
+  - bits: '8'
+    longdesc: '0: no interrupt occurred 1: interrupt occurred'
+    name: TIMEOUT
+    shortdesc: 'Receiver Timeout Error interrupt mask status: This event is triggered
+      whenever the receiver timeout counter has expired due to a long idle condition.'
+    type: wtc
+  - bits: '7'
+    longdesc: '0: no interrupt occurred 1: interrupt occurred'
+    name: PARE
+    shortdesc: 'Receiver Parity Error interrupt mask status: This event is triggered
+      whenever the received parity bit does not match the expected value.'
+    type: wtc
+  - bits: '6'
+    longdesc: '0: no interrupt occurred 1: interrupt occurred'
+    name: FRAME
+    shortdesc: 'Receiver Framing Error interrupt mask status: This event is triggered
+      whenever the receiver fails to detect a valid stop bit.'
+    type: wtc
+  - bits: '5'
+    longdesc: 'This may be due to the FIFO being full, or due to excessive clock boundary
+      delays. 0: no interrupt occurred 1: interrupt occurred'
+    name: ROVR
+    shortdesc: 'Receiver Overflow Error interrupt mask status: This event is triggered
+      whenever the contents of the receiver shift register have not yet been transferred
+      to the receiver FIFO and a new start bit is detected.'
+    type: wtc
+  - bits: '4'
+    longdesc: '0: no interrupt occurred 1: interrupt occurred'
+    name: TFUL
+    shortdesc: 'Transmitter FIFO Full interrupt mask status: This event is triggered
+      whenever a new word is inserted into the transmit FIFO causing it to go from
+      a non-full condition to a full condition.'
+    type: wtc
+  - bits: '3'
+    longdesc: '0: no interrupt occurred 1: interrupt occurred'
+    name: TEMPTY
+    shortdesc: 'Transmitter FIFO Empty interrupt mask status: This event is triggered
+      whenever the final word is removed from the transmit FIFO.'
+    type: wtc
+  - bits: '2'
+    longdesc: '0: no interrupt occurred 1: interrupt occurred'
+    name: RFUL
+    shortdesc: 'Receiver FIFO Full interrupt mask status: This event is triggered
+      whenever a new word is inserted into the receive FIFO causing it to go from
+      a non-full condition to a full condition.'
+    type: wtc
+  - bits: '1'
+    longdesc: '0: no interrupt occurred 1: interrupt occurred'
+    name: REMPTY
+    shortdesc: 'Receiver FIFO Empty interrupt mask status: This event is triggered
+      upon exit of the final word from the receive FIFO.'
+    type: wtc
+  - bits: '0'
+    longdesc: '0: no interrupt occurred 1: interrupt occurred'
+    name: RTRIG
+    shortdesc: 'Receiver FIFO Trigger interrupt mask status: This event is triggered
+      whenever a new word is inserted into the receive FIFO.'
+    type: wtc
+  name: CHNL_INT_STS
+  offset: '0x00000014'
+  type: wtc
+  width: 32
+- default: '0x0000028B'
+  description: Baud Rate Generator Register.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    name: CD
+    type: rw
+  name: BAUD_RATE_GEN
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Receiver Timeout Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    name: RTO
+    type: rw
+  name: RCVR_TIMEOUT
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000020'
+  description: Receiver FIFO Trigger Level Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:0'
+    name: RTRIG
+    type: rw
+  name: RCVR_FIFO_TRIGGER_LEVEL
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Modem Control Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    longdesc: '1: enable Transmission will only occur when the EMIOUARTxCTSN input
+      is asserted low, and the EMIOUARTxRTSN output is driven using a compare of the
+      RX FIFO fill level to the programmed FDEL value.'
+    name: FCM
+    shortdesc: 'Automatic flow control mode: 0: disable Transmission is continuous
+      regardless of the value of the EMIOUARTxCTSN input, and the EMIOUARTxRTSN output
+      is driven completely under software control.'
+    type: rw
+  - bits: '4:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    longdesc: 'If FCM is low, the value of this bit is inverted when applied to the
+      EMIOUARTxRTSN output. 0: EMIOUARTxRTSN output forced to logic 1 1: EMIOUARTxRTSN
+      output forced to logic 0'
+    name: RTS
+    shortdesc: 'Request to send output control: This bit is ignored if automatic flow
+      control mode is enabled by FCM being high.'
+    type: rw
+  - bits: '0'
+    longdesc: '0: EMIOUARTxDTRN output forced to logic 1 1: EMIOUARTxDTRN output forced
+      to logic 0'
+    name: DTR
+    shortdesc: 'Data Terminal Ready: The value of this bit is inverted when applied
+      to the EMIOUARTxDTRN output.'
+    type: rw
+  name: MODEM_CTRL
+  offset: '0x00000024'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Modem Status Register
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: FCMS
+    type: rw
+  - bits: '7'
+    name: DCD
+    type: ro
+  - bits: '6'
+    name: RI
+    type: ro
+  - bits: '5'
+    name: DSR
+    type: ro
+  - bits: '4'
+    name: CTS
+    type: ro
+  - bits: '3'
+    longdesc: '0: No change has occurred 1: Change has occurred'
+    name: DDCD
+    shortdesc: 'Delta Data Carrier Detect status: Indicates a change in state of the
+      EMIOUARTxDCDN input since this bit was last cleared.'
+    type: wtc
+  - bits: '2'
+    longdesc: '0: No trailing edge has occurred 1: Trailing edge has occurred'
+    name: TERI
+    shortdesc: 'Trailing Edge Ring Indicator status: Indicates that the EMIOUARTxRIN
+      input has change from high to low state since this bit was last cleared.'
+    type: wtc
+  - bits: '1'
+    longdesc: '0: No change has occurred 1: Change has occurred'
+    name: DDSR
+    shortdesc: 'Delta Data Set Ready status: Indicates a change in state of the EMIOUARTxDSRN
+      input since this bit was last cleared.'
+    type: wtc
+  - bits: '0'
+    longdesc: '0: No change has occurred 1: Change has occurred'
+    name: DCTS
+    shortdesc: 'Delta Clear To Send status: Indicates a change in state of the EMIOUARTxCTSN
+      input since this bit was last cleared.'
+    type: wtc
+  name: MODEM_STS
+  offset: '0x00000028'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Channel Status Register
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: ro
+  - bits: '14'
+    longdesc: 'If a write were currently attempted it would cause an overflow. Note
+      that when WSIZE is 00, this assumes that a two byte write would be attempted
+      and hence a single byte write is still possible without overflow by driving
+      byte_sel low for the write. 0: More than one byte is unused in the Tx FIFO 1:
+      Only one byte is free in the Tx FIFO'
+    name: TNFUL
+    shortdesc: 'Transmitter FIFO Nearly Full continuous status: This indicates that
+      there is not enough space for the number of bytes currently specified in the
+      WSIZE bits in the Mode register.'
+    type: ro
+  - bits: '13'
+    name: TTRIG
+    type: ro
+  - bits: '12'
+    name: FDELT
+    type: ro
+  - bits: '11'
+    name: TACTIVE
+    type: ro
+  - bits: '10'
+    name: RACTIVE
+    type: ro
+  - bits: '9:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: TFUL
+    type: ro
+  - bits: '3'
+    name: TEMPTY
+    type: ro
+  - bits: '2'
+    name: RFUL
+    type: ro
+  - bits: '1'
+    name: REMPTY
+    type: ro
+  - bits: '0'
+    name: RTRIG
+    type: ro
+  name: CHANNEL_STS
+  offset: '0x0000002C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Transmit and Receive FIFO
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    name: FIFO
+    type: rw
+  name: TX_RX_FIFO
+  offset: '0x00000030'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: Baud Rate Divider Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    name: BDIV
+    type: rw
+  name: BAUD_RATE_DIVIDER
+  offset: '0x00000034'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Flow Control Delay Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:0'
+    longdesc: '4 to 65535: EMIOUARTxRTSN is driven high when Rx FIFO fill level equals
+      FDEL'
+    name: FDEL
+    shortdesc: 'RxFIFO trigger level for Ready To Send (RTS) output signal (EMIOUARTxRTSN)
+      de-assertion: 0 - 3: Flow delay triggering is disabled, since minimum 4 word
+      hysteresis cannot be satisfied.'
+    type: rw
+  name: FLOW_DELAY
+  offset: '0x00000038'
+  type: mixed
+  width: 32
+- default: '0x00000020'
+  description: Transmitter FIFO Trigger Level Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:0'
+    name: TTRIG
+    type: rw
+  name: TX_FIFO_TRIGGER_LEVEL
+  offset: '0x00000044'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: RX FIFO Byte Status Register
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: ro
+  - bits: '11'
+    longdesc: '0: No break was detected when byte 3 was received 1: A break was detected
+      when byte 3 was received'
+    name: BYTE3_BREAK
+    shortdesc: The byte in location3 of the RX FIFO has a break condition associated
+      with it.
+    type: rw
+  - bits: '10'
+    longdesc: '0: No frame error was detected when byte 3 was received 1: A frame
+      error was detected when byte 3 was received'
+    name: BYTE3_FRM_ERR
+    shortdesc: The byte in location 3 of the RX FIFO has a frame error associated
+      with it.
+    type: rw
+  - bits: '9'
+    name: BYTE3_PAR_ERR
+    type: rw
+  - bits: '8'
+    longdesc: '0: No break was detected when byte 2 was received 1: A break was detected
+      when byte 2 was received'
+    name: BYTE2_BREAK
+    shortdesc: The byte in location 2 of the RX FIFO has a break condition associated
+      with it.
+    type: rw
+  - bits: '7'
+    longdesc: '0: No frame error was detected when byte 0 was received 1: A frame
+      error was detected when byte 2 was received'
+    name: BYTE2_FRM_ERR
+    shortdesc: The byte in location 2 of the RX FIFO has a frame error associated
+      with it.
+    type: rw
+  - bits: '6'
+    name: BYTE2_PAR_ERR
+    type: rw
+  - bits: '5'
+    longdesc: '0: No break was detected when byte 1 was received 1: A break was detected
+      when byte 1 was received'
+    name: BYTE1_BREAK
+    shortdesc: The byte in location 1 of the RX FIFO has a break condition associated
+      with it.
+    type: rw
+  - bits: '4'
+    longdesc: '0: No frame error was detected when byte 1 was received 1: A frame
+      error was detected when byte 1 was received'
+    name: BYTE1_FRM_ERR
+    shortdesc: The byte in location 1 of the RX FIFO has a frame error associated
+      with it.
+    type: rw
+  - bits: '3'
+    name: BYTE1_PAR_ERR
+    type: rw
+  - bits: '2'
+    longdesc: '0: No break was detected when byte 0 was received 1: A break was detected
+      when byte 0 was received'
+    name: BYTE0_BREAK
+    shortdesc: The byte in location 0 of the RX FIFO has a break condition associated
+      with it.
+    type: rw
+  - bits: '1'
+    longdesc: '0: No frame error was detected when byte 0 was received 1: A frame
+      error was detected when byte 0 was received'
+    name: BYTE0_FRM_ERR
+    shortdesc: The byte in location 0 of the RX FIFO has a frame error associated
+      with it.
+    type: rw
+  - bits: '0'
+    name: BYTE0_PAR_ERR
+    type: rw
+  name: RX_FIFO_BYTE_STATUS
+  offset: '0x00000048'
+  type: mixed
+  width: 32

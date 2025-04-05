@@ -1,0 +1,56 @@
+definition:
+- arch: microblaze
+  buses:
+  - base_address: '0xFD00_0000'
+    data_width: 32
+    name: pmu_pmuswitch
+    supplier: true
+  core_count: 1
+  gcc_flags: -O1 -mlittle-endian -mxl-barrel-shift -mxl-pattern-compare -mcpu=v9.2
+    -mxl-soft-mul -Wl,--build-id -Wl,-dT=${CMAKE_CURRENT_LIST_DIR}/empty-file.ld
+  max_atomic_width: 32
+  max_bitop_type_width: 32
+  registers: []
+  triple: microblaze-none-elf
+  type: cpu.pmu.zynqps8
+  width: 32
+- buses:
+  - data_width: 32
+    name: pmu_pmuswitch
+    supplier: false
+  - data_width: 32
+    name: iopinbound_pmuswitch
+    supplier: false
+  - data_width: 32
+    name: pmu_pmuoutbound
+    supplier: true
+  - address_width: 18
+    data_width: 32
+    name: pmuram
+    supplier: true
+  registers:
+  - base_address: '0x02D4_0000'
+    cpus: PMU
+    name: PMU_IOMODULE
+    resource: registers/pmu_iomodule.toml
+  - base_address: '0x02D5_0000'
+    cpus: PMU
+    name: PMU_LMB_BRAM
+    resource: registers/pmu_lmb_bram.toml
+  - base_address: '0x02D6_0000'
+    cpus: PMU
+    name: PMU_LOCAL
+    resource: registers/pmu_local.toml
+  - base_address: '0x02D8_0000'
+    name: PMU_GLOBAL
+    resource: registers/pmu_global.toml
+  type: switch.internal.pmuswitch
+- buses:
+  - address_width: 18
+    data_width: 32
+    name: pmuram
+    supplier: false
+  ranges:
+  - address: '0x02DC_0000'
+    size: 128 KiB
+  type: ram.sram.pmuram

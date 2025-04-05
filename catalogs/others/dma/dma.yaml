@@ -1,0 +1,68 @@
+definition:
+- buses:
+  - data_width: 32
+    name: iopinbound_lpddma
+    supplier: false
+  - data_width: 128
+    name: lpddma_lpdoutbound
+    supplier: true
+  registers:
+  - base_address: '0x2a8_0000'
+    name: LPD_DMA_CH0
+    resource: zynqps8/zdma.toml
+  - base_address: '0x2a9_0000'
+    name: LPD_DMA_CH1
+    resource: zynqps8/zdma.toml
+  - base_address: '0x2aa_0000'
+    name: LPD_DMA_CH2
+    resource: zynqps8/zdma.toml
+  - base_address: '0x2ab_0000'
+    name: LPD_DMA_CH3
+    resource: zynqps8/zdma.toml
+  - base_address: '0x2ac_0000'
+    name: LPD_DMA_CH4
+    resource: zynqps8/zdma.toml
+  - base_address: '0x2ad_0000'
+    name: LPD_DMA_CH5
+    resource: zynqps8/zdma.toml
+  - base_address: '0x2ae_0000'
+    name: LPD_DMA_CH6
+    resource: zynqps8/zdma.toml
+  - base_address: '0x2af_0000'
+    name: LPD_DMA_CH7
+    resource: zynqps8/zdma.toml
+  type: other.dma.lpd.zynqps8
+- buses:
+  - data_width: 32
+    name: siou_fpddma
+    supplier: false
+  - data_width: 128
+    name: out
+    supplier: true
+  registers:
+  - base_address: '0x50_0000'
+    name: FPD_DMA_CH0
+    resource: zynqps8/zdma.toml
+  - base_address: '0x51_0000'
+    name: FPD_DMA_CH1
+    resource: zynqps8/zdma.toml
+  - base_address: '0x52_0000'
+    name: FPD_DMA_CH2
+    resource: zynqps8/zdma.toml
+  - base_address: '0x53_0000'
+    name: FPD_DMA_CH3
+    resource: zynqps8/zdma.toml
+  - base_address: '0x54_0000'
+    name: FPD_DMA_CH4
+    resource: zynqps8/zdma.toml
+  - base_address: '0x55_0000'
+    name: FPD_DMA_CH5
+    resource: zynqps8/zdma.toml
+  - base_address: '0x56_0000'
+    name: FPD_DMA_CH6
+    resource: zynqps8/zdma.toml
+  - base_address: '0x57_0000'
+    name: FPD_DMA_CH7
+    resource: zynqps8/zdma.toml
+  type: other.dma.fpd.zynqps8
+path: dma

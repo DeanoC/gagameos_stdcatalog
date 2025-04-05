@@ -1,0 +1,219 @@
+description: FPD System-level Control - Secure
+register:
+- default: '0x00000000'
+  description: General control register for the LPD SLCR SECURE.
+  field:
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exists. By enabling this slverr_enable,
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. Register write is ignored. Read
+      returns 0. 1: SLVERR is enabled. SLVERR is asserted. Register write is ignored.
+      Read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: CTRL
+  offset: '0x00000004'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Status and clear.
+  field:
+  - bits: '0'
+    longdesc: 'Reads: 0: No Event. 1: Event Occurred. Writes: 0: ignored. 1: clear
+      bit.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Status for an address decode error.
+    type: wtc
+  name: ISR
+  offset: '0x00000008'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Interrupt Mask
+  field:
+  - bits: '0'
+    longdesc: '0: Interrupt Enabled 1: Interrupt Disabled'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error.
+    type: ro
+  name: IMR
+  offset: '0x0000000C'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Enable
+  field:
+  - bits: '0'
+    longdesc: 'Writes: 0: ignored. 1: IMR register bit set to 0.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Enable for an address decode error.
+    type: wo
+  name: IER
+  offset: '0x00000010'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Disable
+  field:
+  - bits: '0'
+    longdesc: 'Writes: 0: ignored. 1: IMR register bit set to 1.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error.
+    type: wo
+  name: IDR
+  offset: '0x00000014'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Trigger
+  field:
+  - bits: '0'
+    longdesc: 'Writes: 0: ignored. 1: ISR register bit set to 1.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Trigger an address decode error interrupt.
+    type: wo
+  name: ITR
+  offset: '0x00000018'
+  type: wo
+  width: 1
+- default: '0x0000000E'
+  description: SATA TrustZone settings.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3'
+    name: TZ_AXIMDMA1
+    type: rw
+  - bits: '2'
+    name: TZ_AXIMDMA0
+    type: rw
+  - bits: '1'
+    name: TZ_AXIS
+    type: rw
+  - bits: '0'
+    name: TZ_EN
+    type: rw
+  name: SLCR_SATA
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x01FFFFFF'
+  description: PCIe TrustZone settings.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24'
+    name: TZ_DMA_3
+    type: rw
+  - bits: '23'
+    name: TZ_DMA_2
+    type: rw
+  - bits: '22'
+    name: TZ_DMA_1
+    type: rw
+  - bits: '21'
+    name: TZ_DMA_0
+    type: rw
+  - bits: '20'
+    name: TZ_AT_INGR_7
+    type: rw
+  - bits: '19'
+    name: TZ_AT_INGR_6
+    type: rw
+  - bits: '18'
+    name: TZ_AT_INGR_5
+    type: rw
+  - bits: '17'
+    name: TZ_AT_INGR_4
+    type: rw
+  - bits: '16'
+    name: TZ_AT_INGR_3
+    type: rw
+  - bits: '15'
+    name: TZ_AT_INGR_2
+    type: rw
+  - bits: '14'
+    name: TZ_AT_INGR_1
+    type: rw
+  - bits: '13'
+    name: TZ_AT_INGR_0
+    type: rw
+  - bits: '12'
+    name: TZ_AT_EGR_7
+    type: rw
+  - bits: '11'
+    name: TZ_AT_EGR_6
+    type: rw
+  - bits: '10'
+    name: TZ_AT_EGR_5
+    type: rw
+  - bits: '9'
+    name: TZ_AT_EGR_4
+    type: rw
+  - bits: '8'
+    name: TZ_AT_EGR_3
+    type: rw
+  - bits: '7'
+    name: TZ_AT_EGR_2
+    type: rw
+  - bits: '6'
+    name: TZ_AT_EGR_1
+    type: rw
+  - bits: '5'
+    name: TZ_AT_EGR_0
+    type: rw
+  - bits: '4'
+    name: TZ_DMA_REGS
+    type: rw
+  - bits: '3'
+    name: TZ_MSIX_PBA
+    type: rw
+  - bits: '2'
+    name: TZ_MSIX_TABLE
+    type: rw
+  - bits: '1'
+    name: TZ_ECAM
+    type: rw
+  - bits: '0'
+    name: TZ_BRIDGE_REGS
+    type: rw
+  name: SLCR_PCIE
+  offset: '0x00000030'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: DisplayPort DMA TrustZone Setting.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: TZ
+    type: rw
+  name: SLCR_DPDMA
+  offset: '0x00000040'
+  type: mixed
+  width: 32
+- default: '0x000000FF'
+  description: FPD DMA Trustzone Settings.
+  field:
+  - bits: '7:0'
+    name: TZ
+    type: rw
+  name: SLCR_GDMA
+  offset: '0x00000050'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: APU GIC setting.
+  field:
+  - bits: '0'
+    name: CFG_DISABLE
+    type: rw
+  name: SLCR_GIC
+  offset: '0x00000060'
+  type: rw
+  width: 1

@@ -1,0 +1,4857 @@
+description: Mali 400 GPU with two pixel processors, Graphics Processing Unit
+register:
+- default: '0x00000000'
+  description: GP ControlRegister VSCL Start Address
+  field:
+  - bits: '31:3'
+    name: GP_CONTR_REG_VSCL_START_ADDR
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: GP_CONTR_REG_VSCL_START_ADDR
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register VSCL End Address
+  field:
+  - bits: '31:3'
+    name: GP_CONTR_REG_VSCL_END_ADDR
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: GP_CONTR_REG_VSCL_END_ADDR
+  offset: '0x00000004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register PLBCL Start Address
+  field:
+  - bits: '31:3'
+    name: GP_CONTR_REG_PLBCL_START_ADDR
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: GP_CONTR_REG_PLBCL_START_ADDR
+  offset: '0x00000008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register PLBCL End Address
+  field:
+  - bits: '31:3'
+    name: GP_CONTR_REG_PLBCL_END_ADDR
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: GP_CONTR_REG_PLBCL_END_ADDR
+  offset: '0x0000000C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register PLB Allocate Start Address
+  field:
+  - bits: '31:7'
+    name: GP_CONTR_REG_PLB_ALLOC_START_ADDR
+    type: rw
+  - bits: '6:0'
+    name: RESERVED
+    type: rw
+  name: GP_CONTR_REG_PLB_ALLOC_START_ADDR
+  offset: '0x00000010'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register PLB Allocate End Address
+  field:
+  - bits: '31:7'
+    name: GP_CONTR_REG_PLB_ALLOC_END_ADDR
+    type: rw
+  - bits: '6:0'
+    name: RESERVED
+    type: rw
+  name: GP_CONTR_REG_PLB_ALLOC_END_ADDR
+  offset: '0x00000014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Command
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: wo
+  - bits: '11'
+    longdesc: Writing a 1 to this bit overrides all the architectural clock gates
+      in the design so all clocks are always active
+    name: GP_CMD_CLK_OVERRIDE
+    shortdesc: Disable block level clock gates.
+    type: wo
+  - bits: '10'
+    longdesc: Use the GP_IRQ_RESET_COMPLETED interrupt bit to discover when the reset
+      has actually completed
+    name: GP_CMD_SOFT_RESET
+    shortdesc: Waits until all outstanding bus-transfers are completed, then resets
+      the internal state of GP.
+    type: wo
+  - bits: '9'
+    name: GP_CMD_STOP_BUS
+    type: wo
+  - bits: '8'
+    name: GP_CMD_START_BUS
+    type: wo
+  - bits: '7'
+    name: RESERVED
+    type: wo
+  - bits: '6'
+    longdesc: This functionality depends on the watchdog timer
+    name: GP_CMD_FORCE_HANG
+    shortdesc: Force hang.
+    type: wo
+  - bits: '5'
+    longdesc: 'If GP_CMD_FORCE_RESET is asserted while there is a bus transaction
+      in progress the AXI interconnect might operate at reduced efficiency or lockup.
+      To ensure a safe reset: 1. Write 1 to GP_CMD_STOP_BUS. 2. Wait until all transactions
+      have completed. The GP_IRQ_AXI_BUS_STOPPED interrupt is asserted when the bus
+      is idle. 3. Write 1 to GP_CMD_FORCE_RESET. The use of GP_CMD_FORCE_RESET must
+      be deprecated, unless you require backwards compatibility with Mali-200.'
+    name: GP_CMD_FORCE_RESET
+    shortdesc: Resets the internal state of GP immediately.
+    type: wo
+  - bits: '4'
+    name: GP_CMD_UPDATE_PLB_ALLOC
+    type: wo
+  - bits: '3:2'
+    name: RESERVED
+    type: wo
+  - bits: '1'
+    name: GP_CMD_START_PLB
+    type: wo
+  - bits: '0'
+    name: GP_CMD_START_VS
+    type: wo
+  name: GP_CONTR_REG_CMD
+  offset: '0x00000020'
+  type: wo
+  width: 32
+- default: '0x00080000'
+  description: GP Control Register Interrupt Rawstat
+  field:
+  - bits: '31:23'
+    name: RESERVED
+    type: rw
+  - bits: '22'
+    longdesc: This indicates an error in the setup of the data structures. Any additional
+      processing is terminated.
+    name: GP_IRQ_PTR_OUT_OF_BOUNDS
+    shortdesc: The PLB tries to access a pointer with an index larger than the number
+      of tiles specified.
+    type: rw
+  - bits: '21'
+    longdesc: It triggers if the previous semaphore was in use and not 0 when the
+      PLB switched semaphore
+    name: GP_IRQ_SEMAPHORE_OVERFLOW
+    shortdesc: Semaphore overflow interrupt.
+    type: rw
+  - bits: '20'
+    longdesc: It triggers if the PLB waits for a semaphore that cannot come. For example
+      the VS has already switched semaphore.
+    name: GP_IRQ_SEMAPHORE_UNDERFLOW
+    shortdesc: Semaphore underflow interrupt.
+    type: rw
+  - bits: '19'
+    longdesc: It triggers whenever the geometry processor has been successfully reset.
+      When outstanding transactions are completed, the AXI bus is stopped before a
+      soft reset can take place.
+    name: GP_IRQ_RESET_COMPLETED
+    shortdesc: Reset completed interrupt.
+    type: rw
+  - bits: '18:15'
+    name: RESERVED
+    type: rw
+  - bits: '14'
+    longdesc: It triggers whenever the PLB encounters a command it does not understand.
+      Any additional processing is terminated.
+    name: GP_IRQ_PLB_INVALID_CMD
+    shortdesc: Invalid command interrupt from the PLB.
+    type: rw
+  - bits: '13'
+    longdesc: It triggers whenever the vertex shader encounters a command it does
+      not understand. Any additional processing is terminated.
+    name: GP_IRQ_VS_INVALID_CMD
+    shortdesc: Invalid command interrupt from the Vertex shader.
+    type: rw
+  - bits: '12'
+    longdesc: It triggers if the bus is stopped using the GP_CMD_STOP_BUS in the GP
+      Control Register Command. Any additional processing is terminated.
+    name: GP_IRQ_AXI_BUS_STOPPED
+    shortdesc: AXI bus stopped.
+    type: rw
+  - bits: '11'
+    name: GP_IRQ_AXI_BUS_ERROR
+    type: rw
+  - bits: '10'
+    name: RESERVED
+    type: rw
+  - bits: '9'
+    name: GP_IRQ_WRITE_BOUND_ERR
+    type: rw
+  - bits: '8'
+    name: GP_IRQ_PERF_CNT_1_LIMIT
+    type: rw
+  - bits: '7'
+    name: GP_IRQ_PERF_CNT_0_LIMIT
+    type: rw
+  - bits: '6'
+    name: GP_IRQ_FORCED_HANG
+    type: rw
+  - bits: '5'
+    longdesc: This state can also be triggered under normal rendering if you are running
+      a shader where it is near to a never-ending inner loop. From the software perspective,
+      you can ignore this state, because this is merely a hint from the HW that something
+      might be wrong. The SW then decides to either reset the processor, or continue
+      to let it run.
+    name: GP_IRQ_HANG
+    shortdesc: Watchdog timer limit reached.
+    type: rw
+  - bits: '4'
+    name: GP_IRQ_PLB_SEM
+    type: rw
+  - bits: '3'
+    name: GP_IRQ_VS_SEM
+    type: rw
+  - bits: '2'
+    name: GP_IRQ_PLB_OUT_OF_MEM
+    type: rw
+  - bits: '1'
+    name: GP_IRQ_PLB_END_CMD_LIST
+    type: rw
+  - bits: '0'
+    name: GP_IRQ_VS_END_CMD_LIST
+    type: rw
+  name: GP_CONTR_REG_INT_RAWSTAT
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00707BFF'
+  description: GP Control Register Interrupt Clear
+  field:
+  - bits: '31:23'
+    name: RESERVED
+    type: wo
+  - bits: '22'
+    longdesc: This indicates an error in the setup of the data structures. Any additional
+      processing is terminated.
+    name: GP_IRQ_PTR_OUT_OF_BOUNDS
+    shortdesc: The PLB tries to access a pointer with an index larger than the number
+      of tiles specified.
+    type: wo
+  - bits: '21'
+    longdesc: It triggers if the previous semaphore was in use and not 0 when the
+      PLB switched semaphore
+    name: GP_IRQ_SEMAPHORE_OVERFLOW
+    shortdesc: Semaphore overflow interrupt.
+    type: wo
+  - bits: '20'
+    longdesc: It triggers if the PLB waits for a semaphore that cannot come. For example
+      the VS has already switched semaphore.
+    name: GP_IRQ_SEMAPHORE_UNDERFLOW
+    shortdesc: Semaphore underflow interrupt.
+    type: wo
+  - bits: '19'
+    longdesc: It triggers whenever the geometry processor has been successfully reset.
+      When outstanding transactions are completed, the AXI bus is stopped before a
+      soft reset can take place.
+    name: GP_IRQ_RESET_COMPLETED
+    shortdesc: Reset completed interrupt.
+    type: wo
+  - bits: '18:15'
+    name: RESERVED
+    type: wo
+  - bits: '14'
+    longdesc: It triggers whenever the PLB encounters a command it does not understand.
+      Any additional processing is terminated.
+    name: GP_IRQ_PLB_INVALID_CMD
+    shortdesc: Invalid command interrupt from the PLB.
+    type: wo
+  - bits: '13'
+    longdesc: It triggers whenever the vertex shader encounters a command it does
+      not understand. Any additional processing is terminated.
+    name: GP_IRQ_VS_INVALID_CMD
+    shortdesc: Invalid command interrupt from the Vertex shader.
+    type: wo
+  - bits: '12'
+    longdesc: It triggers if the bus is stopped using the GP_CMD_STOP_BUS in the GP
+      Control Register Command. Any additional processing is terminated.
+    name: GP_IRQ_AXI_BUS_STOPPED
+    shortdesc: AXI bus stopped.
+    type: wo
+  - bits: '11'
+    name: GP_IRQ_AXI_BUS_ERROR
+    type: wo
+  - bits: '10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: GP_IRQ_WRITE_BOUND_ERR
+    type: wo
+  - bits: '8'
+    name: GP_IRQ_PERF_CNT_1_LIMIT
+    type: wo
+  - bits: '7'
+    name: GP_IRQ_PERF_CNT_0_LIMIT
+    type: wo
+  - bits: '6'
+    name: GP_IRQ_FORCED_HANG
+    type: wo
+  - bits: '5'
+    longdesc: This state can also be triggered under normal rendering if you are running
+      a shader where it is near to a never-ending inner loop. From the software perspective,
+      you can ignore this state, because this is merely a hint from the HW that something
+      might be wrong. The SW then decides to either reset the processor, or continue
+      to let it run.
+    name: GP_IRQ_HANG
+    shortdesc: Watchdog timer limit reached.
+    type: wo
+  - bits: '4'
+    name: GP_IRQ_PLB_SEM
+    type: wo
+  - bits: '3'
+    name: GP_IRQ_VS_SEM
+    type: wo
+  - bits: '2'
+    name: GP_IRQ_PLB_OUT_OF_MEM
+    type: wo
+  - bits: '1'
+    name: GP_IRQ_PLB_END_CMD_LIST
+    type: wo
+  - bits: '0'
+    name: GP_IRQ_VS_END_CMD_LIST
+    type: wo
+  name: GP_CONTR_REG_INT_CLEAR
+  offset: '0x00000028'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Interrupt Mask
+  field:
+  - bits: '31:23'
+    name: RESERVED
+    type: wo
+  - bits: '22'
+    longdesc: This indicates an error in the setup of the data structures. Any additional
+      processing is terminated.
+    name: GP_IRQ_PTR_OUT_OF_BOUNDS
+    shortdesc: The PLB tries to access a pointer with an index larger than the number
+      of tiles specified.
+    type: wo
+  - bits: '21'
+    longdesc: It triggers if the previous semaphore was in use and not 0 when the
+      PLB switched semaphore
+    name: GP_IRQ_SEMAPHORE_OVERFLOW
+    shortdesc: Semaphore overflow interrupt.
+    type: wo
+  - bits: '20'
+    longdesc: It triggers if the PLB waits for a semaphore that cannot come. For example
+      the VS has already switched semaphore.
+    name: GP_IRQ_SEMAPHORE_UNDERFLOW
+    shortdesc: Semaphore underflow interrupt.
+    type: wo
+  - bits: '19'
+    longdesc: It triggers whenever the geometry processor has been successfully reset.
+      When outstanding transactions are completed, the AXI bus is stopped before a
+      soft reset can take place.
+    name: GP_IRQ_RESET_COMPLETED
+    shortdesc: Reset completed interrupt.
+    type: wo
+  - bits: '14'
+    longdesc: It triggers whenever the PLB encounters a command it does not understand.
+      Any additional processing is terminated.
+    name: GP_IRQ_PLB_INVALID_CMD
+    shortdesc: Invalid command interrupt from the PLB.
+    type: wo
+  - bits: '13'
+    longdesc: It triggers whenever the vertex shader encounters a command it does
+      not understand. Any additional processing is terminated.
+    name: GP_IRQ_VS_INVALID_CMD
+    shortdesc: Invalid command interrupt from the Vertex shader.
+    type: wo
+  - bits: '12'
+    longdesc: It triggers if the bus is stopped using the GP_CMD_STOP_BUS in the GP
+      Control Register Command. Any additional processing is terminated.
+    name: GP_IRQ_AXI_BUS_STOPPED
+    shortdesc: AXI bus stopped.
+    type: wo
+  - bits: '11'
+    name: GP_IRQ_AXI_BUS_ERROR
+    type: wo
+  - bits: '10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: GP_IRQ_WRITE_BOUND_ERR
+    type: wo
+  - bits: '8'
+    name: GP_IRQ_PERF_CNT_1_LIMIT
+    type: wo
+  - bits: '7'
+    name: GP_IRQ_PERF_CNT_0_LIMIT
+    type: wo
+  - bits: '6'
+    name: GP_IRQ_FORCED_HANG
+    type: wo
+  - bits: '5'
+    longdesc: This state can also be triggered under normal rendering if you are running
+      a shader where it is near to a never-ending inner loop. From the software perspective,
+      you can ignore this state, because this is merely a hint from the HW that something
+      might be wrong. The SW then decides to either reset the processor, or continue
+      to let it run.
+    name: GP_IRQ_HANG
+    shortdesc: Watchdog timer limit reached.
+    type: wo
+  - bits: '4'
+    name: GP_IRQ_PLB_SEM
+    type: wo
+  - bits: '3'
+    name: GP_IRQ_VS_SEM
+    type: wo
+  - bits: '2'
+    name: GP_IRQ_PLB_OUT_OF_MEM
+    type: wo
+  - bits: '1'
+    name: GP_IRQ_PLB_END_CMD_LIST
+    type: wo
+  - bits: '0'
+    name: GP_IRQ_VS_END_CMD_LIST
+    type: wo
+  name: GP_CONTR_REG_INT_MASK
+  offset: '0x0000002C'
+  type: wo
+  width: 32
+- default: '0x00080000'
+  description: GP Control Register Interrupt Status
+  field:
+  - bits: '31:23'
+    name: RESERVED
+    type: ro
+  - bits: '22'
+    longdesc: This indicates an error in the setup of the data structures. Any additional
+      processing is terminated.
+    name: GP_IRQ_PTR_OUT_OF_BOUNDS
+    shortdesc: The PLB tries to access a pointer with an index larger than the number
+      of tiles specified.
+    type: ro
+  - bits: '21'
+    longdesc: It triggers if the previous semaphore was in use and not 0 when the
+      PLB switched semaphore
+    name: GP_IRQ_SEMAPHORE_OVERFLOW
+    shortdesc: Semaphore overflow interrupt.
+    type: ro
+  - bits: '20'
+    longdesc: It triggers if the PLB waits for a semaphore that cannot come. For example
+      the VS has already switched semaphore.
+    name: GP_IRQ_SEMAPHORE_UNDERFLOW
+    shortdesc: Semaphore underflow interrupt.
+    type: ro
+  - bits: '19'
+    longdesc: It triggers whenever the geometry processor has been successfully reset.
+      When outstanding transactions are completed, the AXI bus is stopped before a
+      soft reset can take place.
+    name: GP_IRQ_RESET_COMPLETED
+    shortdesc: Reset completed interrupt.
+    type: ro
+  - bits: '18:15'
+    name: RESERVED
+    type: ro
+  - bits: '14'
+    longdesc: It triggers whenever the PLB encounters a command it does not understand.
+      Any additional processing is terminated.
+    name: GP_IRQ_PLB_INVALID_CMD
+    shortdesc: Invalid command interrupt from the PLB.
+    type: ro
+  - bits: '13'
+    longdesc: It triggers whenever the vertex shader encounters a command it does
+      not understand. Any additional processing is terminated.
+    name: GP_IRQ_VS_INVALID_CMD
+    shortdesc: Invalid command interrupt from the Vertex shader.
+    type: ro
+  - bits: '12'
+    longdesc: It triggers if the bus is stopped using the GP_CMD_STOP_BUS in the GP
+      Control Register Command. Any additional processing is terminated.
+    name: GP_IRQ_AXI_BUS_STOPPED
+    shortdesc: AXI bus stopped.
+    type: ro
+  - bits: '11'
+    name: GP_IRQ_AXI_BUS_ERROR
+    type: ro
+  - bits: '10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: GP_IRQ_WRITE_BOUND_ERR
+    type: ro
+  - bits: '8'
+    name: GP_IRQ_PERF_CNT_1_LIMIT
+    type: ro
+  - bits: '7'
+    name: GP_IRQ_PERF_CNT_0_LIMIT
+    type: ro
+  - bits: '6'
+    name: GP_IRQ_FORCED_HANG
+    type: ro
+  - bits: '5'
+    longdesc: This state can also be triggered under normal rendering if you are running
+      a shader where it is near to a never-ending inner loop. From the software perspective,
+      you can ignore this state, because this is merely a hint from the HW that something
+      might be wrong. The SW then decides to either reset the processor, or continue
+      to let it run.
+    name: GP_IRQ_HANG
+    shortdesc: Watchdog timer limit reached.
+    type: ro
+  - bits: '4'
+    name: GP_IRQ_PLB_SEM
+    type: ro
+  - bits: '3'
+    name: GP_IRQ_VS_SEM
+    type: ro
+  - bits: '2'
+    name: GP_IRQ_PLB_OUT_OF_MEM
+    type: ro
+  - bits: '1'
+    name: GP_IRQ_PLB_END_CMD_LIST
+    type: ro
+  - bits: '0'
+    name: GP_IRQ_VS_END_CMD_LIST
+    type: ro
+  name: GP_CONTR_REG_INT_STAT
+  offset: '0x00000030'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Write Boundary Low
+  field:
+  - bits: '31:8'
+    name: GP_CONTR_REG_WRITE_BOUND_LOW
+    type: rw
+  - bits: '7:0'
+    name: RESERVED
+    type: rw
+  name: GP_CONTR_REG_WRITE_BOUND_LOW
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0xFFFFFF00'
+  description: GP Control Register Write Boundary High
+  field:
+  - bits: '31:8'
+    name: GP_CONTR_REG_WRITE_BOUND_HIGH
+    type: rw
+  - bits: '7:0'
+    name: RESERVED
+    type: rw
+  name: GP_CONTR_REG_WRITE_BOUND_HIGH
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Performance Counter 0 Enable
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: GP_CONTR_REG_PERF_CNT_0_ENABLE
+    type: rw
+  name: GP_CONTR_REG_PERF_CNT_0_ENABLE
+  offset: '0x0000003C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Performance Counter 1 Enable
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: GP_CONTR_REG_PERF_CNT_1_ENABLE
+    type: rw
+  name: GP_CONTR_REG_PERF_CNT_1_ENABLE
+  offset: '0x00000040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Performance Counter 0 Source
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: GP_CONTR_REG_PERF_CNT_0_SRC
+    type: rw
+  name: GP_CONTR_REG_PERF_CNT_0_SRC
+  offset: '0x00000044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Performance Counter 1 Source
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: GP_CONTR_REG_PERF_CNT_1_SRC
+    type: rw
+  name: GP_CONTR_REG_PERF_CNT_1_SRC
+  offset: '0x00000048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Performance Counter 0 Value
+  field:
+  - bits: '31:0'
+    name: GP_CONTR_REG_PERF_CNT_0_VAL
+    type: ro
+  name: GP_CONTR_REG_PERF_CNT_0_VAL
+  offset: '0x0000004C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Performance Counter 1 Value
+  field:
+  - bits: '31:0'
+    name: GP_CONTR_REG_PERF_CNT_1_VAL
+    type: ro
+  name: GP_CONTR_REG_PERF_CNT_1_VAL
+  offset: '0x00000050'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Performance Counter 0 Limit
+  field:
+  - bits: '31:0'
+    name: GP_CONTR_REG_PERF_CNT_0_LIMIT
+    type: rw
+  name: GP_CONTR_REG_PERF_CNT_0_LIMIT
+  offset: '0x00000054'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Performance Control 1 Limit
+  field:
+  - bits: '31:0'
+    name: GP_CONTR_REG_PERF_CNT_1_LIMIT
+    type: rw
+  name: GP_CONTR_REG_PERF_CNT_1_LIMIT
+  offset: '0x00000058'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Status
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    longdesc: When this bit is set, all the architectural clock gates in the design
+      are overridden so all clocks are always active
+    name: CLK_OVERRIDE
+    shortdesc: Shows that the block level clock gates have been disabled This bit
+      is set by the GP_CLK_OVERRIDE command in the GP_CONTR_REG_CMD Register.
+    type: ro
+  - bits: '8'
+    name: GP_STATUS_WRITE_BOUND_ERR
+    type: ro
+  - bits: '7'
+    longdesc: This state can also be triggered under normal rendering if you are running
+      a shader where it is near to a never-ending inner loop. From the software perspective,
+      you can ignore this state, because this is merely a hint from the HW that something
+      might be wrong. The SW then decides to either reset the processor, or continue
+      to let it run.
+    name: GP_STATUS_HANG
+    shortdesc: Watchdog timer limit reached.
+    type: ro
+  - bits: '6'
+    name: GP_STATUS_BUS_ERROR
+    type: ro
+  - bits: '5'
+    name: GP_STATUS_PLB_STALLED
+    type: ro
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: GP_STATUS_PLB_ACTIVE
+    type: ro
+  - bits: '2'
+    name: GP_STATUS_BUS_STOPPED
+    type: ro
+  - bits: '1'
+    name: GP_STATUS_VS_ACTIVE
+    type: ro
+  - bits: '0'
+    name: GP_STATUS_IRQ
+    type: ro
+  name: GP_CONTR_REG_STATUS
+  offset: '0x00000068'
+  type: ro
+  width: 32
+- default: '0x00000B07'
+  description: GP Control Register VERSION
+  field:
+  - bits: '31:16'
+    name: PRODUCT_ID
+    type: ro
+  - bits: '15:8'
+    name: VERSION_MAJOR
+    type: ro
+  - bits: '7:0'
+    name: VERSION_MINOR
+    type: ro
+  name: GP_CONTR_REG_VERSION
+  offset: '0x0000006C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register VSCL Initial Address
+  field:
+  - bits: '31:3'
+    name: GP_CONTR_REG_VSCL_INITIAL_ADDR
+    type: ro
+  - bits: '2:0'
+    name: RESERVED
+    type: ro
+  name: GP_CONTR_REG_VSCL_INITIAL_ADDR
+  offset: '0x00000080'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register PLBCL Initial Address
+  field:
+  - bits: '31:3'
+    name: GP_CONTR_REG_PLBCL_INITIAL_ADDR
+    type: ro
+  - bits: '2:0'
+    name: RESERVED
+    type: ro
+  name: GP_CONTR_REG_PLBCL_INITIAL_ADDR
+  offset: '0x00000084'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Write Error Address
+  field:
+  - bits: '31:0'
+    name: GP_CONTR_REG_WRITE_BOUNDARY_ERROR_ADDR
+    type: ro
+  name: GP_CONTR_REG_WRITE_BOUNDARY_ERROR_ADDR
+  offset: '0x00000088'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: GP Control AXI Bus Error Status
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:6'
+    name: GP_READ_ERROR_ID
+    type: ro
+  - bits: '5:2'
+    name: GP_WRITE_ERROR_ID
+    type: ro
+  - bits: '1'
+    name: GP_READ_ERROR
+    type: ro
+  - bits: '0'
+    name: GP_WRITE_ERROR
+    type: ro
+  name: GP_CONTR_REG_AXI_BUS_ERROR_STAT
+  offset: '0x00000094'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: GP Control Register Watchdog Disable
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: GP_CONTR_REG_WATCHDOG_DISABLE
+    type: rw
+  name: GP_CONTR_REG_WATCHDOG_DISABLE
+  offset: '0x000000A0'
+  type: rw
+  width: 32
+- default: '0x000F4240'
+  description: GP Control Register Watchdog Timeout
+  field:
+  - bits: '31:0'
+    name: WDOG_TIMEOUT
+    type: rw
+  name: GP_CONTR_REG_WATCHDOG_TIMEOUT
+  offset: '0x000000A4'
+  type: rw
+  width: 32
+- default: '0xCAC20000'
+  description: VERSION Register
+  field:
+  - bits: '31:16'
+    name: PRODUCT_ID
+    type: ro
+  - bits: '15:8'
+    name: VERSION_MAJOR
+    type: ro
+  - bits: '7:0'
+    name: VERSION_MINOR
+    type: ro
+  name: VERSION
+  offset: '0x00001000'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SIZE Register
+  field:
+  - bits: '31:24'
+    name: EXTERNAL_BUS_WIDTH
+    type: ro
+  - bits: '23:16'
+    name: CACHE_SIZE
+    type: ro
+  - bits: '15:8'
+    name: ASSOCIATIVITY
+    type: ro
+  - bits: '7:0'
+    name: LINE_SIZE
+    type: ro
+  name: SIZE
+  offset: '0x00001004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Status Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    name: DATA_BUSY
+    type: ro
+  - bits: '0'
+    name: COMMAND_BUSY
+    type: ro
+  name: STATUS
+  offset: '0x00001008'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Command Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: wo
+  - bits: '2:0'
+    name: COMMAND
+    type: wo
+  name: COMMAND
+  offset: '0x00001010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Clear Page Register
+  field:
+  - bits: '31:0'
+    name: CLEAR_PAGE
+    type: wo
+  name: CLEAR_PAGE
+  offset: '0x00001014'
+  type: wo
+  width: 32
+- default: '0x0000001C'
+  description: Maximum Reads Register
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: rw
+  - bits: '4:0'
+    name: MAX_READS
+    type: rw
+  name: MAX_READS
+  offset: '0x00001018'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Enable Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: PERMIT_CACHE_READ_ALLOCATE
+    type: rw
+  - bits: '0'
+    name: PERMIT_CACHEABLE_ACCESSES
+    type: rw
+  name: ENABLE
+  offset: '0x0000101C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 0 Source Register
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: rw
+  - bits: '6:0'
+    name: PERFCNT
+    type: rw
+  name: PERFCNT_SRC0
+  offset: '0x00001020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 0 Value Register
+  field:
+  - bits: '31:0'
+    name: PERFCNT_VAL0
+    type: rw
+  name: PERFCNT_VAL0
+  offset: '0x00001024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 1 Source Register
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: rw
+  - bits: '6:0'
+    name: PERFCNT
+    type: rw
+  name: PERFCNT_SRC1
+  offset: '0x00001028'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 1 Value Register
+  field:
+  - bits: '31:0'
+    name: PERFCNT_VAL1
+    type: rw
+  name: PERFCNT_VAL1
+  offset: '0x0000102C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MMU Current Page Table Address Register
+  field:
+  - bits: '31:0'
+    name: MMU_DTE_ADDR
+    type: rw
+  name: GP_MMU_DTE_ADDR
+  offset: '0x00003000'
+  type: rw
+  width: 32
+- default: '0x00000018'
+  description: MMU Status Register
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: ro
+  - bits: '10:6'
+    name: MMU_PAGE_FAULT_BUS_ID
+    type: ro
+  - bits: '5'
+    longdesc: 0 = Read 1 = Write
+    name: MMU_PAGE_FAULT_IS_WRITE
+    shortdesc: The direction of access for last page fault.
+    type: ro
+  - bits: '4'
+    name: MMU_REPLAY_BUFFER_EMPTY
+    type: ro
+  - bits: '3'
+    longdesc: The MMU_IDLE signal only reports idle when the MMU processor is idle
+      and accesses are active on the external bus.
+    name: MMU_IDLE
+    shortdesc: The MMU is idle when accesses are being translated and there are no
+      unfinished translated accesses.
+    type: ro
+  - bits: '2'
+    longdesc: The mode is enabled by command.
+    name: MMU_STALL_ACTIVE
+    shortdesc: MMU stall mode currently enabled.
+    type: ro
+  - bits: '1'
+    longdesc: The mode is enabled by command.
+    name: MMU_PAGE_FAULT_ACTIVE
+    shortdesc: MMU page fault mode currently enabled.
+    type: ro
+  - bits: '0'
+    name: MMU_PAGING_ENABLED
+    type: ro
+  name: GP_MMU_STATUS
+  offset: '0x00003004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: MMU Command Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: wo
+  name: GP_MMU_COMMAND
+  offset: '0x00003008'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: MMU Logical Address
+  field:
+  - bits: '31:0'
+    name: MMU_PAGE_FAULT_ADDR
+    type: ro
+  name: GP_MMU_PAGE_FAULT_ADDR
+  offset: '0x0000300C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: MMU Zap Cache Line Register
+  field:
+  - bits: '31:0'
+    name: MMU_ZAP_ONE_LINE
+    type: wo
+  name: GP_MMU_ZAP_ONE_LINE
+  offset: '0x00003010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: MMU Raw Interrupt Status Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: rw
+  - bits: '0'
+    name: PAGE_FAULT
+    type: rw
+  name: GP_MMU_INT_RAWSTAT
+  offset: '0x00003014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MMU Interrupt Clear Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: wo
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: wo
+  - bits: '0'
+    name: PAGE_FAULT
+    type: wo
+  name: GP_MMU_INT_CLEAR
+  offset: '0x00003018'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: MMU Interrupt Mask Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: rw
+  - bits: '0'
+    name: PAGE_FAULT
+    type: rw
+  name: GP_MMU_INT_MASK
+  offset: '0x0000301C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MMU Interrupt Status Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: ro
+  - bits: '0'
+    name: PAGE_FAULT
+    type: ro
+  name: GP_MMU_INT_STATUS
+  offset: '0x00003020'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: MMU Current Page Table Address Register
+  field:
+  - bits: '31:0'
+    name: MMU_DTE_ADDR
+    type: rw
+  name: PP0_MMU_DTE_ADDR
+  offset: '0x00004000'
+  type: rw
+  width: 32
+- default: '0x00000018'
+  description: MMU Status Register
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: ro
+  - bits: '10:6'
+    name: MMU_PAGE_FAULT_BUS_ID
+    type: ro
+  - bits: '5'
+    longdesc: 0 = Read 1 = Write
+    name: MMU_PAGE_FAULT_IS_WRITE
+    shortdesc: The direction of access for last page fault.
+    type: ro
+  - bits: '4'
+    name: MMU_REPLAY_BUFFER_EMPTY
+    type: ro
+  - bits: '3'
+    longdesc: The MMU_IDLE signal only reports idle when the MMU processor is idle
+      and accesses are active on the external bus.
+    name: MMU_IDLE
+    shortdesc: The MMU is idle when accesses are being translated and there are no
+      unfinished translated accesses.
+    type: ro
+  - bits: '2'
+    longdesc: The mode is enabled by command.
+    name: MMU_STALL_ACTIVE
+    shortdesc: MMU stall mode currently enabled.
+    type: ro
+  - bits: '1'
+    longdesc: The mode is enabled by command.
+    name: MMU_PAGE_FAULT_ACTIVE
+    shortdesc: MMU page fault mode currently enabled.
+    type: ro
+  - bits: '0'
+    name: MMU_PAGING_ENABLED
+    type: ro
+  name: PP0_MMU_STATUS
+  offset: '0x00004004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: MMU Command Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: wo
+  name: PP0_MMU_COMMAND
+  offset: '0x00004008'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: MMU Logical Address
+  field:
+  - bits: '31:0'
+    name: MMU_PAGE_FAULT_ADDR
+    type: ro
+  name: PP0_MMU_PAGE_FAULT_ADDR
+  offset: '0x0000400C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: MMU Zap Cache Line Register
+  field:
+  - bits: '31:0'
+    name: MMU_ZAP_ONE_LINE
+    type: wo
+  name: PP0_MMU_ZAP_ONE_LINE
+  offset: '0x00004010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: MMU Raw Interrupt Status Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: rw
+  - bits: '0'
+    name: PAGE_FAULT
+    type: rw
+  name: PP0_MMU_INT_RAWSTAT
+  offset: '0x00004014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MMU Interrupt Clear Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: wo
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: wo
+  - bits: '0'
+    name: PAGE_FAULT
+    type: wo
+  name: PP0_MMU_INT_CLEAR
+  offset: '0x00004018'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: MMU Interrupt Mask Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: rw
+  - bits: '0'
+    name: PAGE_FAULT
+    type: rw
+  name: PP0_MMU_INT_MASK
+  offset: '0x0000401C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MMU Interrupt Status Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: ro
+  - bits: '0'
+    name: PAGE_FAULT
+    type: ro
+  name: PP0_MMU_INT_STATUS
+  offset: '0x00004020'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: MMU Current Page Table Address Register
+  field:
+  - bits: '31:0'
+    name: MMU_DTE_ADDR
+    type: rw
+  name: PP1_MMU_DTE_ADDR
+  offset: '0x00005000'
+  type: rw
+  width: 32
+- default: '0x00000018'
+  description: MMU Status Register
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: ro
+  - bits: '10:6'
+    name: MMU_PAGE_FAULT_BUS_ID
+    type: ro
+  - bits: '5'
+    longdesc: 0 = Read 1 = Write
+    name: MMU_PAGE_FAULT_IS_WRITE
+    shortdesc: The direction of access for last page fault.
+    type: ro
+  - bits: '4'
+    name: MMU_REPLAY_BUFFER_EMPTY
+    type: ro
+  - bits: '3'
+    longdesc: The MMU_IDLE signal only reports idle when the MMU processor is idle
+      and accesses are active on the external bus.
+    name: MMU_IDLE
+    shortdesc: The MMU is idle when accesses are being translated and there are no
+      unfinished translated accesses.
+    type: ro
+  - bits: '2'
+    longdesc: The mode is enabled by command.
+    name: MMU_STALL_ACTIVE
+    shortdesc: MMU stall mode currently enabled.
+    type: ro
+  - bits: '1'
+    longdesc: The mode is enabled by command.
+    name: MMU_PAGE_FAULT_ACTIVE
+    shortdesc: MMU page fault mode currently enabled.
+    type: ro
+  - bits: '0'
+    name: MMU_PAGING_ENABLED
+    type: ro
+  name: PP1_MMU_STATUS
+  offset: '0x00005004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: MMU Command Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: wo
+  - bits: '2:0'
+    longdesc: 'This can be: 000:MMU_ENABLE_PAGING. Enable paging. 001:MMU_DISABLE_PAGING.
+      Disable paging. 010:MMU_ENABLE_STALL. Turn on stall mode. 011:MMU_DISABLE_STALL.
+      Turn off stall mode. 100:MMU_ZAP_CACHE. Zap the entire page table cache. 101:MMU_PAGE_FAULT_DONE.
+      Leave page fault mode. 110:MMU_FORCE_RESET. Reset the MMU.'
+    name: MMU_CMD
+    shortdesc: MMU_CMD.
+    type: wo
+  name: PP1_MMU_COMMAND
+  offset: '0x00005008'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: MMU Logical Address
+  field:
+  - bits: '31:0'
+    name: MMU_PAGE_FAULT_ADDR
+    type: ro
+  name: PP1_MMU_PAGE_FAULT_ADDR
+  offset: '0x0000500C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: MMU Zap Cache Line Register
+  field:
+  - bits: '31:0'
+    name: MMU_ZAP_ONE_LINE
+    type: wo
+  name: PP1_MMU_ZAP_ONE_LINE
+  offset: '0x00005010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: MMU Raw Interrupt Status Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: rw
+  - bits: '0'
+    name: PAGE_FAULT
+    type: rw
+  name: PP1_MMU_INT_RAWSTAT
+  offset: '0x00005014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MMU Interrupt Clear Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: wo
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: wo
+  - bits: '0'
+    name: PAGE_FAULT
+    type: wo
+  name: PP1_MMU_INT_CLEAR
+  offset: '0x00005018'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: MMU Interrupt Mask Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: rw
+  - bits: '0'
+    name: PAGE_FAULT
+    type: rw
+  name: PP1_MMU_INT_MASK
+  offset: '0x0000501C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MMU Interrupt Status Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    name: READ_BUS_ERROR
+    type: ro
+  - bits: '0'
+    name: PAGE_FAULT
+    type: ro
+  name: PP1_MMU_INT_STATUS
+  offset: '0x00005020'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Renderer List Address Register
+  field:
+  - bits: '31:3'
+    name: REND_LIST_ADDR
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: PP0_REND_LIST_ADDR
+  offset: '0x00008000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Renderer State Word Base Address Register
+  field:
+  - bits: '31:6'
+    name: REND_RSW_BASE
+    type: rw
+  - bits: '5:0'
+    name: RESERVED
+    type: rw
+  name: PP0_REND_RSW_BASE
+  offset: '0x00008004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Renderer Vertex Base Register
+  field:
+  - bits: '31:6'
+    name: REND_VERTEX_BASE
+    type: rw
+  - bits: '5:0'
+    name: RESERVED
+    type: rw
+  name: PP0_REND_VERTEX_BASE
+  offset: '0x00008008'
+  type: rw
+  width: 32
+- default: '0x00000002'
+  description: Feature Enable Register
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: rw
+  - bits: '6'
+    longdesc: This means that all 16 samples from a 2x2 quad are counted and converted
+      to an alpha between 0.0 (0 samples) and 1.0 (16 samples), and that the alpha
+      value is set for all the fragments in the 2x2 fragment quad.
+    name: SUMMATE_QUAD_COVER
+    shortdesc: When set to 1, the coverage-to-alpha operates on a 2x2 fragment quad,
+      and not individual fragments.
+    type: rw
+  - bits: '5'
+    longdesc: The ORIGIN_LOWER_LEFT bit indicates whether the coordinate system for
+      the screen XY position has its origin in the upper-left corner, y-axis increasing
+      downwards or to lower-left corner, y-axis increasing upwards. The only hardware
+      function that is currently affected by this bit is the Position Register function,
+      and tile indices. The pixel processor considers the upper-left corner to be
+      the origin. This bit must be set for use with OpenGL.
+    name: ORIGIN_LOWER_LEFT
+    shortdesc: This feature is still functional but deprecated, use Scaling Register
+      on page 3-44 FLIP_FRAGOORD bit instead.
+    type: rw
+  - bits: '4'
+    longdesc: Only use for debugging. For normal use, enable or disable Early-Z with
+      the EARLYZ_ENABLE bit.
+    name: EARLYZ_DISABLE2
+    shortdesc: Setting this bit disables the second of two Early-Z mechanisms.
+    type: rw
+  - bits: '3'
+    longdesc: Only use for debugging. For normal use, enable or disable Early-Z with
+      the EARLYZ_ENABLE bit.
+    name: EARLYZ_DISABLE1
+    shortdesc: Setting this bit disables the first of two Early-Z mechanisms.
+    type: rw
+  - bits: '1'
+    longdesc: EarlyZ is enabled by default. Enabling this test increases the performance
+      in high-overdraw situations by performing multiple Z-tests per clock at the
+      rasterizer level. The Early Z-test is not effective on Greater-Than depth test
+      functions.
+    name: EARLYZ_ENABLE
+    shortdesc: Setting this bit to 1 enables the Early Z-test mechanism in the rasterizer.
+    type: rw
+  - bits: '0'
+    longdesc: 'Enabling this feature has the following consequences: * multiple render
+      targets cannot be used * internal multi-sampling or super-sampling anti-aliasing
+      cannot be used * external write-back anti-aliasing technique cannot be used.'
+    name: FP_TILEBUF_ENABLE
+    shortdesc: Setting this bit to 1 sets the tile buffer to FP16 (1:5:10) component
+      format instead of 8-bit component format.
+    type: rw
+  name: PP0_FEATURE_ENABLE
+  offset: '0x0000800C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Z Clear Value Register
+  field:
+  - bits: '23:0'
+    longdesc: If you do not want the Z tile buffer to be cleared, the content of the
+      Z tile buffer can be pre-loaded by using a textured quad and Z-replacement technique.
+      For more information see the explanation of subword 3 in Render state word data
+      structures on page 3-132. See also Table 3-231 on page 3-181 and the corresponding
+      description of texel format value 50.
+    name: Z_CLEAR_VALUE
+    shortdesc: The 24-bit depth value of the Z tile buffer is logically cleared whenever
+      processing of a new tile starts.
+    type: rw
+  name: PP0_Z_CLEAR_VALUE
+  offset: '0x00008010'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Stencil Clear Value Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:0'
+    longdesc: If you do not want the stencil tile buffer to be cleared, the content
+      of the stencil tile buffer can be pre-loaded by using a textured quad and stencil
+      replacement technique. For more information see the explanation of subword 3
+      in Render state word data structures on page 3-132. See also Table 3-231 on
+      page 3-181 and the corresponding description of texel format value 50.
+    name: STENCIL_CLEAR_VALUE
+    shortdesc: The 8-bit stencil value of the stencil tile buffer is logically cleared
+      whenever processing of a new tile starts.
+    type: rw
+  name: PP0_STENCIL_CLEAR_VALUE
+  offset: '0x00008014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: ABGR Clear Value 0 Register
+  field:
+  - bits: '31:24'
+    name: ALPHA_CLEAR_VALUE
+    type: rw
+  - bits: '23:16'
+    name: BLUE_CLEAR_VALUE
+    type: rw
+  - bits: '15:8'
+    name: GREEN_CLEAR_VALUE
+    type: rw
+  - bits: '7:0'
+    name: RED_CLEAR_VALUE
+    type: rw
+  name: PP0_ABGR_CLEAR_VALUE_0
+  offset: '0x00008018'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: ABGR Clear Value 1 Register
+  field:
+  - bits: '31:24'
+    name: ALPHA_CLEAR_VALUE
+    type: rw
+  - bits: '23:16'
+    name: BLUE_CLEAR_VALUE
+    type: rw
+  - bits: '15:8'
+    name: GREEN_CLEAR_VALUE
+    type: rw
+  - bits: '7:0'
+    name: RED_CLEAR_VALUE
+    type: rw
+  name: PP0_ABGR_CLEAR_VALUE_1
+  offset: '0x0000801C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: ABGR Clear Value 2 Register
+  field:
+  - bits: '31:24'
+    name: ALPHA_CLEAR_VALUE
+    type: rw
+  - bits: '23:16'
+    name: BLUE_CLEAR_VALUE
+    type: rw
+  - bits: '15:8'
+    name: GREEN_CLEAR_VALUE
+    type: rw
+  - bits: '7:0'
+    name: RED_CLEAR_VALUE
+    type: rw
+  name: PP0_ABGR_CLEAR_VALUE_2
+  offset: '0x00008020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: ABGR Clear Value 3 Register
+  field:
+  - bits: '31:24'
+    name: ALPHA_CLEAR_VALUE
+    type: rw
+  - bits: '23:16'
+    name: BLUE_CLEAR_VALUE
+    type: rw
+  - bits: '15:8'
+    name: GREEN_CLEAR_VALUE
+    type: rw
+  - bits: '7:0'
+    name: RED_CLEAR_VALUE
+    type: rw
+  name: PP0_ABGR_CLEAR_VALUE_3
+  offset: '0x00008024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Bounding Box Left Right Register
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: rw
+  - bits: '19:16'
+    longdesc: Bits [13:4] are always 0. If a greater bounding box than 16 is required,
+      the modulo 16 of the bounding box is placed in this register. The remaining
+      part is subtracted from all vertices.
+    name: BOUNDING_BOX_LEFT
+    shortdesc: Bits [3:0] of the number of pixels from the left initial framebuffer
+      edge to exclude from write-back, if the bounding box is honored.
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:0'
+    name: BOUNDING_BOX_RIGHT
+    type: rw
+  name: PP0_BOUNDING_BOX_LEFT_RIGHT
+  offset: '0x00008028'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Bounding Box Bottom Register
+  field:
+  - bits: '31:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:0'
+    name: BOUNDING_BOX_BOTTOM
+    type: rw
+  name: PP0_BOUNDING_BOX_BOTTOM
+  offset: '0x0000802C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: FS Stack Address Register
+  field:
+  - bits: '31:6'
+    name: FS_STACK_ADDR
+    type: rw
+  - bits: '5:0'
+    name: RESERVED
+    type: rw
+  name: PP0_FS_STACK_ADDR
+  offset: '0x00008030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: FS Stack Size and Initial Value Register
+  field:
+  - bits: '31:16'
+    longdesc: This is achieved by setting this field to a non-zero value to enable
+      the main function of a fragment shader to have a stack frame. This register
+      must be set to the size of the largest stack frame of the active fragment shader
+      main function requirements. If the stack pointer is decremented to a value less
+      than FS_STACK_INIT_VAL as a result of a function return, then the fragment shader
+      terminates, and is considered to have executed successfully. This functionality
+      enables the main-function to be recursive, as any other function.
+    name: FS_STACK_INIT_VAL
+    shortdesc: The initial value that the stack pointer is set to at the start of
+      executing a fragment shader.
+    type: rw
+  - bits: '15:0'
+    longdesc: 'The amount of memory that must be allocated for the fragment shader
+      stack is 1KB x FS_STACK_SIZE. Note: The fragment shader requires 128 stacks
+      to keep stack data for all active fragments in the pipeline. An increment of
+      1 unit in FS_STACK_SIZE means 8-byte elements for each stack for each fragment.
+      This gives 8-byte x 128 stacks/fragment = 1024 bytes.'
+    name: FS_STACK_SIZE
+    shortdesc: The fragment shader stack size in number of 8-byte elements that the
+      fragment shader stack is permitted to contain.
+    type: rw
+  name: PP0_FS_STACK_SIZE_AND_INIT_VAL
+  offset: '0x00008034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Origin Offset X Register
+  field:
+  - bits: '15:0'
+    name: ORIGIN_OFFSET_X
+    type: rw
+  name: PP0_ORIGIN_OFFSET_X
+  offset: '0x00008040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Origin Offset Y Register
+  field:
+  - bits: '15:0'
+    name: ORIGIN_OFFSET_Y
+    type: rw
+  name: PP0_ORIGIN_OFFSET_Y
+  offset: '0x00008044'
+  type: rw
+  width: 32
+- default: '0x00000075'
+  description: Subpixel Specifier Register
+  field:
+  - bits: '7:0'
+    longdesc: 'Write to this register as follows: 117 for resolutions below 1024x1024
+      118 for resolutions between 1024x1024-2048x2048 119 for resolutions above 2048x2048
+      to guarantee robust rasterization.'
+    name: SUBPIXEL_SPECIFIER
+    shortdesc: The default value is 117, and is 127 minus the number of subpixel bits.
+    type: rw
+  name: PP0_SUBPIXEL_SPECIFIER
+  offset: '0x00008048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Tiebreak mode Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    name: TIEBREAK_MODE
+    type: rw
+  name: PP0_TIEBREAK_MODE
+  offset: '0x0000804C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Polygon List Format Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: rw
+  - bits: '29:28'
+    name: LIST_FORMAT
+    type: rw
+  - bits: '21:16'
+    name: SCALE_Y
+    type: rw
+  - bits: '15:6'
+    name: RESERVED
+    type: rw
+  - bits: '5:0'
+    name: SCALE_X
+    type: rw
+  name: PP0_PLIST_CONFIG
+  offset: '0x00008050'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Scaling Register
+  field:
+  - bits: '31:23'
+    name: RESERVED
+    type: rw
+  - bits: '22:20'
+    name: SCALE_Y
+    type: rw
+  - bits: '19'
+    name: RESERVED
+    type: rw
+  - bits: '18:16'
+    name: SCALE_X
+    type: rw
+  - bits: '15:12'
+    name: RESERVED
+    type: rw
+  - bits: '11'
+    longdesc: It changes the sign on the y-coordinate when using the derivative instruction
+      in adder4 and adder1.
+    name: FLIP_DERIVATIVE_Y
+    shortdesc: Flips the sign of the y derivative.
+    type: rw
+  - bits: '10'
+    longdesc: When set to 1, the xy-coordinate system has the origin in the lower
+      left corner. If set to 0, the origin is at the upper left corner. Only the fragcoord
+      y-value is affected.
+    name: FLIP_FRAGCOORD
+    shortdesc: Flips the coordinate system as read by fragcoord.
+    type: rw
+  - bits: '9'
+    longdesc: 'See Subword 14: Stencil clear tag, number of uniforms, dithering/ROP4
+      enable, polygon orientation flag on page 3-145 The dithering enabled by WBx_DITHER_ENABLE
+      in the WBx_TARGET_FLAGS Register is not affected. Note: There are no offsets
+      to the dithering matrix, consequently a framebuffer with a height divisible
+      by four is required for a 1:1 mapping with the non-flipped content.'
+    name: FLIP_DITHERING_MATRIX
+    shortdesc: Flips the dithering matrix enabled by RSW 14, bit 13 upside down.
+    type: rw
+  - bits: '8'
+    longdesc: This is achieved by flipping the y-coordinate of the point sprites when
+      using varying instruction 12.
+    name: FLIP_POINT_SPRITES
+    shortdesc: Flips the point sprites upside down.
+    type: rw
+  - bits: '3'
+    longdesc: This is achieved by multiplying the result from the derivative instructions
+      in adder4 and adder1 by 2**SCALEX for the x-direction and 2**SCALEY for the
+      y-direction.
+    name: DERIVATIVE_SCALE_ENABLE
+    shortdesc: Enables scaling of the derivative instruction.
+    type: rw
+  - bits: '2'
+    longdesc: This is achieved by dividing the result of the varying instruction Position
+      Register with 2**SCALEX for the x-direction and 2**SCALEY for the y-direction.
+    name: FRAGCOORD_SCALE_ENABLE
+    shortdesc: Enables inverse scaling of fragcoord values.
+    type: rw
+  - bits: '1'
+    longdesc: 'This is achieved by dividing the x and y position with 2**SCALEX and
+      2**SCALEY before applying the dithering offset table. There are two offset tables,
+      one in the blending unit and one in the writeback unit. Both are affected. Note:
+      * The dither scaling is only valid for the dithering enabled by the RSW. Writeback
+      dithering, that is, dithering enabled by the writeback registers, is not affected.
+      * The dithering matrix can only be scaled up to the size of the tile, making
+      scaling values greater than 3 ineffective. This is an implementation limit.'
+    name: DITHERING_SCALE_ENABLE
+    shortdesc: Enables scaling of dithering values.
+    type: rw
+  - bits: '0'
+    longdesc: This feature multiplies the line width and point size in both x and
+      y direction by 2*SCALEX and 2*SCALEY. The major axis for aliased lines is affected
+      so that dx and dy are divided by 2*SCALEX and 2*SCALEY before the major axis
+      is selected. Because of the diamond-exit rulea, the line offset is not affected
+      by the scaling.
+    name: POINT_AND_LINE_SCALE_ENABLE
+    shortdesc: Enables scaling of point and line sizes.
+    type: rw
+  name: PP0_SCALING_CONFIG
+  offset: '0x00008054'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Tilebuffer configuration Register
+  field:
+  - bits: '15:12'
+    name: TILEBUFFER_A_BITS
+    type: rw
+  - bits: '11:8'
+    name: TILEBUFFER_B_BITS
+    type: rw
+  - bits: '7:4'
+    name: TILEBUFFER_G_BITS
+    type: rw
+  - bits: '3:0'
+    name: TILEBUFFER_R_BITS
+    type: rw
+  name: PP0_TILEBUFFER_BITS
+  offset: '0x00008058'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Source Select Register
+  field:
+  - bits: '1:0'
+    longdesc: 0 = None, WB is disabled 1 = Z/Stencil buffer 2 = ARGB buffer 3 = Reserved/undefined.
+    name: WB0_SOURCE_SELECT
+    shortdesc: Tile buffer source for the write-back unit.
+    type: rw
+  name: PP0_WB0_SOURCE_SELECT
+  offset: '0x00008100'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target Address Register
+  field:
+  - bits: '31:3'
+    name: WB0_TARGET_ADDR
+    type: rw
+  name: PP0_WB0_TARGET_ADDR
+  offset: '0x00008104'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target Pixel Format Register
+  field:
+  - bits: '3:0'
+    name: WB0_TARGET_PIXEL_FORMAT
+    type: rw
+  name: PP0_WB0_TARGET_PIXEL_FORMAT
+  offset: '0x00008108'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target AA Format Register
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: rw
+  - bits: '14:12'
+    name: WB0_TARGET_AA_Y
+    type: rw
+  - bits: '11:10'
+    name: RESERVED
+    type: rw
+  - bits: '9:8'
+    name: WB0_TARGET_AA_X
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    longdesc: Consequently you are advised not to use these bits and to set them to
+      zero.
+    name: WB0_TARGET_AA_FORMAT
+    shortdesc: 'Blocked AA Note: WB0_TARGET_AA_FORMAT is deprecated.'
+    type: rw
+  name: PP0_WB0_TARGET_AA_FORMAT
+  offset: '0x0000810C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target Layout
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1:0'
+    longdesc: The pixels are stored in normal linear layout in memory. 1 Interleaved
+      layout. This is a fully interleaved mode where pixels are stored in u-order
+      in memory for best possible 2D locality. This normally requires a quadratic
+      framebuffer with power of two sides, but can also be used if the width is twice
+      the height and both sides are powers of two. 2 Interleaved blocks. Each 16x16
+      pixel block is interleaved u-order internally and then the blocks are stored
+      linearly in the framebuffer. 3 Reserved = Undefined.
+    name: WB0_TARGET_LAYOUT
+    shortdesc: 0 Linear layout.
+    type: rw
+  name: PP0_WB0_TARGET_LAYOUT
+  offset: '0x00008110'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target Scanline Length
+  field:
+  - bits: '15:0'
+    longdesc: The actual meaning depends on the value of WB0_TARGET_LAYOUT.
+    name: WB0_TARGET_SCANLINE_LENGTH
+    shortdesc: Specifies the offset between the beginning of two lines of the target
+      buffer.
+    type: rw
+  name: PP0_WB0_TARGET_SCANLINE_LENGTH
+  offset: '0x00008114'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target Flags Register
+  field:
+  - bits: '5'
+    longdesc: When disabled, pixels are written in little-endian byte order.
+    name: WB0_BIG_ENDIAN
+    shortdesc: When enabled, pixels are written in big-endian byte order.
+    type: rw
+  - bits: '4'
+    longdesc: 'Dithering is only possible when FP_TILEBUF_ENABLE is off. Note: Dithering
+      only is supported when the tilebuffer is not downsampled more than a factor
+      of four in either dimension, that is, the tilebuffer size is not less than 4x4
+      pixels.'
+    name: WB0_DITHER_ENABLE
+    shortdesc: When enabled, dithering of the write-back data is performed using Bayer
+      ordered dithering.
+    type: rw
+  - bits: '3'
+    longdesc: This, together with WB0_SWAP_RED_BLUE_ENABLE makes it possible to support
+      different component permutations of WB0_TARGET_PIXEL_FORMAT.
+    name: WB0_INV_COMPONENT_ORDER_ENABLE
+    shortdesc: 'When enabled, color formats get the order of their components inverted,
+      for example: RGBA -> ARGB.'
+    type: rw
+  - bits: '2'
+    longdesc: This, together with WB0_INV_COMPONENT_ORDER_ENABLE makes it possible
+      to support different component permutations of WB0_TARGET_PIXEL_FORMAT.
+    name: WB0_SWAP_RED_BLUE_ENABLE
+    shortdesc: 'When enabled, color formats get their red and blue components swapped,
+      for example: RGBA->BGRA.'
+    type: rw
+  - bits: '1'
+    name: WB0_BOUNDING_BOX_ENABLE
+    type: rw
+  - bits: '0'
+    name: WB0_DIRTY_BIT_ENABLE
+    type: rw
+  name: PP0_WB0_TARGET_FLAGS
+  offset: '0x00008118'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 MRT Enable Register
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: rw
+  - bits: '3:0'
+    name: WB0_MRT_ENABLE
+    type: rw
+  name: PP0_WB0_MRT_ENABLE
+  offset: '0x0000811C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 MRT Offset Register
+  field:
+  - bits: '31:3'
+    name: WB0_MRT_OFFSET
+    type: rw
+  name: PP0_WB0_MRT_OFFSET
+  offset: '0x00008120'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Global Test Enable Register
+  field:
+  - bits: '0'
+    name: WB0_GLOBAL_TEST_ENABLE
+    type: rw
+  name: PP0_WB0_GLOBAL_TEST_ENABLE
+  offset: '0x00008124'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Global Test Reference Value Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: rw
+  name: PP0_WB0_GLOBAL_TEST_REF_VALUE
+  offset: '0x00008128'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Global Test Compare Function Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: rw
+  name: PP0_WB0_GLOBAL_TEST_CMP_FUNC
+  offset: '0x0000812C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Source Select Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1:0'
+    longdesc: 0 = None, WB is disabled 1 = Z/Stencil buffer 2 = ARGB buffer 3 = Reserved/undefined.
+    name: WB1_SOURCE_SELECT
+    shortdesc: Tile buffer source for the write-back unit.
+    type: rw
+  name: PP0_WB1_SOURCE_SELECT
+  offset: '0x00008200'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target Address Register
+  field:
+  - bits: '31:3'
+    name: WB1_TARGET_ADDR
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: PP0_WB1_TARGET_ADDR
+  offset: '0x00008204'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target Pixel Format Register
+  field:
+  - bits: '3:0'
+    name: WB1_TARGET_PIXEL_FORMAT
+    type: rw
+  name: PP0_WB1_TARGET_PIXEL_FORMAT
+  offset: '0x00008208'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target AA Format Register
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: rw
+  - bits: '14:12'
+    name: WB1_TARGET_AA_Y
+    type: rw
+  - bits: '11:10'
+    name: RESERVED
+    type: rw
+  - bits: '9:8'
+    name: WB1_TARGET_AA_X
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    longdesc: Consequently you are advised not to use these bits and to set them to
+      zero.
+    name: WB1_TARGET_AA_FORMAT
+    shortdesc: 'Blocked AA Note: WB1_TARGET_AA_FORMAT is deprecated.'
+    type: rw
+  name: PP0_WB1_TARGET_AA_FORMAT
+  offset: '0x0000820C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target Layout
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1:0'
+    longdesc: The pixels are stored in normal linear layout in memory. 1 Interleaved
+      layout. This is a fully interleaved mode where pixels are stored in u-order
+      in memory for best possible 2D locality. This normally requires a quadratic
+      framebuffer with power of two sides, but can also be used if the width is twice
+      the height and both sides are powers of two. 2 Interleaved blocks. Each 16x16
+      pixel block is interleaved u-order internally and then the blocks are stored
+      linearly in the framebuffer. 3 Reserved = Undefined.
+    name: WB1_TARGET_LAYOUT
+    shortdesc: 0 Linear layout.
+    type: rw
+  name: PP0_WB1_TARGET_LAYOUT
+  offset: '0x00008210'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target Scanline Length
+  field:
+  - bits: '15:0'
+    longdesc: The actual meaning depends on the value of WB1_TARGET_LAYOUT.
+    name: WB2_TARGET_SCANLINE_LENGTH
+    shortdesc: Specifies the offset between the beginning of two lines of the target
+      buffer.
+    type: rw
+  name: PP0_WB1_TARGET_SCANLINE_LENGTH
+  offset: '0x00008214'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target Flags Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    longdesc: When disabled, pixels are written in little-endian byte order.
+    name: WB1_BIG_ENDIAN
+    shortdesc: When enabled, pixels are written in big-endian byte order.
+    type: rw
+  - bits: '4'
+    longdesc: 'Dithering is only possible when FP_TILEBUF_ENABLE is off. Note: Dithering
+      only is supported when the tilebuffer is not downsampled more than a factor
+      of four in either dimension, that is, the tilebuffer size is not less than 4x4
+      pixels.'
+    name: WB1_DITHER_ENABLE
+    shortdesc: When enabled, dithering of the write-back data is performed using Bayer
+      ordered dithering.
+    type: rw
+  - bits: '3'
+    longdesc: This, together with WB0_SWAP_RED_BLUE_ENABLE makes it possible to support
+      different component permutations of WB1_TARGET_PIXEL_FORMAT.
+    name: WB1_INV_COMPONENT_ORDER_ENABLE
+    shortdesc: 'When enabled, color formats get the order of their components inverted,
+      for example: RGBA -> ARGB.'
+    type: rw
+  - bits: '2'
+    longdesc: This, together with WB1_INV_COMPONENT_ORDER_ENABLE makes it possible
+      to support different component permutations of WB1_TARGET_PIXEL_FORMAT.
+    name: WB1_SWAP_RED_BLUE_ENABLE
+    shortdesc: 'When enabled, color formats get their red and blue components swapped,
+      for example: RGBA->BGRA.'
+    type: rw
+  - bits: '1'
+    name: WB1_BOUNDING_BOX_ENABLE
+    type: rw
+  - bits: '0'
+    name: WB1_DIRTY_BIT_ENABLE
+    type: rw
+  name: PP0_WB1_TARGET_FLAGS
+  offset: '0x00008218'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 MRT Enable Register
+  field:
+  - bits: '3:0'
+    name: WB1_MRT_ENABLE
+    type: rw
+  name: PP0_WB1_MRT_ENABLE
+  offset: '0x0000821C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 MRT Offset Register
+  field:
+  - bits: '31:3'
+    name: WB1_MRT_OFFSET
+    type: rw
+  name: PP0_WB1_MRT_OFFSET
+  offset: '0x00008220'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Global Test Enable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: WB1_GLOBAL_TEST_ENABLE
+    type: rw
+  name: PP0_WB1_GLOBAL_TEST_ENABLE
+  offset: '0x00008224'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Global Test Reference Value Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: rw
+  name: PP0_WB1_GLOBAL_TEST_REF_VALUE
+  offset: '0x00008228'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Global Test Compare Function Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: rw
+  name: PP0_WB1_GLOBAL_TEST_CMP_FUNC
+  offset: '0x0000822C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Source Select Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1:0'
+    longdesc: 0 = None, WB is disabled 1 = Z/Stencil buffer 2 = ARGB buffer 3 = Reserved/undefined.
+    name: WB2_SOURCE_SELECT
+    shortdesc: Tile buffer source for the write-back unit.
+    type: rw
+  name: PP0_WB2_SOURCE_SELECT
+  offset: '0x00008300'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target Address Register
+  field:
+  - bits: '31:3'
+    name: WB2_TARGET_ADDR
+    type: rw
+  name: PP0_WB2_TARGET_ADDR
+  offset: '0x00008304'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target Pixel Format Register
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: rw
+  - bits: '3:0'
+    name: WB2_TARGET_PIXEL_FORMAT
+    type: rw
+  name: PP0_WB2_TARGET_PIXEL_FORMAT
+  offset: '0x00008308'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target AA Format Register
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: rw
+  - bits: '14:12'
+    name: WB2_TARGET_AA_Y
+    type: rw
+  - bits: '11:10'
+    name: RESERVED
+    type: rw
+  - bits: '9:8'
+    name: WB2_TARGET_AA_X
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    longdesc: Consequently you are advised not to use these bits and to set them to
+      zero.
+    name: WB2_TARGET_AA_FORMAT
+    shortdesc: 'Blocked AA Note: WB2_TARGET_AA_FORMAT is deprecated.'
+    type: rw
+  name: PP0_WB2_TARGET_AA_FORMAT
+  offset: '0x0000830C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target Layout
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1:0'
+    longdesc: The pixels are stored in normal linear layout in memory. 1 Interleaved
+      layout. This is a fully interleaved mode where pixels are stored in u-order
+      in memory for best possible 2D locality. This normally requires a quadratic
+      framebuffer with power of two sides, but can also be used if the width is twice
+      the height and both sides are powers of two. 2 Interleaved blocks. Each 16x16
+      pixel block is interleaved u-order internally and then the blocks are stored
+      linearly in the framebuffer. 3 Reserved = Undefined.
+    name: WB2_TARGET_LAYOUT
+    shortdesc: 0 Linear layout.
+    type: rw
+  name: PP0_WB2_TARGET_LAYOUT
+  offset: '0x00008310'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target Scanline Length
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: rw
+  - bits: '15:0'
+    longdesc: The actual meaning depends on the value of WB2_TARGET_LAYOUT.
+    name: WB2_TARGET_SCANLINE_LENGTH
+    shortdesc: Specifies the offset between the beginning of two lines of the target
+      buffer.
+    type: rw
+  name: PP0_WB2_TARGET_SCANLINE_LENGTH
+  offset: '0x00008314'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target Flags Register
+  field:
+  - bits: '5'
+    longdesc: When disabled, pixels are written in little-endian byte order.
+    name: WB2_BIG_ENDIAN
+    shortdesc: When enabled, pixels are written in big-endian byte order.
+    type: rw
+  - bits: '4'
+    longdesc: 'Dithering is only possible when FP_TILEBUF_ENABLE is off. Note: Dithering
+      only is supported when the tilebuffer is not downsampled more than a factor
+      of four in either dimension, that is, the tilebuffer size is not less than 4x4
+      pixels.'
+    name: WB2_DITHER_ENABLE
+    shortdesc: When enabled, dithering of the write-back data is performed using Bayer
+      ordered dithering.
+    type: rw
+  - bits: '3'
+    longdesc: This, together with WB2_SWAP_RED_BLUE_ENABLE makes it possible to support
+      different component permutations of WB2_TARGET_PIXEL_FORMAT.
+    name: WB2_INV_COMPONENT_ORDER_ENABLE
+    shortdesc: 'When enabled, color formats get the order of their components inverted,
+      for example: RGBA -> ARGB.'
+    type: rw
+  - bits: '2'
+    longdesc: This, together with WB2_INV_COMPONENT_ORDER_ENABLE makes it possible
+      to support different component permutations of WB2_TARGET_PIXEL_FORMAT.
+    name: WB2_SWAP_RED_BLUE_ENABLE
+    shortdesc: 'When enabled, color formats get their red and blue components swapped,
+      for example: RGBA->BGRA.'
+    type: rw
+  - bits: '1'
+    name: WB2_BOUNDING_BOX_ENABLE
+    type: rw
+  - bits: '0'
+    name: WB2_DIRTY_BIT_ENABLE
+    type: rw
+  name: PP0_WB2_TARGET_FLAGS
+  offset: '0x00008318'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 MRT Enable Register
+  field:
+  - bits: '3:0'
+    name: WB2_MRT_ENABLE
+    type: rw
+  name: PP0_WB2_MRT_ENABLE
+  offset: '0x0000831C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 MRT Offset Register
+  field:
+  - bits: '31:3'
+    name: WB2_MRT_OFFSET
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: PP0_WB2_MRT_OFFSET
+  offset: '0x00008320'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Global Test Enable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: WB2_GLOBAL_TEST_ENABLE
+    type: rw
+  name: PP0_WB2_GLOBAL_TEST_ENABLE
+  offset: '0x00008324'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Global Test Reference Value Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: rw
+  name: PP0_WB2_GLOBAL_TEST_REF_VALUE
+  offset: '0x00008328'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Global Test Compare Function Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: rw
+  name: PP0_WB2_GLOBAL_TEST_CMP_FUNC
+  offset: '0x0000832C'
+  type: rw
+  width: 32
+- default: '0x00CD0007'
+  description: Version Register
+  field:
+  - bits: '31:16'
+    name: PRODUCT_ID
+    type: ro
+  - bits: '15:8'
+    name: VERSION_MAJOR
+    type: ro
+  - bits: '7:0'
+    name: VERSION_MINOR
+    type: ro
+  name: PP0_VERSION
+  offset: '0x00009000'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Current Renderer List Address Register
+  field:
+  - bits: '31:5'
+    name: CURRENT_REND_LIST_ADDR
+    type: rw
+  - bits: '4:0'
+    name: RESERVED
+    type: rw
+  name: PP0_CURRENT_REND_LIST_ADDR
+  offset: '0x00009004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Pixel Processor Status Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7'
+    longdesc: This bit is set by the CLK_OVERRIDE command in the CTRL_MGMT Register.
+      When this bit is set, all the architectural clock gates in the design are overridden
+      so all clocks are always active.
+    name: CLK_OVERRIDE
+    shortdesc: Shows that the block level clock gates have been disabled.
+    type: rw
+  - bits: '6'
+    name: INTERRUPT_ASSERTED
+    type: rw
+  - bits: '5'
+    name: WRITE_BOUNDARY_ERROR
+    type: rw
+  - bits: '4'
+    longdesc: The bus interface can be restarted by using the START_BUS command.
+    name: BUS_STOPPED
+    shortdesc: Shows that the master bus interface of the pixel processor has been
+      stopped because of a STOP_BUS command or a performance counter limit event.
+    type: rw
+  - bits: '3'
+    longdesc: The pixel processor has been stopped and has to be reset before rendering
+      can be started again.
+    name: BUS_ERROR
+    shortdesc: A bus transaction has ended with error.
+    type: rw
+  - bits: '2'
+    longdesc: This state can also be triggered under normal rendering if you are running
+      a shader where it is near to a never-ending inner loop. From the software perspective,
+      you can ignore this state, because this is merely a hint from the HW that something
+      might be wrong. The SW then decides to either reset the processor, or continue
+      to let it run.
+    name: HANG
+    shortdesc: Watchdog timer limit reached.
+    type: rw
+  - bits: '1'
+    longdesc: Indicates that an END_AFTER_TILE command has been issued.
+    name: TILE_STOPPED
+    shortdesc: Rendering of the current tile has been completed as if it was the last
+      tile of the frame.
+    type: rw
+  - bits: '0'
+    name: RENDERING_ACTIVE
+    type: rw
+  name: PP0_STATUS
+  offset: '0x00009008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Control Management Register
+  field:
+  - bits: '8'
+    longdesc: Writing a 1 to this bit overrides all the architectural clock gates
+      in the design, so all clocks are always active. The status of the clock override
+      is shown as the CLK_OVERRIDE bit in the STATUS Register. The only way to disable
+      the clock override is by performing a pixel processor reset.
+    name: CLK_OVERRIDE
+    shortdesc: Disable block level clock gates.
+    type: wo
+  - bits: '7'
+    longdesc: Use the RESET_COMPLETED interrupt bit to discover when the reset has
+      actually completed.
+    name: SOFT_RESET
+    shortdesc: Writing to this bit resets the pixel processor after all outstanding
+      bus-transfers have completed.
+    type: wo
+  - bits: '6'
+    longdesc: Do not write this value during rendering.
+    name: START_RENDERING
+    shortdesc: Writing to this bit initiates rendering.
+    type: wo
+  - bits: '5'
+    longdesc: 'If FORCE_RESET is asserted while there is a bus transaction in progress
+      the AXI interconnect might operate at reduced efficiency or lockup. To ensure
+      a safe reset: 1. Write 1 to STOP_BUS. 2. Wait until all transactions have completed.
+      The BUS_STOP interrupt is asserted when the bus is idle. 3. Write 1 to FORCE_RESET.
+      The use of FORCE_RESET must be deprecated, unless you require backwards compatibility
+      with Mali-200.'
+    name: FORCE_RESET
+    shortdesc: Writing to this bit resets the pixel processor, so that it can be brought
+      out of a hang in a reasonably clean manner.
+    type: wo
+  - bits: '4'
+    longdesc: Only useful for debugging.
+    name: FORCE_HANG
+    shortdesc: Writing to this bit causes the pixel processor to hang.
+    type: wo
+  - bits: '3'
+    longdesc: 'This must be done only when the renderer is idle, otherwise the hardware
+      cannot guarantee that caches become clean or that renderer glitches do not occur.
+      The pixel processor must have an active clock for the flush to have an effect.
+      The pixel processor might have the clock shut off when idle to conserve power,
+      depending on the processor integration. This means that the FLUSH_CACHES command
+      must be issued in of the following states of operation: 1. At the beginning
+      of a frame, after the APB registers have been written to, but before the START_RENDERING
+      command has been issued. 2. At the end of a frame, after the interrupt has been
+      received but before the interrupt signal has been masked or acknowledged. If
+      neither is possible, you can use a FORCE_RESET command to flush the caches.
+      FLUSH_CACHES is performed implicitly every time the pixel processor starts rendering,
+      so explicitly using this bit is rarely required.'
+    name: FLUSH_CACHES
+    shortdesc: Writing to this bit causes all the vertex, RSW and texture caches to
+      be flushed immediately.
+    type: wo
+  - bits: '2'
+    longdesc: This action finalizes the rendering of the current tile, leaving the
+      framebuffer incomplete in most situations, except when the current tile is the
+      last tile of the frame. Rendering of the rest of the frame can be initiated
+      by writing the CURRENT_REND_LIST_ADDR value to the REND_LIST_ADDR Register and
+      issuing the START_RENDERING command.
+    name: END_AFTER_TILE
+    shortdesc: Writing to this bit causes the renderer to treat a BEGIN-NEW-TILE command,
+      that is, Cmd 14, as an End-Of-List command, that is Cmd 15.
+    type: wo
+  - bits: '1'
+    longdesc: The effect of issuing a START_BUS and a STOP_BUS command at the same
+      time is not defined.
+    name: START_BUS
+    shortdesc: Writing to this bit reactivates the bus interface after it has been
+      stopped by a STOP_BUS command or a WRITE_BOUNDARY_LIMIT event.
+    type: wo
+  - bits: '0'
+    longdesc: Any current bus transactions are completed before the interface is stopped.
+      The bus can be restarted by issuing a START_BUS command. The effect of issuing
+      a START_BUS and a STOP_BUS command at the same time is not defined.
+    name: STOP_BUS
+    shortdesc: Writing to this bit causes the bus interface to hold back future transactions
+      on the bus.
+    type: wo
+  name: PP0_CTRL_MGMT
+  offset: '0x0000900C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Last Tile Where Processing Started Register
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23:16'
+    longdesc: 'Note: Scaling is equal to that of the Begin New Tile command 15 in
+      the polygon list.'
+    name: TILEY_START
+    shortdesc: The y position of the last file that processing has begun.
+    type: ro
+  - bits: '15:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    longdesc: 'Note: Scaling is equal to that of the Begin New Tile command 15 in
+      the polygon list.'
+    name: TILEX_START
+    shortdesc: The x position of the last file that processing has begun.
+    type: ro
+  name: PP0_LAST_TILE_POS_START
+  offset: '0x00009010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Last Tile Where Processing Completed Register
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23:16'
+    longdesc: 'Note: Scaling is equal to that of the Begin New Tile command 15 in
+      the polygon list.'
+    name: TILEY_END
+    shortdesc: The y position of the last tile that processing has ended, that is
+      written back.
+    type: ro
+  - bits: '15:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    longdesc: 'Note: Scaling is equal to that of the Begin New Tile command 15 in
+      the polygon list.'
+    name: TILEX_END
+    shortdesc: The x position of the last tile that processing has ended, that is
+      written back.
+    type: ro
+  name: PP0_LAST_TILE_POS_END
+  offset: '0x00009014'
+  type: ro
+  width: 32
+- default: '0x00001000'
+  description: Interrupt Rawstat Register
+  field:
+  - bits: '31:13'
+    name: RESERVED
+    type: rw
+  - bits: '12'
+    name: RESET_COMPLETED
+    type: rw
+  - bits: '11'
+    longdesc: It is treated as an end of list command and rendering stops.
+    name: CALL_STACK_OVERFLOW
+    shortdesc: The polygon list command call has been executed to many times recursively.
+    type: rw
+  - bits: '10'
+    longdesc: The return command is then treated as an end of list command and rendering
+      stops.
+    name: CALL_STACK_UNDERFLOW
+    shortdesc: The polygon list command return was executed without a call first.
+    type: rw
+  - bits: '9'
+    longdesc: The invalid command is treated as an end of list command.
+    name: INVALID_PLIST_COMMAND
+    shortdesc: A command in the polygon list was invalid and rendering could not continue.
+    type: rw
+  - bits: '8'
+    longdesc: The bus interface completes the previous bus transaction but does not
+      initialize any new transactions before the WRITE_BOUNDARY is modified or disabled,
+      or the renderer is reset.
+    name: WRITE_BOUNDARY_ERROR
+    shortdesc: The pixel processor has attempted to write outside the write boundary
+      set by the WRITE_BOUNDARY registers.
+    type: rw
+  - bits: '7'
+    longdesc: The bus interface is stopped as with STOP_BUS, and this interrupt source
+      set. The BUS_STOP interrupt is asserted when the bus is actually stopped. This
+      is likely to occur after CNT_1_LIMIT has been triggered.
+    name: CNT_1_LIMIT
+    shortdesc: Performance counter PERF_CNT_1 has passed the limit set in PERF_CNT_1_LIMIT.
+    type: rw
+  - bits: '6'
+    longdesc: The bus interface is stopped as with STOP_BUS, and this interrupt source
+      set. The BUS_STOP interrupt is asserted when the bus is actually stopped. This
+      is likely to occur after CNT_0_LIMIT has been triggered.
+    name: CNT_0_LIMIT
+    shortdesc: Performance counter PERF_CNT_0 has passed the limit set in PERF_CNT_0_LIMIT.
+    type: rw
+  - bits: '5'
+    longdesc: BUS_STOP is triggered only after the bus is actually stopped, making
+      it likely that BUS_STOP is delayed a bit after CNT_x_LIMIT has been triggered.
+      Operation can be continued by issuing the START_BUS command.
+    name: BUS_STOP
+    shortdesc: The renderer has been stopped by a STOP_BUS command.
+    type: rw
+  - bits: '4'
+    longdesc: The pixel processor has been stopped and has to be reset before rendering
+      can be started again.
+    name: BUS_ERROR
+    shortdesc: A bus transaction has ended with error.
+    type: rw
+  - bits: '3'
+    longdesc: The renderer must be reset before rendering can be started again.
+    name: FORCE_HANG
+    shortdesc: The pixel processor has been forced into an illegal state by the FORCE_HANG
+      command.
+    type: rw
+  - bits: '2'
+    longdesc: This state can also be triggered under normal rendering if you are running
+      a shader where it is near to a never-ending inner loop. From the software perspective,
+      you can ignore this state, because this is merely a hint from the HW that something
+      might be wrong. The SW then decides to either reset the processor, or continue
+      to let it run.
+    name: HANG
+    shortdesc: Watchdog timer limit reached.
+    type: rw
+  - bits: '1'
+    longdesc: The framebuffer might be incomplete.
+    name: END_OF_TILE
+    shortdesc: Rendering has been ended by an END_AFTER_TILE command.
+    type: rw
+  - bits: '0'
+    longdesc: The framebuffer is complete. The interrupt is delayed until all outstanding
+      write requests have completed.
+    name: END_OF_FRAME
+    shortdesc: Rendering has ended by completion of the polygon list.
+    type: rw
+  name: PP0_INT_RAWSTAT
+  offset: '0x00009020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear Register
+  field:
+  - bits: '31:13'
+    name: RESERVED
+    type: wo
+  - bits: '12'
+    name: RESET_COMPLETED
+    type: wo
+  - bits: '11'
+    name: CALL_STACK_OVERFLOW
+    type: wo
+  - bits: '10'
+    name: CALL_STACK_UNDERFLOW
+    type: wo
+  - bits: '9'
+    name: INVALID_PLIST_COMMAND
+    type: wo
+  - bits: '8'
+    name: WRITE_BOUNDARY_ERROR
+    type: wo
+  - bits: '7'
+    name: CNT_1_LIMIT
+    type: wo
+  - bits: '6'
+    name: CNT_0_LIMIT
+    type: wo
+  - bits: '5'
+    name: BUS_STOP
+    type: wo
+  - bits: '4'
+    name: BUS_ERROR
+    type: wo
+  - bits: '3'
+    name: FORCE_HANG
+    type: wo
+  - bits: '2'
+    name: HANG
+    type: wo
+  - bits: '1'
+    name: END_OF_TILE
+    type: wo
+  - bits: '0'
+    name: END_OF_FRAME
+    type: wo
+  name: PP0_INT_CLEAR
+  offset: '0x00009024'
+  type: wo
+  width: 32
+- default: '0x00000FFF'
+  description: Interrupt Mask Register
+  field:
+  - bits: '31:13'
+    name: RESERVED
+    type: rw
+  - bits: '12'
+    name: RESET_COMPLETED
+    type: rw
+  - bits: '11'
+    name: CALL_STACK_OVERFLOW
+    type: rw
+  - bits: '10'
+    name: CALL_STACK_UNDERFLOW
+    type: rw
+  - bits: '9'
+    name: INVALID_PLIST_COMMAND
+    type: rw
+  - bits: '8'
+    name: WRITE_BOUNDARY_ERROR
+    type: rw
+  - bits: '7'
+    name: CNT_1_LIMIT
+    type: rw
+  - bits: '6'
+    name: CNT_0_LIMIT
+    type: rw
+  - bits: '5'
+    name: BUS_STOP
+    type: rw
+  - bits: '4'
+    name: BUS_ERROR
+    type: rw
+  - bits: '3'
+    name: FORCE_HANG
+    type: rw
+  - bits: '2'
+    name: HANG
+    type: rw
+  - bits: '1'
+    name: END_OF_TILE
+    type: rw
+  - bits: '0'
+    name: END_OF_FRAME
+    type: rw
+  name: PP0_INT_MASK
+  offset: '0x00009028'
+  type: rw
+  width: 32
+- default: '0x00001000'
+  description: Interrupt Status Register
+  field:
+  - bits: '12'
+    name: RESET_COMPLETED
+    type: rw
+  - bits: '11'
+    name: CALL_STACK_OVERFLOW
+    type: rw
+  - bits: '10'
+    name: CALL_STACK_UNDERFLOW
+    type: rw
+  - bits: '9'
+    name: INVALID_PLIST_COMMAND
+    type: rw
+  - bits: '8'
+    name: WRITE_BOUNDARY_ERROR
+    type: rw
+  - bits: '7'
+    name: CNT_1_LIMIT
+    type: rw
+  - bits: '6'
+    name: CNT_0_LIMIT
+    type: rw
+  - bits: '5'
+    name: BUS_STOP
+    type: rw
+  - bits: '4'
+    name: BUS_ERROR
+    type: rw
+  - bits: '3'
+    name: FORCE_HANG
+    type: rw
+  - bits: '2'
+    name: HANG
+    type: rw
+  - bits: '1'
+    name: END_OF_TILE
+    type: rw
+  - bits: '0'
+    name: END_OF_FRAME
+    type: rw
+  name: PP0_INT_STATUS
+  offset: '0x0000902C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Boundary Enable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  name: PP0_WRITE_BOUNDARY_ENABLE
+  offset: '0x00009040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Boundary Low Register
+  field:
+  - bits: '31:8'
+    name: WRITE_BOUNDARY_LOW
+    type: rw
+  - bits: '7:0'
+    name: RESERVED
+    type: rw
+  name: PP0_WRITE_BOUNDARY_LOW
+  offset: '0x00009044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Boundary High Register
+  field:
+  - bits: '31:8'
+    name: WRITE_BOUNDARY_HIGH
+    type: rw
+  - bits: '7:0'
+    name: RESERVED
+    type: rw
+  name: PP0_WRITE_BOUNDARY_HIGH
+  offset: '0x00009048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Boundary Address Register
+  field:
+  - bits: '31:2'
+    name: WRITE_BOUNDARY_ADDRESS
+    type: rw
+  - bits: '1:0'
+    name: RESERVED
+    type: rw
+  name: PP0_WRITE_BOUNDARY_ADDRESS
+  offset: '0x0000904C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Bus Error Status Register
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: rw
+  - bits: '9:6'
+    name: READ_ERROR_ID
+    type: rw
+  - bits: '5:2'
+    name: WRITE_ERROR_ID
+    type: rw
+  - bits: '1'
+    name: READ_ERROR
+    type: rw
+  - bits: '0'
+    name: WRITE_ERROR
+    type: rw
+  name: PP0_BUS_ERROR_STATUS
+  offset: '0x00009050'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Watchdog Disable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  name: PP0_WATCHDOG_DISABLE
+  offset: '0x00009060'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Watchdog Timeout Register
+  field:
+  - bits: '31:0'
+    name: WATCHDOG_TIMEOUT
+    type: rw
+  name: PP0_WATCHDOG_TIMEOUT
+  offset: '0x00009064'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 0 Enable Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: If the PERF_CNT_0_VALUE Register exceeds the Performance Counter 0 Limit
+      value, then an interrupt is asserted and the BUS_STOPPED mechanism stops the
+      bus. The PERF_CNT_0_VALUE Register is reset to zero if you write to PERF_CNT_0_ENABLE
+      while the counter is enabled, that is, the PERF_CNT_0_ENABLE bit is 1.
+    name: PERF_CNT_0_LIM_EN
+    shortdesc: When set to 1, the PERF_CNT_0_LIMIT Register becomes active.
+    type: rw
+  - bits: '0'
+    longdesc: The PERF_CNT_0_SRC Register selects the event to be counted during a
+      frame.
+    name: PERF_CNT_0_ENABLE
+    shortdesc: When set to 1, the performance counter 0 is reset to zero and activated.
+    type: rw
+  name: PP0_PERF_CNT_0_ENABLE
+  offset: '0x00009080'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 0 SRC Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: rw
+  - bits: '5:0'
+    name: PERF_CNT_0_SRC
+    type: rw
+  name: PP0_PERF_CNT_0_SRC
+  offset: '0x00009084'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 0 Limit Register
+  field:
+  - bits: '31:0'
+    name: PERF_CNT_0_LIMIT
+    type: rw
+  name: PP0_PERF_CNT_0_LIMIT
+  offset: '0x00009088'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 0 Value Register
+  field:
+  - bits: '31:0'
+    name: PERF_CNT_0_VALUE
+    type: rw
+  name: PP0_PERF_CNT_0_VALUE
+  offset: '0x0000908C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 0 Enable Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: If the PERF_CNT_1_VALUE Register exceeds the Performance Counter 1 limit
+      value, then an interrupt is asserted and the BUS_STOPPED mechanism stops the
+      bus. The PERF_CNT_1_VALUE Register is reset to zero if you write to PERF_CNT_1_ENABLE
+      while the counter is enabled, that is, the PERF_CNT_1_ENABLE bit is 1.
+    name: PERF_CNT_1_LIM_EN
+    shortdesc: When set to 1, the PERF_CNT_1_LIMIT Register becomes active.
+    type: rw
+  - bits: '0'
+    longdesc: The PERF_CNT_1_SRC Register selects the event to be counted during a
+      frame.
+    name: PERF_CNT_1_ENABLE
+    shortdesc: When set to 1, the performance counter 1 is reset to zero and activated.
+    type: rw
+  name: PP0_PERF_CNT_1_ENABLE
+  offset: '0x000090A0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 1 SRC Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: rw
+  - bits: '5:0'
+    name: PERF_CNT_1_SRC
+    type: rw
+  name: PP0_PERF_CNT_1_SRC
+  offset: '0x000090A4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 1 Limit Register
+  field:
+  - bits: '31:0'
+    name: PERF_CNT_1_LIMIT
+    type: rw
+  name: PP0_PERF_CNT_1_LIMIT
+  offset: '0x000090A8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 1 Value Register
+  field:
+  - bits: '31:26'
+    name: PERF_CNT_1_VALUE
+    type: rw
+  name: PP0_PERF_CNT_1_VALUE
+  offset: '0x000090AC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Monitor Control Register
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: rw
+  - bits: '25:16'
+    name: NUMBER_TILE_X_DIR
+    type: rw
+  - bits: '15:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: PERFMON_ENABLE
+    type: rw
+  name: PP0_PERFMON_CONTR
+  offset: '0x000090B0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Monitor Base Address Register
+  field:
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: PP0_PERFMON_BASE
+  offset: '0x000090B4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Renderer List Address Register
+  field:
+  - bits: '31:3'
+    name: REND_LIST_ADDR
+    type: rw
+  name: PP1_REND_LIST_ADDR
+  offset: '0x0000A000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Renderer State Word Base Address Register
+  field:
+  - bits: '31:6'
+    name: REND_RSW_BASE
+    type: rw
+  name: PP1_REND_RSW_BASE
+  offset: '0x0000A004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Renderer Vertex Base Register
+  field:
+  - bits: '31:6'
+    name: REND_VERTEX_BASE
+    type: rw
+  name: PP1_REND_VERTEX_BASE
+  offset: '0x0000A008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Feature Enable Register
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: rw
+  - bits: '6'
+    longdesc: This means that all 16 samples from a 2x2 quad are counted and converted
+      to an alpha between 0.0 (0 samples) and 1.0 (16 samples), and that the alpha
+      value is set for all the fragments in the 2x2 fragment quad.
+    name: SUMMATE_QUAD_COVER
+    shortdesc: When set to 1, the coverage-to-alpha operates on a 2x2 fragment quad,
+      and not individual fragments.
+    type: rw
+  - bits: '5'
+    longdesc: The ORIGIN_LOWER_LEFT bit indicates whether the coordinate system for
+      the screen XY position has its origin in the upper-left corner, y-axis increasing
+      downwards or to lower-left corner, y-axis increasing upwards. The only hardware
+      function that is currently affected by this bit is the Position Register function,
+      and tile indices. The pixel processor considers the upper-left corner to be
+      the origin. This bit must be set for use with OpenGL.
+    name: ORIGIN_LOWER_LEFT
+    shortdesc: This feature is still functional but deprecated, use Scaling Register
+      on page 3-44 FLIP_FRAGOORD bit instead.
+    type: rw
+  - bits: '4'
+    longdesc: Only use for debugging. For normal use, enable or disable Early-Z with
+      the EARLYZ_ENABLE bit.
+    name: EARLYZ_DISABLE2
+    shortdesc: Setting this bit disables the second of two Early-Z mechanisms.
+    type: rw
+  - bits: '3'
+    longdesc: Only use for debugging. For normal use, enable or disable Early-Z with
+      the EARLYZ_ENABLE bit.
+    name: EARLYZ_DISABLE1
+    shortdesc: Setting this bit disables the first of two Early-Z mechanisms.
+    type: rw
+  - bits: '2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: EarlyZ is enabled by default. Enabling this test increases the performance
+      in high-overdraw situations by performing multiple Z-tests per clock at the
+      rasterizer level. The Early Z-test is not effective on Greater-Than depth test
+      functions.
+    name: EARLYZ_ENABLE
+    shortdesc: Setting this bit to 1 enables the Early Z-test mechanism in the rasterizer.
+    type: rw
+  - bits: '0'
+    longdesc: 'Enabling this feature has the following consequences: * multiple render
+      targets cannot be used * internal multi-sampling or super-sampling anti-aliasing
+      cannot be used * external write-back anti-aliasing technique cannot be used.'
+    name: FP_TILEBUF_ENABLE
+    shortdesc: Setting this bit to 1 sets the tile buffer to FP16 (1:5:10) component
+      format instead of 8-bit component format.
+    type: rw
+  name: PP1_FEATURE_ENABLE
+  offset: '0x0000A00C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Z Clear Value Register
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: rw
+  - bits: '23:0'
+    longdesc: If you do not want the Z tile buffer to be cleared, the content of the
+      Z tile buffer can be pre-loaded by using a textured quad and Z-replacement technique.
+      For more information see the explanation of subword 3 in Render state word data
+      structures on page 3-132. See also Table 3-231 on page 3-181 and the corresponding
+      description of texel format value 50.
+    name: Z_CLEAR_VALUE
+    shortdesc: The 24-bit depth value of the Z tile buffer is logically cleared whenever
+      processing of a new tile starts.
+    type: rw
+  name: PP1_Z_CLEAR_VALUE
+  offset: '0x0000A010'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Stencil Clear Value Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:0'
+    longdesc: If you do not want the stencil tile buffer to be cleared, the content
+      of the stencil tile buffer can be pre-loaded by using a textured quad and stencil
+      replacement technique. For more information see the explanation of subword 3
+      in Render state word data structures on page 3-132. See also Table 3-231 on
+      page 3-181 and the corresponding description of texel format value 50.
+    name: STENCIL_CLEAR_VALUE
+    shortdesc: The 8-bit stencil value of the stencil tile buffer is logically cleared
+      whenever processing of a new tile starts.
+    type: rw
+  name: PP1_STENCIL_CLEAR_VALUE
+  offset: '0x0000A014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: ABGR Clear Value 0 Register
+  field:
+  - bits: '31:24'
+    name: ALPHA_CLEAR_VALUE
+    type: rw
+  - bits: '23:16'
+    name: BLUE_CLEAR_VALUE
+    type: rw
+  - bits: '15:8'
+    name: GREEN_CLEAR_VALUE
+    type: rw
+  - bits: '7:0'
+    name: RED_CLEAR_VALUE
+    type: rw
+  name: PP1_ABGR_CLEAR_VALUE_0
+  offset: '0x0000A018'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: ABGR Clear Value 1 Register
+  field:
+  - bits: '31:24'
+    name: ALPHA_CLEAR_VALUE
+    type: rw
+  - bits: '23:16'
+    name: BLUE_CLEAR_VALUE
+    type: rw
+  - bits: '15:8'
+    name: GREEN_CLEAR_VALUE
+    type: rw
+  - bits: '7:0'
+    name: RED_CLEAR_VALUE
+    type: rw
+  name: PP1_ABGR_CLEAR_VALUE_1
+  offset: '0x0000A01C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: ABGR Clear Value 2 Register
+  field:
+  - bits: '31:24'
+    name: ALPHA_CLEAR_VALUE
+    type: rw
+  - bits: '23:16'
+    name: BLUE_CLEAR_VALUE
+    type: rw
+  - bits: '15:8'
+    name: GREEN_CLEAR_VALUE
+    type: rw
+  - bits: '7:0'
+    name: RED_CLEAR_VALUE
+    type: rw
+  name: PP1_ABGR_CLEAR_VALUE_2
+  offset: '0x0000A020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: ABGR Clear Value 3 Register
+  field:
+  - bits: '31:24'
+    name: ALPHA_CLEAR_VALUE
+    type: rw
+  - bits: '23:16'
+    name: BLUE_CLEAR_VALUE
+    type: rw
+  - bits: '15:8'
+    name: GREEN_CLEAR_VALUE
+    type: rw
+  - bits: '7:0'
+    name: RED_CLEAR_VALUE
+    type: rw
+  name: PP1_ABGR_CLEAR_VALUE_3
+  offset: '0x0000A024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Bounding Box Left Right Register
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: rw
+  - bits: '19:16'
+    longdesc: Bits [13:4] are always 0. If a greater bounding box than 16 is required,
+      the modulo 16 of the bounding box is placed in this register. The remaining
+      part is subtracted from all vertices.
+    name: BOUNDING_BOX_LEFT
+    shortdesc: Bits [3:0] of the number of pixels from the left initial framebuffer
+      edge to exclude from write-back, if the bounding box is honored.
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:0'
+    name: BOUNDING_BOX_RIGHT
+    type: rw
+  name: PP1_BOUNDING_BOX_LEFT_RIGHT
+  offset: '0x0000A028'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Bounding Box Bottom Register
+  field:
+  - bits: '13:0'
+    name: BOUNDING_BOX_BOTTOM
+    type: rw
+  name: PP1_BOUNDING_BOX_BOTTOM
+  offset: '0x0000A02C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: FS Stack Address Register
+  field:
+  - bits: '31:6'
+    name: FS_STACK_ADDR
+    type: rw
+  name: PP1_FS_STACK_ADDR
+  offset: '0x0000A030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: FS Stack Size and Initial Value Register
+  field:
+  - bits: '31:16'
+    longdesc: This is achieved by setting this field to a non-zero value to enable
+      the main function of a fragment shader to have a stack frame. This register
+      must be set to the size of the largest stack frame of the active fragment shader
+      main function requirements. If the stack pointer is decremented to a value less
+      than FS_STACK_INIT_VAL as a result of a function return, then the fragment shader
+      terminates, and is considered to have executed successfully. This functionality
+      enables the main-function to be recursive, as any other function.
+    name: FS_STACK_INIT_VAL
+    shortdesc: The initial value that the stack pointer is set to at the start of
+      executing a fragment shader.
+    type: rw
+  - bits: '15:0'
+    longdesc: 'The amount of memory that must be allocated for the fragment shader
+      stack is 1KB x FS_STACK_SIZE. Note: The fragment shader requires 128 stacks
+      to keep stack data for all active fragments in the pipeline. An increment of
+      1 unit in FS_STACK_SIZE means 8-byte elements for each stack for each fragment.
+      This gives 8-byte x 128 stacks/fragment = 1024 bytes.'
+    name: FS_STACK_SIZE
+    shortdesc: The fragment shader stack size in number of 8-byte elements that the
+      fragment shader stack is permitted to contain.
+    type: rw
+  name: PP1_FS_STACK_SIZE_AND_INIT_VAL
+  offset: '0x0000A034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Origin Offset X Register
+  field:
+  - bits: '15:0'
+    name: ORIGIN_OFFSET_X
+    type: rw
+  name: PP1_ORIGIN_OFFSET_X
+  offset: '0x0000A040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Origin Offset Y Register
+  field:
+  - bits: '15:0'
+    name: ORIGIN_OFFSET_Y
+    type: rw
+  name: PP1_ORIGIN_OFFSET_Y
+  offset: '0x0000A044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Subpixel Specifier Register
+  field:
+  - bits: '7:0'
+    longdesc: 'Write to this register as follows: 117 for resolutions below 1024x1024
+      118 for resolutions between 1024x1024-2048x2048 119 for resolutions above 2048x2048
+      to guarantee robust rasterization.'
+    name: SUBPIXEL_SPECIFIER
+    shortdesc: The default value is 117, and is 127 minus the number of subpixel bits.
+    type: rw
+  name: PP1_SUBPIXEL_SPECIFIER
+  offset: '0x0000A048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Tiebreak mode Register
+  field:
+  - bits: '2:0'
+    name: TIEBREAK_MODE
+    type: rw
+  name: PP1_TIEBREAK_MODE
+  offset: '0x0000A04C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Polygon List Format Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: rw
+  - bits: '29:28'
+    name: LIST_FORMAT
+    type: rw
+  - bits: '27:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: SCALE_Y
+    type: rw
+  - bits: '15:6'
+    name: RESERVED
+    type: rw
+  - bits: '5:0'
+    name: SCALE_X
+    type: rw
+  name: PP1_PLIST_CONFIG
+  offset: '0x0000A050'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Scaling Register
+  field:
+  - bits: '31:23'
+    name: RESERVED
+    type: rw
+  - bits: '22:20'
+    name: SCALE_Y
+    type: rw
+  - bits: '19'
+    name: RESERVED
+    type: rw
+  - bits: '18:16'
+    name: SCALE_X
+    type: rw
+  - bits: '15:12'
+    name: RESERVED
+    type: rw
+  - bits: '11'
+    longdesc: It changes the sign on the y-coordinate when using the derivative instruction
+      in adder4 and adder1.
+    name: FLIP_DERIVATIVE_Y
+    shortdesc: Flips the sign of the y derivative.
+    type: rw
+  - bits: '10'
+    longdesc: When set to 1, the xy-coordinate system has the origin in the lower
+      left corner. If set to 0, the origin is at the upper left corner. Only the fragcoord
+      y-value is affected.
+    name: FLIP_FRAGCOORD
+    shortdesc: Flips the coordinate system as read by fragcoord.
+    type: rw
+  - bits: '9'
+    longdesc: 'See Subword 14: Stencil clear tag, number of uniforms, dithering/ROP4
+      enable, polygon orientation flag on page 3-145 The dithering enabled by WBx_DITHER_ENABLE
+      in the WBx_TARGET_FLAGS Register is not affected. Note: There are no offsets
+      to the dithering matrix, consequently a framebuffer with a height divisible
+      by four is required for a 1:1 mapping with the non-flipped content.'
+    name: FLIP_DITHERING_MATRIX
+    shortdesc: Flips the dithering matrix enabled by RSW 14, bit 13 upside down.
+    type: rw
+  - bits: '8'
+    longdesc: This is achieved by flipping the y-coordinate of the point sprites when
+      using varying instruction 12.
+    name: FLIP_POINT_SPRITES
+    shortdesc: Flips the point sprites upside down.
+    type: rw
+  - bits: '3'
+    longdesc: This is achieved by multiplying the result from the derivative instructions
+      in adder4 and adder1 by 2**SCALEX for the x-direction and 2**SCALEY for the
+      y-direction.
+    name: DERIVATIVE_SCALE_ENABLE
+    shortdesc: Enables scaling of the derivative instruction.
+    type: rw
+  - bits: '2'
+    longdesc: This is achieved by dividing the result of the varying instruction Position
+      Register with 2**SCALEX for the x-direction and 2**SCALEY for the y-direction.
+    name: FRAGCOORD_SCALE_ENABLE
+    shortdesc: Enables inverse scaling of fragcoord values.
+    type: rw
+  - bits: '1'
+    longdesc: 'This is achieved by dividing the x and y position with 2**SCALEX and
+      2**SCALEY before applying the dithering offset table. There are two offset tables,
+      one in the blending unit and one in the writeback unit. Both are affected. Note:
+      * The dither scaling is only valid for the dithering enabled by the RSW. Writeback
+      dithering, that is, dithering enabled by the writeback registers, is not affected.
+      * The dithering matrix can only be scaled up to the size of the tile, making
+      scaling values greater than 3 ineffective. This is an implementation limit.'
+    name: DITHERING_SCALE_ENABLE
+    shortdesc: Enables scaling of dithering values.
+    type: rw
+  - bits: '0'
+    longdesc: This feature multiplies the line width and point size in both x and
+      y direction by 2*SCALEX and 2*SCALEY. The major axis for aliased lines is affected
+      so that dx and dy are divided by 2*SCALEX and 2*SCALEY before the major axis
+      is selected. Because of the diamond-exit rulea, the line offset is not affected
+      by the scaling.
+    name: POINT_AND_LINE_SCALE_ENABLE
+    shortdesc: Enables scaling of point and line sizes.
+    type: rw
+  name: PP1_SCALING_CONFIG
+  offset: '0x0000A054'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Tilebuffer configuration Register
+  field:
+  - bits: '15:12'
+    name: TILEBUFFER_A_BITS
+    type: rw
+  - bits: '11:8'
+    name: TILEBUFFER_B_BITS
+    type: rw
+  - bits: '7:4'
+    name: TILEBUFFER_G_BITS
+    type: rw
+  - bits: '3:0'
+    name: TILEBUFFER_R_BITS
+    type: rw
+  name: PP1_TILEBUFFER_BITS
+  offset: '0x0000A058'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Source Select Register
+  field:
+  - bits: '1:0'
+    longdesc: 0 = None, WB is disabled 1 = Z/Stencil buffer 2 = ARGB buffer 3 = Reserved/undefined.
+    name: WB0_SOURCE_SELECT
+    shortdesc: Tile buffer source for the write-back unit.
+    type: rw
+  name: PP1_WB0_SOURCE_SELECT
+  offset: '0x0000A100'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target Address Register
+  field:
+  - bits: '31:3'
+    name: WB0_TARGET_ADDR
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: PP1_WB0_TARGET_ADDR
+  offset: '0x0000A104'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target Pixel Format Register
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: rw
+  - bits: '3:0'
+    name: WB0_TARGET_PIXEL_FORMAT
+    type: rw
+  name: PP1_WB0_TARGET_PIXEL_FORMAT
+  offset: '0x0000A108'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target AA Format Register
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: rw
+  - bits: '14:12'
+    name: WB0_TARGET_AA_Y
+    type: rw
+  - bits: '11:10'
+    name: RESERVED
+    type: rw
+  - bits: '9:8'
+    name: WB0_TARGET_AA_X
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    longdesc: Consequently you are advised not to use these bits and to set them to
+      zero.
+    name: WB0_TARGET_AA_FORMAT
+    shortdesc: 'Blocked AA Note: WB0_TARGET_AA_FORMAT is deprecated.'
+    type: rw
+  name: PP1_WB0_TARGET_AA_FORMAT
+  offset: '0x0000A10C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target Layout
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1:0'
+    longdesc: The pixels are stored in normal linear layout in memory. 1 Interleaved
+      layout. This is a fully interleaved mode where pixels are stored in u-order
+      in memory for best possible 2D locality. This normally requires a quadratic
+      framebuffer with power of two sides, but can also be used if the width is twice
+      the height and both sides are powers of two. 2 Interleaved blocks. Each 16x16
+      pixel block is interleaved u-order internally and then the blocks are stored
+      linearly in the framebuffer. 3 Reserved = Undefined.
+    name: WB0_TARGET_LAYOUT
+    shortdesc: 0 Linear layout.
+    type: rw
+  name: PP1_WB0_TARGET_LAYOUT
+  offset: '0x0000A110'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target Scanline Length
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: rw
+  - bits: '15:0'
+    longdesc: The actual meaning depends on the value of WB0_TARGET_LAYOUT.
+    name: WB0_TARGET_SCANLINE_LENGTH
+    shortdesc: Specifies the offset between the beginning of two lines of the target
+      buffer.
+    type: rw
+  name: PP1_WB0_TARGET_SCANLINE_LENGTH
+  offset: '0x0000A114'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Target Flags Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    longdesc: When disabled, pixels are written in little-endian byte order.
+    name: WB0_BIG_ENDIAN
+    shortdesc: When enabled, pixels are written in big-endian byte order.
+    type: rw
+  - bits: '4'
+    longdesc: 'Dithering is only possible when FP_TILEBUF_ENABLE is off. Note: Dithering
+      only is supported when the tilebuffer is not downsampled more than a factor
+      of four in either dimension, that is, the tilebuffer size is not less than 4x4
+      pixels.'
+    name: WB0_DITHER_ENABLE
+    shortdesc: When enabled, dithering of the write-back data is performed using Bayer
+      ordered dithering.
+    type: rw
+  - bits: '3'
+    longdesc: This, together with WB0_SWAP_RED_BLUE_ENABLE makes it possible to support
+      different component permutations of WB0_TARGET_PIXEL_FORMAT.
+    name: WB0_INV_COMPONENT_ORDER_ENABLE
+    shortdesc: 'When enabled, color formats get the order of their components inverted,
+      for example: RGBA -> ARGB.'
+    type: rw
+  - bits: '2'
+    longdesc: This, together with WB0_INV_COMPONENT_ORDER_ENABLE makes it possible
+      to support different component permutations of WB0_TARGET_PIXEL_FORMAT.
+    name: WB0_SWAP_RED_BLUE_ENABLE
+    shortdesc: 'When enabled, color formats get their red and blue components swapped,
+      for example: RGBA->BGRA.'
+    type: rw
+  - bits: '1'
+    name: WB0_BOUNDING_BOX_ENABLE
+    type: rw
+  - bits: '0'
+    name: WB0_DIRTY_BIT_ENABLE
+    type: rw
+  name: PP1_WB0_TARGET_FLAGS
+  offset: '0x0000A118'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 MRT Enable Register
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: rw
+  - bits: '3:0'
+    name: WB0_MRT_ENABLE
+    type: rw
+  name: PP1_WB0_MRT_ENABLE
+  offset: '0x0000A11C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 MRT Offset Register
+  field:
+  - bits: '31:3'
+    name: WB0_MRT_OFFSET
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: PP1_WB0_MRT_OFFSET
+  offset: '0x0000A120'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Global Test Enable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: WB0_GLOBAL_TEST_ENABLE
+    type: rw
+  name: PP1_WB0_GLOBAL_TEST_ENABLE
+  offset: '0x0000A124'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Global Test Reference Value Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: rw
+  name: PP1_WB0_GLOBAL_TEST_REF_VALUE
+  offset: '0x0000A128'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB0 Global Test Compare Function Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: rw
+  name: PP1_WB0_GLOBAL_TEST_CMP_FUNC
+  offset: '0x0000A12C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Source Select Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1:0'
+    longdesc: 0 = None, WB is disabled 1 = Z/Stencil buffer 2 = ARGB buffer 3 = Reserved/undefined.
+    name: WB1_SOURCE_SELECT
+    shortdesc: Tile buffer source for the write-back unit.
+    type: rw
+  name: PP1_WB1_SOURCE_SELECT
+  offset: '0x0000A200'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target Address Register
+  field:
+  - bits: '31:3'
+    name: WB1_TARGET_ADDR
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: PP1_WB1_TARGET_ADDR
+  offset: '0x0000A204'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target Pixel Format Register
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: rw
+  - bits: '3:0'
+    name: WB1_TARGET_PIXEL_FORMAT
+    type: rw
+  name: PP1_WB1_TARGET_PIXEL_FORMAT
+  offset: '0x0000A208'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target AA Format Register
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: rw
+  - bits: '14:12'
+    name: WB1_TARGET_AA_Y
+    type: rw
+  - bits: '11:10'
+    name: RESERVED
+    type: rw
+  - bits: '9:8'
+    name: WB1_TARGET_AA_X
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    longdesc: Consequently you are advised not to use these bits and to set them to
+      zero.
+    name: WB1_TARGET_AA_FORMAT
+    shortdesc: 'Blocked AA Note: WB1_TARGET_AA_FORMAT is deprecated.'
+    type: rw
+  name: PP1_WB1_TARGET_AA_FORMAT
+  offset: '0x0000A20C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target Layout
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1:0'
+    longdesc: The pixels are stored in normal linear layout in memory. 1 Interleaved
+      layout. This is a fully interleaved mode where pixels are stored in u-order
+      in memory for best possible 2D locality. This normally requires a quadratic
+      framebuffer with power of two sides, but can also be used if the width is twice
+      the height and both sides are powers of two. 2 Interleaved blocks. Each 16x16
+      pixel block is interleaved u-order internally and then the blocks are stored
+      linearly in the framebuffer. 3 Reserved = Undefined.
+    name: WB1_TARGET_LAYOUT
+    shortdesc: 0 Linear layout.
+    type: rw
+  name: PP1_WB1_TARGET_LAYOUT
+  offset: '0x0000A210'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target Scanline Length
+  field:
+  - bits: '15:0'
+    longdesc: The actual meaning depends on the value of WB1_TARGET_LAYOUT.
+    name: WB2_TARGET_SCANLINE_LENGTH
+    shortdesc: Specifies the offset between the beginning of two lines of the target
+      buffer.
+    type: rw
+  name: PP1_WB1_TARGET_SCANLINE_LENGTH
+  offset: '0x0000A214'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Target Flags Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    longdesc: When disabled, pixels are written in little-endian byte order.
+    name: WB1_BIG_ENDIAN
+    shortdesc: When enabled, pixels are written in big-endian byte order.
+    type: rw
+  - bits: '4'
+    longdesc: 'Dithering is only possible when FP_TILEBUF_ENABLE is off. Note: Dithering
+      only is supported when the tilebuffer is not downsampled more than a factor
+      of four in either dimension, that is, the tilebuffer size is not less than 4x4
+      pixels.'
+    name: WB1_DITHER_ENABLE
+    shortdesc: When enabled, dithering of the write-back data is performed using Bayer
+      ordered dithering.
+    type: rw
+  - bits: '3'
+    longdesc: This, together with WB0_SWAP_RED_BLUE_ENABLE makes it possible to support
+      different component permutations of WB1_TARGET_PIXEL_FORMAT.
+    name: WB1_INV_COMPONENT_ORDER_ENABLE
+    shortdesc: 'When enabled, color formats get the order of their components inverted,
+      for example: RGBA -> ARGB.'
+    type: rw
+  - bits: '2'
+    longdesc: This, together with WB1_INV_COMPONENT_ORDER_ENABLE makes it possible
+      to support different component permutations of WB1_TARGET_PIXEL_FORMAT.
+    name: WB1_SWAP_RED_BLUE_ENABLE
+    shortdesc: 'When enabled, color formats get their red and blue components swapped,
+      for example: RGBA->BGRA.'
+    type: rw
+  - bits: '1'
+    name: WB1_BOUNDING_BOX_ENABLE
+    type: rw
+  - bits: '0'
+    name: WB1_DIRTY_BIT_ENABLE
+    type: rw
+  name: PP1_WB1_TARGET_FLAGS
+  offset: '0x0000A218'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 MRT Enable Register
+  field:
+  - bits: '3:0'
+    name: WB1_MRT_ENABLE
+    type: rw
+  name: PP1_WB1_MRT_ENABLE
+  offset: '0x0000A21C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 MRT Offset Register
+  field:
+  - bits: '31:3'
+    name: WB1_MRT_OFFSET
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: PP1_WB1_MRT_OFFSET
+  offset: '0x0000A220'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Global Test Enable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: WB1_GLOBAL_TEST_ENABLE
+    type: rw
+  name: PP1_WB1_GLOBAL_TEST_ENABLE
+  offset: '0x0000A224'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Global Test Reference Value Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: rw
+  name: PP1_WB1_GLOBAL_TEST_REF_VALUE
+  offset: '0x0000A228'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB1 Global Test Compare Function Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: rw
+  name: PP1_WB1_GLOBAL_TEST_CMP_FUNC
+  offset: '0x0000A22C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Source Select Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1:0'
+    longdesc: 0 = None, WB is disabled 1 = Z/Stencil buffer 2 = ARGB buffer 3 = Reserved/undefined.
+    name: WB2_SOURCE_SELECT
+    shortdesc: Tile buffer source for the write-back unit.
+    type: rw
+  name: PP1_WB2_SOURCE_SELECT
+  offset: '0x0000A300'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target Address Register
+  field:
+  - bits: '31:3'
+    name: WB2_TARGET_ADDR
+    type: rw
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: PP1_WB2_TARGET_ADDR
+  offset: '0x0000A304'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target Pixel Format Register
+  field:
+  - bits: '3:0'
+    name: WB2_TARGET_PIXEL_FORMAT
+    type: rw
+  name: PP1_WB2_TARGET_PIXEL_FORMAT
+  offset: '0x0000A308'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target AA Format Register
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: rw
+  - bits: '14:12'
+    name: WB2_TARGET_AA_Y
+    type: rw
+  - bits: '11:10'
+    name: RESERVED
+    type: rw
+  - bits: '9:8'
+    name: WB2_TARGET_AA_X
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    longdesc: Consequently you are advised not to use these bits and to set them to
+      zero.
+    name: WB2_TARGET_AA_FORMAT
+    shortdesc: 'Blocked AA Note: WB2_TARGET_AA_FORMAT is deprecated.'
+    type: rw
+  name: PP1_WB2_TARGET_AA_FORMAT
+  offset: '0x0000A30C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target Layout
+  field:
+  - bits: '1:0'
+    longdesc: The pixels are stored in normal linear layout in memory. 1 Interleaved
+      layout. This is a fully interleaved mode where pixels are stored in u-order
+      in memory for best possible 2D locality. This normally requires a quadratic
+      framebuffer with power of two sides, but can also be used if the width is twice
+      the height and both sides are powers of two. 2 Interleaved blocks. Each 16x16
+      pixel block is interleaved u-order internally and then the blocks are stored
+      linearly in the framebuffer. 3 Reserved = Undefined.
+    name: WB2_TARGET_LAYOUT
+    shortdesc: 0 Linear layout.
+    type: rw
+  name: PP1_WB2_TARGET_LAYOUT
+  offset: '0x0000A310'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target Scanline Length
+  field:
+  - bits: '15:0'
+    longdesc: The actual meaning depends on the value of WB2_TARGET_LAYOUT.
+    name: WB2_TARGET_SCANLINE_LENGTH
+    shortdesc: Specifies the offset between the beginning of two lines of the target
+      buffer.
+    type: rw
+  name: PP1_WB2_TARGET_SCANLINE_LENGTH
+  offset: '0x0000A314'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Target Flags Register
+  field:
+  - bits: '5'
+    longdesc: When disabled, pixels are written in little-endian byte order.
+    name: WB2_BIG_ENDIAN
+    shortdesc: When enabled, pixels are written in big-endian byte order.
+    type: rw
+  - bits: '4'
+    longdesc: 'Dithering is only possible when FP_TILEBUF_ENABLE is off. Note: Dithering
+      only is supported when the tilebuffer is not downsampled more than a factor
+      of four in either dimension, that is, the tilebuffer size is not less than 4x4
+      pixels.'
+    name: WB2_DITHER_ENABLE
+    shortdesc: When enabled, dithering of the write-back data is performed using Bayer
+      ordered dithering.
+    type: rw
+  - bits: '3'
+    longdesc: This, together with WB2_SWAP_RED_BLUE_ENABLE makes it possible to support
+      different component permutations of WB2_TARGET_PIXEL_FORMAT.
+    name: WB2_INV_COMPONENT_ORDER_ENABLE
+    shortdesc: 'When enabled, color formats get the order of their components inverted,
+      for example: RGBA -> ARGB.'
+    type: rw
+  - bits: '2'
+    longdesc: This, together with WB2_INV_COMPONENT_ORDER_ENABLE makes it possible
+      to support different component permutations of WB2_TARGET_PIXEL_FORMAT.
+    name: WB2_SWAP_RED_BLUE_ENABLE
+    shortdesc: 'When enabled, color formats get their red and blue components swapped,
+      for example: RGBA->BGRA.'
+    type: rw
+  - bits: '1'
+    name: WB2_BOUNDING_BOX_ENABLE
+    type: rw
+  - bits: '0'
+    name: WB2_DIRTY_BIT_ENABLE
+    type: rw
+  name: PP1_WB2_TARGET_FLAGS
+  offset: '0x0000A318'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 MRT Enable Register
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: rw
+  - bits: '3:0'
+    name: WB2_MRT_ENABLE
+    type: rw
+  name: PP1_WB2_MRT_ENABLE
+  offset: '0x0000A31C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 MRT Offset Register
+  field:
+  - bits: '31:3'
+    name: WB2_MRT_OFFSET
+    type: rw
+  name: PP1_WB2_MRT_OFFSET
+  offset: '0x0000A320'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Global Test Enable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: WB2_GLOBAL_TEST_ENABLE
+    type: rw
+  name: PP1_WB2_GLOBAL_TEST_ENABLE
+  offset: '0x0000A324'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Global Test Reference Value Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: rw
+  name: PP1_WB2_GLOBAL_TEST_REF_VALUE
+  offset: '0x0000A328'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Global Test Compare Function Register
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: rw
+  name: PP1_WB2_GLOBAL_TEST_CMP_FUNC
+  offset: '0x0000A32C'
+  type: rw
+  width: 32
+- default: '0x00CD0007'
+  description: Version Register
+  field:
+  - bits: '31:16'
+    name: PRODUCT_ID
+    type: rw
+  - bits: '15:8'
+    name: VERSION_MAJOR
+    type: rw
+  - bits: '7:0'
+    name: VERSION_MINOR
+    type: rw
+  name: PP1_VERSION
+  offset: '0x0000B000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Current Renderer List Address Register
+  field:
+  - bits: '31:5'
+    name: CURRENT_REND_LIST_ADDR
+    type: rw
+  - bits: '4:0'
+    name: RESERVED
+    type: rw
+  name: PP1_CURRENT_REND_LIST_ADDR
+  offset: '0x0000B004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Pixel Processor Status Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7'
+    longdesc: This bit is set by the CLK_OVERRIDE command in the CTRL_MGMT Register.
+      When this bit is set, all the architectural clock gates in the design are overridden
+      so all clocks are always active.
+    name: CLK_OVERRIDE
+    shortdesc: Shows that the block level clock gates have been disabled.
+    type: rw
+  - bits: '6'
+    name: INTERRUPT_ASSERTED
+    type: rw
+  - bits: '5'
+    name: WRITE_BOUNDARY_ERROR
+    type: rw
+  - bits: '4'
+    longdesc: The bus interface can be restarted by using the START_BUS command.
+    name: BUS_STOPPED
+    shortdesc: Shows that the master bus interface of the pixel processor has been
+      stopped because of a STOP_BUS command or a performance counter limit event.
+    type: rw
+  - bits: '3'
+    longdesc: The pixel processor has been stopped and has to be reset before rendering
+      can be started again.
+    name: BUS_ERROR
+    shortdesc: A bus transaction has ended with error.
+    type: rw
+  - bits: '2'
+    longdesc: This state can also be triggered under normal rendering if you are running
+      a shader where it is near to a never-ending inner loop. From the software perspective,
+      you can ignore this state, because this is merely a hint from the HW that something
+      might be wrong. The SW then decides to either reset the processor, or continue
+      to let it run.
+    name: HANG
+    shortdesc: Watchdog timer limit reached.
+    type: rw
+  - bits: '1'
+    longdesc: Indicates that an END_AFTER_TILE command has been issued.
+    name: TILE_STOPPED
+    shortdesc: Rendering of the current tile has been completed as if it was the last
+      tile of the frame.
+    type: rw
+  - bits: '0'
+    name: RENDERING_ACTIVE
+    type: rw
+  name: PP1_STATUS
+  offset: '0x0000B008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Control Management Register
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: rw
+  - bits: '8'
+    longdesc: Writing a 1 to this bit overrides all the architectural clock gates
+      in the design, so all clocks are always active. The status of the clock override
+      is shown as the CLK_OVERRIDE bit in the STATUS Register. The only way to disable
+      the clock override is by performing a pixel processor reset.
+    name: CLK_OVERRIDE
+    shortdesc: Disable block level clock gates.
+    type: rw
+  - bits: '7'
+    longdesc: Use the RESET_COMPLETED interrupt bit to discover when the reset has
+      actually completed.
+    name: SOFT_RESET
+    shortdesc: Writing to this bit resets the pixel processor after all outstanding
+      bus-transfers have completed.
+    type: rw
+  - bits: '6'
+    longdesc: Do not write this value during rendering.
+    name: START_RENDERING
+    shortdesc: Writing to this bit initiates rendering.
+    type: rw
+  - bits: '5'
+    longdesc: 'If FORCE_RESET is asserted while there is a bus transaction in progress
+      the AXI interconnect might operate at reduced efficiency or lockup. To ensure
+      a safe reset: 1. Write 1 to STOP_BUS. 2. Wait until all transactions have completed.
+      The BUS_STOP interrupt is asserted when the bus is idle. 3. Write 1 to FORCE_RESET.
+      The use of FORCE_RESET must be deprecated, unless you require backwards compatibility
+      with Mali-200.'
+    name: FORCE_RESET
+    shortdesc: Writing to this bit resets the pixel processor, so that it can be brought
+      out of a hang in a reasonably clean manner.
+    type: rw
+  - bits: '4'
+    longdesc: Only useful for debugging.
+    name: FORCE_HANG
+    shortdesc: Writing to this bit causes the pixel processor to hang.
+    type: rw
+  - bits: '3'
+    longdesc: 'This must be done only when the renderer is idle, otherwise the hardware
+      cannot guarantee that caches become clean or that renderer glitches do not occur.
+      The pixel processor must have an active clock for the flush to have an effect.
+      The pixel processor might have the clock shut off when idle to conserve power,
+      depending on the processor integration. This means that the FLUSH_CACHES command
+      must be issued in of the following states of operation: 1. At the beginning
+      of a frame, after the APB registers have been written to, but before the START_RENDERING
+      command has been issued. 2. At the end of a frame, after the interrupt has been
+      received but before the interrupt signal has been masked or acknowledged. If
+      neither is possible, you can use a FORCE_RESET command to flush the caches.
+      FLUSH_CACHES is performed implicitly every time the pixel processor starts rendering,
+      so explicitly using this bit is rarely required.'
+    name: FLUSH_CACHES
+    shortdesc: Writing to this bit causes all the vertex, RSW and texture caches to
+      be flushed immediately.
+    type: rw
+  - bits: '2'
+    longdesc: This action finalizes the rendering of the current tile, leaving the
+      framebuffer incomplete in most situations, except when the current tile is the
+      last tile of the frame. Rendering of the rest of the frame can be initiated
+      by writing the CURRENT_REND_LIST_ADDR value to the REND_LIST_ADDR Register and
+      issuing the START_RENDERING command.
+    name: END_AFTER_TILE
+    shortdesc: Writing to this bit causes the renderer to treat a BEGIN-NEW-TILE command,
+      that is, Cmd 14, as an End-Of-List command, that is Cmd 15.
+    type: rw
+  - bits: '1'
+    longdesc: The effect of issuing a START_BUS and a STOP_BUS command at the same
+      time is not defined.
+    name: START_BUS
+    shortdesc: Writing to this bit reactivates the bus interface after it has been
+      stopped by a STOP_BUS command or a WRITE_BOUNDARY_LIMIT event.
+    type: rw
+  - bits: '0'
+    longdesc: Any current bus transactions are completed before the interface is stopped.
+      The bus can be restarted by issuing a START_BUS command. The effect of issuing
+      a START_BUS and a STOP_BUS command at the same time is not defined.
+    name: STOP_BUS
+    shortdesc: Writing to this bit causes the bus interface to hold back future transactions
+      on the bus.
+    type: rw
+  name: PP1_CTRL_MGMT
+  offset: '0x0000B00C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Last Tile Where Processing Started Register
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: rw
+  - bits: '23:16'
+    longdesc: 'Note: Scaling is equal to that of the Begin New Tile command 15 in
+      the polygon list.'
+    name: TILEY_START
+    shortdesc: The y position of the last file that processing has begun.
+    type: rw
+  - bits: '7:0'
+    longdesc: 'Note: Scaling is equal to that of the Begin New Tile command 15 in
+      the polygon list.'
+    name: TILEX_START
+    shortdesc: The x position of the last file that processing has begun.
+    type: rw
+  name: PP1_LAST_TILE_POS_START
+  offset: '0x0000B010'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Last Tile Where Processing Completed Register
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: rw
+  - bits: '23:16'
+    longdesc: 'Note: Scaling is equal to that of the Begin New Tile command 15 in
+      the polygon list.'
+    name: TILEY_END
+    shortdesc: The y position of the last tile that processing has ended, that is
+      written back.
+    type: rw
+  - bits: '15:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:0'
+    longdesc: 'Note: Scaling is equal to that of the Begin New Tile command 15 in
+      the polygon list.'
+    name: TILEX_END
+    shortdesc: The x position of the last tile that processing has ended, that is
+      written back.
+    type: rw
+  name: PP1_LAST_TILE_POS_END
+  offset: '0x0000B014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Rawstat Register
+  field:
+  - bits: '31:13'
+    name: RESERVED
+    type: rw
+  - bits: '12'
+    name: RESET_COMPLETED
+    type: rw
+  - bits: '11'
+    longdesc: It is treated as an end of list command and rendering stops.
+    name: CALL_STACK_OVERFLOW
+    shortdesc: The polygon list command call has been executed to many times recursively.
+    type: rw
+  - bits: '10'
+    longdesc: The return command is then treated as an end of list command and rendering
+      stops.
+    name: CALL_STACK_UNDERFLOW
+    shortdesc: The polygon list command return was executed without a call first.
+    type: rw
+  - bits: '9'
+    longdesc: The invalid command is treated as an end of list command.
+    name: INVALID_PLIST_COMMAND
+    shortdesc: A command in the polygon list was invalid and rendering could not continue.
+    type: rw
+  - bits: '8'
+    longdesc: The bus interface completes the previous bus transaction but does not
+      initialize any new transactions before the WRITE_BOUNDARY is modified or disabled,
+      or the renderer is reset.
+    name: WRITE_BOUNDARY_ERROR
+    shortdesc: The pixel processor has attempted to write outside the write boundary
+      set by the WRITE_BOUNDARY registers.
+    type: rw
+  - bits: '7'
+    longdesc: The bus interface is stopped as with STOP_BUS, and this interrupt source
+      set. The BUS_STOP interrupt is asserted when the bus is actually stopped. This
+      is likely to occur after CNT_1_LIMIT has been triggered.
+    name: CNT_1_LIMIT
+    shortdesc: Performance counter PERF_CNT_1 has passed the limit set in PERF_CNT_1_LIMIT.
+    type: rw
+  - bits: '6'
+    longdesc: The bus interface is stopped as with STOP_BUS, and this interrupt source
+      set. The BUS_STOP interrupt is asserted when the bus is actually stopped. This
+      is likely to occur after CNT_0_LIMIT has been triggered.
+    name: CNT_0_LIMIT
+    shortdesc: Performance counter PERF_CNT_0 has passed the limit set in PERF_CNT_0_LIMIT.
+    type: rw
+  - bits: '5'
+    longdesc: BUS_STOP is triggered only after the bus is actually stopped, making
+      it likely that BUS_STOP is delayed a bit after CNT_x_LIMIT has been triggered.
+      Operation can be continued by issuing the START_BUS command.
+    name: BUS_STOP
+    shortdesc: The renderer has been stopped by a STOP_BUS command.
+    type: rw
+  - bits: '4'
+    longdesc: The pixel processor has been stopped and has to be reset before rendering
+      can be started again.
+    name: BUS_ERROR
+    shortdesc: A bus transaction has ended with error.
+    type: rw
+  - bits: '3'
+    longdesc: The renderer must be reset before rendering can be started again.
+    name: FORCE_HANG
+    shortdesc: The pixel processor has been forced into an illegal state by the FORCE_HANG
+      command.
+    type: rw
+  - bits: '2'
+    longdesc: This state can also be triggered under normal rendering if you are running
+      a shader where it is near to a never-ending inner loop. From the software perspective,
+      you can ignore this state, because this is merely a hint from the HW that something
+      might be wrong. The SW then decides to either reset the processor, or continue
+      to let it run.
+    name: HANG
+    shortdesc: Watchdog timer limit reached.
+    type: rw
+  - bits: '1'
+    longdesc: The framebuffer might be incomplete.
+    name: END_OF_TILE
+    shortdesc: Rendering has been ended by an END_AFTER_TILE command.
+    type: rw
+  - bits: '0'
+    longdesc: The framebuffer is complete. The interrupt is delayed until all outstanding
+      write requests have completed.
+    name: END_OF_FRAME
+    shortdesc: Rendering has ended by completion of the polygon list.
+    type: rw
+  name: PP1_INT_RAWSTAT
+  offset: '0x0000B020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear Register
+  field:
+  - bits: '31:13'
+    name: RESERVED
+    type: rw
+  - bits: '12'
+    name: RESET_COMPLETED
+    type: rw
+  - bits: '11'
+    name: CALL_STACK_OVERFLOW
+    type: rw
+  - bits: '10'
+    name: CALL_STACK_UNDERFLOW
+    type: rw
+  - bits: '9'
+    name: INVALID_PLIST_COMMAND
+    type: rw
+  - bits: '8'
+    name: WRITE_BOUNDARY_ERROR
+    type: rw
+  - bits: '7'
+    name: CNT_1_LIMIT
+    type: rw
+  - bits: '6'
+    name: CNT_0_LIMIT
+    type: rw
+  - bits: '5'
+    name: BUS_STOP
+    type: rw
+  - bits: '4'
+    name: BUS_ERROR
+    type: rw
+  - bits: '3'
+    name: FORCE_HANG
+    type: rw
+  - bits: '2'
+    name: HANG
+    type: rw
+  - bits: '1'
+    name: END_OF_TILE
+    type: rw
+  - bits: '0'
+    name: END_OF_FRAME
+    type: rw
+  name: PP1_INT_CLEAR
+  offset: '0x0000B024'
+  type: rw
+  width: 32
+- default: '0x00000FFF'
+  description: Interrupt Mask Register
+  field:
+  - bits: '31:13'
+    name: RESERVED
+    type: rw
+  - bits: '12'
+    name: RESET_COMPLETED
+    type: rw
+  - bits: '11'
+    name: CALL_STACK_OVERFLOW
+    type: rw
+  - bits: '10'
+    name: CALL_STACK_UNDERFLOW
+    type: rw
+  - bits: '9'
+    name: INVALID_PLIST_COMMAND
+    type: rw
+  - bits: '8'
+    name: WRITE_BOUNDARY_ERROR
+    type: rw
+  - bits: '7'
+    name: CNT_1_LIMIT
+    type: rw
+  - bits: '6'
+    name: CNT_0_LIMIT
+    type: rw
+  - bits: '5'
+    name: BUS_STOP
+    type: rw
+  - bits: '4'
+    name: BUS_ERROR
+    type: rw
+  - bits: '3'
+    name: FORCE_HANG
+    type: rw
+  - bits: '2'
+    name: HANG
+    type: rw
+  - bits: '1'
+    name: END_OF_TILE
+    type: rw
+  - bits: '0'
+    name: END_OF_FRAME
+    type: rw
+  name: PP1_INT_MASK
+  offset: '0x0000B028'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register
+  field:
+  - bits: '31:13'
+    name: RESERVED
+    type: rw
+  - bits: '12'
+    name: RESET_COMPLETED
+    type: rw
+  - bits: '11'
+    name: CALL_STACK_OVERFLOW
+    type: rw
+  - bits: '10'
+    name: CALL_STACK_UNDERFLOW
+    type: rw
+  - bits: '9'
+    name: INVALID_PLIST_COMMAND
+    type: rw
+  - bits: '8'
+    name: WRITE_BOUNDARY_ERROR
+    type: rw
+  - bits: '7'
+    name: CNT_1_LIMIT
+    type: rw
+  - bits: '6'
+    name: CNT_0_LIMIT
+    type: rw
+  - bits: '5'
+    name: BUS_STOP
+    type: rw
+  - bits: '4'
+    name: BUS_ERROR
+    type: rw
+  - bits: '3'
+    name: FORCE_HANG
+    type: rw
+  - bits: '2'
+    name: HANG
+    type: rw
+  - bits: '1'
+    name: END_OF_TILE
+    type: rw
+  - bits: '0'
+    name: END_OF_FRAME
+    type: rw
+  name: PP1_INT_STATUS
+  offset: '0x0000B02C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Boundary Enable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  name: PP1_WRITE_BOUNDARY_ENABLE
+  offset: '0x0000B040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Boundary Low Register
+  field:
+  - bits: '31:8'
+    name: WRITE_BOUNDARY_LOW
+    type: rw
+  - bits: '7:0'
+    name: RESERVED
+    type: rw
+  name: PP1_WRITE_BOUNDARY_LOW
+  offset: '0x0000B044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Boundary High Register
+  field:
+  - bits: '31:8'
+    name: WRITE_BOUNDARY_HIGH
+    type: rw
+  name: PP1_WRITE_BOUNDARY_HIGH
+  offset: '0x0000B048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Boundary Address Register
+  field:
+  - bits: '31:2'
+    name: WRITE_BOUNDARY_ADDRESS
+    type: rw
+  name: PP1_WRITE_BOUNDARY_ADDRESS
+  offset: '0x0000B04C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Bus Error Status Register
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: rw
+  - bits: '9:6'
+    name: READ_ERROR_ID
+    type: rw
+  - bits: '5:2'
+    name: WRITE_ERROR_ID
+    type: rw
+  - bits: '1'
+    name: READ_ERROR
+    type: rw
+  - bits: '0'
+    name: WRITE_ERROR
+    type: rw
+  name: PP1_BUS_ERROR_STATUS
+  offset: '0x0000B050'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Watchdog Disable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  name: PP1_WATCHDOG_DISABLE
+  offset: '0x0000B060'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Watchdog Timeout Register
+  field:
+  - bits: '31:0'
+    name: WATCHDOG_TIMEOUT
+    type: rw
+  name: PP1_WATCHDOG_TIMEOUT
+  offset: '0x0000B064'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: WB2 Global Test Compare Function Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: If the PERF_CNT_0_VALUE Register exceeds the Performance Counter 0 Limit
+      value, then an interrupt is asserted and the BUS_STOPPED mechanism stops the
+      bus. The PERF_CNT_0_VALUE Register is reset to zero if you write to PERF_CNT_0_ENABLE
+      while the counter is enabled, that is, the PERF_CNT_0_ENABLE bit is 1.
+    name: PERF_CNT_0_LIM_EN
+    shortdesc: When set to 1, the PERF_CNT_0_LIMIT Register becomes active.
+    type: rw
+  - bits: '0'
+    longdesc: The PERF_CNT_0_SRC Register selects the event to be counted during a
+      frame.
+    name: PERF_CNT_0_ENABLE
+    shortdesc: When set to 1, the performance counter 0 is reset to zero and activated.
+    type: rw
+  name: PP1_PERF_CNT_0_ENABLE
+  offset: '0x0000B080'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 0 SRC Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: rw
+  - bits: '5:0'
+    name: PERF_CNT_0_SRC
+    type: rw
+  name: PP1_PERF_CNT_0_SRC
+  offset: '0x0000B084'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 0 Limit Register
+  field:
+  - bits: '31:0'
+    name: PERF_CNT_0_LIMIT
+    type: rw
+  name: PP1_PERF_CNT_0_LIMIT
+  offset: '0x0000B088'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 0 Value Register
+  field:
+  - bits: '31:0'
+    name: PERF_CNT_0_VALUE
+    type: rw
+  name: PP1_PERF_CNT_0_VALUE
+  offset: '0x0000B08C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 1 Enable Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: If the PERF_CNT_1_VALUE Register exceeds the Performance Counter 1 limit
+      value, then an interrupt is asserted and the BUS_STOPPED mechanism stops the
+      bus. The PERF_CNT_1_VALUE Register is reset to zero if you write to PERF_CNT_1_ENABLE
+      while the counter is enabled, that is, the PERF_CNT_1_ENABLE bit is 1.
+    name: PERF_CNT_1_LIM_EN
+    shortdesc: When set to 1, the PERF_CNT_1_LIMIT Register becomes active.
+    type: rw
+  - bits: '0'
+    longdesc: The PERF_CNT_1_SRC Register selects the event to be counted during a
+      frame.
+    name: PERF_CNT_1_ENABLE
+    shortdesc: When set to 1, the performance counter 1 is reset to zero and activated.
+    type: rw
+  name: PP1_PERF_CNT_1_ENABLE
+  offset: '0x0000B0A0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 1 SRC Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: rw
+  - bits: '5:0'
+    name: PERF_CNT_1_SRC
+    type: rw
+  name: PP1_PERF_CNT_1_SRC
+  offset: '0x0000B0A4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 1 Limit Register
+  field:
+  - bits: '31:0'
+    name: PERF_CNT_1_LIMIT
+    type: rw
+  name: PP1_PERF_CNT_1_LIMIT
+  offset: '0x0000B0A8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Counter 1 Value Register
+  field:
+  - bits: '31:26'
+    name: PERF_CNT_1_VALUE
+    type: rw
+  name: PP1_PERF_CNT_1_VALUE
+  offset: '0x0000B0AC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Monitor Control Register
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: rw
+  - bits: '25:16'
+    name: NUMBER_TILE_X_DIR
+    type: rw
+  - bits: '15:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: PERFMON_ENABLE
+    type: rw
+  name: PP1_PERFMON_CONTR
+  offset: '0x0000B0B0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Performance Monitor Base Address Register
+  field:
+  - bits: '2:0'
+    name: RESERVED
+    type: rw
+  name: PP1_PERFMON_BASE
+  offset: '0x0000B0B4'
+  type: rw
+  width: 32

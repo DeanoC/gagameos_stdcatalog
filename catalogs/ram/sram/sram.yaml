@@ -1,0 +1,5 @@
+definition:
+- gateware: pmb_bram/pmb_bram.toml
+  type: ram.sram.pmb_bram
+- type: ram.sram.generic
+path: sram

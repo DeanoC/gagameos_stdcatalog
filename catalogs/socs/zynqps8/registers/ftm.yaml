@@ -1,0 +1,316 @@
+bank:
+- address: '0xfe9d0000'
+  name: CORESIGHT_SOC_FTM
+description: Fabric Trigger Macrocell interface from PL to ECT
+register:
+- default: '0x00000000'
+  description: General Purpose Input
+  field:
+  - bits: '31:0'
+    name: IN
+    type: ro
+  name: GPI
+  offset: '0x00000010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: General Purpose Output
+  field:
+  - bits: '31:0'
+    name: OUT
+    type: rw
+  name: GPO
+  offset: '0x00000020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Trigger Output Register
+  field:
+  - bits: '0'
+    name: TRIGOUT
+    type: wo
+  name: ITTRIGOUT
+  offset: '0x00000ED0'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Trigger Output Acknowledge Register
+  field:
+  - bits: '0'
+    name: TRIGOUTACK
+    type: ro
+  name: ITTRIGOUTACK
+  offset: '0x00000ED4'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Trigger Input Register
+  field:
+  - bits: '0'
+    name: TRIGIN
+    type: ro
+  name: ITTRIGIN
+  offset: '0x00000ED8'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Trigger Input Acknowledge Register
+  field:
+  - bits: '0'
+    name: TRIGINACK
+    type: wo
+  name: ITTRIGINACK
+  offset: '0x00000EDC'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Integration Control Register
+  field:
+  - bits: '0'
+    name: INTEGRATION
+    type: rw
+  name: ITCTRL
+  offset: '0x00000F00'
+  type: rw
+  width: 1
+- default: '0x00000001'
+  description: Claim Tag Set Register
+  field:
+  - bits: '3:0'
+    longdesc: 'Read: 1= Claim tag is implemented, 0 = Claim tag is not implemented
+      Write: 1= Set claim tag bit, 0= No effect'
+    name: SET
+    shortdesc: The claim tag register is used for any interrogating tools to determine
+      if the device is being programmed or has been programmed.
+    type: rw
+  name: CLAIMSET
+  offset: '0x00000FA0'
+  type: rw
+  width: 4
+- default: '0x00000000'
+  description: Claim Tag Clear Register
+  field:
+  - bits: '3:0'
+    longdesc: 'Read: Current value of claim tag. Write: 1= Clear claim tag bit, 0=
+      No effect'
+    name: CLEAR
+    shortdesc: The claim tag register is used for any interrogating tools to determine
+      if the device is being programmed or has been programmed.
+    type: rw
+  name: CLAIMCLR
+  offset: '0x00000FA4'
+  type: rw
+  width: 4
+- default: '0x00000000'
+  description: Lock Access Register
+  field:
+  - bits: '31:0'
+    longdesc: 'Write behavior depends on PADDRDBG31 pin: - PADDRDBG31=0 (lower 2GB):
+      After reset (via PRESETDBGn), FTM is locked, i.e., writes to all other registers
+      using lower 2GB addresses are ignored. To unlock, 0xC5ACCE55 must be written
+      this register. After the required registers are written, to lock again, write
+      a value other than 0xC5ACCE55 to this register. - PADDRDBG31=1 (upper 2GB):
+      FTM is unlocked when upper 2GB addresses are used to write to all the registers.
+      However, write to this register is ignored using a upper 2GB address! Note:
+      read from this register always returns 0, regardless of PADDRDBG31.'
+    name: KEY
+    shortdesc: Write Access Code.
+    type: wo
+  name: LAR
+  offset: '0x00000FB0'
+  type: wo
+  width: 32
+- default: '0x00000003'
+  description: Lock Status Register
+  field:
+  - bits: '2'
+    name: 8BIT
+    type: ro
+  - bits: '1'
+    longdesc: '- PADDRDBG31=1 (upper 2GB): always returns 0.'
+    name: STATUS
+    shortdesc: 'Read behavior depends on PADDRDBG31 pin: - PADDRDBG31=0 (lower 2GB):
+      When a lower 2GB address is used to read this register, this bit indicates whether
+      FTM is in locked state (1= locked, 0= unlocked).'
+    type: ro
+  - bits: '0'
+    longdesc: '- PADDRDBG31=1 (upper 2GB): always returns 0, meaning lock mechanism
+      is NOT implemented.'
+    name: IMP
+    shortdesc: 'Read behavior depends on PADDRDBG31 pin: - PADDRDBG31=0 (lower 2GB):
+      always returns 1, meaning lock mechanism are implemented.'
+    type: ro
+  name: LSR
+  offset: '0x00000FB4'
+  type: ro
+  width: 3
+- default: '0x00000000'
+  description: Authentication Status Register
+  field:
+  - bits: '7:6'
+    longdesc: Otherwise, this field is 2'b10 (implemented but disabled).
+    name: SNI
+    shortdesc: Secure non-invasive debug If ((SPNIDEN or SPIDEN) and (NIDEN or DBGEN))
+      is true, this field is 2'b11, indicating the functionality is implemented and
+      enabled.
+    type: ro
+  - bits: '5:4'
+    longdesc: This functionality is not implemented.
+    name: SI
+    shortdesc: Secure invasive debug Always 2'b00.
+    type: ro
+  - bits: '3:2'
+    longdesc: Otherwise, this field is 2'b10 (implemented but disabled)
+    name: NSNI
+    shortdesc: Non-secure non-invasive debug IF (NIDEN or DBGEN) is 1, this field
+      is 2'b11, indicating the functionality is implemented and enabled.
+    type: ro
+  - bits: '1:0'
+    longdesc: This functionality is not implemented.
+    name: NSI
+    shortdesc: Non-secure invasive debug Always 2'b00.
+    type: ro
+  name: AUTHSTATUS
+  offset: '0x00000FB8'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: Device ID
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: DEVID
+  offset: '0x00000FC8'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: Device Type
+  field:
+  - bits: '7:0'
+    name: TYPE
+    type: ro
+  name: DEVTYPE
+  offset: '0x00000FCC'
+  type: ro
+  width: 8
+- default: '0x00000001'
+  description: Peripheral ID4
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: PIDR4
+  offset: '0x00000FD0'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: Peripheral ID5
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: PIDR5
+  offset: '0x00000FD4'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: Peripheral ID6
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: PIDR6
+  offset: '0x00000FD8'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: Peripheral ID7
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: PIDR7
+  offset: '0x00000FDC'
+  type: ro
+  width: 8
+- default: '0x00000021'
+  description: Peripheral ID0
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: PIDR0
+  offset: '0x00000FE0'
+  type: ro
+  width: 8
+- default: '0x0000003F'
+  description: Peripheral ID1
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: PIDR1
+  offset: '0x00000FE4'
+  type: ro
+  width: 8
+- default: '0x00000009'
+  description: Peripheral ID2
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: PIDR2
+  offset: '0x00000FE8'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: Peripheral ID3
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: PIDR3
+  offset: '0x00000FEC'
+  type: ro
+  width: 8
+- default: '0x0000000D'
+  description: Component ID0
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: CIDR0
+  offset: '0x00000FF0'
+  type: ro
+  width: 8
+- default: '0x00000090'
+  description: Component ID1
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: CIDR1
+  offset: '0x00000FF4'
+  type: ro
+  width: 8
+- default: '0x00000005'
+  description: Component ID2
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: CIDR2
+  offset: '0x00000FF8'
+  type: ro
+  width: 8
+- default: '0x000000B1'
+  description: Component ID3
+  field:
+  - bits: '7:0'
+    name: ID
+    type: ro
+  name: CIDR3
+  offset: '0x00000FFC'
+  type: ro
+  width: 8

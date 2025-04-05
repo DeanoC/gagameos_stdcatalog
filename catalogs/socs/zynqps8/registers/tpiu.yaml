@@ -1,0 +1,944 @@
+bank:
+- address: '0xfe980000'
+  name: CORESIGHT_SOC_TPIU
+description: Test Port Interface Unit bridge to on-chip trace data
+register:
+- default: '0x00000001'
+  description: Each bit location represents a single port size that is supported on
+    the device, that is, 32-1 in bit locations [31:0].
+  field:
+  - bits: '31'
+    name: PORT_SIZE_32
+    type: ro
+  - bits: '30'
+    name: PORT_SIZE_31
+    type: ro
+  - bits: '29'
+    name: PORT_SIZE_30
+    type: ro
+  - bits: '28'
+    name: PORT_SIZE_29
+    type: ro
+  - bits: '27'
+    name: PORT_SIZE_28
+    type: ro
+  - bits: '26'
+    name: PORT_SIZE_27
+    type: ro
+  - bits: '25'
+    name: PORT_SIZE_26
+    type: ro
+  - bits: '24'
+    name: PORT_SIZE_25
+    type: ro
+  - bits: '23'
+    name: PORT_SIZE_24
+    type: ro
+  - bits: '22'
+    name: PORT_SIZE_23
+    type: ro
+  - bits: '21'
+    name: PORT_SIZE_22
+    type: ro
+  - bits: '20'
+    name: PORT_SIZE_21
+    type: ro
+  - bits: '19'
+    name: PORT_SIZE_20
+    type: ro
+  - bits: '18'
+    name: PORT_SIZE_19
+    type: ro
+  - bits: '17'
+    name: PORT_SIZE_18
+    type: ro
+  - bits: '16'
+    name: PORT_SIZE_17
+    type: ro
+  - bits: '15'
+    name: PORT_SIZE_16
+    type: ro
+  - bits: '14'
+    name: PORT_SIZE_15
+    type: ro
+  - bits: '13'
+    name: PORT_SIZE_14
+    type: ro
+  - bits: '12'
+    name: PORT_SIZE_13
+    type: ro
+  - bits: '11'
+    name: PORT_SIZE_12
+    type: ro
+  - bits: '10'
+    name: PORT_SIZE_11
+    type: ro
+  - bits: '9'
+    name: PORT_SIZE_10
+    type: ro
+  - bits: '8'
+    name: PORT_SIZE_9
+    type: ro
+  - bits: '7'
+    name: PORT_SIZE_8
+    type: ro
+  - bits: '6'
+    name: PORT_SIZE_7
+    type: ro
+  - bits: '5'
+    name: PORT_SIZE_6
+    type: ro
+  - bits: '4'
+    name: PORT_SIZE_5
+    type: ro
+  - bits: '3'
+    name: PORT_SIZE_4
+    type: ro
+  - bits: '2'
+    name: PORT_SIZE_3
+    type: ro
+  - bits: '1'
+    name: PORT_SIZE_2
+    type: ro
+  - bits: '0'
+    name: PORT_SIZE_1
+    type: ro
+  name: SUPPORTED_PORT_SIZES
+  offset: '0x00000000'
+  type: ro
+  width: 32
+- default: '0x00000001'
+  description: 'The Current Port Size Register has the same format as the Supported
+    Port Sizes register but only one bit is set, and all others must be zero. Writing
+    values with more than one bit set or setting a bit that is not indicated as supported
+    is not supported and causes unpredictable behavior.On reset this defaults to the
+    smallest possible port size, 1 bit, and so reads as 0x00000001.Note: Do not modify
+    the value while the Trace Port is still active, or without correctly stopping
+    the formatter (see Formatter and Flush Control Register, 0x304). This can result
+    in data not being aligned to the port width. For example, data on an 8-bit Trace
+    Port might not be byte aligned.'
+  field:
+  - bits: '31'
+    name: PORT_SIZE_32
+    type: rw
+  - bits: '30'
+    name: PORT_SIZE_31
+    type: rw
+  - bits: '29'
+    name: PORT_SIZE_30
+    type: rw
+  - bits: '28'
+    name: PORT_SIZE_29
+    type: rw
+  - bits: '27'
+    name: PORT_SIZE_28
+    type: rw
+  - bits: '26'
+    name: PORT_SIZE_27
+    type: rw
+  - bits: '25'
+    name: PORT_SIZE_26
+    type: rw
+  - bits: '24'
+    name: PORT_SIZE_25
+    type: rw
+  - bits: '23'
+    name: PORT_SIZE_24
+    type: rw
+  - bits: '22'
+    name: PORT_SIZE_23
+    type: rw
+  - bits: '21'
+    name: PORT_SIZE_22
+    type: rw
+  - bits: '20'
+    name: PORT_SIZE_21
+    type: rw
+  - bits: '19'
+    name: PORT_SIZE_20
+    type: rw
+  - bits: '18'
+    name: PORT_SIZE_19
+    type: rw
+  - bits: '17'
+    name: PORT_SIZE_18
+    type: rw
+  - bits: '16'
+    name: PORT_SIZE_17
+    type: rw
+  - bits: '15'
+    name: PORT_SIZE_16
+    type: rw
+  - bits: '14'
+    name: PORT_SIZE_15
+    type: rw
+  - bits: '13'
+    name: PORT_SIZE_14
+    type: rw
+  - bits: '12'
+    name: PORT_SIZE_13
+    type: rw
+  - bits: '11'
+    name: PORT_SIZE_12
+    type: rw
+  - bits: '10'
+    name: PORT_SIZE_11
+    type: rw
+  - bits: '9'
+    name: PORT_SIZE_10
+    type: rw
+  - bits: '8'
+    name: PORT_SIZE_9
+    type: rw
+  - bits: '7'
+    name: PORT_SIZE_8
+    type: rw
+  - bits: '6'
+    name: PORT_SIZE_7
+    type: rw
+  - bits: '5'
+    name: PORT_SIZE_6
+    type: rw
+  - bits: '4'
+    name: PORT_SIZE_5
+    type: rw
+  - bits: '3'
+    name: PORT_SIZE_4
+    type: rw
+  - bits: '2'
+    name: PORT_SIZE_3
+    type: rw
+  - bits: '1'
+    name: PORT_SIZE_2
+    type: rw
+  - bits: '0'
+    name: PORT_SIZE_1
+    type: rw
+  name: CURRENT_PORT_SIZE
+  offset: '0x00000004'
+  type: rw
+  width: 32
+- default: '0x0000011F'
+  description: This register indicates the implemented Trigger Counter multipliers
+    and other supported features of the trigger system.
+  field:
+  - bits: '17'
+    name: TRGRUN
+    type: ro
+  - bits: '16'
+    name: TRIGGERED
+    type: ro
+  - bits: '8'
+    name: TCOUNT8
+    type: ro
+  - bits: '4'
+    name: MULT64K
+    type: ro
+  - bits: '3'
+    name: MULT256
+    type: ro
+  - bits: '2'
+    name: MULT16
+    type: ro
+  - bits: '1'
+    name: MULT4
+    type: ro
+  - bits: '0'
+    name: MULT2
+    type: ro
+  name: SUPPORTED_TRIGGER_MODES
+  offset: '0x00000100'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: The Trigger Counter Register enables delaying the indication of triggers
+    to any external connected trace capture or storage devices. This counter is only
+    eight bits wide and is intended to only be used with the counter multipliers in
+    the Trigger Multiplier Register, 0x108. When a trigger is started, this value,
+    in combination with the multiplier, is the number of words before the trigger
+    is indicated. When the trigger counter reaches zero, the value written here is
+    reloaded. Writing to this register causes the trigger counter value to reset but
+    not reset any values on the multiplier. Reading this register returns the preset
+    value not the current count.
+  field:
+  - bits: '7:0'
+    longdesc: At reset the value is zero and this value has the effect of disabling
+      the register, that is, there is no delay.
+    name: TRIGCOUNT
+    shortdesc: 8-bit counter value for the number of words to be output from the formatter
+      before a trigger is inserted.
+    type: rw
+  name: TRIGGER_COUNTER_VALUE
+  offset: '0x00000104'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register contains the selectors for the Trigger Counter Multiplier.
+    Several multipliers can be selected to create the required multiplier value, that
+    is, any value between 1 and approximately 2x10^9. The default value is multiplied
+    by 1, 0x0.Writing to this register causes the internal trigger counter and the
+    state in the multipliers to be reset to initial count position, that is, trigger
+    counter is reloaded with the Trigger Counter Register value and all multipliers
+    are reset.
+  field:
+  - bits: '4'
+    name: MULT64K
+    type: rw
+  - bits: '3'
+    name: MULT256
+    type: rw
+  - bits: '2'
+    name: MULT16
+    type: rw
+  - bits: '1'
+    name: MULT4
+    type: rw
+  - bits: '0'
+    name: MULT2
+    type: rw
+  name: TRIGGER_MULTIPLIER
+  offset: '0x00000108'
+  type: rw
+  width: 32
+- default: '0x0003000F'
+  description: The pattern generator unit provides a set of known bit sequences or
+    patterns that can be output over the Trace Port and be detected by the TPA or
+    other associated trace capture device.
+  field:
+  - bits: '17'
+    name: PCONTEN
+    type: ro
+  - bits: '16'
+    name: PTIMEEN
+    type: ro
+  - bits: '3'
+    name: PATF0
+    type: ro
+  - bits: '2'
+    name: PATA5
+    type: ro
+  - bits: '1'
+    name: PATW0
+    type: ro
+  - bits: '0'
+    name: PATW1
+    type: ro
+  name: SUPPORTED_TEST_PATTERN_MODES
+  offset: '0x00000200'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: This register indicates the current test pattern/mode selected. Only
+    one of the modes can be set, using bits 17-16, but a multiple number of bits for
+    the patterns can be set using bits 3-0. If Timed Mode is chosen, then after the
+    allotted number of cycles has been reached, the mode automatically switches to
+    Off Mode. On reset this register is set to 18'h00000, Off Mode with no selected
+    patterns.
+  field:
+  - bits: '17'
+    name: PCONTEN
+    type: rw
+  - bits: '16'
+    name: PTIMEEN
+    type: rw
+  - bits: '3'
+    name: PATF0
+    type: rw
+  - bits: '2'
+    name: PATA5
+    type: rw
+  - bits: '1'
+    name: PATW0
+    type: rw
+  - bits: '0'
+    name: PATW1
+    type: rw
+  name: CURRENT_TEST_PATTERN_MODE
+  offset: '0x00000204'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This is an eight-bit counter start value that is decremented. A write
+    sets the initial counter value and a read returns the programmed value. On reset
+    this value is set to 0.
+  field:
+  - bits: '7:0'
+    longdesc: Default value is 0.
+    name: PATTCOUNT
+    shortdesc: 8-bit counter value to indicate the number of traceclkin cycles that
+      a pattern runs for before switching to the next pattern.
+    type: rw
+  name: TPRCR
+  offset: '0x00000208'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register indicates the current status of the formatter and flush
+    features available in the TPIU.
+  field:
+  - bits: '2'
+    longdesc: If this bit is set then tracectl is present. If no tracectl pin is available,
+      that is, this bit is zero, then the data formatter must be used and only in
+      continuous mode.This is constrained by the CSTPIU_TRACECTL_VAL Verilog `define,
+      which is not user modifiable, and the external tie-off tpctl. If either constraint
+      reports zero/LOW then no tracectl is present and this inability to use the pin
+      is reflected in this register.
+    name: TCPRESENT
+    shortdesc: Indicates whether the tracectl pin is available for use.
+    type: ro
+  - bits: '1'
+    longdesc: Any more trace data on the ATB interface is ignored and atreadys goes
+      HIGH.
+    name: FTSTOPPED
+    shortdesc: The formatter has received a stop request signal and all trace data
+      and post-amble has been output.
+    type: ro
+  - bits: '0'
+    name: FLINPROG
+    type: ro
+  name: FFSR
+  offset: '0x00000300'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'This register controls the generation of stop, trigger, and flush
+    events.To disable formatting and put the formatter into bypass mode, bits 1 and
+    0 must be clear. Setting both bits is the same as setting bit 1.All three flush
+    generating conditions can be enabled together. However, if a second or third flush
+    event is generated from another condition then the current flush completes before
+    the next flush is serviced. Flush from flushin takes priority over flush from
+    Trigger, which in turn completes before a manually activated flush. All Trigger
+    indication conditions can be enabled simultaneously although this can cause the
+    appearance of multiple triggers if flush using trigger is also enabled.Both ''Stop
+    On'' settings can be enabled, although if flush on trigger is set up then none
+    of the flushed data is stored. When the system stops, it returns atreadys and
+    does not store the accepted data packets. This is to avoid stalling of any other
+    devices that are connected to a Trace Replicator.If an event in the Formatter
+    and Flush Control Register is required, it must be enabled before the originating
+    event starts. Because requests from flushes and triggers can originate in an asynchronous
+    clock domain, the exact time the component acts on the request cannot be determined
+    with respect to configuring the control.Note - It is recommended that the Trace
+    Port width is changed without enabling continuous mode. Enabling continuous mode
+    causes data to be output from the Trace Port and modifying the port size can result
+    in data not being aligned for power2 port widths.- To perform a stop on flush
+    completion through a manually-generated flush request, two write operations to
+    the register are required: one to enable the stop event, if it is not already
+    enabled; one to generate the manual flush.'
+  field:
+  - bits: '13'
+    longdesc: Reset to disabled, or zero.
+    name: STOPTRIG
+    shortdesc: Stop the formatter after a Trigger Event is observed.
+    type: rw
+  - bits: '12'
+    longdesc: Setting this bit enables this function but this is clear on reset, or
+      disabled.
+    name: STOPFL
+    shortdesc: This forces the FIFO to drain off any part-completed packets.
+    type: rw
+  - bits: '10'
+    name: TRIGFL
+    type: rw
+  - bits: '9'
+    name: TRIGEVT
+    type: rw
+  - bits: '8'
+    name: TRIGIN
+    type: rw
+  - bits: '6'
+    longdesc: This is cleared when this flush has been serviced. This bit is clear
+      on reset.
+    name: FONMAN
+    shortdesc: Setting this bit causes a flush to be generated.
+    type: rw
+  - bits: '5'
+    longdesc: On reset this bit is clear. A Trigger Event is defined as when the Trigger
+      counter reaches zero or, in the case of the Trigger counter being zero, when
+      trigin is HIGH.
+    name: FONTRIG
+    shortdesc: Set this bit to cause a flush of data in the system when a Trigger
+      Event occurs.
+    type: rw
+  - bits: '4'
+    longdesc: This is clear on reset.
+    name: FONFLIN
+    shortdesc: Set this bit to enable use of the flushin connection.
+    type: rw
+  - bits: '1'
+    longdesc: Reset value is this bit clear. Can only be changed when FtStopped is
+      HIGH.
+    name: ENFCONT
+    shortdesc: Embed in trigger packets and indicate null cycles using Sync packets.
+    type: rw
+  - bits: '0'
+    longdesc: Trace disable cycles and triggers are indicated by tracectl, where fitted.
+      On Reset this bit clear. Can only be changed when FtStopped is HIGH.
+    name: ENFTC
+    shortdesc: Do not embed Triggers into the formatted stream.
+    type: rw
+  name: FFCR
+  offset: '0x00000304'
+  type: rw
+  width: 32
+- default: '0x00000040'
+  description: The Formatter Synchronization Counter Register enables effective use
+    on different sized Trace Port Analyzers (TPAs) without wasting large amounts of
+    the storage capacity of the capture device.This counter is the number of formatter
+    frames since the last synchronization packet of 128 bits, and is a 12-bit counter
+    with a maximum count value of 4096. This equates to synchronization every 65536
+    bytes, that is, 4096 packets x 16 bytes per packet. The default is set up for
+    a synchronization packet every 1024 bytes, that is, every 64 formatter frames.If
+    the formatter has been configured for continuous mode, full and half-word sync
+    frames are inserted during normal operation. Under these circumstances the count
+    value represents the maximum number of complete frames between full synchronization
+    packets.
+  field:
+  - bits: '11:0'
+    longdesc: Default value is 64 (0x40).
+    name: CYCCOUNT
+    shortdesc: 12-bit counter value to indicate the number of complete frames between
+      full synchronization packets.
+    type: rw
+  name: FSCR
+  offset: '0x00000308'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Two ports can be used as a control and feedback mechanism for any serializers,
+    pin sharing multiplexors or other solutions that might be added to the trace output
+    pins either for pin control or a high speed trace port solution. These ports are
+    raw register banks that sample or export the corresponding external pins. The
+    output register bank is set to all zeros on reset. The input registers sample
+    the incoming signals and as such are undefined.
+  field:
+  - bits: '7:0'
+    name: EXTCTLIN
+    type: ro
+  name: EXTCTL_IN_PORT
+  offset: '0x00000400'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Two ports can be used as a control and feedback mechanism for any serializers,
+    pin sharing multiplexors or other solutions that might be added to the trace output
+    pins either for pin control or a high speed trace port solution. These ports are
+    raw register banks that sample or export the corresponding external pins. The
+    output register bank is set to all zeros on reset. The input registers sample
+    the incoming signals and as such are undefined.
+  field:
+  - bits: '7:0'
+    longdesc: 'Bits [7:1] are not used; bit [0] controls the source for TPIU trace
+      clock: 0: trace clock is from PS clock controller 1: trace clock is from PL'
+    name: EXTCTLOUT
+    shortdesc: EXTCTL Outputs.
+    type: rw
+  name: EXTCTL_OUT_PORT
+  offset: '0x00000404'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The Integration Test Trigger In and Flush In Acknowledge Register enables
+    control of the triginack and flushinack outputs from the TPIU.
+  field:
+  - bits: '1'
+    name: FLUSHINACK
+    type: wo
+  - bits: '0'
+    name: TRIGINACK
+    type: wo
+  name: ITTRFLINACK
+  offset: '0x00000EE4'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: The Integration Test Trigger In and Flush In Register contains the
+    values of the flushin and trigin inputs to the TPIU.
+  field:
+  - bits: '1'
+    name: FLUSHIN
+    type: ro
+  - bits: '0'
+    name: TRIGIN
+    type: ro
+  name: ITTRFLIN
+  offset: '0x00000EE8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: The Integration Test ATB Data Register 0 contains the value of the
+    atdatas inputs to the TPIU. The values are only valid when atvalids is HIGH.
+  field:
+  - bits: '4'
+    name: ATDATA_31
+    type: ro
+  - bits: '3'
+    name: ATDATA_23
+    type: ro
+  - bits: '2'
+    name: ATDATA_15
+    type: ro
+  - bits: '1'
+    name: ATDATA_7
+    type: ro
+  - bits: '0'
+    name: ATDATA_0
+    type: ro
+  name: ITATBDATA0
+  offset: '0x00000EEC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: The Integration Test ATB Control Register 2 enables control of the
+    atreadys and afvalids outputs of the TPIU.
+  field:
+  - bits: '1'
+    name: AFVALID
+    type: wo
+  - bits: '0'
+    name: ATREADY
+    type: wo
+  name: ITATBCTR2
+  offset: '0x00000EF0'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: The Integration Test ATB Control Register 1 contains the value of the
+    atids input to the TPIU. This is only valid when atvalids is HIGH.
+  field:
+  - bits: '6:0'
+    name: ATID
+    type: ro
+  name: ITATBCTR1
+  offset: '0x00000EF4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: The Integration Test ATB Control Register 0 captures the values of
+    the atvalids, afreadys, and atbytess inputs to the TPIU. To ensure the integration
+    registers work correctly in a system, the value of atbytess is only valid when
+    atvalids, bit [0], is HIGH.
+  field:
+  - bits: '9:8'
+    name: ATBYTES
+    type: ro
+  - bits: '1'
+    name: AFREADY
+    type: ro
+  - bits: '0'
+    name: ATVALID
+    type: ro
+  name: ITATBCTR0
+  offset: '0x00000EF8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'This register is used to enable topology detection. For more information
+    see the CoreSight Architecture Specification. This register enables the component
+    to switch from a functional mode, the default behavior, to integration mode where
+    the inputs and outputs of the component can be directly controlled for the purpose
+    of integration testing and topology solving. Note: When a device has been in integration
+    mode, it might not function with the original behavior. After performing integration
+    or topology detection, you must reset the system to ensure correct behavior of
+    CoreSight and other connected system components that are affected by the integration
+    or topology detection.The registers in the TPIU enable the system to set the flushinack
+    and triginack output pins. The flushin and trigin inputs to the TPIU can also
+    be read. The other Integration Test Registers are for testing the integration
+    of the ATB slave interface on the TPIU.'
+  field:
+  - bits: '0'
+    name: INTEGRATION_MODE
+    type: rw
+  name: ITCTRL
+  offset: '0x00000F00'
+  type: rw
+  width: 32
+- default: '0x0000000F'
+  description: This is used in conjunction with Claim Tag Clear Register, CLAIMCLR.
+    This register forms one half of the Claim Tag value. This location allows individual
+    bits to be set, write, and returns the number of bits that can be set, read.
+  field:
+  - bits: '3:0'
+    name: CLAIMSET
+    type: rw
+  name: CLAIMSET
+  offset: '0x00000FA0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register is used in conjunction with Claim Tag Set Register, CLAIMSET.
+    This register forms one half of the Claim Tag value. This location enables individual
+    bits to be cleared, write, and returns the current Claim Tag value, read.
+  field:
+  - bits: '3:0'
+    name: CLAIMCLR
+    type: rw
+  name: CLAIMCLR
+  offset: '0x00000FA4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This is used to enable write access to device registers. External accesses
+    from a debugger (paddrdbg31 = 1) are not subject to the Lock Registers. A debugger
+    does not have to unlock the component in order to write and modify the registers
+    in the component.
+  field:
+  - bits: '31:0'
+    longdesc: A write of any value other than 0xC5ACCE55 will have the affect of removing
+      write access.
+    name: ACCESS_W
+    shortdesc: A write of 0xC5ACCE55 enables further write access to this device.
+    type: wo
+  name: LAR
+  offset: '0x00000FB0'
+  type: wo
+  width: 32
+- default: '0x00000003'
+  description: This indicates the status of the Lock control mechanism. This lock
+    prevents accidental writes by code under debug. When locked, write access is blocked
+    to all registers, except the Lock Access Register.External accesses from a debugger
+    (paddrdbg31 = 1) are not subject to the Lock Registers. This register reads as
+    0 when read from an external debugger (paddrdbg31 = 1).
+  field:
+  - bits: '2'
+    name: LOCKTYPE
+    type: ro
+  - bits: '1'
+    longdesc: This bit reads as 0 when read from an external debugger (paddrdbg31
+      = 1) since external debugger accesses are not subject to Lock Registers.
+    name: LOCKGRANT
+    shortdesc: Returns the current status of the Lock.
+    type: ro
+  - bits: '0'
+    longdesc: This bit reads as 0 when read from an external debugger (paddrdbg31
+      = 1) since external debugger accesses are not subject to Lock Registers.
+    name: LOCKEXIST
+    shortdesc: Indicates that a lock control mechanism exists for this device.
+    type: ro
+  name: LSR
+  offset: '0x00000FB4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reports what functionality is currently permitted by the authentication
+    interface.
+  field:
+  - bits: '7:6'
+    name: SNID
+    type: ro
+  - bits: '5:4'
+    name: SID
+    type: ro
+  - bits: '3:2'
+    name: NSNID
+    type: ro
+  - bits: '1:0'
+    name: NSID
+    type: ro
+  name: AUTHSTATUS
+  offset: '0x00000FB8'
+  type: ro
+  width: 32
+- default: '0x000000A0'
+  description: This register indicates the capabilities of the TPIU.
+  field:
+  - bits: '11'
+    name: SWOUARTNRZ
+    type: ro
+  - bits: '10'
+    name: SWOMAN
+    type: ro
+  - bits: '9'
+    name: TCLKDATA
+    type: ro
+  - bits: '8:6'
+    name: FIFOSIZE
+    type: ro
+  - bits: '5'
+    name: CLKRELAT
+    type: ro
+  - bits: '4:0'
+    longdesc: When nonzero this value indicates the type/number of ATB multiplexing
+      present on the input to the ATB. Currently only 0x00 is supported, that is,
+      no multiplexing present.This value is used to assist topology detection of the
+      ATB structure.
+    name: MUXNUM
+    shortdesc: Indicates the Hidden Level of Input multiplexing.
+    type: ro
+  name: DEVID
+  offset: '0x00000FC8'
+  type: ro
+  width: 32
+- default: '0x00000011'
+  description: It provides a debugger with information about the component when the
+    Part Number field is not recognized. The debugger can then report this information.
+  field:
+  - bits: '7:4'
+    name: SUB_TYPE
+    type: ro
+  - bits: '3:0'
+    name: MAJOR_TYPE
+    type: ro
+  name: DEVTYPE
+  offset: '0x00000FCC'
+  type: ro
+  width: 32
+- default: '0x00000004'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer identity and the memory footprint indicator.
+  field:
+  - bits: '7:4'
+    longdesc: If a component only requires the standard 4KB then this should read
+      as 0x0, 4KB only, for 8KB set to 0x1, 16KB == 0x2, 32KB == 0x3, and so on.
+    name: SIZE
+    shortdesc: This is a 4-bit value that indicates the total contiguous size of the
+      memory window used by this component in powers of 2 from the standard 4KB.
+    type: ro
+  - bits: '3:0'
+    name: DES_2
+    type: ro
+  name: PIDR4
+  offset: '0x00000FD0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  name: PIDR5
+  offset: '0x00000FD4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  name: PIDR6
+  offset: '0x00000FD8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  name: PIDR7
+  offset: '0x00000FDC'
+  type: rw
+  width: 32
+- default: '0x00000012'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer specific part number.
+  field:
+  - bits: '7:0'
+    longdesc: This is selected by the designer of the component.
+    name: PART_0
+    shortdesc: Bits [7:0] of the component's part number.
+    type: ro
+  name: PIDR0
+  offset: '0x00000FE0'
+  type: ro
+  width: 32
+- default: '0x000000B9'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer specific part number and part of the designer identity.
+  field:
+  - bits: '7:4'
+    name: DES_0
+    type: ro
+  - bits: '3:0'
+    longdesc: This is selected by the designer of the component.
+    name: PART_1
+    shortdesc: Bits [11:8] of the component's part number.
+    type: ro
+  name: PIDR1
+  offset: '0x00000FE4'
+  type: ro
+  width: 32
+- default: '0x0000004B'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer identity and the product revision.
+  field:
+  - bits: '7:4'
+    longdesc: This only increases by 1 for both major and minor revisions and is simply
+      used as a look-up to establish the exact major/minor revision.
+    name: REVISION
+    shortdesc: The Revision field is an incremental value starting at 0x0 for the
+      first design of this component.
+    type: ro
+  - bits: '3'
+    longdesc: Indicates that a JEDEC assigned value is used
+    name: JEDEC
+    shortdesc: Always set.
+    type: ro
+  - bits: '2:0'
+    name: DES_1
+    type: ro
+  name: PIDR2
+  offset: '0x00000FE8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Part of the set of Peripheral Identification registers. Contains the
+    RevAnd and Customer Modified fields.
+  field:
+  - bits: '7:4'
+    longdesc: In most cases this field is zero. It is recommended that component designers
+      ensure this field can be changed by a metal fix if required, for example by
+      driving it from registers that reset to zero.
+    name: REVAND
+    shortdesc: This field indicates minor errata fixes specific to this design, for
+      example metal fixes after implementation.
+    type: ro
+  - bits: '3:0'
+    longdesc: In most cases this field is zero.
+    name: CMOD
+    shortdesc: Where the component is reusable IP, this value indicates if the customer
+      has modified the behavior of the component.
+    type: ro
+  name: PIDR3
+  offset: '0x00000FEC'
+  type: ro
+  width: 32
+- default: '0x0000000D'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_0
+    type: ro
+  name: CIDR0
+  offset: '0x00000FF0'
+  type: ro
+  width: 32
+- default: '0x00000090'
+  description: A component identification register, that indicates that the identification
+    registers are present. This register also indicates the component class.
+  field:
+  - bits: '7:4'
+    longdesc: E.g. ROM table, CoreSight component etc. Constitutes bits [15:12] of
+      the component identification.
+    name: CLASS
+    shortdesc: Class of the component.
+    type: ro
+  - bits: '3:0'
+    name: PRMBL_1
+    type: ro
+  name: CIDR1
+  offset: '0x00000FF4'
+  type: ro
+  width: 32
+- default: '0x00000005'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_2
+    type: ro
+  name: CIDR2
+  offset: '0x00000FF8'
+  type: ro
+  width: 32
+- default: '0x000000B1'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_3
+    type: ro
+  name: CIDR3
+  offset: '0x00000FFC'
+  type: ro
+  width: 32

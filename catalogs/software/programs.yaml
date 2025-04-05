@@ -1,0 +1,33 @@
+definition:
+- cpus: host
+  depends:
+  - core
+  - dbg
+  name: bin2c
+  software: programs/bin2c/bin2c.toml
+  type: program.bin2c
+- cpus: host
+  depends:
+  - core
+  - dbg
+  - memory
+  - utils
+  - multi_core
+  - cadt
+  - vfile
+  - vfile_memory
+  - data_utils
+  - tiny_image_format
+  - image
+  - image_io
+  - gfx2d
+  - host_os
+  - tiny_stl
+  - luau
+  - luau_utils
+  - data_binify
+  - resource_bundle
+  - resource_bundle_writer
+  name: image_convert
+  software: programs/image_convert/image_convert.toml
+  type: program.image_convert

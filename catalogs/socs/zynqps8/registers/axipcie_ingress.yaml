@@ -1,0 +1,165 @@
+bank:
+- address: '0xfd0e0800'
+  name: AXIPCIE_INGRESS0
+- address: '0xfd0e0820'
+  name: AXIPCIE_INGRESS1
+- address: '0xfd0e0840'
+  name: AXIPCIE_INGRESS2
+- address: '0xfd0e0860'
+  name: AXIPCIE_INGRESS3
+- address: '0xfd0e0880'
+  name: AXIPCIE_INGRESS4
+- address: '0xfd0e08a0'
+  name: AXIPCIE_INGRESS5
+- address: '0xfd0e08c0'
+  name: AXIPCIE_INGRESS6
+- address: '0xfd0e08e0'
+  name: AXIPCIE_INGRESS7
+description: PCIe Bridge - Ingress Addr Translation 0
+register:
+- default: '0x1F0C0001'
+  description: Ingress AXI Translation - Capabilities
+  field:
+  - bits: '31:24'
+    name: INGRESS_SIZE_MAX
+    type: ro
+  - bits: '23:16'
+    name: INGRESS_SIZE_OFFSET
+    type: ro
+  - bits: '15:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: INGRESS_PRESENT
+    type: ro
+  name: TRAN_INGRESS_CAPABILITIES
+  offset: '0x00000000'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Ingress AXI Translation - Status
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24:16'
+    name: WR_PENDING_CTR
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:0'
+    name: RD_PENDING_CTR
+    type: ro
+  name: TRAN_INGRESS_STATUS
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Ingress AXI Translation - Control
+  field:
+  - bits: '31:28'
+    longdesc: When ingress_attr_enable == 1, the AXI transaction m_awcache port is
+      set to this value when forwarding write transactions hitting this translation
+      to AXI. When ingress_attr_enable == 0, the default cache attributes determined
+      by cfg_pcie_rx_awcache are applied.
+    name: INGRESS_ATTR_W
+    shortdesc: Ingress Write Cache Override.
+    type: rw
+  - bits: '27:24'
+    longdesc: When ingress_attr_enable == 1, the AXI transaction m_arcache port is
+      set to this value when forwarding read transactions hitting this translation
+      to AXI. When ingress_attr_enable == 0, the default cache attributes determined
+      by cfg_pcie_rx_arcache are applied.
+    name: INGRESS_ATTR_R
+    shortdesc: Ingress Read Cache Override.
+    type: rw
+  - bits: '23'
+    name: INGRESS_ATTR_ENABLE
+    type: rw
+  - bits: '22:21'
+    name: RESERVED
+    type: ro
+  - bits: '20:16'
+    longdesc: The translation window size in bytes is configured to be 2^(ingress_size_offset+ingress_size).
+      ingress_size must be <= ingress_size_max.
+    name: INGRESS_SIZE
+    shortdesc: Translation Size.
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: ro
+  - bits: '13:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: INGRESS_INVALID
+    type: rw
+  - bits: '2'
+    name: INGRESS_SECURITY_ENABLE
+    type: rw
+  - bits: '1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'The translation is hit when both of the following are true: * ingress_enable
+      == 1 * ingress_src_base[63:(12+ingress_size)] == AXI Address[63:(12+ingress_size)]'
+    name: INGRESS_ENABLE
+    shortdesc: Translation Enable.
+    type: rw
+  name: TRAN_INGRESS_CONTROL
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Ingress AXI Translation - Source Address Low
+  field:
+  - bits: '31:12'
+    name: INGRESS_SRC_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: TRAN_INGRESS_SRC_BASE_LO
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Ingress AXI Translation - Source Address High
+  field:
+  - bits: '31:0'
+    name: INGRESS_SRC_BASE_HI
+    type: rw
+  name: TRAN_INGRESS_SRC_BASE_HI
+  offset: '0x00000014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Ingress AXI Translation - Destination Address Low
+  field:
+  - bits: '31:12'
+    name: INGRESS_DST_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: TRAN_INGRESS_DST_BASE_LO
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Ingress AXI Translation - Destination Address High
+  field:
+  - bits: '31:0'
+    name: INGRESS_DST_BASE_HI
+    type: rw
+  name: TRAN_INGRESS_DST_BASE_HI
+  offset: '0x0000001C'
+  type: rw
+  width: 32

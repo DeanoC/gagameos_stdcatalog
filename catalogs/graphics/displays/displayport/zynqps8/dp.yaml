@@ -1,0 +1,3426 @@
+description: DisplayPort Controller
+register:
+- default: '0x00000000'
+  description: Sets the value of the main link bandwidth for the sink device.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    enum:
+    - description: 5.4Gb/s link speed
+      name: LINK_5_4GBS
+      value: '0x14'
+    - description: 2.7Gb/s link speed
+      name: LINK_2_7GBS
+      value: '0x0A'
+    - description: 1.62Gb/s link speed
+      name: LINK_1_62GBS
+      value: '0x06'
+    longdesc: o 0x06 = 1.62 Gbps o 0x0A = 2.7 Gbps o 0x14 = 5.4 Gbps
+    name: BW
+    shortdesc: Sets the value of the main link bandwidth for the sink device.
+    type: rw
+  name: LINK_BW_SET
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: To set the lane count
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: raz
+  - bits: '4:0'
+    name: LANE_CNT
+    type: rw
+  name: LANE_COUNT_SET
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: To enable enhanced framing
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: ENH_FRAMING_EN
+    type: rw
+  name: ENHANCED_FRAME_EN
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: To force training pattern
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1:0'
+    longdesc: '[1:0] - Set the link training pattern according to the two bit code.
+      o 00 = Training off o 01 = Training pattern 1, used for clock recovery o 10
+      = Training pattern 2, used for channel equalization o 11 = Training pattern
+      3, used for channel equalization for cores with DisplayPort v1.2.'
+    name: TP_SET
+    shortdesc: Sets the link training mode.
+    type: rw
+  name: TRAINING_PATTERN_SET
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: To transmit the link quality pattern
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: Set this bit to '1' to transmit HBR2 Compliance pattern(when LINK_QUAL_PAT_SET
+      = 2'b01) or 80-bit custom pattern(when LINK_QUAL_PAT_SET = 2'b00).
+    name: EXT
+    shortdesc: This bit is used along with LINK_QUAL_PAT_SET.
+    type: rw
+  - bits: '1:0'
+    longdesc: '- [1:0] - Enable transmission of the link quality test patterns. o
+      00 = Link quality test pattern not transmitted o 01 = D10.2 test pattern (unscrambled)
+      transmitted(Reserved. This feature can be enabled using TP1 selection) o 10
+      = Symbol Error Rate measurement pattern o 11 = PRBS7 transmitted (Reserved.
+      This feature can be enabled using PRBS7 transmit feature Reg 0x230)'
+    name: LNK_QUAL_PAT_SET
+    shortdesc: Transmit the link quality pattern.
+    type: rw
+  name: LINK_QUAL_PATTERN_SET
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: SCRAMBLING_DISABLE
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: '[0] - Disable scrambling.'
+    name: SCR_DIS
+    shortdesc: Set to '1' when the transmitter has disabled the scrambler and transmits
+      all symbols.
+    type: rw
+  name: SCRAMBLING_DISABLE
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: For down-spreading control
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: 5% spreading of the clock or '0' for none.
+    name: DWNSPRD_CTL
+    shortdesc: Down-spreading control - [0] -Set to '1' to enable a 0.
+    type: rw
+  name: DOWNSPREAD_CTRL
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Soft reset of DP Core
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: '[0] - Soft Video Reset: When set, video logic will be reset (stream
+      1). Software need NOT update this bit to ''0''for deassertion of reset'
+    name: SOFT_RST
+    shortdesc: Reads will return zeros.
+    type: wo
+  name: SOFTWARE_RESET
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 32 bits of 80-bit custom pattern that is used for LINK quality test.
+    These bits are valid when Bit 2 of LINK_QUAL_PATTERN_SET 0x10 register is set
+    to '1
+  field:
+  - bits: '31:0'
+    name: BITS_31_0
+    type: rw
+  name: COMP_PATTERN_80BIT_1
+  offset: '0x00000020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Description same as COMP_PATTERN_80BIT_1 (0x20)
+  field:
+  - bits: '31:0'
+    name: BITS_63_32
+    type: rw
+  name: COMP_PATTERN_80BIT_2
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Description same as COMP_PATTERN_80BIT_1 (0x20)
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: BITS_79_64
+    type: rw
+  name: COMP_PATTERN_80BIT_3
+  offset: '0x00000028'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Enable the basic operations of the transmitter.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: TX_EN
+    type: rw
+  name: TRANSMITTER_ENABLE
+  offset: '0x00000080'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Enable the transmission of main link video information.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: MS_ENABLE
+    type: rw
+  name: MAIN_STREAM_ENABLE
+  offset: '0x00000084'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Reads from this register always return 0x0.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: FORCE_SCR_RESET
+    type: wo
+  name: FORCE_SCRAMBLER_RESET
+  offset: '0x000000C0'
+  type: mixed
+  width: 32
+- default: '0x04010000'
+  description: Core version register
+  field:
+  - bits: '31:0'
+    name: VER
+    type: ro
+  name: VERSION_REGISTER
+  offset: '0x000000F8'
+  type: ro
+  width: 32
+- default: '0x01020000'
+  description: Returns the unique identification code of the core and the current
+    revision level
+  field:
+  - bits: '31:0'
+    name: ID
+    type: ro
+  name: CORE_ID
+  offset: '0x000000FC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: AUX_COMMAND_REGISTER
+  field:
+  - bits: '31:13'
+    name: RESERVED
+    type: raz
+  - bits: '12'
+    name: ADDR_TRANSFER_EN
+    type: rw
+  - bits: '11:8'
+    enum:
+    - description: I2C over Aux Write
+      name: I2C_WRITE
+      value: 0
+    - description: I2C over Aux Read
+      name: I2C_READ
+      value: 1
+    - description: I2C over Aux Write Status
+      name: I2C_WRITE_STATUS
+      value: 2
+    - description: I2C over Aux Write Middle Of Transfer
+      name: I2C_WRITE_MOT
+      value: 4
+    - description: I2C over Aux Read Middle Of Transfer
+      name: I2C_READ_MOT
+      value: 5
+    - description: Aux Write
+      name: AUX_WRITE
+      value: 8
+    - description: Aux Read
+      name: AUX_READ
+      value: 9
+    name: AUX_CH_COMMAND
+    type: rw
+  - bits: '7:4'
+    name: RESERVED
+    type: raz
+  - bits: '3:0'
+    longdesc: The range of the register is 0 to 15 indicating between 1 and 16 bytes
+      of data.
+    name: NUM_OF_BYTES
+    shortdesc: Specifies the number of bytes to transfer with the current command.
+    type: rw
+  name: AUX_COMMAND_REGISTER
+  offset: '0x00000100'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: . FIFO containing up to 16 bytes of write data for the current AUX
+    channel command
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    name: AUX_WRITE_FIFO
+    type: wo
+  name: AUX_WRITE_FIFO
+  offset: '0x00000104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Specifies the address for the current AUX channel command.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: raz
+  - bits: '19:0'
+    name: AUX_ADDRESS
+    type: rw
+  name: AUX_ADDRESS
+  offset: '0x00000108'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: . Contains the clock divider value for generating the internal 1MHz
+    clock from the APB host interface clock. The clock divider register provides integer
+    division only and does not support fractional APB clock rates (for example, set
+    to 75 for a 75 MHz APB clock).
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:8'
+    longdesc: 'Allowable values include: 8,16,24,32,40 and 48. From DP Protocol spec,
+      AUX Pulse Width range = 0.4 to 0.6 us For example, for AXI Lite clock of 50MHz
+      (=20ns), the filter width, when set to 24, falls in the allowable range as defined
+      by the protocol spec. ((20*24 = 480) = 0.48us which is in the range 0.4 to 0.6us)
+      Program a value of 24 in this register.'
+    name: AUX_SIGNAL_WIDTH_FILTER
+    shortdesc: The number of APB clocks equivalent to the recommended width of AUX
+      pulse.
+    type: rw
+  - bits: '7:0'
+    name: CLK_DIV
+    type: rw
+  name: AUX_CLOCK_DIVIDER
+  offset: '0x0000010C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: . Indicates an overflow in the user FIFO. The event may occur if the
+    video rate does not match the TU size programming.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: This bit clears upon read.
+    name: OVERFLOW
+    shortdesc: ': A ''1'' indicates that the internal FIFO has detected an overflow
+      condition.'
+    type: clronrd
+  name: TX_USER_FIFO_OVERFLOW
+  offset: '0x00000110'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Contains the raw signal values for those conditions which may cause
+    an interrupt.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3'
+    name: REPLY_TIMEOUT
+    type: ro
+  - bits: '2'
+    name: REPLY_STATE
+    type: ro
+  - bits: '1'
+    name: REQUEST_STATE
+    type: ro
+  - bits: '0'
+    name: HPD_STATE
+    type: ro
+  name: INTERRUPT_SIGNAL_STATE
+  offset: '0x00000130'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Maps to the internal FIFO which contains up to 16 bytes of information
+    received during the AUX channel reply. Reply data is read from the FIFO starting
+    with byte 0. The number of bytes in the FIFO corresponds to the number of bytes
+    requested.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    name: AUX_REPLY_DATA
+    type: ro
+  name: AUX_REPLY_DATA
+  offset: '0x00000134'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Reply code received from the most recent AUX Channel request. The AUX
+    Reply Code corresponds to the code from the DisplayPort specification
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3:2'
+    enum:
+    - name: I2C_ACK
+      value: 0
+    - name: I2C_NACK
+      value: 1
+    - name: I2C_DEFER
+      value: 2
+    name: CODE1
+    type: ro
+  - bits: '1:0'
+    enum:
+    - name: AUX_ACK
+      value: 0
+    - name: AUX_NACK
+      value: 1
+    - name: AUX_DEFER
+      value: 2
+    name: CODE0
+    type: ro
+  name: AUX_REPLY_CODE
+  offset: '0x00000138'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Provides an internal counter of the number of AUX reply transactions
+    received on the AUX Channel. Writing to this register clears the count.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    name: AUX_REPLY_COUNT
+    type: clronwr
+  name: AUX_REPLY_COUNT
+  offset: '0x0000013C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Returns the total number of data bytes actually received during a transaction.
+    This register does not use the length byte of the transaction header.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: rw
+  - bits: '4:0'
+    name: REPLY_DATA_COUNT
+    type: ro
+  name: REPLY_DATA_COUNT
+  offset: '0x00000148'
+  type: mixed
+  width: 32
+- default: '0x00000010'
+  description: REPLY_STATUS
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:4'
+    name: AUX_REPLY_STATE
+    type: ro
+  - bits: '3'
+    name: REPLY_ERROR
+    type: ro
+  - bits: '2'
+    longdesc: The bit is set to '0' when the AUX transaction request controller is
+      idle.
+    name: REQUEST_IN_PROGRESS
+    shortdesc: '- [2] - REQUEST_IN_PROGRESS: The AUX transaction request controller
+      sets this bit to a ''1'' while actively transmitting a request on the AUX serial
+      bus.'
+    type: ro
+  - bits: '1'
+    longdesc: The bit is '0' otherwise.
+    name: REPLY_IN_PROGRESS
+    shortdesc: The AUX reply detection logic sets this bit to a '1' while receiving
+      a reply on the AUX serial bus.
+    type: ro
+  - bits: '0'
+    longdesc: The AUX reply controller sets this bit to '1' when a complete and valid
+      reply transaction has been received
+    name: REPLY_RECEIVED
+    shortdesc: This bit is set to '0' when the AUX request controller begins sending
+      bits on the AUX serial bus.
+    type: ro
+  name: REPLY_STATUS
+  offset: '0x0000014C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: HPD_DURATION
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: HPD_DURATION
+    type: ro
+  name: HPD_DURATION
+  offset: '0x00000150'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Specifies the total number of clocks in the horizontal framing period
+    for the main stream video signal.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: HTOTAL
+    type: rw
+  name: MAIN_STREAM_HTOTAL
+  offset: '0x00000180'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Provides the total number of lines in the main stream video frame
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: VTOTAL
+    type: rw
+  name: MAIN_STREAM_VTOTAL
+  offset: '0x00000184'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Provides the polarity values for the video sync signals
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: VSYNC_POLARITY
+    type: rw
+  - bits: '0'
+    name: HSYNC_POLARITY
+    type: rw
+  name: MAIN_STREAM_POLARITY
+  offset: '0x00000188'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Sets the width of the horizontal sync pulse.
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: HSWIDTH
+    type: rw
+  name: MAIN_STREAM_HSWIDTH
+  offset: '0x0000018C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Sets the width of the vertical sync pulse.
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: VSWIDTH
+    type: rw
+  name: MAIN_STREAM_VSWIDTH
+  offset: '0x00000190'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Horizontal resolution of the main stream video source
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: HRES
+    type: rw
+  name: MAIN_STREAM_HRES
+  offset: '0x00000194'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Vertical resolution of the main stream video source
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: VRES
+    type: rw
+  name: MAIN_STREAM_VRES
+  offset: '0x00000198'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Number of clocks between the leading edge of the horizontal sync and
+    the start of active data
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: HSTART
+    type: rw
+  name: MAIN_STREAM_HSTART
+  offset: '0x0000019C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Number of lines between the leading edge of the vertical sync and the
+    first line of active data.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: VSTART
+    type: rw
+  name: MAIN_STREAM_VSTART
+  offset: '0x000001A0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Miscellaneous stream attributes.Implements the attribute information
+    contained in the DisplayPort MISC0 register described in section 2.2.4 of the
+    standard.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:5'
+    name: BPC
+    type: rw
+  - bits: '4'
+    name: YCBCR_COLR
+    type: rw
+  - bits: '3'
+    name: DYNC_RANGE
+    type: rw
+  - bits: '2:1'
+    name: COMP_FORMAT
+    type: rw
+  - bits: '0'
+    name: SYNC_CLOCK
+    type: rw
+  name: MAIN_STREAM_MISC0
+  offset: '0x000001A4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: MAIN_STREAM_MISC1. Miscellaneous stream attributes.Implements the attribute
+    information contained in the DisplayPort MISC1 register described in section 2.2.4
+    of the standard.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7'
+    name: Y_ONLY_EN
+    type: rw
+  - bits: '6:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:1'
+    name: STEREO_VID_ATTR
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MAIN_STREAM_MISC1
+  offset: '0x000001A8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: M value for the video stream as computed by the source core. If synchronous
+    clocking mode is used, this register must be written with the M value.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: raz
+  - bits: '23:0'
+    name: M_VID
+    type: rw
+  name: MAIN_STREAM_M_VID
+  offset: '0x000001AC'
+  type: mixed
+  width: 32
+- default: '0x00000040'
+  description: Sets the size of a transfer unit in the framing logic On reset, transfer
+    size is set to 64.
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:0'
+    longdesc: Note that bit 0 cannot be written (the transfer unit size is always
+      even).
+    name: TU_SIZE
+    shortdesc: This number should be in the range of 32 to 64 and is set to a fixed
+      value that depends on the inbound video mode.
+    type: rw
+  name: MSA_TRANSFER_UNIT_SIZE
+  offset: '0x000001B0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: N value for the video stream as computed by the source core. If synchronous
+    clocking mode is used, this register must be written with the N value.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: raz
+  - bits: '23:0'
+    name: N_VID
+    type: rw
+  name: MAIN_STREAM_N_VID
+  offset: '0x000001B4'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: User pixel width size
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1:0'
+    longdesc: This may be used in driver to maintain compatibility with soft IP
+    name: PIX_WIDTH
+    shortdesc: DP Tx core is used in single pixel mode.
+    type: ro
+  name: USER_PIX_WIDTH
+  offset: '0x000001B8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This register is used to translate the number of pixels per line to
+    the native internal 16-bit datapath.
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: raz
+  - bits: '17:0'
+    name: DATA_CNT_PER_LANE
+    type: rw
+  name: USER_DATA_COUNT_PER_LANE
+  offset: '0x000001BC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Programs source to use MIN number of bytes per transfer unit. The calculation
+    should be done based on the DisplayPort specification.
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:0'
+    name: MIN_BYTES_PER_TU
+    type: rw
+  name: MIN_BYTES_PER_TU
+  offset: '0x000001C4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Calculating MIN bytes per TU will often not be a whole number.This
+    register is used to hold the fractional component
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    name: FRACT_BYTES_PER_TU
+    type: rw
+  name: FRAC_BYTES_PER_TU
+  offset: '0x000001C8'
+  type: mixed
+  width: 32
+- default: '0x00000020'
+  description: This register defines the number of initial wait cycles at the start
+    of a new line by the Framing logic. This allows enough data to be buffered in
+    the input FIFO.
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:0'
+    name: INIT_WAIT
+    type: rw
+  name: INIT_WAIT
+  offset: '0x000001CC'
+  type: mixed
+  width: 32
+- default: '0x00010003'
+  description: Reset the transmitter PHY.
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16'
+    name: EN_8B_10B
+    type: rw
+  - bits: '15:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    longdesc: Clear to release.
+    name: GT_RESET
+    shortdesc: Set to '1' to hold the GT in reset.
+    type: rw
+  - bits: '0'
+    longdesc: Clear to release.
+    name: PHY_RESET
+    shortdesc: Set to '1' to hold the PHY in reset.
+    type: rw
+  name: PHY_RESET
+  offset: '0x00000200'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Enable the pseudo random bit sequence 7 pattern transmission for link
+    quality assessment. PRBS is generated by the DP transmit controller only. Note:
+    PRBS feature of GT is unused'
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: TX_PRBS7
+    type: rw
+  name: TRANSMIT_PRBS7
+  offset: '0x00000230'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Instructs the PHY PLL to generate the proper clock frequency for the
+    required link rate
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - description: 5.4Gb/s link speed
+      name: LINK_5_4GBS
+      value: 5
+    - description: 2.7Gb/s link speed
+      name: LINK_2_7GBS
+      value: 3
+    - description: 1.62Gb/s link speed
+      name: LINK_1_62GBS
+      value: 1
+    longdesc: 40 Gb/s link o 0x03 = 2.70 Gb/s link o 0x01 = 1.62 Gb/s link
+    name: SEL
+    shortdesc: o 0x05 = 5.
+    type: rw
+  name: PHY_CLOCK_SELECT
+  offset: '0x00000234'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Control PHY Power down
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3:0'
+    longdesc: When set to 11, moves the GT to power down mode. When set to 00, GT
+      will be in active state. bits [1:0] - lane0 Bits [3:2] - lane 1
+    name: POWER_DWN
+    shortdesc: Two bits per lane.
+    type: rw
+  name: TX_PHY_POWER_DOWN
+  offset: '0x00000238'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Set the pre-cursor level(post cursor 1 for GT) for lane 0 of the DisplayPort
+    link
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: raz
+  - bits: '4:0'
+    longdesc: The mapping of the four levels supported by the DisplayPort standard
+      to the 32 levels indicated here is implementation specific
+    name: PRECURSOR0
+    shortdesc: Controls the pre-cursor level for lane 0 of the transmitter.
+    type: rw
+  name: PHY_PRECURSOR_LANE_0
+  offset: '0x0000024C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Set the pre-cursor level(post cursor 1 for GT) for lane 1 of the DisplayPort
+    link
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: raz
+  - bits: '4:0'
+    name: PRECURSOR1
+    type: rw
+  name: PHY_PRECURSOR_LANE_1
+  offset: '0x00000250'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Provides the current status from the PHY.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: PLL_LOCKED
+    type: ro
+  - bits: '3:2'
+    name: RATE_CHANGE_DONE_0_1
+    type: ro
+  - bits: '1:0'
+    name: RESET_LANES_0_1
+    type: ro
+  name: PHY_STATUS
+  offset: '0x00000280'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Enables audio stream packets in main link and provides buffer control.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: TX_AUD_CTRL
+    type: rw
+  name: TX_AUDIO_CONTROL
+  offset: '0x00000300'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: TX_AUDIO_CHANNELS. Used to input active channel count. Transmitter
+    collects audio samples based on this information.
+  field:
+  - bits: '0'
+    name: TX_AUD_CH
+    type: rw
+  name: TX_AUDIO_CHANNELS
+  offset: '0x00000304'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Word formatted as per CEA 861-C Info Frame.
+  field:
+  - bits: '31:0'
+    longdesc: . - 8th word -DB27,DB26,DB25,DB24 The data bytes DB1..DBN of CEA Info
+      frame are mapped as DB0-DBN-1. No protection is provided for wrong operations
+      by software
+    name: INFO_DATA
+    shortdesc: 'Total of eight words should be written in following order: - 1st word
+      - o [7:0] = HB0 o [15:8] = HB1 o [23:16] = HB2 o [31:24] = HB3 - 2nd word -
+      DB3,DB2,DB1,DB0 .'
+    type: wo
+  name: TX_AUDIO_INFO_DATA0
+  offset: '0x00000308'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Word formatted as per CEA 861-C Info Frame.
+  field:
+  - bits: '31:0'
+    longdesc: Similar to register TX_AUDIO_INFO_DATA0
+    name: INFO_DATA
+    shortdesc: Second word of the 8 words.
+    type: wo
+  name: TX_AUDIO_INFO_DATA1
+  offset: '0x0000030C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Word formatted as per CEA 861-C Info Frame.
+  field:
+  - bits: '31:0'
+    longdesc: Similar to register TX_AUDIO_INFO_DATA0
+    name: INFO_DATA
+    shortdesc: Third word of the 8 words.
+    type: wo
+  name: TX_AUDIO_INFO_DATA2
+  offset: '0x00000310'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Word formatted as per CEA 861-C Info Frame.
+  field:
+  - bits: '31:0'
+    longdesc: Similar to register TX_AUDIO_INFO_DATA0
+    name: INFO_DATA
+    shortdesc: Fourth word of the 8 words.
+    type: wo
+  name: TX_AUDIO_INFO_DATA3
+  offset: '0x00000314'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Word formatted as per CEA 861-C Info Frame.
+  field:
+  - bits: '31:0'
+    longdesc: Similar to register TX_AUDIO_INFO_DATA0
+    name: INFO_DATA
+    shortdesc: 5th word of the 8 words.
+    type: wo
+  name: TX_AUDIO_INFO_DATA4
+  offset: '0x00000318'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Word formatted as per CEA 861-C Info Frame.
+  field:
+  - bits: '31:0'
+    longdesc: Similar to register TX_AUDIO_INFO_DATA0
+    name: INFO_DATA
+    shortdesc: 6th word of the 8 words.
+    type: wo
+  name: TX_AUDIO_INFO_DATA5
+  offset: '0x0000031C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Word formatted as per CEA 861-C Info Frame.
+  field:
+  - bits: '31:0'
+    longdesc: Similar to register TX_AUDIO_INFO_DATA0
+    name: INFO_DATA
+    shortdesc: 7th word of the 8 words.
+    type: wo
+  name: TX_AUDIO_INFO_DATA6
+  offset: '0x00000320'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Word formatted as per CEA 861-C Info Frame.
+  field:
+  - bits: '31:0'
+    longdesc: Similar to register TX_AUDIO_INFO_DATA0
+    name: INFO_DATA
+    shortdesc: 8th word of the 8 words.
+    type: wo
+  name: TX_AUDIO_INFO_DATA7
+  offset: '0x00000324'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: M value of audio stream as computed by transmitter
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: raz
+  - bits: '23:0'
+    name: MAUD
+    type: rw
+  name: TX_M_AUD
+  offset: '0x00000328'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: TX_AUDIO_NAUD. N value of audio stream as computed by transmitter.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: raz
+  - bits: '23:0'
+    name: NAUD
+    type: rw
+  name: TX_N_AUD
+  offset: '0x0000032C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Word formatted as per Extension packet described in protocol specification.
+    Extended packet is fixed to 32 Bytes length. The controller has buffer space for
+    only one extended packet.
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: wo
+  name: TX_AUDIO_EXT_DATA0
+  offset: '0x00000330'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 2nd word of the 9 words of the extended packet
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: wo
+  name: TX_AUDIO_EXT_DATA1
+  offset: '0x00000334'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 3rd word of the 9 words of the extended packet
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: wo
+  name: TX_AUDIO_EXT_DATA2
+  offset: '0x00000338'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 4th word of the 9 words of the extended packet
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: wo
+  name: TX_AUDIO_EXT_DATA3
+  offset: '0x0000033C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 5th word of the 9 words of the extended packet
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: wo
+  name: TX_AUDIO_EXT_DATA4
+  offset: '0x00000340'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 6th word of the 9 words of the extended packet
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: wo
+  name: TX_AUDIO_EXT_DATA5
+  offset: '0x00000344'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 7th word of the 9 words of the extended packet
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: wo
+  name: TX_AUDIO_EXT_DATA6
+  offset: '0x00000348'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 8th word of the 9 words of the extended packet
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: wo
+  name: TX_AUDIO_EXT_DATA7
+  offset: '0x0000034C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 9th word of the 9 words of the extended packet
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: wo
+  name: TX_AUDIO_EXT_DATA8
+  offset: '0x00000350'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31'
+    longdesc: This is generated on every VSYNC event. The TS itself is stored in AV_BUFFER_STC_VIDEO_VSYNC_TS_REG0
+      and REG1 registers
+    name: VSYNC_TS
+    shortdesc: A '1' indicates that VSYNC Timestamp is available.
+    type: wtc
+  - bits: '30'
+    longdesc: This is generated on every posedge of external VSYNC signal. The TS
+      itself is stored in AV_BUFFER_STC_EXT_VSYNC_TS_REG0 and REG1 registers
+    name: EXT_VSYNC_TS
+    shortdesc: A '1' indicates that External VSYNC has triggered Timestamp.
+    type: wtc
+  - bits: '29'
+    longdesc: The TS itself is stored in AV_BUFFER_STC_CUSTOM_EVENT_TS_REG0 and REG1
+      registers
+    name: CUST_TS
+    shortdesc: A '1' indicates that a user defined Custom event has triggeredTimestamp.
+    type: wtc
+  - bits: '28'
+    longdesc: The TS itself is stored in AV_BUFFER_STC_CUSTOM_EVENT2_TS_REG0 and REG1
+      registers
+    name: CUST_TS_2
+    shortdesc: A '1' indicates that a user defined Custom event 2 has triggeredTimestamp.
+    type: wtc
+  - bits: '27'
+    name: CHBUF0_OVERFLW
+    type: wtc
+  - bits: '26'
+    name: CHBUF1_OVERFLW
+    type: wtc
+  - bits: '25'
+    name: CHBUF2_OVERFLW
+    type: wtc
+  - bits: '24'
+    name: CHBUF3_OVERFLW
+    type: wtc
+  - bits: '23'
+    name: CHBUF4_OVERFLW
+    type: wtc
+  - bits: '22'
+    name: CHBUF5_OVERFLW
+    type: wtc
+  - bits: '21'
+    name: CHBUF0_UNDERFLW
+    type: wtc
+  - bits: '20'
+    name: CHBUF1_UNDERFLW
+    type: wtc
+  - bits: '19'
+    name: CHBUF2_UNDERFLW
+    type: wtc
+  - bits: '18'
+    name: CHBUF3_UNDERFLW
+    type: wtc
+  - bits: '17'
+    name: CHBUF4_UNDERFLW
+    type: wtc
+  - bits: '16'
+    name: CHBUF5_UNDERFLW
+    type: wtc
+  - bits: '15'
+    name: PIXEL0_MATCH
+    type: wtc
+  - bits: '14'
+    name: PIXEL1_MATCH
+    type: wtc
+  - bits: '13'
+    name: VBLNK_START
+    type: wtc
+  - bits: '12'
+    name: LIV_ABUF_UNDRFLW
+    type: wtc
+  - bits: '11:6'
+    name: RESERVED
+    type: raz
+  - bits: '5'
+    name: EXT_PKT_TXD
+    type: wtc
+  - bits: '4'
+    longdesc: The duration of the pulse can be determined by reading 0x150.
+    name: HPD_PULSE_DET
+    shortdesc: A pulse on the HPD line was detected.
+    type: wtc
+  - bits: '3'
+    name: REPLY_TIMEOUT
+    type: wtc
+  - bits: '2'
+    name: REPLY_RECEIVED
+    type: wtc
+  - bits: '1'
+    name: HPD_EVENT
+    type: wtc
+  - bits: '0'
+    name: HPD_IRQ
+    type: wtc
+  name: INT_STATUS
+  offset: '0x000003A0'
+  type: mixed
+  width: 32
+- default: '0xFFFFF03F'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31'
+    name: VSYNC_TS
+    type: ro
+  - bits: '30'
+    name: EXT_VSYNC_TS
+    type: ro
+  - bits: '29'
+    name: CUST_TS
+    type: ro
+  - bits: '28'
+    name: CUST_TS_2
+    type: ro
+  - bits: '27'
+    name: CHBUF0_OVERFLW
+    type: ro
+  - bits: '26'
+    name: CHBUF1_OVERFLW
+    type: ro
+  - bits: '25'
+    name: CHBUF2_OVERFLW
+    type: ro
+  - bits: '24'
+    name: CHBUF3_OVERFLW
+    type: ro
+  - bits: '23'
+    name: CHBUF4_OVERFLW
+    type: ro
+  - bits: '22'
+    name: CHBUF5_OVERFLW
+    type: ro
+  - bits: '21'
+    name: CHBUF0_UNDERFLW
+    type: ro
+  - bits: '20'
+    name: CHBUF1_UNDERFLW
+    type: ro
+  - bits: '19'
+    name: CHBUF2_UNDERFLW
+    type: ro
+  - bits: '18'
+    name: CHBUF3_UNDERFLW
+    type: ro
+  - bits: '17'
+    name: CHBUF4_UNDERFLW
+    type: ro
+  - bits: '16'
+    name: CHBUF5_UNDERFLW
+    type: ro
+  - bits: '15'
+    name: PIXEL0_MATCH
+    type: ro
+  - bits: '14'
+    name: PIXEL1_MATCH
+    type: ro
+  - bits: '13'
+    name: VBLNK_START
+    type: ro
+  - bits: '12'
+    name: LIV_AUDBUF_UNDRFLW
+    type: ro
+  - bits: '11:6'
+    name: RESERVED
+    type: raz
+  - bits: '5'
+    name: EXT_PKT_TXD
+    type: ro
+  - bits: '4'
+    name: HPD_PULSE_DET
+    type: ro
+  - bits: '3'
+    name: REPLY_TIMEOUT
+    type: ro
+  - bits: '2'
+    name: REPLY_RECEIVED
+    type: ro
+  - bits: '1'
+    name: HPD_EVENT
+    type: ro
+  - bits: '0'
+    name: HPD_IRQ
+    type: ro
+  name: INT_MASK
+  offset: '0x000003A4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31'
+    name: VSYNC_TS
+    type: wo
+  - bits: '30'
+    name: EXT_VSYNC_TS
+    type: wo
+  - bits: '29'
+    name: CUST_TS
+    type: wo
+  - bits: '28'
+    name: CUST_TS_2
+    type: wo
+  - bits: '27'
+    name: CHBUF0_OVERFLW
+    type: wo
+  - bits: '26'
+    name: CHBUF1_OVERFLW
+    type: wo
+  - bits: '25'
+    name: CHBUF2_OVERFLW
+    type: wo
+  - bits: '24'
+    name: CHBUF3_OVERFLW
+    type: wo
+  - bits: '23'
+    name: CHBUF4_OVERFLW
+    type: wo
+  - bits: '22'
+    name: CHBUF5_OVERFLW
+    type: wo
+  - bits: '21'
+    name: CHBUF0_UNDERFLW
+    type: wo
+  - bits: '20'
+    name: CHBUF1_UNDERFLW
+    type: wo
+  - bits: '19'
+    name: CHBUF2_UNDERFLW
+    type: wo
+  - bits: '18'
+    name: CHBUF3_UNDERFLW
+    type: wo
+  - bits: '17'
+    name: CHBUF4_UNDERFLW
+    type: wo
+  - bits: '16'
+    name: CHBUF5_UNDERFLW
+    type: wo
+  - bits: '15'
+    name: PIXEL0_MATCH
+    type: wo
+  - bits: '14'
+    name: PIXEL1_MATCH
+    type: wo
+  - bits: '13'
+    name: VBLNK_START
+    type: wo
+  - bits: '12'
+    name: LIV_AUDBUF_UNDRFLW
+    type: wo
+  - bits: '11:6'
+    name: RESERVED
+    type: raz
+  - bits: '5'
+    name: EXT_PKT_TXD
+    type: wo
+  - bits: '4'
+    name: HPD_PULSE_DET
+    type: wo
+  - bits: '3'
+    name: REPLY_TIMEOUT
+    type: wo
+  - bits: '2'
+    name: REPLY_RECEIVED
+    type: wo
+  - bits: '1'
+    name: HPD_EVENT
+    type: wo
+  - bits: '0'
+    name: HPD_IRQ
+    type: wo
+  name: INT_EN
+  offset: '0x000003A8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31'
+    name: VSYNC_TS
+    type: wo
+  - bits: '30'
+    name: EXT_VSYNC_TS
+    type: wo
+  - bits: '29'
+    name: CUST_TS
+    type: wo
+  - bits: '28'
+    name: CUST_TS_2
+    type: wo
+  - bits: '27'
+    name: CHBUF0_OVERFLW
+    type: wo
+  - bits: '26'
+    name: CHBUF1_OVERFLW
+    type: wo
+  - bits: '25'
+    name: CHBUF2_OVERFLW
+    type: wo
+  - bits: '24'
+    name: CHBUF3_OVERFLW
+    type: wo
+  - bits: '23'
+    name: CHBUF4_OVERFLW
+    type: wo
+  - bits: '22'
+    name: CHBUF5_OVERFLW
+    type: wo
+  - bits: '21'
+    name: CHBUF0_UNDERFLW
+    type: wo
+  - bits: '20'
+    name: CHBUF1_UNDERFLW
+    type: wo
+  - bits: '19'
+    name: CHBUF2_UNDERFLW
+    type: wo
+  - bits: '18'
+    name: CHBUF3_UNDERFLW
+    type: wo
+  - bits: '17'
+    name: CHBUF4_UNDERFLW
+    type: wo
+  - bits: '16'
+    name: CHBUF5_UNDERFLW
+    type: wo
+  - bits: '15'
+    name: PIXEL0_MATCH
+    type: wo
+  - bits: '14'
+    name: PIXEL1_MATCH
+    type: wo
+  - bits: '13'
+    name: VBLNK_START
+    type: wo
+  - bits: '12'
+    name: LIV_AUDBUF_UNDRFLW
+    type: wo
+  - bits: '11:6'
+    name: RESERVED
+    type: raz
+  - bits: '5'
+    name: EXT_PKT_TXD
+    type: wo
+  - bits: '4'
+    name: HPD_PULSE_DET
+    type: wo
+  - bits: '3'
+    name: REPLY_TIMEOUT
+    type: wo
+  - bits: '2'
+    name: REPLY_RECEIVED
+    type: wo
+  - bits: '1'
+    name: HPD_EVENT
+    type: wo
+  - bits: '0'
+    name: HPD_IRQ
+    type: wo
+  name: INT_DS
+  offset: '0x000003AC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_BG_CLR_0: Sets background color of the layers'
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:0'
+    name: CLR0
+    type: rw
+  name: V_BLEND_BG_CLR_0
+  offset: '0x0000A000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_BG_CLR_1: Sets background color of the layers'
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:0'
+    name: CLR1
+    type: rw
+  name: V_BLEND_BG_CLR_1
+  offset: '0x0000A004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_BG_CLR_2: Sets background color of the layers.'
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:0'
+    name: CLR2
+    type: rw
+  name: V_BLEND_BG_CLR_2
+  offset: '0x0000A008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: To set the global alpha
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: raz
+  - bits: '8:1'
+    longdesc: '0: Transparent, 255: Opaque'
+    name: VALUE
+    shortdesc: '8: 1: Global Alpha Value.'
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: V_BLEND_SET_GLOBAL_ALPHA_REG
+  offset: '0x0000A00C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_OUTPUT_VID_FORMAT:'
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: raz
+  - bits: '4'
+    longdesc: This bit must be set when the blended output VID_FORMAT is set to YUV4222
+    name: EN_DOWNSAMPLE
+    shortdesc: Set to '1' to force downsampling on blender output.
+    type: rw
+  - bits: '3'
+    name: RESERVED
+    type: raz
+  - bits: '2:0'
+    enum:
+    - name: RGB
+      value: 0
+    - name: YCBCR_444
+      value: 1
+    - name: YCBCR_422
+      value: 2
+    - name: Y_ONLY
+      value: 3
+    longdesc: 'o 0: RGB o 1: YCbCr444 o 2: YCbCr422 o 3: Y-Only'
+    name: VID_FORMAT
+    shortdesc: Blended video Format.
+    type: rw
+  name: V_BLEND_OUTPUT_VID_FORMAT
+  offset: '0x0000A014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_LAYER0_CONTROL: Layer 0 is always video pixel'
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: raz
+  - bits: '8'
+    name: BYPASS
+    type: rw
+  - bits: '7:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: RGB_MODE
+    type: rw
+  - bits: '0'
+    name: EN_US
+    type: rw
+  name: V_BLEND_LAYER0_CONTROL
+  offset: '0x0000A018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_LAYER1_CONTROL: Layer 1 is always Graphcis'
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: raz
+  - bits: '8'
+    name: BYPASS
+    type: rw
+  - bits: '7:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    longdesc: For Palette mode graphics stream, this bit has to be 1 even if data
+      is YUV
+    name: RGB_MODE
+    shortdesc: Set to '1' when layer 1 to the blender is RGB.
+    type: rw
+  - bits: '0'
+    name: EN_US
+    type: rw
+  name: V_BLEND_LAYER1_CONTROL
+  offset: '0x0000A01C'
+  type: mixed
+  width: 32
+- default: '0x00001000'
+  description: V_BLEND_RGB2YCBCR_COEFF0:Coefficient values from Matrix for output
+    color space convertor. A total of 9 values are needed to form 3x3 matrix. The
+    value is scaled by 2^12 and stored in 15-bit signed format.(1bit reserved). 12Bits
+    out of the 15 represent fractional value and 2 bits for decimal value and one
+    signed bit. The order of programming values is from v0 - v8
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: RGB2Y_C0
+    type: rw
+  name: V_BLEND_RGB2YCBCR_COEFF0
+  offset: '0x0000A020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_RGB2YCBCR_COEFF1:Description same as V_BLEND_RGB2YCBCR_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: RGB2Y_C1
+    type: rw
+  name: V_BLEND_RGB2YCBCR_COEFF1
+  offset: '0x0000A024'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_RGB2YCBCR_COEFF2:Description same as V_BLEND_RGB2YCBCR_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: RGB2Y_C2
+    type: rw
+  name: V_BLEND_RGB2YCBCR_COEFF2
+  offset: '0x0000A028'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_RGB2YCBCR_COEFF3:Description same as V_BLEND_RGB2YCBCR_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: RGB2Y_C3
+    type: rw
+  name: V_BLEND_RGB2YCBCR_COEFF3
+  offset: '0x0000A02C'
+  type: mixed
+  width: 32
+- default: '0x00001000'
+  description: V_BLEND_RGB2YCBCR_COEFF4:Description same as V_BLEND_RGB2YCBCR_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: RGB2Y_C4
+    type: rw
+  name: V_BLEND_RGB2YCBCR_COEFF4
+  offset: '0x0000A030'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_RGB2YCBCR_COEFF5:Description same as V_BLEND_RGB2YCBCR_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: RGB2Y_C5
+    type: rw
+  name: V_BLEND_RGB2YCBCR_COEFF5
+  offset: '0x0000A034'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_RGB2YCBCR_COEFF6:Description same as V_BLEND_RGB2YCBCR_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: RGB2Y_C6
+    type: rw
+  name: V_BLEND_RGB2YCBCR_COEFF6
+  offset: '0x0000A038'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_RGB2YCBCR_COEFF7:Description same as V_BLEND_RGB2YCBCR_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: RGB2Y_C7
+    type: rw
+  name: V_BLEND_RGB2YCBCR_COEFF7
+  offset: '0x0000A03C'
+  type: mixed
+  width: 32
+- default: '0x00001000'
+  description: V_BLEND_RGB2YCBCR_COEFF8:Description same as V_BLEND_RGB2YCBCR_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: RGB2Y_C8
+    type: rw
+  name: V_BLEND_RGB2YCBCR_COEFF8
+  offset: '0x0000A040'
+  type: mixed
+  width: 32
+- default: '0x00001000'
+  description: V_BLEND_IN1CSC_COEFF0:Coefficient values from Matrix for input color
+    space convertor(video). A total of 9 values are needed to form 3x3 matrix. The
+    value is scaled by 2^12 and stored in 15-bit signed format.(1bit reserved). 12Bits
+    out of the 15 represent fractional value and 2 bits for decimal value and one
+    signed bit. The order of programming values is from v0 - v8
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C0
+    type: rw
+  name: V_BLEND_IN1CSC_COEFF0
+  offset: '0x0000A044'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN1CSC_COEFF1:Description same as V_BLEND_IN1CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C1
+    type: rw
+  name: V_BLEND_IN1CSC_COEFF1
+  offset: '0x0000A048'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN1CSC_COEFF2:Description same as V_BLEND_IN1CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C2
+    type: rw
+  name: V_BLEND_IN1CSC_COEFF2
+  offset: '0x0000A04C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN1CSC_COEFF3:Description same as V_BLEND_IN1CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C3
+    type: rw
+  name: V_BLEND_IN1CSC_COEFF3
+  offset: '0x0000A050'
+  type: mixed
+  width: 32
+- default: '0x00001000'
+  description: V_BLEND_IN1CSC_COEFF4:Description same as V_BLEND_IN1CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C4
+    type: rw
+  name: V_BLEND_IN1CSC_COEFF4
+  offset: '0x0000A054'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN1CSC_COEFF5:Description same as V_BLEND_IN1CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C5
+    type: rw
+  name: V_BLEND_IN1CSC_COEFF5
+  offset: '0x0000A058'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN1CSC_COEFF6:Description same as V_BLEND_IN1CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C6
+    type: rw
+  name: V_BLEND_IN1CSC_COEFF6
+  offset: '0x0000A05C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN1CSC_COEFF7:CDescription same as V_BLEND_IN1CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C7
+    type: rw
+  name: V_BLEND_IN1CSC_COEFF7
+  offset: '0x0000A060'
+  type: mixed
+  width: 32
+- default: '0x00001000'
+  description: V_BLEND_IN1CSC_COEFF8:Description same as V_BLEND_IN1CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C8
+    type: rw
+  name: V_BLEND_IN1CSC_COEFF8
+  offset: '0x0000A064'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_LUMA_IN1CSC_OFFSET: Offset values for Y before and after matrix
+    multiplication for input color space conversion'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: POST_OFFSET
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: PRE_OFFSET
+    type: rw
+  name: V_BLEND_LUMA_IN1CSC_OFFSET
+  offset: '0x0000A068'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_CR_IN1CSC_OFFSET: Offset values for CR before and after matrix
+    multiplication for input color space conversion'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: POST_OFFSET
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: PRE_OFFSET
+    type: rw
+  name: V_BLEND_CR_IN1CSC_OFFSET
+  offset: '0x0000A06C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_CB_IN1CSC_OFFSET: Offset values for CB before and after matrix
+    multiplication for input color space conversion'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: POST_OFFSET
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: PRE_OFFSET
+    type: rw
+  name: V_BLEND_CB_IN1CSC_OFFSET
+  offset: '0x0000A070'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_LUMA_OUTCSC_OFFSET: Offset values for Y before and after matrix
+    multiplication for output color space conversion'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: POST_OFFSET
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: PRE_OFFSET
+    type: rw
+  name: V_BLEND_LUMA_OUTCSC_OFFSET
+  offset: '0x0000A074'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_CR_OUTCSC_OFFSET: Offset values for CR before and after matrix
+    multiplication for output color space conversion'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: POST_OFFSET
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: PRE_OFFSET
+    type: rw
+  name: V_BLEND_CR_OUTCSC_OFFSET
+  offset: '0x0000A078'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_CB_OUTCSC_OFFSET: Offset values for color CB before and after
+    matrix multiplication for output color space conversion'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: POST_OFFSET
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: PRE_OFFSET
+    type: rw
+  name: V_BLEND_CB_OUTCSC_OFFSET
+  offset: '0x0000A07C'
+  type: mixed
+  width: 32
+- default: '0x00001000'
+  description: V_BLEND_IN2CSC_COEFF0:Coefficient values from Matrix for input color
+    space convertor(graphics). A total of 9 values are needed to form 3x3 matrix.
+    The value is scaled by 2^12 and stored in 15-bit signed format.(1bit reserved).
+    12Bits out of the 15 represent fractional value and 2 bits for decimal value and
+    one signed bit. The order of programming values is from v0 - v8
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C0
+    type: rw
+  name: V_BLEND_IN2CSC_COEFF0
+  offset: '0x0000A080'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN2CSC_COEFF1:Description same as V_BLEND_IN2CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C1
+    type: rw
+  name: V_BLEND_IN2CSC_COEFF1
+  offset: '0x0000A084'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN2CSC_COEFF2:Description same as V_BLEND_IN2CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C2
+    type: rw
+  name: V_BLEND_IN2CSC_COEFF2
+  offset: '0x0000A088'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN2CSC_COEFF3:Description same as V_BLEND_IN2CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C3
+    type: rw
+  name: V_BLEND_IN2CSC_COEFF3
+  offset: '0x0000A08C'
+  type: mixed
+  width: 32
+- default: '0x00001000'
+  description: V_BLEND_IN2CSC_COEFF4:Description same as V_BLEND_IN2CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C4
+    type: rw
+  name: V_BLEND_IN2CSC_COEFF4
+  offset: '0x0000A090'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN2CSC_COEFF5:Description same as V_BLEND_IN2CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C5
+    type: rw
+  name: V_BLEND_IN2CSC_COEFF5
+  offset: '0x0000A094'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN2CSC_COEFF6:Description same as V_BLEND_IN2CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C6
+    type: rw
+  name: V_BLEND_IN2CSC_COEFF6
+  offset: '0x0000A098'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_IN2CSC_COEFF7:Description same as V_BLEND_IN2CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C7
+    type: rw
+  name: V_BLEND_IN2CSC_COEFF7
+  offset: '0x0000A09C'
+  type: mixed
+  width: 32
+- default: '0x00001000'
+  description: V_BLEND_IN2CSC_COEFF8:Description same as V_BLEND_IN2CSC_COEFF0
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: raz
+  - bits: '14:0'
+    name: Y2R_C8
+    type: rw
+  name: V_BLEND_IN2CSC_COEFF8
+  offset: '0x0000A0A0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_LUMA_IN2CSC_OFFSET: Offset values for Y before and after matrix
+    multiplication for input color space conversion'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: POST_OFFSET
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: PRE_OFFSET
+    type: rw
+  name: V_BLEND_LUMA_IN2CSC_OFFSET
+  offset: '0x0000A0A4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_CR_IN2CSC_OFFSET: Offset values for CR before and after matrix
+    multiplication for input color space conversion'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: POST_OFFSET
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: PRE_OFFSET
+    type: rw
+  name: V_BLEND_CR_IN2CSC_OFFSET
+  offset: '0x0000A0A8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_CB_IN2CSC_OFFSET: Offset values for CB before and after matrix
+    multiplication for input color space conversion'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '28:16'
+    name: POST_OFFSET
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: raz
+  - bits: '12:0'
+    name: PRE_OFFSET
+    type: rw
+  name: V_BLEND_CB_IN2CSC_OFFSET
+  offset: '0x0000A0AC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_CHROMA_KEY_ENABLE
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: M_SEL
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: V_BLEND_CHROMA_KEY_ENABLE
+  offset: '0x0000A1D0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_CHROMA_KEY_COMP1:'
+  field:
+  - bits: '31:28'
+    name: RESERVED
+    type: raz
+  - bits: '27:16'
+    name: MAX
+    type: rw
+  - bits: '15:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:0'
+    name: MIN
+    type: rw
+  name: V_BLEND_CHROMA_KEY_COMP1
+  offset: '0x0000A1D4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: V_BLEND_CHROMA_KEY_COMP2
+  field:
+  - bits: '31:28'
+    name: RESERVED
+    type: raz
+  - bits: '27:16'
+    name: MAX
+    type: rw
+  - bits: '15:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:0'
+    name: MIN
+    type: rw
+  name: V_BLEND_CHROMA_KEY_COMP2
+  offset: '0x0000A1D8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'V_BLEND_CHROMA_KEY_COMP3: - 11:0 - B component of the key minimum
+    value - 27:16 - B component of the key maximum value'
+  field:
+  - bits: '31:28'
+    name: RESERVED
+    type: raz
+  - bits: '27:16'
+    name: MAX
+    type: rw
+  - bits: '15:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:0'
+    name: MIN
+    type: rw
+  name: V_BLEND_CHROMA_KEY_COMP3
+  offset: '0x0000A1DC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_FORMAT: This register should be programmed based on the Video/Graphics
+    packing format in memory. DP unpacker works based on this'
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:8'
+    name: NL_GRAPHX_FORMAT
+    type: rw
+  - bits: '4:0'
+    name: NL_VID_FORMAT
+    type: rw
+  name: AV_BUF_FORMAT
+  offset: '0x0000B000'
+  type: mixed
+  width: 32
+- default: '0x00000180'
+  description: The memory fetch latency. This parameter is used to offset the early
+    VTC. The max latency supported is 412. This should have a buffer of 35 pixel clocks
+    than actual maximum latency expected in the system
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    name: NL_LATENCY
+    type: rw
+  name: AV_BUF_NON_LIVE_LATENCY
+  offset: '0x0000B008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AV_CHBUF0: Channel Enable, flush and Burst length to be programmed
+    based on video formats. Each channel can be programmed with independent BL Channel
+    0: must be always enabled for any video mode. Channel 1 and 2 should be enabled
+    for planar modes. Channel 3 for graphics. Channel 4 and 5 for audio modes'
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:2'
+    longdesc: (correspond to 1,2,4,8,16)
+    name: BURST_LEN
+    shortdesc: 'Burst length: Allowed values are 0,1,3,7,15.'
+    type: rw
+  - bits: '1'
+    name: FLUSH
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: AV_CHBUF0
+  offset: '0x0000B010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AV_CHBUF1:Same as AV_CHBUF0
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:2'
+    name: BURST_LEN
+    type: rw
+  - bits: '1'
+    name: FLUSH
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: AV_CHBUF1
+  offset: '0x0000B014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AV_CHBUF2:Same as AV_CHBUF0
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:2'
+    name: BURST_LEN
+    type: rw
+  - bits: '1'
+    name: FLUSH
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: AV_CHBUF2
+  offset: '0x0000B018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AV_CHBUF3:Same as AV_CHBUF0
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:2'
+    name: BURST_LEN
+    type: rw
+  - bits: '1'
+    name: FLUSH
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: AV_CHBUF3
+  offset: '0x0000B01C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AV_CHBUF4
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:2'
+    longdesc: Allowable values are 0,1,3(actual burst length will be 1,2,4)
+    name: BURST_LEN
+    shortdesc: Burst length.
+    type: rw
+  - bits: '1'
+    name: FLUSH
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: AV_CHBUF4
+  offset: '0x0000B020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AV_CHBUF5: Same as AV_CHBUF4'
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:2'
+    name: BURST_LEN
+    type: rw
+  - bits: '1'
+    name: FLUSH
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: AV_CHBUF5
+  offset: '0x0000B024'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_CONTROL:'
+  field:
+  - bits: '0'
+    name: EN
+    type: rw
+  name: AV_BUF_STC_CONTROL
+  offset: '0x0000B02C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_INIT_VALUE0:'
+  field:
+  - bits: '31:0'
+    name: INIT_VALUE0
+    type: rw
+  name: AV_BUF_STC_INIT_VALUE0
+  offset: '0x0000B030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_INIT_VALUE1:'
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    longdesc: A write to this register triggers the loading of STC. SW must first
+      write to VALUE0 register above and then write to this register
+    name: INIT_VALUE1
+    shortdesc: '9:0: Initial Value most significant 10bits of STC.'
+    type: rw
+  name: AV_BUF_STC_INIT_VALUE1
+  offset: '0x0000B034'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_ADJ: A write to this register triggers STC adjust'
+  field:
+  - bits: '31'
+    name: SIGN
+    type: rw
+  - bits: '30:0'
+    name: VALUE
+    type: rw
+  name: AV_BUF_STC_ADJ
+  offset: '0x0000B038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_VIDEO_VSYNC_TS_REG0: STC TS with VSYNC event'
+  field:
+  - bits: '31:0'
+    name: VSYNC_TS0
+    type: ro
+  name: AV_BUF_STC_VIDEO_VSYNC_TS_REG0
+  offset: '0x0000B03C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_VIDEO_VSYNC_TS_REG1: STC TS with VSYNC event'
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    longdesc: '- =Bits [41:32] of VSYNC TS register'
+    name: VSYNC_TS1
+    shortdesc: Bits [9:0] of TS register.
+    type: ro
+  name: AV_BUF_STC_VIDEO_VSYNC_TS_REG1
+  offset: '0x0000B040'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_EXT_VSYNC_TS_REG0: STC TS with external VSYNC event'
+  field:
+  - bits: '31:0'
+    name: EXT_VSYNC_TS0
+    type: ro
+  name: AV_BUF_STC_EXT_VSYNC_TS_REG0
+  offset: '0x0000B044'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_EXT_VSYNC_TS_REG1: STC TS with VSYNC event'
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    longdesc: '- =Bits [41:32] of EXT VSYNC TS register'
+    name: EXT_VSYNC_TS1
+    shortdesc: Bits [9:0] of TS register.
+    type: ro
+  name: AV_BUF_STC_EXT_VSYNC_TS_REG1
+  offset: '0x0000B048'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_CUSTOM_EVENT_TS_REG0: STC TS with custom event1'
+  field:
+  - bits: '31:0'
+    name: CUST_EVENT_TS0
+    type: ro
+  name: AV_BUF_STC_CUSTOM_EVENT_TS_REG0
+  offset: '0x0000B04C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_CUSTOM_EVENT_TS_REG1: STC TS with custom event1'
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    name: CUST_EVENT_TS1
+    type: ro
+  name: AV_BUF_STC_CUSTOM_EVENT_TS_REG1
+  offset: '0x0000B050'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_CUSTOM_EVENT2_TS_REG0: STC TS with custom event 2 (can
+    be audio TS)'
+  field:
+  - bits: '31:0'
+    name: CUST_EVENT2_TS0
+    type: ro
+  name: AV_BUF_STC_CUSTOM_EVENT2_TS_REG0
+  offset: '0x0000B054'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_STC_CUSTOM_EVENT2_TS_REG1: STC TS with custom event2'
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    longdesc: '- =Bits [41:32] of custom event 2 TS register'
+    name: CUST_EVENT2_TS1
+    shortdesc: Bits [9:0] of TS register.
+    type: ro
+  name: AV_BUF_STC_CUSTOM_EVENT2_TS_REG1
+  offset: '0x0000B058'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AV_BUF_STC_SNAPSHOT0
+  field:
+  - bits: '31:0'
+    longdesc: SW should read both of these to get the correct snapshot
+    name: STC0
+    shortdesc: '31:0: STC snapshot, lower 32bits A read to this register triggers
+      snapshot of STC and updates AV_BUF_STC_SNAPSHOT0 and AV_BUF_STC_SNAPSHOT1 registers.'
+    type: ro
+  name: AV_BUF_STC_SNAPSHOT0
+  offset: '0x0000B060'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: AV_BUF_STC_SNAPSHOT1
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:0'
+    longdesc: SW should read both the snapshot registers to get the correct snapshot(in
+      the sequence AV_BUF_STC_SNAPSHOT0 and AV_BUF_STC_SNAPSHOT1)
+    name: STC1
+    shortdesc: '9:0: STC snapshot, MSB 10bits This register is updated on read to
+      AV_BUF_STC_SNAPSHOT0.'
+    type: ro
+  name: AV_BUF_STC_SNAPSHOT1
+  offset: '0x0000B064'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: 'AV_BUF_OUTPUT_AUDIO_VIDEO_SELECT: to select the buffer manager outputs'
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6'
+    name: AUD_STREAM2_SEL
+    type: rw
+  - bits: '5:4'
+    name: AUD_STREAM1_SEL
+    type: rw
+  - bits: '3:2'
+    name: VID_STREAM2_SEL
+    type: rw
+  - bits: '1:0'
+    name: VID_STREAM1_SEL
+    type: rw
+  name: AV_BUF_OUTPUT_AUDIO_VIDEO_SELECT
+  offset: '0x0000B070'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_HCOUNT_VCOUNT_INT0: When the early VTC timing values(VCOUNT
+    and HCOUNT) match the values programmed in this register and corresponding interrupt
+    mask is enabled, an interrupt is generated'
+  field:
+  - bits: '29:16'
+    name: HCOUNT
+    type: rw
+  - bits: '13:0'
+    name: VCOUNT
+    type: rw
+  name: AV_BUF_HCOUNT_VCOUNT_INT0
+  offset: '0x0000B074'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_HCOUNT_VCOUNT_INT1: When the early VTC timing values(VCOUNT
+    and HCOUNT) match the values programmed in this register and corresponding interrupt
+    mask is enabled, an interrupt is generated'
+  field:
+  - bits: '29:16'
+    name: HCOUNT
+    type: rw
+  - bits: '13:0'
+    name: VCOUNT
+    type: rw
+  name: AV_BUF_HCOUNT_VCOUNT_INT1
+  offset: '0x0000B078'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register is used for configuring dither functions
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    longdesc: When this bit = 0, LSB bits of the LFSR are used to get dither word
+    name: TAP_MSB
+    shortdesc: When this bit = '1'; MSB bits of the LFSR are tapped as random value.
+    type: rw
+  - bits: '9'
+    longdesc: Set 1 to enable each color different random value for dithering
+    name: DW_SEL
+    shortdesc: All the three colors are added with same random value.
+    type: rw
+  - bits: '8'
+    name: LD
+    type: rw
+  - bits: '7:5'
+    longdesc: 'This must be clubbed with BPC and DW size. -3''b000: Truncate point
+      at 0 -3''b001: Truncate point at 1 -3''b010: Truncate point at 2 -3''b011: Truncate
+      point at 3 -3''b100: Truncate point at 4 Allowed combinations of dither word
+      size, Truncation point, BPC are: (in the same order) DW Size TP BPC 2 0 6/8/10
+      2 1 6/8/10 3 0 6/8 3 1 6/8/10 3 2 6/8/10 4 0 6/8 4 1 6/8 4 2 6/8/10 4 3 6/8/10
+      5 0 6 5 1 6/8 5 2 6/8 5 3 6/8/10 5 4 6/8/10'
+    name: TRUNC_PT
+    shortdesc: Truncation Point.
+    type: rw
+  - bits: '4:3'
+    longdesc: However, when this value is programmed, output is truncated version
+      of input
+    name: MODE
+    shortdesc: 'dithering mode - 2''b01: Round - 2''b00: truncate - 2''b10: Dither
+      Note: Value of 2''b11 is not encoded to any mode.'
+    type: rw
+  - bits: '2:0'
+    longdesc: 'Bits[1:0] = - 3''b010: Dither word size = 2 - 3''b011: Dither word
+      size = 3 - 3''b100: Dither word size = 4 - 3''b101: Dither word size = 5'
+    name: SIZE
+    shortdesc: Dithering word size.
+    type: rw
+  name: AV_BUF_DITHER_CONFIG
+  offset: '0x0000B07C'
+  type: mixed
+  width: 32
+- default: '0x00008000'
+  description: To set seed for LFSR0
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: COLR0
+    type: rw
+  name: DITHER_CONFIG_SEED0
+  offset: '0x0000B080'
+  type: mixed
+  width: 32
+- default: '0x00008080'
+  description: Description same as DITHER_CONFIG_SEED0
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: COLR1
+    type: rw
+  name: DITHER_CONFIG_SEED1
+  offset: '0x0000B084'
+  type: mixed
+  width: 32
+- default: '0x00008008'
+  description: Description same as DITHER_CONFIG_SEED0
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: COLR2
+    type: rw
+  name: DITHER_CONFIG_SEED2
+  offset: '0x0000B088'
+  type: mixed
+  width: 32
+- default: '0x00000FFF'
+  description: To set the max output value on video pixel (at the blender output towards
+    DP )
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:0'
+    longdesc: Depends on BPC
+    name: COLR_MAX
+    shortdesc: Max value.
+    type: rw
+  name: DITHER_CONFIG_MAX
+  offset: '0x0000B08C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: To set the min output value on video pixel (at the blender output towards
+    DP )
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:0'
+    longdesc: Depends on BPC
+    name: COLR_MIN
+    shortdesc: Min value.
+    type: rw
+  name: DITHER_CONFIG_MIN
+  offset: '0x0000B090'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'PATTERN_GEN_SELECT:PATTERN_GEN_SELECT:'
+  field:
+  - bits: '31:8'
+    longdesc: 1kHz - 0x2B11 For 48KHz - 0x2EE0
+    name: OFFSET_EQ
+    shortdesc: 'Depends on audio sample rate: Need to program an offset value which
+      is needed by audio pattern generator to generate ping pattern (250ms) For 44.'
+    type: rw
+  - bits: '7:2'
+    name: RESERVED
+    type: raz
+  - bits: '1:0'
+    longdesc: '1KHz - 2: 48KHz'
+    name: AUD_RATE_SEL
+    shortdesc: 'Bits[1:0] - Audio Pattern generator - 1: 44.'
+    type: rw
+  name: PATTERN_GEN_SELECT
+  offset: '0x0000B100'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AUD_CH1_PAT_SELECT
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1:0'
+    longdesc: 'This bit is valid only when 0xB070 is selected for internal pattern
+      generator (Bits 5:4 =2] Bits {1:0] = 2''b00: Ping pattern. Alternate silence
+      and sine for 250ms 2''b01: Sine pattern (2kHz when audio frequency = 48kHz.
+      For 44.1kHz, frequency is almost = 2kHz) 2''b10: Silence'
+    name: PATTERN
+    shortdesc: Audio pattern generated on ch1.
+    type: rw
+  name: AUD_PATTERN_SELECT1
+  offset: '0x0000B104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AUD_CH2_PAT_SELECT
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1:0'
+    name: PATTERN
+    type: rw
+  name: AUD_PATTERN_SELECT2
+  offset: '0x0000B108'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AV_BUF_AUD_VID_CLK_SOURCE: When live video from PL is absent, then
+    the internal clock shall be video pipeline clock. If the live video is present,
+    then clock from PL shall be the video pipe line clock. Similarly for the audio
+    we can select from either PS or PL clock'
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    name: VID_TIMING_SRC
+    type: rw
+  - bits: '1'
+    name: AUD_CLK_SRC
+    type: rw
+  - bits: '0'
+    name: VID_CLK_SRC
+    type: rw
+  name: AV_BUF_AUD_VID_CLK_SOURCE
+  offset: '0x0000B120'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AV_BUF_SRST_REG
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: VID_RST
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: raz
+  name: AV_BUF_SRST_REG
+  offset: '0x0000B124'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AV_BUF_AUDIO_RDY_INTERVAL. Debug register.
+  field:
+  - bits: '31:16'
+    name: CH1_INT
+    type: rw
+  - bits: '15:0'
+    name: CH0_INT
+    type: rw
+  name: AV_BUF_AUDIO_RDY_INTERVAL
+  offset: '0x0000B128'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: AV_BUF_AUDIO_CH_CONFIG
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1:0'
+    name: AUD_CH_ID
+    type: rw
+  name: AV_BUF_AUDIO_CH_CONFIG
+  offset: '0x0000B12C'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for graphics for component 0 For 4-bits, scale factor
+    will be 16/15*2^16 = 0x11111 For 5-bits, scale factor will be 32/31*2^16 = 0x10842
+    For 6-bits, scale factor will be 64/63*2^16 = 0x10410. For 8-bits, scale factor
+    will be 256/255*2^16 = 0x10101 For 10-bits, scale factor will be 1024/1023*2^16
+    = 0x10040 For BPC =12, no scaling is done. This register is unused and can be
+    default
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: GRAPHICS_SCALE_FACTOR0
+    type: rw
+  name: AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  offset: '0x0000B200'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for graphics for component1. Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: GRAPHICS_SCALE_FACTOR1
+    type: rw
+  name: AV_BUF_GRAPHICS_COMP1_SCALE_FACTOR
+  offset: '0x0000B204'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for graphics for component 2.Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: GRAPHICS_SCALE_FACTOR2
+    type: rw
+  name: AV_BUF_GRAPHICS_COMP2_SCALE_FACTOR
+  offset: '0x0000B208'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for video color comp0.Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: VID_SCA_FACT0
+    type: rw
+  name: AV_BUF_VIDEO_COMP0_SCALE_FACTOR
+  offset: '0x0000B20C'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for video color comp1.Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: VID_SCA_FACT1
+    type: rw
+  name: AV_BUF_VIDEO_COMP1_SCALE_FACTOR
+  offset: '0x0000B210'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for video color comp2.Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: VID_SCA_FACT2
+    type: rw
+  name: AV_BUF_VIDEO_COMP2_SCALE_FACTOR
+  offset: '0x0000B214'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for live video color comp0.Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: LIV_VID_SCA_FACT0
+    type: rw
+  name: AV_BUF_LIVE_VIDEO_COMP0_SF
+  offset: '0x0000B218'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for live video color comp1.Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: LIV_VID_SCA_FACT1
+    type: rw
+  name: AV_BUF_LIVE_VIDEO_COMP1_SF
+  offset: '0x0000B21C'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for live video color comp2.Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: LIV_VID_SCA_FACT2
+    type: rw
+  name: AV_BUF_LIVE_VIDEO_COMP2_SF
+  offset: '0x0000B220'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Programmable option to configure Cb or Cr first, when YUV422 mode is
+    enabled
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: raz
+  - bits: '8'
+    longdesc: When bit 0 = Cr is sent first.
+    name: CB_FIRST
+    shortdesc: ': when bit 0 =1, on live video, Cb is received first.'
+    type: rw
+  - bits: '7:6'
+    name: RESERVED
+    type: raz
+  - bits: '5:4'
+    name: FORMAT
+    type: rw
+  - bits: '3'
+    name: RESERVED
+    type: raz
+  - bits: '2:0'
+    name: BPC
+    type: rw
+  name: AV_BUF_LIVE_VID_CONFIG
+  offset: '0x0000B224'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for live graphics color comp0.Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: LIV_VID_SCA_FACT0
+    type: rw
+  name: AV_BUF_LIVE_GFX_COMP0_SF
+  offset: '0x0000B228'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for live graphics color comp1.Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: LIV_VID_SCA_FACT1
+    type: rw
+  name: AV_BUF_LIVE_GFX_COMP1_SF
+  offset: '0x0000B22C'
+  type: mixed
+  width: 32
+- default: '0x00010101'
+  description: Scaling factor for live graphics color comp2.Description same as AV_BUF_GRAPHICS_COMP0_SCALE_FACTOR
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: LIV_VID_SCA_FACT2
+    type: rw
+  name: AV_BUF_LIVE_GFX_COMP2_SF
+  offset: '0x0000B230'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Programmable option to configure Cb or Cr first, when YUV422 mode is
+    enabled
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: raz
+  - bits: '8'
+    longdesc: When bit 0 = Cr is sent first.
+    name: CB_FIRST
+    shortdesc: ': when bit 0 =1, on live graphics, Cb is received first.'
+    type: rw
+  - bits: '7:6'
+    name: RESERVED
+    type: raz
+  - bits: '5:4'
+    name: FORMAT
+    type: rw
+  - bits: '3'
+    name: RESERVED
+    type: raz
+  - bits: '2:0'
+    name: BPC
+    type: rw
+  name: AV_BUF_LIVE_GFX_CONFIG
+  offset: '0x0000B234'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AUDIO_MIXER_VOLUME_CONTROL:Setting value to 8192 means no volume change
+    (1.0 scaling factor)
+  field:
+  - bits: '31:16'
+    longdesc: User should ensure volume adjustment does not saturate the signal heavily.
+    name: VOL_CTRL_CH1
+    shortdesc: Volume - Multiplication factor for stream2(graphcis).
+    type: rw
+  - bits: '15:0'
+    longdesc: User should ensure volume adjustment does not saturate the signal heavily.
+    name: VOL_CTRL_CH0
+    shortdesc: Volume - Multiplication factor for stream1(video).
+    type: rw
+  name: AUDIO_MIXER_VOLUME_CONTROL
+  offset: '0x0000C000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: AUDIO_MIXER_META_DATA
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: When set to '0', meta data from registers programmed in 0xC008 - 0xC04c
+      will be embedded into audio stream and then transmitted over displayport.
+    name: AUD_META_DATA_SEL
+    shortdesc: When set to '1', meta data from live stream input will be taken.
+    type: rw
+  name: AUDIO_MIXER_META_DATA
+  offset: '0x0000C004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_STATUS_REG0: Audio Channel status bits 31 to 0'
+  field:
+  - bits: '31:0'
+    name: STATUS0
+    type: rw
+  name: AUD_CH_STATUS_REG0
+  offset: '0x0000C008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_STATUS_REG1: Audio Channel status bits 63 to 32'
+  field:
+  - bits: '31:0'
+    name: STATUS1
+    type: rw
+  name: AUD_CH_STATUS_REG1
+  offset: '0x0000C00C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_STATUS_REG2: Audio Channel status bits 95 to 64'
+  field:
+  - bits: '31:0'
+    name: STATUS2
+    type: rw
+  name: AUD_CH_STATUS_REG2
+  offset: '0x0000C010'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_STATUS_REG3: Audio Channel status bits 127 to 96'
+  field:
+  - bits: '31:0'
+    name: STATUS3
+    type: rw
+  name: AUD_CH_STATUS_REG3
+  offset: '0x0000C014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_STATUS_REG4: Audio Channel status bits 159 to 128'
+  field:
+  - bits: '31:0'
+    name: STATUS4
+    type: rw
+  name: AUD_CH_STATUS_REG4
+  offset: '0x0000C018'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_STATUS_REG5: Audio Channel status bits 191 to 160'
+  field:
+  - bits: '31:0'
+    name: STATUS5
+    type: rw
+  name: AUD_CH_STATUS_REG5
+  offset: '0x0000C01C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_A_DATA_REG0: User data bits 31 to 0'
+  field:
+  - bits: '31:0'
+    name: USER_DATA0
+    type: rw
+  name: AUD_CH_A_DATA_REG0
+  offset: '0x0000C020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_A_DATA_REG1: User data bits 63 to 32'
+  field:
+  - bits: '31:0'
+    name: USER_DATA1
+    type: rw
+  name: AUD_CH_A_DATA_REG1
+  offset: '0x0000C024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_A_DATA_REG2: User data bits 95 to 64'
+  field:
+  - bits: '31:0'
+    name: USER_DATA2
+    type: rw
+  name: AUD_CH_A_DATA_REG2
+  offset: '0x0000C028'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_A_DATA_REG3: User data bits 127 to 96'
+  field:
+  - bits: '31:0'
+    name: USER_DATA3
+    type: rw
+  name: AUD_CH_A_DATA_REG3
+  offset: '0x0000C02C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_A_DATA_REG4: User data bits 159 to 128'
+  field:
+  - bits: '31:0'
+    name: USER_DATA4
+    type: rw
+  name: AUD_CH_A_DATA_REG4
+  offset: '0x0000C030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_A_DATA_REG5: User data bits 191 to 160'
+  field:
+  - bits: '31:0'
+    name: USER_DATA5
+    type: rw
+  name: AUD_CH_A_DATA_REG5
+  offset: '0x0000C034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_B_DATA_REG0: User data bits 31 to 0.'
+  field:
+  - bits: '31:0'
+    name: USER_DATA0
+    type: rw
+  name: AUD_CH_B_DATA_REG0
+  offset: '0x0000C038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_B_DATA_REG1: User data bits 63 to 32.'
+  field:
+  - bits: '31:0'
+    name: USER_DATA1
+    type: rw
+  name: AUD_CH_B_DATA_REG1
+  offset: '0x0000C03C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_B_DATA_REG2: User data bits 95 to 64.'
+  field:
+  - bits: '31:0'
+    name: USER_DATA2
+    type: rw
+  name: AUD_CH_B_DATA_REG2
+  offset: '0x0000C040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_B_DATA_REG3: User data bits 127 to 96.'
+  field:
+  - bits: '31:0'
+    name: USER_DATA3
+    type: rw
+  name: AUD_CH_B_DATA_REG3
+  offset: '0x0000C044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_B_DATA_REG4: User data bits 159 to 128.'
+  field:
+  - bits: '31:0'
+    name: USER_DATA4
+    type: rw
+  name: AUD_CH_B_DATA_REG4
+  offset: '0x0000C048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'AUD_CH_B_DATA_REG5: User data bits 191 to 160.'
+  field:
+  - bits: '31:0'
+    name: USER_DATA5
+    type: rw
+  name: AUD_CH_B_DATA_REG5
+  offset: '0x0000C04C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Audio Soft reset reigster.
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: This is a non-reset flop. SW has to set this bit to '0' after power
+      on
+    name: EXTRA_BS_CONTROL
+    shortdesc: Setting this bit to 1 will bypass the extra BS on link.
+    type: rw
+  - bits: '1'
+    longdesc: As per CVT standard, the reduced blanking resolutions blanking period
+      is less than 20% of HTOTAL and it has either blanking period as 80/160 and hres%8
+      = 0 Reduced blanking version 1 (RB) resolutions have HBLANK as 160 Reduced blanking
+      version 2 (RB 2) resolutions have H BLANK as 80 This is a non-reset flop. SW
+      has to set this bit to '0' after power on
+    name: LINE_RESET_DISABLE
+    shortdesc: Set the bit to 1 to disable the end of line reset for reduced blanking
+      resolutions.
+    type: rw
+  - bits: '0'
+    longdesc: Required whenever audio from DPDMA is disabled. Clear this bit to deassert
+      reset. Note that when ever audio soft reset is used, after deassertion of Audio
+      soft reset, all the registers related to Audio programming need to be cleared
+      to 0 and rewritten with correct values. This is a non-reset flop. SW has to
+      set this bit to '0' after power on
+    name: AUDIO_SRST
+    shortdesc: Set this bit to 1 to reset audio pipe.
+    type: rw
+  name: AUDIO_SOFT_RESET
+  offset: '0x0000CC00'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 16 bit CRC calculated on the first component of video output from Internal
+    Test Pattern Generator
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: CRC_R
+    type: ro
+  name: PATGEN_CRC_R
+  offset: '0x0000CC10'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 16 bit CRC calculated on the second component of video output from
+    Internal Test Pattern Generator
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: CRC_G
+    type: ro
+  name: PATGEN_CRC_G
+  offset: '0x0000CC14'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 16 bit CRC calculated on the third component of video output from Internal
+    Test Pattern Generator
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:0'
+    name: CRC_B
+    type: ro
+  name: PATGEN_CRC_B
+  offset: '0x0000CC18'
+  type: mixed
+  width: 32

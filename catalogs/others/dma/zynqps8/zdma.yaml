@@ -1,0 +1,687 @@
+description: FPD DMA Channel 0
+register:
+- default: '0x00000001'
+  description: Enable/Disable a error response
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: APB_ERR_RES
+    type: rw
+  name: ZDMA_ERR_CTRL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11'
+    name: DMA_PAUSE
+    type: wtc
+  - bits: '10'
+    name: DMA_DONE
+    type: wtc
+  - bits: '9'
+    name: AXI_WR_DATA
+    type: wtc
+  - bits: '8'
+    name: AXI_RD_DATA
+    type: wtc
+  - bits: '7'
+    name: AXI_RD_DST_DSCR
+    type: wtc
+  - bits: '6'
+    name: AXI_RD_SRC_DSCR
+    type: wtc
+  - bits: '5'
+    name: IRQ_DST_ACCT_ERR
+    type: wtc
+  - bits: '4'
+    name: IRQ_SRC_ACCT_ERR
+    type: wtc
+  - bits: '3'
+    name: BYTE_CNT_OVRFL
+    type: wtc
+  - bits: '2'
+    longdesc: Completion indicates data has been written to the memory and BRESP has
+      been received.
+    name: DST_DSCR_DONE
+    shortdesc: Interrupt is set at the completion of DST Descriptor element.
+    type: wtc
+  - bits: '1'
+    longdesc: Completion indicates data has been read, but it may be in DMA buffer
+      (and not yet written to destination).
+    name: SRC_DSCR_DONE
+    shortdesc: Interrupt is set at the completion of SRC Descriptor.
+    type: wtc
+  - bits: '0'
+    name: INV_APB
+    type: wtc
+  name: ZDMA_CH_ISR
+  offset: '0x00000100'
+  type: mixed
+  width: 32
+- default: '0x00000FFF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11'
+    name: DMA_PAUSE
+    type: ro
+  - bits: '10'
+    name: DMA_DONE
+    type: ro
+  - bits: '9'
+    name: AXI_WR_DATA
+    type: ro
+  - bits: '8'
+    name: AXI_RD_DATA
+    type: ro
+  - bits: '7'
+    name: AXI_RD_DST_DSCR
+    type: ro
+  - bits: '6'
+    name: AXI_RD_SRC_DSCR
+    type: ro
+  - bits: '5'
+    name: IRQ_DST_ACCT_ERR
+    type: ro
+  - bits: '4'
+    name: IRQ_SRC_ACCT_ERR
+    type: ro
+  - bits: '3'
+    name: BYTE_CNT_OVRFL
+    type: ro
+  - bits: '2'
+    longdesc: Completion indicates data has been written to the memory and BRESP has
+      been received.
+    name: DST_DSCR_DONE
+    shortdesc: Interrupt is set at the completion of DST Descriptor element.
+    type: ro
+  - bits: '1'
+    longdesc: Completion indicates data has been read, but it may be in DMA buffer
+      (and not yet written to destination).
+    name: SRC_DSCR_DONE
+    shortdesc: Interrupt is set at the completion of SRC Descriptor.
+    type: ro
+  - bits: '0'
+    name: INV_APB
+    type: ro
+  name: ZDMA_CH_IMR
+  offset: '0x00000104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11'
+    name: DMA_PAUSE
+    type: wo
+  - bits: '10'
+    name: DMA_DONE
+    type: wo
+  - bits: '9'
+    name: AXI_WR_DATA
+    type: wo
+  - bits: '8'
+    name: AXI_RD_DATA
+    type: wo
+  - bits: '7'
+    name: AXI_RD_DST_DSCR
+    type: wo
+  - bits: '6'
+    name: AXI_RD_SRC_DSCR
+    type: wo
+  - bits: '5'
+    name: IRQ_DST_ACCT_ERR
+    type: wo
+  - bits: '4'
+    name: IRQ_SRC_ACCT_ERR
+    type: wo
+  - bits: '3'
+    name: BYTE_CNT_OVRFL
+    type: wo
+  - bits: '2'
+    longdesc: Completion indicates data has been written to the memory and BRESP has
+      been received.
+    name: DST_DSCR_DONE
+    shortdesc: Interrupt is set at the completion of DST Descriptor element.
+    type: wo
+  - bits: '1'
+    longdesc: Completion indicates data has been read, but it may be in DMA buffer
+      (and not yet written to destination).
+    name: SRC_DSCR_DONE
+    shortdesc: Interrupt is set at the completion of SRC Descriptor.
+    type: wo
+  - bits: '0'
+    name: INV_APB
+    type: wo
+  name: ZDMA_CH_IEN
+  offset: '0x00000108'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11'
+    name: DMA_PAUSE
+    type: wo
+  - bits: '10'
+    name: DMA_DONE
+    type: wo
+  - bits: '9'
+    name: AXI_WR_DATA
+    type: wo
+  - bits: '8'
+    name: AXI_RD_DATA
+    type: wo
+  - bits: '7'
+    name: AXI_RD_DST_DSCR
+    type: wo
+  - bits: '6'
+    name: AXI_RD_SRC_DSCR
+    type: wo
+  - bits: '5'
+    name: IRQ_DST_ACCT_ERR
+    type: wo
+  - bits: '4'
+    name: IRQ_SRC_ACCT_ERR
+    type: wo
+  - bits: '3'
+    name: BYTE_CNT_OVRFL
+    type: wo
+  - bits: '2'
+    longdesc: Completion indicates data has been written to the memory and BRESP has
+      been received.
+    name: DST_DSCR_DONE
+    shortdesc: Interrupt is set at the completion of DST Descriptor element.
+    type: wo
+  - bits: '1'
+    longdesc: Completion indicates data has been read, but it may be in DMA buffer
+      (and not yet written to destination).
+    name: SRC_DSCR_DONE
+    shortdesc: Interrupt is set at the completion of SRC Descriptor.
+    type: wo
+  - bits: '0'
+    name: INV_APB
+    type: wo
+  name: ZDMA_CH_IDS
+  offset: '0x0000010C'
+  type: mixed
+  width: 32
+- default: '0x00000080'
+  description: Channel Control Register 0
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7'
+    name: OVR_FETCH
+    type: rw
+  - bits: '6'
+    enum:
+    - description: Use register descriptor
+      name: SIMPLE
+      value: 0
+    - description: Use memory (scatter-gather) based descriptors
+      name: MEMORY
+      value: 0
+    longdesc: 'Descriptor (DMA command) from APB register space. 1: Scatter-gather
+      mode DMA. Descriptor are stored in Memory. This field must remain stable while
+      DMA Channel is enabled'
+    name: POINT_TYPE
+    shortdesc: Simple mode or in memory descriptors
+    type: rw
+  - bits: '5:4'
+    enum:
+    - description: Normal read & write DMA (default)
+      name: NORMAL
+      value: 0
+    - description: Write only(uses data from WR_DMA_DATA*)
+      name: WRITE_ONLY
+      value: 1
+    - description: Read only
+      name: READ_ONLY
+      value: 2
+    name: MODE
+    type: rw
+  - bits: '3'
+    name: RATE_CTRL
+    type: rw
+  - bits: '2'
+    name: CONT_ADDR
+    type: rw
+  - bits: '1'
+    longdesc: When DMA is unpaused , then hardware clears this bit. SW clear has no
+      effect on it
+    name: CONT
+    shortdesc: Setting to 1 unpause (restarts from current position) the pauseed DMA
+      SW sets this 1 to trigger.
+    type: wo
+  - bits: '0'
+    name: RESERVED
+    type: raz
+  name: ZDMA_CH_CTRL0
+  offset: '0x00000110'
+  type: mixed
+  width: 32
+- default: '0x000003FF'
+  description: Channel Flow Control Register
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '4:0'
+    name: SRC_ISSUE
+    type: rw
+  name: ZDMA_CH_CTRL1
+  offset: '0x00000114'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Channel Control Register 1
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: raz
+  - bits: '3:2'
+    longdesc: 'These register fields can be used to limit the common buffer usage
+      of the flow controlled channel. When FCI is controlling the write side, read
+      DMA side is not controlled and may use the entire common buffer. This might
+      starve/limit the bandwidth of other DMA channels. By programming the PROG_CELL_CNT,
+      user can limit the number of 128/64 bit entries used by channel in common buffer.
+      Maximum number of entries used by a channel: 0 = 32 + AxLEN 1 = 64 + AxLEN 2
+      = 128+AxLEN 3 = 256'
+    name: PROG_CELL_CNT
+    shortdesc: This field is used when flow control interface is enabled and it is
+      attached to the DST side.
+    type: rw
+  - bits: '1'
+    name: SIDE
+    type: rw
+  - bits: '0'
+    name: EN
+    type: rw
+  name: ZDMA_CH_FCI
+  offset: '0x00000118'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Channel Status Register
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1:0'
+    longdesc: '10: DMA is busy transferring 11: DMA done with error (error condition
+      captured in otherregisters) This bit is cleared by HW when Enable or Unpause
+      is set to 1.'
+    name: STATE
+    shortdesc: '00: Done with no error (as a result Enable bit is cleared by HW) 01:
+      pauseed with no error (as a result Enable bit remains set).'
+    type: ro
+  name: ZDMA_CH_STATUS
+  offset: '0x0000011C'
+  type: mixed
+  width: 32
+- default: '0x0483D20F'
+  description: Channel DATA AXI parameter Register
+  field:
+  - bits: '31:28'
+    name: RESERVED
+    type: raz
+  - bits: '27:26'
+    name: ARBURST
+    type: rw
+  - bits: '25:22'
+    name: ARCACHE
+    type: rw
+  - bits: '21:18'
+    name: ARQOS
+    type: rw
+  - bits: '17:14'
+    longdesc: DMA support power of 2 values for ARLEN. User can provide the length
+      value as power of two number. 0 = 2^0 = 1 1 = 2^1 = 2 2 = 2^2 = 4 3 = 2^3 =
+      8 4 = 2^4 = 16 5 = 2^5 = 16 four or greater always result in AXI length of 0xF.
+    name: ARLEN
+    shortdesc: AXI Length for Data Read.
+    type: rw
+  - bits: '13:12'
+    name: AWBURST
+    type: rw
+  - bits: '11:8'
+    name: AWCACHE
+    type: rw
+  - bits: '7:4'
+    name: AWQOS
+    type: rw
+  - bits: '3:0'
+    longdesc: DMA support power of 2 values for AWLEN. User can provide the length
+      value as power of two number. 0 = 2^0 = 1 1 = 2^1 = 2 2 = 2^2 = 4 3 = 2^3 =
+      8 4 = 2^4 = 16 5 = 2^5 = 16 four or greater always result in AXI length of 0xF.
+    name: AWLEN
+    shortdesc: AXI Length for Data Write.
+    type: rw
+  name: ZDMA_CH_DATA_ATTR
+  offset: '0x00000120'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Channel DSCR AXI parameter Register
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: raz
+  - bits: '8'
+    longdesc: 'FPD-DMA does not support coherency at descriptor and data. 0: AXI transactions
+      generated for the descriptor read are marked Non-coherent 1: AXI transactions
+      generated for the descriptor read are marked coherent'
+    name: AXCOHRNT
+    shortdesc: This field is only valid for LPD-DMA.
+    type: rw
+  - bits: '7:4'
+    name: AXCACHE
+    type: rw
+  - bits: '3:0'
+    name: AXQOS
+    type: rw
+  name: ZDMA_CH_DSCR_ATTR
+  offset: '0x00000124'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: SRC DSCR Word 0
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: rw
+  name: ZDMA_CH_SRC_DSCR_WORD0
+  offset: '0x00000128'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SRC DSCR Word 1
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: MSB
+    type: rw
+  name: ZDMA_CH_SRC_DSCR_WORD1
+  offset: '0x0000012C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: SRC DSCR Word 2
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '29:0'
+    name: SIZE
+    type: rw
+  name: ZDMA_CH_SRC_DSCR_WORD2
+  offset: '0x00000130'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: SRC DSCR Word 3
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: raz
+  - bits: '4:3'
+    longdesc: This is provided for consistant view between simple mode cmds and SG
+      descriptors
+    name: CMD
+    shortdesc: '00: Next descriptor is valid 01: Pause after completing this descriptor
+      10: STOP after completing this descriptor 11: Reserved This fields are not used
+      in simple mode.'
+    type: rw
+  - bits: '2'
+    longdesc: Completion indicates data has been read, but it may be in DMA buffer
+      (and not yet written to destination).
+    name: INTR
+    shortdesc: '0: Completion interrupt is not required 1: Interrupt is set at the
+      completion of this element.'
+    type: rw
+  - bits: '1'
+    longdesc: This is provided for consistant view between simple mode cmds and SG
+      descriptors
+    name: TYPE
+    shortdesc: '0: Current descriptor size is 128bit (linear) 1: Current descriptor
+      size is 256bit (link list) This fields are not used in simple mode.'
+    type: rw
+  - bits: '0'
+    longdesc: 'FPD-DMA does not support coherency at descriptor and data. 0: AXI transactions
+      generated to process the descriptor payload are marked Non-coherent 1: AXI transaction
+      generated to process the descriptor payload are marked coherent'
+    name: COHRNT
+    shortdesc: This field is only valid for LPD-DMA.
+    type: rw
+  name: ZDMA_CH_SRC_DSCR_WORD3
+  offset: '0x00000134'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DST DSCR Word 0
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: rw
+  name: ZDMA_CH_DST_DSCR_WORD0
+  offset: '0x00000138'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: DST DSCR Word 1
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: MSB
+    type: rw
+  name: ZDMA_CH_DST_DSCR_WORD1
+  offset: '0x0000013C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DST DSCR Word 2
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: raz
+  - bits: '29:0'
+    name: SIZE
+    type: rw
+  name: ZDMA_CH_DST_DSCR_WORD2
+  offset: '0x00000140'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DST DSCR Word 3
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: raz
+  - bits: '2'
+    longdesc: Completion indicates data has been written to the memory and BRESP has
+      been received.
+    name: INTR
+    shortdesc: '0: Completion interrupt is not required 1: Interrupt is set at the
+      completion of this element.'
+    type: rw
+  - bits: '1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: 'FPD-DMA does not support coherency at descriptor and data. 0: AXI transactions
+      generated to process the descriptor payload are marked Non-coherent 1: AXI transaction
+      generated to process the descriptor payload are marked coherent'
+    name: COHRNT
+    shortdesc: This field is only valid for LPD-DMA.
+    type: rw
+  name: ZDMA_CH_DST_DSCR_WORD3
+  offset: '0x00000144'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Write Only Data Word 0
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: rw
+  name: ZDMA_CH_WR_ONLY_WORD0
+  offset: '0x00000148'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Only Data Word 1
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: rw
+  name: ZDMA_CH_WR_ONLY_WORD1
+  offset: '0x0000014C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Only Data Word 2
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: rw
+  name: ZDMA_CH_WR_ONLY_WORD2
+  offset: '0x00000150'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Write Only Data Word 3
+  field:
+  - bits: '31:0'
+    name: DATA
+    type: rw
+  name: ZDMA_CH_WR_ONLY_WORD3
+  offset: '0x00000154'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SRC DSCR Start Address LSB Regiser
+  field:
+  - bits: '31:0'
+    name: ADDR
+    type: rw
+  name: ZDMA_CH_SRC_START_LSB
+  offset: '0x00000158'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SRC DSCR Start Address MSB Regiser
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: ADDR
+    type: rw
+  name: ZDMA_CH_SRC_START_MSB
+  offset: '0x0000015C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DST DSCR Start Address LSB Regiser
+  field:
+  - bits: '31:0'
+    name: ADDR
+    type: rw
+  name: ZDMA_CH_DST_START_LSB
+  offset: '0x00000160'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: DST DSCR Start Address MSB Regiser
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16:0'
+    name: ADDR
+    type: rw
+  name: ZDMA_CH_DST_START_MSB
+  offset: '0x00000164'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Rate Control Count Register
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: raz
+  - bits: '11:0'
+    name: CNT
+    type: rw
+  name: ZDMA_CH_RATE_CTRL
+  offset: '0x0000018C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: SRC Interrupt Account Count Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    name: CNT
+    type: ro
+  name: ZDMA_CH_IRQ_SRC_ACCT
+  offset: '0x00000190'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DST Interrupt Account Count Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    name: CNT
+    type: ro
+  name: ZDMA_CH_IRQ_DST_ACCT
+  offset: '0x00000194'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: zDMA Control Register 2
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: If DMA channel is in pause and this bit is cleared by software then
+      DMA channel goes to disable state when SW set CONT bit. HW clears this flag
+      after finishing DMA opertion.
+    name: EN
+    shortdesc: Channel is enabled SW sets this 1 to trigger.
+    type: rw
+  name: ZDMA_CH_CTRL2
+  offset: '0x00000200'
+  type: mixed
+  width: 32

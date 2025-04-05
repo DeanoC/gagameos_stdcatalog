@@ -1,0 +1,57 @@
+connection:
+- connection: OCMSwitch -> OCM
+  type: logical
+- bus_name: rpu_ocm
+  connection: RPUSwitch -> OCMSwitch
+  type: bus
+- bus_name: rpu_lpd
+  connection: RPUSwitch -> LPDMainSwitch
+  type: bus
+- bus_name: lpd_lpdinbound
+  connection: LPDMainSwitch -> LPDInboundSwitch
+  type: bus
+- bus_name: lpd_ocm
+  connection: LPDMainSwitch -> OCMSwitch
+  type: bus
+- bus_name: lpdinbound_rpuio
+  connection: LPDInboundSwitch -> RPUIOSwitch
+  type: bus
+- bus_name: rpuio_iopinbound
+  connection: RPUIOSwitch -> IOPInboundSwitch
+  type: bus
+- bus_name: iopinbound_iopunitsswitch${index}
+  connection: IOPInboundSwitch -> IOPUnitsSwitch
+  type: bus
+- bus_name: iopinbound_iopunitsswitch${index}
+  connection: IOPInboundSwitch -> IOPUnitsSwitch
+  type: bus
+- bus_name: lpdoutbound_lpd
+  connection: LPDOutboundSwitch -> LPDMainSwitch
+  type: bus
+- bus_name: iopinbound_lpdunitsswitch
+  connection: IOPInboundSwitch -> LPDUnitsSwitch
+  type: bus
+instance:
+- name: LPDMainSwitch
+  type: switch.internal.lpd.zynqps8
+- name: LPDInboundSwitch
+  type: switch.internal.lpdinbound.zynqps8
+- name: LPDOutboundSwitch
+  type: switch.internal.lpdoutbound.zynqps8
+- name: RPUIOSwitch
+  type: switch.internal.rpuio.zynqps8
+- name: RPUSwitch
+  type: switch.internal.rpuswitch.zynqps8
+- name: OCMSwitch
+  type: switch.internal.ocm.zynqps8
+- name: OCM
+  ranges:
+  - address: '0xFC_0000'
+    size: 256 KiB
+  registers:
+  - base_address: '0x960000'
+    name: OCM
+    resource: registers/ocm.toml
+  type: ram.sram.generic
+- name: PMUOutSwitch
+  type: switch.internal.pmuoutbound.zynqps8

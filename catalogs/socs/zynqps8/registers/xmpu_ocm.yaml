@@ -1,0 +1,1557 @@
+bank:
+- address: '0xffa70000'
+  name: OCM_XMPU_CFG
+description: OCM Memory Protection Unit Configuration
+register:
+- default: '0x00000003'
+  description: Control and Implementation.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    longdesc: '0: Aligned to 4kB page (12 address bits). Read-only.'
+    name: ALIGNCFG
+    shortdesc: Region Alignment, value fixed at 0.
+    type: ro
+  - bits: '2'
+    longdesc: '0: attribute Poisoning (recommended); asserts AxUser[10], the Poison
+      signal to the OCM to a level defined by POISON [ATTRIB]. 1: address Poisoning;
+      base address is in POISON [BASE]. Note: the OCM_XMPU normally uses attribute
+      poisoning because the OCM expects it. Address poisoning is possible, but requires
+      4 kB of memory to be allocated at the [BASE] address.'
+    name: POISONCFG
+    shortdesc: Poisoning Method.
+    type: rw
+  - bits: '1'
+    longdesc: 'If a write transaction address and master ID miss in the Region List,
+      then: 0: poison the transaction with a Write Permission Violation. 1: allowed
+      the transaction, regardless of security level.'
+    name: DEFWRALLOWED
+    shortdesc: Default Write Allowed.
+    type: rw
+  - bits: '0'
+    longdesc: 'If a read transaction address and master ID miss in the Region List,
+      then: 0: poison the transaction with a Read Permission Violation. 1: allowed
+      the transaction, regardless of security level.'
+    name: DEFRDALLOWED
+    shortdesc: Default Read Allowed.
+    type: rw
+  name: CTRL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Error Status, Reg 1.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    longdesc: Bits [27:0] correspond to address bits [39:12]. Read-only.
+    name: AXI_ADDR
+    shortdesc: Address bits of a poisoned read or write transaction.
+    type: ro
+  name: ERR_STATUS1
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Error Status, Reg 2.
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    longdesc: Read-only.
+    name: AXI_ID
+    shortdesc: Master ID from a poisoned read or write transaction.
+    type: ro
+  name: ERR_STATUS2
+  offset: '0x00000008'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Poison Configuration.
+  field:
+  - bits: '31:21'
+    name: RESERVED
+    type: ro
+  - bits: '20'
+    longdesc: 'Recommended value is 0. Applies when CTRL [PoisonCfg] = 0 (poison by
+      attribute). The outbound AxUser[10] value is set: 0: to a logic 0 (poison).
+      1: to a logic 1 (not recommended).'
+    name: ATTRIB
+    shortdesc: Poison Attribute Value.
+    type: rw
+  - bits: '19:0'
+    longdesc: 'For poisoned transfers, the OCM_XMPU replaces the incoming AXI address
+      with 0x00_0000_0xxx where xxx = bits [11:0] of the incoming address. Note: poisoning
+      by attribute is recommended (not by address).'
+    name: BASE
+    shortdesc: Poison Base Address, value fixed at 0x0.
+    type: ro
+  name: POISON
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status and Clear.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    longdesc: 'Two conditions can cause a security violation: 1) A non-secure master
+      tries to access a secure memory space. 2) A secure master tries to access a
+      non-secure memory space and Rxx_CONFIG [NSCheckType] = 1 (strict checking).
+      Note: a secure transaction is detected when AxPROT[1] = 0.'
+    name: SECURITYVIO
+    shortdesc: Security Violation by AXI Master.
+    type: wtc
+  - bits: '2'
+    longdesc: Write access attempted to enabled region with WrAllowed = 0. Or the
+      transaction missed in the Region list and CNTRL [DefWrAllowed] = 0.
+    name: WRPERMVIO
+    shortdesc: Write Permission Violation by AXI Master.
+    type: wtc
+  - bits: '1'
+    longdesc: Read access attempted to enabled region with RdAllowed = 0. Or the transaction
+      missed in the Region list and CNTRL [DefRdAllowed] = 0.
+    name: RDPERMVIO
+    shortdesc: Read Permission Violation by AXI Master.
+    type: wtc
+  - bits: '0'
+    longdesc: A register access was requested to an unimplemented register location.
+      The PSLVERR error signal is also asserted back to the APB interconnect.
+    name: INV_APB
+    shortdesc: Register Access Error on APB.
+    type: wtc
+  name: ISR
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: Interrupt Mask.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: SECURITYVIO
+    type: ro
+  - bits: '2'
+    name: WRPERMVIO
+    type: ro
+  - bits: '1'
+    name: RDPERMVIO
+    type: ro
+  - bits: '0'
+    name: INV_APB
+    type: ro
+  name: IMR
+  offset: '0x00000014'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: SECURITYVIO
+    type: wo
+  - bits: '2'
+    name: WRPERMVIO
+    type: wo
+  - bits: '1'
+    name: RDPERMVIO
+    type: wo
+  - bits: '0'
+    name: INV_APB
+    type: wo
+  name: IEN
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: SECURITYVIO
+    type: wo
+  - bits: '2'
+    name: WRPERMVIO
+    type: wo
+  - bits: '1'
+    name: RDPERMVIO
+    type: wo
+  - bits: '0'
+    name: INV_APB
+    type: wo
+  name: IDS
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Register Write Lock.
+  field:
+  - bits: '0'
+    longdesc: 'Applies to all registers except ISR, IMR, IEN and IDS. 0: read/write
+      allowed. 1: read-only. Once this bit is set, it can only be cleared by an OCM_XMPU
+      reset.'
+    name: REGWRDIS
+    shortdesc: Register Write Disable.
+    type: rw
+  name: LOCK
+  offset: '0x00000020'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: Region 0 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R00_START
+  offset: '0x00000100'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 0 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R00_END
+  offset: '0x00000104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 0 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R00_MASTER
+  offset: '0x00000108'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 0 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R00_CONFIG
+  offset: '0x0000010C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 1 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R01_START
+  offset: '0x00000110'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 1 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R01_END
+  offset: '0x00000114'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 1 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R01_MASTER
+  offset: '0x00000118'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 1 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R01_CONFIG
+  offset: '0x0000011C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 2 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R02_START
+  offset: '0x00000120'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 2 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R02_END
+  offset: '0x00000124'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 2 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R02_MASTER
+  offset: '0x00000128'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 2 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R02_CONFIG
+  offset: '0x0000012C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 3 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R03_START
+  offset: '0x00000130'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 3 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R03_END
+  offset: '0x00000134'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 3 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R03_MASTER
+  offset: '0x00000138'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 3 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R03_CONFIG
+  offset: '0x0000013C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 4 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R04_START
+  offset: '0x00000140'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 4 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R04_END
+  offset: '0x00000144'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 4 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R04_MASTER
+  offset: '0x00000148'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 4 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R04_CONFIG
+  offset: '0x0000014C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 5 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R05_START
+  offset: '0x00000150'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 5 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R05_END
+  offset: '0x00000154'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 5 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R05_MASTER
+  offset: '0x00000158'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 5 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R05_CONFIG
+  offset: '0x0000015C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 6 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R06_START
+  offset: '0x00000160'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 6 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R06_END
+  offset: '0x00000164'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 6 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R06_MASTER
+  offset: '0x00000168'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 6 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R06_CONFIG
+  offset: '0x0000016C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 7 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R07_START
+  offset: '0x00000170'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 7 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R07_END
+  offset: '0x00000174'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 7 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R07_MASTER
+  offset: '0x00000178'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 7 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R07_CONFIG
+  offset: '0x0000017C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 8 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R08_START
+  offset: '0x00000180'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 8 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R08_END
+  offset: '0x00000184'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 8 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R08_MASTER
+  offset: '0x00000188'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 8 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R08_CONFIG
+  offset: '0x0000018C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 9 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R09_START
+  offset: '0x00000190'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 9 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R09_END
+  offset: '0x00000194'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 9 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R09_MASTER
+  offset: '0x00000198'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 9 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R09_CONFIG
+  offset: '0x0000019C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 10 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R10_START
+  offset: '0x000001A0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 10 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R10_END
+  offset: '0x000001A4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 10 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R10_MASTER
+  offset: '0x000001A8'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 10 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R10_CONFIG
+  offset: '0x000001AC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 11 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R11_START
+  offset: '0x000001B0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 11 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R11_END
+  offset: '0x000001B4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 11 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R11_MASTER
+  offset: '0x000001B8'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 11 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R11_CONFIG
+  offset: '0x000001BC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 12 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R12_START
+  offset: '0x000001C0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 12 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R12_END
+  offset: '0x000001C4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 12 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R12_MASTER
+  offset: '0x000001C8'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 12 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R12_CONFIG
+  offset: '0x000001CC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 13 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R13_START
+  offset: '0x000001D0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 13 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R13_END
+  offset: '0x000001D4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 13 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R13_MASTER
+  offset: '0x000001D8'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 13 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R13_CONFIG
+  offset: '0x000001DC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 14 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R14_START
+  offset: '0x000001E0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 14 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R14_END
+  offset: '0x000001E4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 14 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R14_MASTER
+  offset: '0x000001E8'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 14 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R14_CONFIG
+  offset: '0x000001EC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 15 Start Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R15_START
+  offset: '0x000001F0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 15 End Address.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    name: ADDR
+    type: rw
+  name: R15_END
+  offset: '0x000001F4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Region 15 Master ID.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:16'
+    name: MASK
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: ID
+    type: rw
+  name: R15_MASTER
+  offset: '0x000001F8'
+  type: mixed
+  width: 32
+- default: '0x00000008'
+  description: Region 15 Configuration.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: 'Secure masters may or may not be allowed to access Non-Secure (NS)
+      memory regions. 0: relaxed checking; secure requests may access a non-secure
+      (NS) region. 1: strict checking; secure requests may only access a secure region.
+      A non-secure access request can only access non-secure regions regardless of
+      bit setting.'
+    name: NSCHECKTYPE
+    shortdesc: Non-secure Region Check Type.
+    type: rw
+  - bits: '3'
+    longdesc: '1: non-secure (NS).'
+    name: REGIONNS
+    shortdesc: 'Select security level of region: 0: secure.'
+    type: rw
+  - bits: '2'
+    longdesc: '1: allowed.'
+    name: WRALLOWED
+    shortdesc: 'Allow writes to region: 0: not allowed; write transaction poisoned.'
+    type: rw
+  - bits: '1'
+    longdesc: '1: allowed.'
+    name: RDALLOWED
+    shortdesc: 'Allow reads within region: 0: not allowed; read transaction poisoned.'
+    type: rw
+  - bits: '0'
+    longdesc: '1: enabled.'
+    name: ENABLE
+    shortdesc: 'Enable region: 0: disabled.'
+    type: rw
+  name: R15_CONFIG
+  offset: '0x000001FC'
+  type: mixed
+  width: 32

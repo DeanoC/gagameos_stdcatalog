@@ -1,0 +1,4 @@
+instance:
+- name: host
+  type: cpu.x86_64.linux.host
+path: prefabs/hosts

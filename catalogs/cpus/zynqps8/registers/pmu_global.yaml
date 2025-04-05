@@ -1,0 +1,4624 @@
+bank:
+- address: '0xffd80000'
+  name: PMU_GLOBAL
+description: PMU Global Control
+register:
+- default: '0x00008800'
+  description: PMU control and status register.
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    longdesc: '1: sleep. Read-only.'
+    name: MB_SLEEP
+    shortdesc: 'PMU processing mode: 0: active.'
+    type: ro
+  - bits: '15:12'
+    longdesc: 4-bit read/write.
+    name: WRITE_QOS
+    shortdesc: QoS regulator setting used by PMU for AXI Write requests.
+    type: rw
+  - bits: '11:8'
+    longdesc: 4-bit read/write.
+    name: READ_QOS
+    shortdesc: QoS regulator setting used by PMU for AXI Read requests.
+    type: rw
+  - bits: '7:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: '0: not loaded. 1: loaded. After the firmware is loaded, the software
+      can call its service routines.'
+    name: FW_IS_PRESENT
+    shortdesc: Software sets this bit to indicate that the PMU firmware has been loaded
+      in the PMU RAM.
+    type: rw
+  - bits: '3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    longdesc: '0: outside of APU coherency. 1: coherent using the legacy ACP port
+      on the APU.'
+    name: COHERENT
+    shortdesc: PMU coherency with APU setting.
+    type: rw
+  - bits: '1'
+    longdesc: '0: disable error signal. 1: assert error signal; write data is ignored
+      and reads returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: Enable the SLVERR error signal back to the interconnect when a Register
+      Access Error occurs.
+    type: rw
+  - bits: '0'
+    longdesc: '0: no signal. 1: assert wake up signal. This feature is used after
+      the PMU firmware is loaded into RAM.'
+    name: DONT_SLEEP
+    shortdesc: PMU wake-up when the PMU is in sleep mode and the interrupts are disabled.
+    type: rw
+  name: GLOBAL_CNTRL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PL Program Initiation Control.
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    longdesc: '0: allowed to propagate to PL. 1: blocked. Debug feature. Read-only.'
+    name: PROG_GATE_STATUS
+    shortdesc: Status.
+    type: ro
+  - bits: '15:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    longdesc: '0: disable, PL is unaffected by reset. 1: enable, PL is reset by POR
+      or [pcfg_prog_b]. Once this bit is set to 1, it can only be reset to 0 by a
+      POR reset.'
+    name: PROG_ENABLE
+    shortdesc: Enable (ungating) bit.
+    type: rw
+  - bits: '0'
+    longdesc: '0: unblocked. 1: blocked. Once this bit is set to 1, it can only be
+      reset to 0 by a POR reset.'
+    name: PROG_GATE
+    shortdesc: Blocking (gating) bit.
+    type: rw
+  name: PS_CNTRL
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: APU Power Initialization Status.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: ACPU3
+    type: rw
+  - bits: '2'
+    name: ACPU2
+    type: rw
+  - bits: '1'
+    name: ACPU1
+    type: rw
+  - bits: '0'
+    name: ACPU0
+    type: rw
+  name: APU_PWR_STATUS_INIT
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00BB02CB'
+  description: This Register controls the PMU RAM and ROM settings.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    name: ROM1_KEN
+    type: rw
+  - bits: '22:20'
+    name: ROM1_EMA
+    type: rw
+  - bits: '19'
+    name: ROM0_KEN
+    type: rw
+  - bits: '18:16'
+    name: ROM0_EMA
+    type: rw
+  - bits: '15:12'
+    name: RESERVED
+    type: ro
+  - bits: '11'
+    name: ECC_RAM_EMAS
+    type: rw
+  - bits: '10:9'
+    name: ECC_RAM_EMAW
+    type: rw
+  - bits: '8:6'
+    name: ECC_RAM_EMA
+    type: rw
+  - bits: '5'
+    name: DATA_RAM_EMAS
+    type: rw
+  - bits: '4:3'
+    name: DATA_RAM_EMAW
+    type: rw
+  - bits: '2:0'
+    name: DATA_RAM_EMA
+    type: rw
+  name: MEM_CNTRL
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Register Address Error; Interrupt Status and Clear.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: '0: no interrupt. 1: interrupt asserted. Write. 0: no effect. 1: clear
+      bit to 0.'
+    name: STATUS
+    shortdesc: Read.
+    type: wtc
+  name: ADDR_ERROR_STATUS
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: Register Address Error; Interrupt Mask.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'Read operation. 0: unmasked (enabled). 1: masked (disabled).'
+    name: MASK
+    shortdesc: Interrupt mask.
+    type: ro
+  name: ADDR_ERROR_INT_MASK
+  offset: '0x00000014'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Register Address Error; Interrupt Enable.
+  field:
+  - bits: '0'
+    longdesc: 'Write operation. 0: no effect. 1: enable interrupt (set mask to 1).'
+    name: ENABLE
+    shortdesc: Interrupt Enable.
+    type: wo
+  name: ADDR_ERROR_INT_EN
+  offset: '0x00000018'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Register Address Error; Interrupt Disable.
+  field:
+  - bits: '0'
+    longdesc: 'Write operation. 0: no effect. 1: disable interrupt (set mask to 1).'
+    name: DISABLE
+    shortdesc: Interrupt Disable.
+    type: wo
+  name: ADDR_ERROR_INT_DIS
+  offset: '0x0000001C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Global Storage, Reg 0.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: GLOBAL_GEN_STORAGE0
+  offset: '0x00000030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Global Storage, Reg 1.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: GLOBAL_GEN_STORAGE1
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Global Storage, Reg 2.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: GLOBAL_GEN_STORAGE2
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Global Storage, Reg 3.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: GLOBAL_GEN_STORAGE3
+  offset: '0x0000003C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Global Storage, Reg 4.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: GLOBAL_GEN_STORAGE4
+  offset: '0x00000040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Global Storage, Reg 5.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: GLOBAL_GEN_STORAGE5
+  offset: '0x00000044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Global Storage, Reg 6.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: GLOBAL_GEN_STORAGE6
+  offset: '0x00000048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Global Storage, Reg 0.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: PERS_GLOB_GEN_STORAGE0
+  offset: '0x00000050'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Global Storage, Reg 1.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: PERS_GLOB_GEN_STORAGE1
+  offset: '0x00000054'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Global Storage, Reg 2.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: PERS_GLOB_GEN_STORAGE2
+  offset: '0x00000058'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Global Storage, Reg 3.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: PERS_GLOB_GEN_STORAGE3
+  offset: '0x0000005C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Global Storage, Reg 4.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: PERS_GLOB_GEN_STORAGE4
+  offset: '0x00000060'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Global Storage, Reg 5.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: PERS_GLOB_GEN_STORAGE5
+  offset: '0x00000064'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Global Storage, Reg 6.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: PERS_GLOB_GEN_STORAGE6
+  offset: '0x00000068'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Global Storage, Reg 7.
+  field:
+  - bits: '31:0'
+    longdesc: The bits do not affect the hardware. The bits are not modified by the
+      hardware or ROM.
+    name: REG
+    shortdesc: Bits [31:0] are R/W.
+    type: rw
+  name: PERS_GLOB_GEN_STORAGE7
+  offset: '0x0000006C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: DDR Output Signal Latch Control.
+  field:
+  - bits: '0'
+    longdesc: 'Write sequence operation. Transition 0 to 1: latch DDR outputs to current
+      state. Transition 1 to 0: allow DDR controller to control outputs. Transitions
+      0 to 0 and 1 to 1 have no effect. The PMU firmware can hold the state of the
+      DDR output buffers while the DDR controller is powered-down.'
+    name: RET
+    shortdesc: Signal Output Retention Control.
+    type: rw
+  name: DDR_CNTRL
+  offset: '0x00000070'
+  type: rw
+  width: 1
+- default: '0x00FFFCBF'
+  description: Power State Status; PS Islands, PL Internal and FPD.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    longdesc: '0: powered-down or isolated (PMU_LOCAL.DOMAIN_ISO_CTRL [PL_LP_ISO_1]
+      = 1; this refers to the non-PCAP interface between the LPD and the PLPD). 1:
+      powered-up and accessible. The PL power is usually controlled by an external
+      FET via an MIO pin.'
+    name: PL
+    shortdesc: PL Power Domain (PLPD) status.
+    type: ro
+  - bits: '22'
+    longdesc: '0: powered-down or isolated (PMU_LOCAL.DOMAIN_ISO_CTRL [LP_FP_ISO_2]
+      = 1). 1: powered-up and accessible. Note: If PMU_LOCAL.DOMAIN_ISO_CTRL [LP_FP_ISO_2]
+      = 1, then the [FP] bit will = 0, but the FPD power supply may in-fact be powered
+      up and the system accessible for debug. When the FPD is in locked isolation
+      (PMU_LOCAL.DOMAIN_ISO_CTRL [FP_LOCKED] = 1), the [FP] bit will be cleared because
+      [LP_FP_ISO_2] becomes inactive in order to allow clocks and resets to enter
+      the FPD. Thus, this field cannot be used to determine FPD accessibility in the
+      event the FPD is locked out. The PMU_LOCAL register set is only accessible by
+      the PMU processor. Note: To request changes to the VCC_PSINTFP power supply,
+      refer to the REQ_PWR{UP,DWN}_TRIG registers. Note: To determine the state of
+      the VCC_PSINTFP power supply, refer to the PMU_GLOCAL.PWR_SUPPLY_STATUS [VCC_PSINTFP]
+      bit.'
+    name: FP
+    shortdesc: Full-power Domain (FPD) status.
+    type: ro
+  - bits: '21'
+    longdesc: '0: powered-down. 1: powered-up.'
+    name: USB1
+    shortdesc: USB Controller 1 power island.
+    type: ro
+  - bits: '20'
+    name: USB0
+    type: ro
+  - bits: '19'
+    name: OCM_BANK3
+    type: ro
+  - bits: '18'
+    name: OCM_BANK2
+    type: ro
+  - bits: '17'
+    name: OCM_BANK1
+    type: ro
+  - bits: '16'
+    name: OCM_BANK0
+    type: ro
+  - bits: '15'
+    name: TCM1B
+    type: ro
+  - bits: '14'
+    name: TCM1A
+    type: ro
+  - bits: '13'
+    name: TCM0B
+    type: ro
+  - bits: '12'
+    name: TCM0A
+    type: ro
+  - bits: '11'
+    name: R5_1
+    type: ro
+  - bits: '10'
+    name: R5_0
+    type: ro
+  - bits: '9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: L2_BANK0
+    type: ro
+  - bits: '6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: PP1
+    type: ro
+  - bits: '4'
+    name: PP0
+    type: ro
+  - bits: '3'
+    name: ACPU3
+    type: ro
+  - bits: '2'
+    name: ACPU2
+    type: ro
+  - bits: '1'
+    name: ACPU1
+    type: ro
+  - bits: '0'
+    name: ACPU0
+    type: ro
+  name: PWR_STATE
+  offset: '0x00000100'
+  type: ro
+  width: 32
+- default: '0x000FF080'
+  description: Memory Retention and RPU Emulation State.
+  field:
+  - bits: '31'
+    name: ACPU3_EMULATION
+    type: ro
+  - bits: '30'
+    name: ACPU2_EMULATION
+    type: ro
+  - bits: '29'
+    name: ACPU1_EMULATION
+    type: ro
+  - bits: '28'
+    name: ACPU0_EMULATION
+    type: ro
+  - bits: '27'
+    name: RPU_EMULATION
+    type: ro
+  - bits: '26:20'
+    name: RESERVED
+    type: ro
+  - bits: '19'
+    name: OCM_BANK3
+    type: ro
+  - bits: '18'
+    name: OCM_BANK2
+    type: ro
+  - bits: '17'
+    name: OCM_BANK1
+    type: ro
+  - bits: '16'
+    name: OCM_BANK0
+    type: ro
+  - bits: '15'
+    name: TCM1B
+    type: ro
+  - bits: '14'
+    name: TCM1A
+    type: ro
+  - bits: '13'
+    name: TCM0B
+    type: ro
+  - bits: '12'
+    name: TCM0A
+    type: ro
+  - bits: '11:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: L2_BANK0
+    type: ro
+  - bits: '6:0'
+    name: RESERVED
+    type: ro
+  name: AUX_PWR_STATE
+  offset: '0x00000104'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Memory Retention Requests.
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19'
+    name: OCM_BANK3
+    type: rw
+  - bits: '18'
+    name: OCM_BANK2
+    type: rw
+  - bits: '17'
+    name: OCM_BANK1
+    type: rw
+  - bits: '16'
+    name: OCM_BANK0
+    type: rw
+  - bits: '15'
+    name: TCM1B
+    type: rw
+  - bits: '14'
+    name: TCM1A
+    type: rw
+  - bits: '13'
+    name: TCM0B
+    type: rw
+  - bits: '12'
+    name: TCM0A
+    type: rw
+  - bits: '11:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: L2_BANK0
+    type: rw
+  - bits: '6:0'
+    name: RESERVED
+    type: ro
+  name: RAM_RET_CNTRL
+  offset: '0x00000108'
+  type: mixed
+  width: 32
+- default: '0x00000004'
+  description: PS Power Supply Status.
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    name: VCC_INT
+    type: ro
+  - bits: '0'
+    name: VCC_PSINTFP
+    type: ro
+  name: PWR_SUPPLY_STATUS
+  offset: '0x0000010C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Power-up Request; Interrupt Status and Clear.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      pin [33]. This is PMU signal [6], pmu_psio_gpo [1].
+    name: PL
+    shortdesc: Programmable Logic, PL.
+    type: wtc
+  - bits: '22'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      pin [32]. This is PMU signal [5], pmu_psio_gpo [0].
+    name: FP
+    shortdesc: Full-power Domain, FPD.
+    type: wtc
+  - bits: '21'
+    name: USB1
+    type: wtc
+  - bits: '20'
+    name: USB0
+    type: wtc
+  - bits: '19'
+    name: OCM_BANK3
+    type: wtc
+  - bits: '18'
+    name: OCM_BANK2
+    type: wtc
+  - bits: '17'
+    name: OCM_BANK1
+    type: wtc
+  - bits: '16'
+    name: OCM_BANK0
+    type: wtc
+  - bits: '15'
+    name: TCM1B
+    type: wtc
+  - bits: '14'
+    name: TCM1A
+    type: wtc
+  - bits: '13'
+    name: TCM0B
+    type: wtc
+  - bits: '12'
+    name: TCM0A
+    type: wtc
+  - bits: '11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    name: RPU
+    type: wtc
+  - bits: '9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: L2_BANK0
+    type: wtc
+  - bits: '6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: PP1
+    type: wtc
+  - bits: '4'
+    name: PP0
+    type: wtc
+  - bits: '3'
+    name: ACPU3
+    type: wtc
+  - bits: '2'
+    name: ACPU2
+    type: wtc
+  - bits: '1'
+    name: ACPU1
+    type: wtc
+  - bits: '0'
+    name: ACPU0
+    type: wtc
+  name: REQ_PWRUP_STATUS
+  offset: '0x00000110'
+  type: mixed
+  width: 32
+- default: '0x00FFF4BF'
+  description: Power-up Request; Interrupt Mask.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [32] and is equivalent to PMU signal [6].
+    name: PL
+    shortdesc: Programmable Logic, PL.
+    type: ro
+  - bits: '22'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [31] and is equivalent to PMU signal [5].
+    name: FP
+    shortdesc: Full-power Domain, FPD.
+    type: ro
+  - bits: '21'
+    name: USB1
+    type: ro
+  - bits: '20'
+    name: USB0
+    type: ro
+  - bits: '19'
+    name: OCM_BANK3
+    type: ro
+  - bits: '18'
+    name: OCM_BANK2
+    type: ro
+  - bits: '17'
+    name: OCM_BANK1
+    type: ro
+  - bits: '16'
+    name: OCM_BANK0
+    type: ro
+  - bits: '15'
+    name: TCM1B
+    type: ro
+  - bits: '14'
+    name: TCM1A
+    type: ro
+  - bits: '13'
+    name: TCM0B
+    type: ro
+  - bits: '12'
+    name: TCM0A
+    type: ro
+  - bits: '11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    name: RPU
+    type: ro
+  - bits: '9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: L2_BANK0
+    type: ro
+  - bits: '6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: PP1
+    type: ro
+  - bits: '4'
+    name: PP0
+    type: ro
+  - bits: '3'
+    name: ACPU3
+    type: ro
+  - bits: '2'
+    name: ACPU2
+    type: ro
+  - bits: '1'
+    name: ACPU1
+    type: ro
+  - bits: '0'
+    name: ACPU0
+    type: ro
+  name: REQ_PWRUP_INT_MASK
+  offset: '0x00000114'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Power-up Request; Interrupt Enable.
+  field:
+  - bits: '23'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [32] and is equivalent to PMU signal [6].
+    name: PL
+    shortdesc: Programmable Logic, PL.
+    type: wo
+  - bits: '22'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [31] and is equivalent to PMU signal [5].
+    name: FP
+    shortdesc: Full-power Domain, FPD.
+    type: wo
+  - bits: '21'
+    name: USB1
+    type: wo
+  - bits: '20'
+    name: USB0
+    type: wo
+  - bits: '19'
+    name: OCM_BANK3
+    type: wo
+  - bits: '18'
+    name: OCM_BANK2
+    type: wo
+  - bits: '17'
+    name: OCM_BANK1
+    type: wo
+  - bits: '16'
+    name: OCM_BANK0
+    type: wo
+  - bits: '15'
+    name: TCM1B
+    type: wo
+  - bits: '14'
+    name: TCM1A
+    type: wo
+  - bits: '13'
+    name: TCM0B
+    type: wo
+  - bits: '12'
+    name: TCM0A
+    type: wo
+  - bits: '10'
+    name: RPU
+    type: wo
+  - bits: '7'
+    name: L2_BANK0
+    type: wo
+  - bits: '5'
+    name: PP1
+    type: wo
+  - bits: '4'
+    name: PP0
+    type: wo
+  - bits: '3'
+    name: ACPU3
+    type: wo
+  - bits: '2'
+    name: ACPU2
+    type: wo
+  - bits: '1'
+    name: ACPU1
+    type: wo
+  - bits: '0'
+    name: ACPU0
+    type: wo
+  name: REQ_PWRUP_INT_EN
+  offset: '0x00000118'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Power-up Request; Interrupt Disable.
+  field:
+  - bits: '23'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [32] and is equivalent to PMU signal [6].
+    name: PL
+    shortdesc: Programmable Logic, PL.
+    type: wo
+  - bits: '22'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [31] and is equivalent to PMU signal [5].
+    name: FP
+    shortdesc: Full-power Domain, FPD.
+    type: wo
+  - bits: '21'
+    name: USB1
+    type: wo
+  - bits: '20'
+    name: USB0
+    type: wo
+  - bits: '19'
+    name: OCM_BANK3
+    type: wo
+  - bits: '18'
+    name: OCM_BANK2
+    type: wo
+  - bits: '17'
+    name: OCM_BANK1
+    type: wo
+  - bits: '16'
+    name: OCM_BANK0
+    type: wo
+  - bits: '15'
+    name: TCM1B
+    type: wo
+  - bits: '14'
+    name: TCM1A
+    type: wo
+  - bits: '13'
+    name: TCM0B
+    type: wo
+  - bits: '12'
+    name: TCM0A
+    type: wo
+  - bits: '10'
+    name: RPU
+    type: wo
+  - bits: '7'
+    name: L2_BANK0
+    type: wo
+  - bits: '5'
+    name: PP1
+    type: wo
+  - bits: '4'
+    name: PP0
+    type: wo
+  - bits: '3'
+    name: ACPU3
+    type: wo
+  - bits: '2'
+    name: ACPU2
+    type: wo
+  - bits: '1'
+    name: ACPU1
+    type: wo
+  - bits: '0'
+    name: ACPU0
+    type: wo
+  name: REQ_PWRUP_INT_DIS
+  offset: '0x0000011C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Power-up Request; Interrupt Trigger.
+  field:
+  - bits: '23'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [32] and is equivalent to PMU signal [6].
+    name: PL
+    shortdesc: Programmable Logic, PL.
+    type: wo
+  - bits: '22'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [31] and is equivalent to PMU signal [5].
+    name: FP
+    shortdesc: Full-power Domain, FPD.
+    type: wo
+  - bits: '21'
+    name: USB1
+    type: wo
+  - bits: '20'
+    name: USB0
+    type: wo
+  - bits: '19'
+    name: OCM_BANK3
+    type: wo
+  - bits: '18'
+    name: OCM_BANK2
+    type: wo
+  - bits: '17'
+    name: OCM_BANK1
+    type: wo
+  - bits: '16'
+    name: OCM_BANK0
+    type: wo
+  - bits: '15'
+    name: TCM1B
+    type: wo
+  - bits: '14'
+    name: TCM1A
+    type: wo
+  - bits: '13'
+    name: TCM0B
+    type: wo
+  - bits: '12'
+    name: TCM0A
+    type: wo
+  - bits: '10'
+    name: RPU
+    type: wo
+  - bits: '7'
+    name: L2_BANK0
+    type: wo
+  - bits: '5'
+    name: PP1
+    type: wo
+  - bits: '4'
+    name: PP0
+    type: wo
+  - bits: '3'
+    name: ACPU3
+    type: wo
+  - bits: '2'
+    name: ACPU2
+    type: wo
+  - bits: '1'
+    name: ACPU1
+    type: wo
+  - bits: '0'
+    name: ACPU0
+    type: wo
+  name: REQ_PWRUP_TRIG
+  offset: '0x00000120'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Power-down or RAM Retention Request; Interrupt Status and Clear.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [32] and is equivalent to PMU signal [6].
+    name: PL
+    shortdesc: Programmable Logic, PL.
+    type: wtc
+  - bits: '22'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [31] and is equivalent to PMU signal [5].
+    name: FP
+    shortdesc: Full-power Domain, FPD.
+    type: wtc
+  - bits: '21'
+    name: USB1
+    type: wtc
+  - bits: '20'
+    name: USB0
+    type: wtc
+  - bits: '19'
+    name: OCM_BANK3
+    type: wtc
+  - bits: '18'
+    name: OCM_BANK2
+    type: wtc
+  - bits: '17'
+    name: OCM_BANK1
+    type: wtc
+  - bits: '16'
+    name: OCM_BANK0
+    type: wtc
+  - bits: '15'
+    name: TCM1B
+    type: wtc
+  - bits: '14'
+    name: TCM1A
+    type: wtc
+  - bits: '13'
+    name: TCM0B
+    type: wtc
+  - bits: '12'
+    name: TCM0A
+    type: wtc
+  - bits: '11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    name: RPU
+    type: wtc
+  - bits: '9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: L2_BANK0
+    type: wtc
+  - bits: '6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: PP1
+    type: wtc
+  - bits: '4'
+    name: PP0
+    type: wtc
+  - bits: '3'
+    name: ACPU3
+    type: wtc
+  - bits: '2'
+    name: ACPU2
+    type: wtc
+  - bits: '1'
+    name: ACPU1
+    type: wtc
+  - bits: '0'
+    name: ACPU0
+    type: wtc
+  name: REQ_PWRDWN_STATUS
+  offset: '0x00000210'
+  type: mixed
+  width: 32
+- default: '0x00FFF4BF'
+  description: Power-down or RAM Retention Request; Interrupt Mask.
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [32] and is equivalent to PMU signal [6].
+    name: PL
+    shortdesc: Programmable Logic, PL.
+    type: ro
+  - bits: '22'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [31] and is equivalent to PMU signal [5].
+    name: FP
+    shortdesc: Full-power Domain, FPD.
+    type: ro
+  - bits: '21'
+    name: USB1
+    type: ro
+  - bits: '20'
+    name: USB0
+    type: ro
+  - bits: '19'
+    name: OCM_BANK3
+    type: ro
+  - bits: '18'
+    name: OCM_BANK2
+    type: ro
+  - bits: '17'
+    name: OCM_BANK1
+    type: ro
+  - bits: '16'
+    name: OCM_BANK0
+    type: ro
+  - bits: '15'
+    name: TCM1B
+    type: ro
+  - bits: '14'
+    name: TCM1A
+    type: ro
+  - bits: '13'
+    name: TCM0B
+    type: ro
+  - bits: '12'
+    name: TCM0A
+    type: ro
+  - bits: '11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    name: RPU
+    type: ro
+  - bits: '9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: L2_BANK0
+    type: ro
+  - bits: '6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: PP1
+    type: ro
+  - bits: '4'
+    name: PP0
+    type: ro
+  - bits: '3'
+    name: ACPU3
+    type: ro
+  - bits: '2'
+    name: ACPU2
+    type: ro
+  - bits: '1'
+    name: ACPU1
+    type: ro
+  - bits: '0'
+    name: ACPU0
+    type: ro
+  name: REQ_PWRDWN_INT_MASK
+  offset: '0x00000214'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Power-down or RAM Retention Request; Interrupt Enable.
+  field:
+  - bits: '23'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [32] and is equivalent to PMU signal [6].
+    name: PL
+    shortdesc: Programmable Logic, PL.
+    type: wo
+  - bits: '22'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [31] and is equivalent to PMU signal [5].
+    name: FP
+    shortdesc: Full-power Domain, FPD.
+    type: wo
+  - bits: '21'
+    name: USB1
+    type: wo
+  - bits: '20'
+    name: USB0
+    type: wo
+  - bits: '19'
+    name: OCM_BANK3
+    type: wo
+  - bits: '18'
+    name: OCM_BANK2
+    type: wo
+  - bits: '17'
+    name: OCM_BANK1
+    type: wo
+  - bits: '16'
+    name: OCM_BANK0
+    type: wo
+  - bits: '15'
+    name: TCM1B
+    type: wo
+  - bits: '14'
+    name: TCM1A
+    type: wo
+  - bits: '13'
+    name: TCM0B
+    type: wo
+  - bits: '12'
+    name: TCM0A
+    type: wo
+  - bits: '10'
+    name: RPU
+    type: wo
+  - bits: '7'
+    name: L2_BANK0
+    type: wo
+  - bits: '5'
+    name: PP1
+    type: wo
+  - bits: '4'
+    name: PP0
+    type: wo
+  - bits: '3'
+    name: ACPU3
+    type: wo
+  - bits: '2'
+    name: ACPU2
+    type: wo
+  - bits: '1'
+    name: ACPU1
+    type: wo
+  - bits: '0'
+    name: ACPU0
+    type: wo
+  name: REQ_PWRDWN_INT_EN
+  offset: '0x00000218'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Power-down or RAM Retention Request; Interrupt Disable.
+  field:
+  - bits: '23'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [32] and is equivalent to PMU signal [6].
+    name: PL
+    shortdesc: Programmable Logic, PL.
+    type: wo
+  - bits: '22'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [31] and is equivalent to PMU signal [5].
+    name: FP
+    shortdesc: Full-power Domain, FPD.
+    type: wo
+  - bits: '21'
+    name: USB1
+    type: wo
+  - bits: '20'
+    name: USB0
+    type: wo
+  - bits: '19'
+    name: OCM_BANK3
+    type: wo
+  - bits: '18'
+    name: OCM_BANK2
+    type: wo
+  - bits: '17'
+    name: OCM_BANK1
+    type: wo
+  - bits: '16'
+    name: OCM_BANK0
+    type: wo
+  - bits: '15'
+    name: TCM1B
+    type: wo
+  - bits: '14'
+    name: TCM1A
+    type: wo
+  - bits: '13'
+    name: TCM0B
+    type: wo
+  - bits: '12'
+    name: TCM0A
+    type: wo
+  - bits: '10'
+    name: RPU
+    type: wo
+  - bits: '7'
+    name: L2_BANK0
+    type: wo
+  - bits: '5'
+    name: PP1
+    type: wo
+  - bits: '4'
+    name: PP0
+    type: wo
+  - bits: '3'
+    name: ACPU3
+    type: wo
+  - bits: '2'
+    name: ACPU2
+    type: wo
+  - bits: '1'
+    name: ACPU1
+    type: wo
+  - bits: '0'
+    name: ACPU0
+    type: wo
+  name: REQ_PWRDWN_INT_DIS
+  offset: '0x0000021C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Power-down or RAM Retention Request; Interrupt Trigger.
+  field:
+  - bits: '23'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [32] and is equivalent to PMU signal [6].
+    name: PL
+    shortdesc: Programmable Logic, PL.
+    type: wo
+  - bits: '22'
+    longdesc: Controlled by external FET via MIO pin. This optional control uses MIO
+      [31] and is equivalent to PMU signal [5].
+    name: FP
+    shortdesc: Full-power Domain, FPD.
+    type: wo
+  - bits: '21'
+    name: USB1
+    type: wo
+  - bits: '20'
+    name: USB0
+    type: wo
+  - bits: '19'
+    name: OCM_BANK3
+    type: wo
+  - bits: '18'
+    name: OCM_BANK2
+    type: wo
+  - bits: '17'
+    name: OCM_BANK1
+    type: wo
+  - bits: '16'
+    name: OCM_BANK0
+    type: wo
+  - bits: '15'
+    name: TCM1B
+    type: wo
+  - bits: '14'
+    name: TCM1A
+    type: wo
+  - bits: '13'
+    name: TCM0B
+    type: wo
+  - bits: '12'
+    name: TCM0A
+    type: wo
+  - bits: '10'
+    name: RPU
+    type: wo
+  - bits: '7'
+    name: L2_BANK0
+    type: wo
+  - bits: '5'
+    name: PP1
+    type: wo
+  - bits: '4'
+    name: PP0
+    type: wo
+  - bits: '3'
+    name: ACPU3
+    type: wo
+  - bits: '2'
+    name: ACPU2
+    type: wo
+  - bits: '1'
+    name: ACPU1
+    type: wo
+  - bits: '0'
+    name: ACPU0
+    type: wo
+  name: REQ_PWRDWN_TRIG
+  offset: '0x00000220'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Isolation Request; Interrupt Status and Clear.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: FP_LOCKED
+    type: wtc
+  - bits: '3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: PL_NONPCAP
+    type: wtc
+  - bits: '1'
+    name: PL
+    type: wtc
+  - bits: '0'
+    name: FP
+    type: wtc
+  name: REQ_ISO_STATUS
+  offset: '0x00000310'
+  type: mixed
+  width: 32
+- default: '0x00000017'
+  description: Isolation Request; Interrupt Mask.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: FP_LOCKED
+    type: ro
+  - bits: '3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: PL_NONPCAP
+    type: ro
+  - bits: '1'
+    name: PL
+    type: ro
+  - bits: '0'
+    name: FP
+    type: ro
+  name: REQ_ISO_INT_MASK
+  offset: '0x00000314'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Isolation Request; Interrupt Enable.
+  field:
+  - bits: '4'
+    name: FP_LOCKED
+    type: wo
+  - bits: '2'
+    name: PL_NONPCAP
+    type: wo
+  - bits: '1'
+    name: PL
+    type: wo
+  - bits: '0'
+    name: FP
+    type: wo
+  name: REQ_ISO_INT_EN
+  offset: '0x00000318'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Isolation Request; Interrupt Disable.
+  field:
+  - bits: '4'
+    name: FP_LOCKED
+    type: wo
+  - bits: '2'
+    name: PL_NONPCAP
+    type: wo
+  - bits: '1'
+    name: PL
+    type: wo
+  - bits: '0'
+    name: FP
+    type: wo
+  name: REQ_ISO_INT_DIS
+  offset: '0x0000031C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Isolation Request; Interrupt Trigger.
+  field:
+  - bits: '4'
+    longdesc: 'The PL Interface remains active. Note: If the FPD voltage node is not
+      powered up when the PS_POR_B reset pin is released, then the FPD node is permanently
+      locked out and this bit is set. To re-enable the FPD, a PS_POR_B reset is required
+      with valid power on VCC_PSINTFP.'
+    name: FP_LOCKED
+    shortdesc: Isolate all signals between the FPD and LPD with the exception of the
+      clock and reset signals.
+    type: wo
+  - bits: '2'
+    name: PL_NONPCAP
+    type: wo
+  - bits: '1'
+    name: PL
+    type: wo
+  - bits: '0'
+    name: FP
+    type: wo
+  name: REQ_ISO_TRIG
+  offset: '0x00000320'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Reset Request; Interrupt Status and Clear.
+  field:
+  - bits: '31'
+    name: PL
+    type: wtc
+  - bits: '30'
+    longdesc: System-level reset ensures FPD transactions are flushed and the FPD
+      is blocked before the reset.
+    name: FP
+    shortdesc: Full Power Domain, FPD reset request.
+    type: wtc
+  - bits: '29'
+    name: LP
+    type: wtc
+  - bits: '28'
+    longdesc: System-level reset ensures the PS transactions are flushed and PS is
+      blocked before the reset. First set PMU_GLOBAL.PS_CTRL [PROG_GATE] = 1 to block
+      the reset to the PL.
+    name: PS_ONLY
+    shortdesc: PS-only reset request.
+    type: wtc
+  - bits: '27'
+    name: IOU
+    type: wtc
+  - bits: '26'
+    name: RESERVED
+    type: ro
+  - bits: '25'
+    name: USB1
+    type: wtc
+  - bits: '24'
+    name: USB0
+    type: wtc
+  - bits: '23'
+    name: GEM3
+    type: wtc
+  - bits: '22'
+    name: GEM2
+    type: wtc
+  - bits: '21'
+    name: GEM1
+    type: wtc
+  - bits: '20'
+    name: GEM0
+    type: wtc
+  - bits: '19'
+    name: RESERVED
+    type: ro
+  - bits: '18'
+    longdesc: System-level reset ensures RPU transactions are flushed and the RPU
+      master is blocked before the reset.
+    name: RPU
+    shortdesc: RPU Lockstep reset request.
+    type: wtc
+  - bits: '17'
+    name: R5_1
+    type: wtc
+  - bits: '16'
+    name: R5_0
+    type: wtc
+  - bits: '15:13'
+    name: RESERVED
+    type: ro
+  - bits: '12'
+    name: DISPLAY_PORT
+    type: wtc
+  - bits: '11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    name: SATA
+    type: wtc
+  - bits: '9'
+    name: PCIE
+    type: wtc
+  - bits: '8'
+    name: GPU
+    type: wtc
+  - bits: '7'
+    name: PP1
+    type: wtc
+  - bits: '6'
+    name: PP0
+    type: wtc
+  - bits: '5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: APU
+    type: wtc
+  - bits: '3'
+    name: ACPU3
+    type: wtc
+  - bits: '2'
+    name: ACPU2
+    type: wtc
+  - bits: '1'
+    name: ACPU1
+    type: wtc
+  - bits: '0'
+    name: ACPU0
+    type: wtc
+  name: REQ_SWRST_STATUS
+  offset: '0x00000410'
+  type: mixed
+  width: 32
+- default: '0xFBF717DF'
+  description: Reset Request; Interrupt Mask. Check the REQ_SWRST_STATUS register
+    bits for more information.
+  field:
+  - bits: '31'
+    name: PL
+    type: ro
+  - bits: '30'
+    name: FP
+    type: ro
+  - bits: '29'
+    name: LP
+    type: ro
+  - bits: '28'
+    name: PS_ONLY
+    type: ro
+  - bits: '27'
+    name: IOU
+    type: ro
+  - bits: '26'
+    name: RESERVED
+    type: ro
+  - bits: '25'
+    name: USB1
+    type: ro
+  - bits: '24'
+    name: USB0
+    type: ro
+  - bits: '23'
+    name: GEM3
+    type: ro
+  - bits: '22'
+    name: GEM2
+    type: ro
+  - bits: '21'
+    name: GEM1
+    type: ro
+  - bits: '20'
+    name: GEM0
+    type: ro
+  - bits: '19'
+    name: RESERVED
+    type: ro
+  - bits: '18'
+    name: LS_R5
+    type: ro
+  - bits: '17'
+    name: R5_1
+    type: ro
+  - bits: '16'
+    name: R5_0
+    type: ro
+  - bits: '15:13'
+    name: RESERVED
+    type: ro
+  - bits: '12'
+    name: DISPLAY_PORT
+    type: ro
+  - bits: '11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    name: SATA
+    type: ro
+  - bits: '9'
+    name: PCIE
+    type: ro
+  - bits: '8'
+    name: GPU
+    type: ro
+  - bits: '7'
+    name: PP1
+    type: ro
+  - bits: '6'
+    name: PP0
+    type: ro
+  - bits: '5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: APU
+    type: ro
+  - bits: '3'
+    name: ACPU3
+    type: ro
+  - bits: '2'
+    name: ACPU2
+    type: ro
+  - bits: '1'
+    name: ACPU1
+    type: ro
+  - bits: '0'
+    name: ACPU0
+    type: ro
+  name: REQ_SWRST_INT_MASK
+  offset: '0x00000414'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reset Request; Interrupt Enable. Check the REQ_SWRST_STATUS register
+    bits for more information.
+  field:
+  - bits: '31'
+    name: PL
+    type: wo
+  - bits: '30'
+    name: FP
+    type: wo
+  - bits: '29'
+    name: LP
+    type: wo
+  - bits: '28'
+    name: PS_ONLY
+    type: wo
+  - bits: '27'
+    name: IOU
+    type: wo
+  - bits: '25'
+    name: USB1
+    type: wo
+  - bits: '24'
+    name: USB0
+    type: wo
+  - bits: '23'
+    name: GEM3
+    type: wo
+  - bits: '22'
+    name: GEM2
+    type: wo
+  - bits: '21'
+    name: GEM1
+    type: wo
+  - bits: '20'
+    name: GEM0
+    type: wo
+  - bits: '18'
+    name: LS_R5
+    type: wo
+  - bits: '17'
+    name: R5_1
+    type: wo
+  - bits: '16'
+    name: R5_0
+    type: wo
+  - bits: '12'
+    name: DISPLAY_PORT
+    type: wo
+  - bits: '10'
+    name: SATA
+    type: wo
+  - bits: '9'
+    name: PCIE
+    type: wo
+  - bits: '8'
+    name: GPU
+    type: wo
+  - bits: '7'
+    name: PP1
+    type: wo
+  - bits: '6'
+    name: PP0
+    type: wo
+  - bits: '4'
+    name: APU
+    type: wo
+  - bits: '3'
+    name: ACPU3
+    type: wo
+  - bits: '2'
+    name: ACPU2
+    type: wo
+  - bits: '1'
+    name: ACPU1
+    type: wo
+  - bits: '0'
+    name: ACPU0
+    type: wo
+  name: REQ_SWRST_INT_EN
+  offset: '0x00000418'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Reset Request; Interrupt Disable. Check the REQ_SWRST_STATUS register
+    bits for more information.
+  field:
+  - bits: '31'
+    name: PL
+    type: wo
+  - bits: '30'
+    name: FP
+    type: wo
+  - bits: '29'
+    name: LP
+    type: wo
+  - bits: '28'
+    name: PS_ONLY
+    type: wo
+  - bits: '27'
+    name: IOU
+    type: wo
+  - bits: '25'
+    name: USB1
+    type: wo
+  - bits: '24'
+    name: USB0
+    type: wo
+  - bits: '23'
+    name: GEM3
+    type: wo
+  - bits: '22'
+    name: GEM2
+    type: wo
+  - bits: '21'
+    name: GEM1
+    type: wo
+  - bits: '20'
+    name: GEM0
+    type: wo
+  - bits: '18'
+    name: LS_R5
+    type: wo
+  - bits: '17'
+    name: R5_1
+    type: wo
+  - bits: '16'
+    name: R5_0
+    type: wo
+  - bits: '12'
+    name: DISPLAY_PORT
+    type: wo
+  - bits: '10'
+    name: SATA
+    type: wo
+  - bits: '9'
+    name: PCIE
+    type: wo
+  - bits: '8'
+    name: GPU
+    type: wo
+  - bits: '7'
+    name: PP1
+    type: wo
+  - bits: '6'
+    name: PP0
+    type: wo
+  - bits: '4'
+    name: APU
+    type: wo
+  - bits: '3'
+    name: ACPU3
+    type: wo
+  - bits: '2'
+    name: ACPU2
+    type: wo
+  - bits: '1'
+    name: ACPU1
+    type: wo
+  - bits: '0'
+    name: ACPU0
+    type: wo
+  name: REQ_SWRST_INT_DIS
+  offset: '0x0000041C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Reset Request; Interrupt Trigger. Check the REQ_SWRST_STATUS register
+    bits for more information.
+  field:
+  - bits: '31'
+    name: PL
+    type: wo
+  - bits: '30'
+    name: FP
+    type: wo
+  - bits: '29'
+    name: LP
+    type: wo
+  - bits: '28'
+    name: PS_ONLY
+    type: wo
+  - bits: '27'
+    name: IOU
+    type: wo
+  - bits: '25'
+    name: USB1
+    type: wo
+  - bits: '24'
+    name: USB0
+    type: wo
+  - bits: '23'
+    name: GEM3
+    type: wo
+  - bits: '22'
+    name: GEM2
+    type: wo
+  - bits: '21'
+    name: GEM1
+    type: wo
+  - bits: '20'
+    name: GEM0
+    type: wo
+  - bits: '18'
+    name: LS_R5
+    type: wo
+  - bits: '17'
+    name: R5_1
+    type: wo
+  - bits: '16'
+    name: R5_0
+    type: wo
+  - bits: '12'
+    name: DISPLAY_PORT
+    type: wo
+  - bits: '10'
+    name: SATA
+    type: wo
+  - bits: '9'
+    name: PCIE
+    type: wo
+  - bits: '8'
+    name: GPU
+    type: wo
+  - bits: '7'
+    name: PP1
+    type: wo
+  - bits: '6'
+    name: PP0
+    type: wo
+  - bits: '4'
+    name: APU
+    type: wo
+  - bits: '3'
+    name: ACPU3
+    type: wo
+  - bits: '2'
+    name: ACPU2
+    type: wo
+  - bits: '1'
+    name: ACPU1
+    type: wo
+  - bits: '0'
+    name: ACPU0
+    type: wo
+  name: REQ_SWRST_TRIG
+  offset: '0x00000420'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: BootROM Error detection and code.
+  field:
+  - bits: '31'
+    longdesc: '0: no error. 1: error occurred and the code is in [ERR_TYPE]. This
+      is a System Error routed to the interrupt status and clear registers. This bit
+      is written by CSU BootROM.'
+    name: BR_ERROR
+    shortdesc: BootROM error detected.
+    type: rw
+  - bits: '30:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Bits [15:0] are written by the BootROM when a fatal error occurs.
+    name: ERR_TYPE
+    shortdesc: BootROM Error Code.
+    type: rw
+  name: CSU_BR_ERROR
+  offset: '0x00000528'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PMU Fault Status; Lockstep, Fatal, Selfcheck, Sleep Instruction.
+  field:
+  - bits: '31:24'
+    longdesc: First lockstep mismatch. Bit [24] between processor 1 and 2. Bit [25]
+      between processor 1 and 3. Bit [26] between processor 2 and 3. Redundant (secondary)
+      first selfcheck comparator Error. Bit [27] between processor 1 and 2. Bit [28]
+      between processor 1 and 3. Bit [29] between processor 2 and 3. First Selfcheck
+      Voter Error. Bit [30] Selfcheck Voter Error. First Uncorrectable ECC Error.
+      Bit [31] Uncorrectable Error from PMU RAM ECC.
+    name: R_FFAIL
+    shortdesc: Redundant (secondary) fatal fault detection.
+    type: ro
+  - bits: '23:20'
+    name: RESERVED
+    type: ro
+  - bits: '19'
+    longdesc: 'PMU Sleep Instruction Response. 0: causes the PMU CPUs to go to sleep.
+      1: causes the PMU CPUs to reset. Read-only.'
+    name: R_SLEEP_RST
+    shortdesc: Redundant (secondary) fault detection.
+    type: ro
+  - bits: '18:16'
+    longdesc: Frist lockstep mismatch. Bit [16] processors 1 and 2. Bit [17] processors
+      1 and 3. Bit [18] processors 2 and 3.
+    name: R_LSFAIL
+    shortdesc: Redundant (secondary) fault detection.
+    type: ro
+  - bits: '15:8'
+    longdesc: First lockstep mismatch. Bit [8] between processor 1 and 2. Bit [9]
+      between processor 1 and 3. Bit [10] between processor 2 and 3. Nominal (primary)
+      first selfcheck comparator Error. Bit [11] between processor 1 and 2. Bit [12]
+      between processor 1 and 3. Bit [13] between processor 2 and 3. First Selfcheck
+      Voter Error. Bit [14] Selfcheck Voter Error. First Uncorrectable ECC Error.
+      Bit [15] Uncorrectable Error from PMU RAM ECC.
+    name: N_FFAIL
+    shortdesc: Nominal (primary) fatal fault detection.
+    type: ro
+  - bits: '7:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    longdesc: 'PMU Sleep Instruction Response. 0: causes the PMU CPUs to go to sleep.
+      1: causes the PMU CPUs to reset. Read-only.'
+    name: N_SLEEP_RST
+    shortdesc: Nominal (primary) fault detection.
+    type: ro
+  - bits: '2:0'
+    longdesc: First lockstep mismatch. Bit [0] processors 1 and 2. Bit [1] processors
+      1 and 3. Bit [2] processors 2 and 3.
+    name: N_LSFAIL
+    shortdesc: Nominal (primary) fault detection.
+    type: ro
+  name: MB_FAULT_STATUS
+  offset: '0x0000052C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: System Errors; Interrupt Clear and Status, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    name: CSU_SWDT
+    type: wtc
+  - bits: '26'
+    longdesc: Selected clock is not within acceptable frequency range. Refer to TRM.
+    name: CLK_MON
+    shortdesc: Clock Monitor (ClkMon) Error.
+    type: wtc
+  - bits: '25:24'
+    longdesc: Bit [24] is OR of OCM_XMPU, XPPU error signals. Bit [25] is OR of FPD_XMPU,
+      DDR_MPU error signals.
+    name: XMPU
+    shortdesc: Protect Unit errors.
+    type: wtc
+  - bits: '23:16'
+    longdesc: Bit [17] is for VCC_PS_FPD. Bit [18] is for VCC_PS_AUX. Bit [19] is
+      for VCCO_PS_DDR. Bit [20] is for VCCO_PS_3. Bit [21] is for VCCO_PS_0. Bit [22]
+      is for VCCO_PS_1. Bit [23] is for VCCO_PS_2.
+    name: PWR_SUPPLY
+    shortdesc: Bit [16] is for VCC_PS_LPD.
+    type: wtc
+  - bits: '15:14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: FPD_SWDT
+    type: wtc
+  - bits: '12'
+    name: LPD_SWDT
+    type: wtc
+  - bits: '11:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    longdesc: Represents one or more errors.
+    name: RPU_CCF
+    shortdesc: RPU Common Cause Failure (CCF) Errors OR'ed together.
+    type: wtc
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7:6'
+    longdesc: '01: lockstep error. 10: lockstep error. 11: lockstep error.'
+    name: RPU_LS
+    shortdesc: 'RPU Lockstep Error detected: 00: no error.'
+    type: wtc
+  - bits: '5'
+    name: FPD_TEMP
+    type: wtc
+  - bits: '4'
+    name: LPD_TEMP
+    type: wtc
+  - bits: '3'
+    name: RPU1
+    type: wtc
+  - bits: '2'
+    name: RPU0
+    type: wtc
+  - bits: '1'
+    name: OCM_ECC
+    type: wtc
+  - bits: '0'
+    name: DDR_ECC
+    type: wtc
+  name: ERROR_STATUS_1
+  offset: '0x00000530'
+  type: mixed
+  width: 32
+- default: '0xFFFF32FF'
+  description: System Errors to PMU; Interrupt Mask, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_SWDT
+    shortdesc: CSU_SWDT timeout.
+    type: ro
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CLK_MON
+    shortdesc: Clock Monitor (ClkMon).
+    type: ro
+  - bits: '25:24'
+    name: XMPU
+    type: ro
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: ro
+  - bits: '15:14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: FPD_SWDT
+    type: ro
+  - bits: '12'
+    name: LPD_SWDT
+    type: ro
+  - bits: '11:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: RPU_CCF
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7:6'
+    name: RPU_LS
+    type: ro
+  - bits: '5'
+    name: FPD_TEMP
+    type: ro
+  - bits: '4'
+    name: LPD_TEMP
+    type: ro
+  - bits: '3'
+    name: RPU1
+    type: ro
+  - bits: '2'
+    name: RPU0
+    type: ro
+  - bits: '1'
+    name: OCM_ECC
+    type: ro
+  - bits: '0'
+    name: DDR_ECC
+    type: ro
+  name: ERROR_INT_MASK_1
+  offset: '0x00000534'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: System Errors to PMU; Interrupt Enable, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_SWDT
+    shortdesc: CSU_SWDT timeout.
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CLK_MON
+    shortdesc: Clock Monitor (ClkMon).
+    type: wo
+  - bits: '25:24'
+    name: XMPU
+    type: wo
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: wo
+  - bits: '15:14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: FPD_SWDT
+    type: wo
+  - bits: '12'
+    name: LPD_SWDT
+    type: wo
+  - bits: '11:10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: RPU_CCF
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: wo
+  - bits: '7:6'
+    name: RPU_LS
+    type: wo
+  - bits: '5'
+    name: FPD_TEMP
+    type: wo
+  - bits: '4'
+    name: LPD_TEMP
+    type: wo
+  - bits: '3'
+    name: RPU1
+    type: wo
+  - bits: '2'
+    name: RPU0
+    type: wo
+  - bits: '1'
+    name: OCM_ECC
+    type: wo
+  - bits: '0'
+    name: DDR_ECC
+    type: wo
+  name: ERROR_INT_EN_1
+  offset: '0x00000538'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: System Errors to PMU; Interrupt Disable, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_SWDT
+    shortdesc: CSU_SWDT timeout.
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CLK_MON
+    shortdesc: Clock Monitor (ClkMon).
+    type: wo
+  - bits: '25:24'
+    name: XMPU
+    type: wo
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: wo
+  - bits: '15:14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: FPD_SWDT
+    type: wo
+  - bits: '12'
+    name: LPD_SWDT
+    type: wo
+  - bits: '11:10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: RPU_CCF
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: wo
+  - bits: '7:6'
+    name: RPU_LS
+    type: wo
+  - bits: '5'
+    name: FPD_TEMP
+    type: wo
+  - bits: '4'
+    name: LPD_TEMP
+    type: wo
+  - bits: '3'
+    name: RPU1
+    type: wo
+  - bits: '2'
+    name: RPU0
+    type: wo
+  - bits: '1'
+    name: OCM_ECC
+    type: wo
+  - bits: '0'
+    name: DDR_ECC
+    type: wo
+  name: ERROR_INT_DIS_1
+  offset: '0x0000053C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: System Errors; Interrupt Clear and Status, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: ro
+  - bits: '26'
+    longdesc: CSU_BR_ERROR [BR_ERROR] bit is set and the [ERR_TYPE] bit field contains
+      the error code.
+    name: CSU_ROM
+    shortdesc: CSU BootROM Sequence Error.
+    type: wtc
+  - bits: '25'
+    name: PMU_PB
+    type: wtc
+  - bits: '24'
+    name: PMU_SERVICE
+    type: wtc
+  - bits: '23:22'
+    name: RESERVED
+    type: ro
+  - bits: '21:18'
+    longdesc: Bits [21:18] can be activated by user firmware.
+    name: PMU_FW
+    shortdesc: Four (4) Firmware defined error bits.
+    type: wtc
+  - bits: '17'
+    longdesc: Includes PMU ROM validation error, PMU Triple Module Redundancy (TMR)
+      error, PMU RAM uncorrectable ECC error, and PMU Local Register address error.
+    name: PMU_UC
+    shortdesc: PMU BootROM Error.
+    type: wtc
+  - bits: '16'
+    longdesc: CSU boot fails, ROM is not executed.
+    name: CSU
+    shortdesc: CSU hardware generated error including CSU ROM validation error.
+    type: wtc
+  - bits: '15:13'
+    name: RESERVED
+    type: ro
+  - bits: '12:8'
+    longdesc: Bit [8] is for IOPLL. Bit [9] is for RPLL. Bit [10] is for APLL. Bit
+      [11] is for DPLL. Bit [12] is for VPLL.
+    name: PLL_LOCK
+    shortdesc: PLL Lock Errors.
+    type: wtc
+  - bits: '7:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:2'
+    longdesc: Bit [2] is PL System Error Signal. Bit [3] is PL System Error Signal.
+      Bit [4] is PL System Error Signal. Bit [5] is PL System Error Signal.
+    name: PL
+    shortdesc: PL to PS Signals.
+    type: wtc
+  - bits: '1:0'
+    longdesc: Bit [0] is for ATB's in the LPD. Bit [1] is for ATB's in the FPD. The
+      ATB timeout signals within a power domain are OR'ed together
+    name: TO
+    shortdesc: AXI Timeout Buffer (ATB).
+    type: wtc
+  name: ERROR_STATUS_2
+  offset: '0x00000540'
+  type: mixed
+  width: 32
+- default: '0x073F1F3F'
+  description: System Errors to PMU; Interrupt Mask, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: ro
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_ROM
+    shortdesc: CSU BootROM Sequence failure.
+    type: ro
+  - bits: '25'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: PMU_PB
+    shortdesc: PMU Pre-BootROM Sequence failure.
+    type: ro
+  - bits: '24'
+    name: PMU_SERVICE
+    type: ro
+  - bits: '23:22'
+    name: RESERVED
+    type: ro
+  - bits: '21:18'
+    name: PMU_FW
+    type: ro
+  - bits: '17'
+    name: PMU_UC
+    type: ro
+  - bits: '16'
+    name: CSU
+    type: ro
+  - bits: '15:13'
+    name: RESERVED
+    type: ro
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: ro
+  - bits: '7:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:2'
+    name: PL
+    type: ro
+  - bits: '1:0'
+    name: TO
+    type: ro
+  name: ERROR_INT_MASK_2
+  offset: '0x00000544'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: System Errors to PMU; Interrupt Enable, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_ROM
+    shortdesc: CSU BootROM Sequence failure.
+    type: wo
+  - bits: '25'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: PMU_PB
+    shortdesc: PMU Pre-BootROM Sequence failure.
+    type: wo
+  - bits: '24'
+    name: PMU_SERVICE
+    type: wo
+  - bits: '23:22'
+    name: RESERVED
+    type: wo
+  - bits: '21:18'
+    name: PMU_FW
+    type: wo
+  - bits: '17'
+    name: PMU_UC
+    type: wo
+  - bits: '16'
+    name: CSU
+    type: wo
+  - bits: '15:13'
+    name: RESERVED
+    type: wo
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: wo
+  - bits: '7:6'
+    name: RESERVED
+    type: wo
+  - bits: '5:2'
+    name: PL
+    type: wo
+  - bits: '1:0'
+    name: TO
+    type: wo
+  name: ERROR_INT_EN_2
+  offset: '0x00000548'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: System Errors to PMU; Interrupt Disable, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_ROM
+    shortdesc: CSU BootROM Sequence failure.
+    type: wo
+  - bits: '25'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: PMU_PB
+    shortdesc: PMU Pre-BootROM Sequence failure.
+    type: wo
+  - bits: '24'
+    name: PMU_SERVICE
+    type: wo
+  - bits: '23:22'
+    name: RESERVED
+    type: wo
+  - bits: '21:18'
+    name: PMU_FW
+    type: wo
+  - bits: '17'
+    name: PMU_UC
+    type: wo
+  - bits: '16'
+    name: CSU
+    type: wo
+  - bits: '15:13'
+    name: RESERVED
+    type: wo
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: wo
+  - bits: '7:6'
+    name: RESERVED
+    type: wo
+  - bits: '5:2'
+    name: PL
+    type: wo
+  - bits: '1:0'
+    name: TO
+    type: wo
+  name: ERROR_INT_DIS_2
+  offset: '0x0000054C'
+  type: wo
+  width: 32
+- default: '0xFFFF32FF'
+  description: System Errors to POR; Interrupt Mask, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_SWDT
+    shortdesc: CSU_SWDT timeout.
+    type: ro
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CLK_MON
+    shortdesc: Clock Monitor (ClkMon).
+    type: ro
+  - bits: '25:24'
+    name: XMPU
+    type: ro
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: ro
+  - bits: '15:14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: FPD_SWDT
+    type: ro
+  - bits: '12'
+    name: LPD_SWDT
+    type: ro
+  - bits: '11:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: RPU_CCF
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7:6'
+    name: RPU_LS
+    type: ro
+  - bits: '5'
+    name: FPD_TEMP
+    type: ro
+  - bits: '4'
+    name: LPD_TEMP
+    type: ro
+  - bits: '3'
+    name: RPU1
+    type: ro
+  - bits: '2'
+    name: RPU0
+    type: ro
+  - bits: '1'
+    name: OCM_ECC
+    type: ro
+  - bits: '0'
+    name: DDR_ECC
+    type: ro
+  name: ERROR_POR_MASK_1
+  offset: '0x00000550'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: System Errors to POR; Interrupt Enable, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_SWDT
+    shortdesc: CSU_SWDT timeout.
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CLK_MON
+    shortdesc: Clock Monitor (ClkMon).
+    type: wo
+  - bits: '25:24'
+    name: XMPU
+    type: wo
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: wo
+  - bits: '15:14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: FPD_SWDT
+    type: wo
+  - bits: '12'
+    name: LPD_SWDT
+    type: wo
+  - bits: '11:10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: RPU_CCF
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: wo
+  - bits: '7:6'
+    name: RPU_LS
+    type: wo
+  - bits: '5'
+    name: FPD_TEMP
+    type: wo
+  - bits: '4'
+    name: LPD_TEMP
+    type: wo
+  - bits: '3'
+    name: RPU1
+    type: wo
+  - bits: '2'
+    name: RPU0
+    type: wo
+  - bits: '1'
+    name: OCM_ECC
+    type: wo
+  - bits: '0'
+    name: DDR_ECC
+    type: wo
+  name: ERROR_POR_EN_1
+  offset: '0x00000554'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: System Errors to POR; Interrupt Disable, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_SWDT
+    shortdesc: CSU_SWDT timeout.
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CLK_MON
+    shortdesc: Clock Monitor (ClkMon).
+    type: wo
+  - bits: '25:24'
+    name: XMPU
+    type: wo
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: wo
+  - bits: '15:14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: FPD_SWDT
+    type: wo
+  - bits: '12'
+    name: LPD_SWDT
+    type: wo
+  - bits: '11:10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: RPU_CCF
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: wo
+  - bits: '7:6'
+    name: RPU_LS
+    type: wo
+  - bits: '5'
+    name: FPD_TEMP
+    type: wo
+  - bits: '4'
+    name: LPD_TEMP
+    type: wo
+  - bits: '3'
+    name: RPU1
+    type: wo
+  - bits: '2'
+    name: RPU0
+    type: wo
+  - bits: '1'
+    name: OCM_ECC
+    type: wo
+  - bits: '0'
+    name: DDR_ECC
+    type: wo
+  name: ERROR_POR_DIS_1
+  offset: '0x00000558'
+  type: wo
+  width: 32
+- default: '0x073F1F3F'
+  description: System Error to POR; Interrupt Mask, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: ro
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_ROM
+    shortdesc: CSU BootROM Sequence failure.
+    type: ro
+  - bits: '25'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: PMU_PB
+    shortdesc: PMU Pre-BootROM Sequence failure.
+    type: ro
+  - bits: '24'
+    name: PMU_SERVICE
+    type: ro
+  - bits: '23:22'
+    name: RESERVED
+    type: ro
+  - bits: '21:18'
+    name: PMU_FW
+    type: ro
+  - bits: '17'
+    name: PMU_UC
+    type: ro
+  - bits: '16'
+    name: CSU
+    type: ro
+  - bits: '15:13'
+    name: RESERVED
+    type: ro
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: ro
+  - bits: '7:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:2'
+    name: PL
+    type: ro
+  - bits: '1:0'
+    name: TO
+    type: ro
+  name: ERROR_POR_MASK_2
+  offset: '0x0000055C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: System Errors to POR; Interrupt Enable, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_ROM
+    shortdesc: CSU BootROM Sequence failure.
+    type: wo
+  - bits: '25'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: PMU_PB
+    shortdesc: PMU Pre-BootROM Sequence failure.
+    type: wo
+  - bits: '24'
+    name: PMU_SERVICE
+    type: wo
+  - bits: '23:22'
+    name: RESERVED
+    type: wo
+  - bits: '21:18'
+    name: PMU_FW
+    type: wo
+  - bits: '17'
+    name: PMU_UC
+    type: wo
+  - bits: '16'
+    name: CSU
+    type: wo
+  - bits: '15:13'
+    name: RESERVED
+    type: wo
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: wo
+  - bits: '7:6'
+    name: RESERVED
+    type: wo
+  - bits: '5:2'
+    name: PL
+    type: wo
+  - bits: '1:0'
+    name: TO
+    type: wo
+  name: ERROR_POR_EN_2
+  offset: '0x00000560'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: System Errors to POR; Interrupt Disable, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_ROM
+    shortdesc: CSU BootROM Sequence failure.
+    type: wo
+  - bits: '25'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: PMU_PB
+    shortdesc: PMU Pre-BootROM Sequence failure.
+    type: wo
+  - bits: '24'
+    name: PMU_SERVICE
+    type: wo
+  - bits: '23:22'
+    name: RESERVED
+    type: wo
+  - bits: '21:18'
+    name: PMU_FW
+    type: wo
+  - bits: '17'
+    name: PMU_UC
+    type: wo
+  - bits: '16'
+    name: CSU
+    type: wo
+  - bits: '15:13'
+    name: RESERVED
+    type: wo
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: wo
+  - bits: '7:6'
+    name: RESERVED
+    type: wo
+  - bits: '5:2'
+    name: PL
+    type: wo
+  - bits: '1:0'
+    name: TO
+    type: wo
+  name: ERROR_POR_DIS_2
+  offset: '0x00000564'
+  type: wo
+  width: 32
+- default: '0xFFFF32FF'
+  description: System Errors to Reset; Interrupt Mask, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_SWDT
+    shortdesc: CSU_SWDT timeout.
+    type: ro
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CLK_MON
+    shortdesc: Clock Monitor (ClkMon).
+    type: ro
+  - bits: '25:24'
+    name: XMPU
+    type: ro
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: ro
+  - bits: '15:14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: FPD_SWDT
+    type: ro
+  - bits: '12'
+    name: LPD_SWDT
+    type: ro
+  - bits: '11:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: RPU_CCF
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7:6'
+    name: RPU_LS
+    type: ro
+  - bits: '5'
+    name: FPD_TEMP
+    type: ro
+  - bits: '4'
+    name: LPD_TEMP
+    type: ro
+  - bits: '3'
+    name: RPU1
+    type: ro
+  - bits: '2'
+    name: RPU0
+    type: ro
+  - bits: '1'
+    name: OCM_ECC
+    type: ro
+  - bits: '0'
+    name: DDR_ECC
+    type: ro
+  name: ERROR_SRST_MASK_1
+  offset: '0x00000568'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: System Errors to Reset; Interrupt Enable, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_SWDT
+    shortdesc: CSU_SWDT timeout.
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CLK_MON
+    shortdesc: Clock Monitor (ClkMon).
+    type: wo
+  - bits: '25:24'
+    name: XMPU
+    type: wo
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: wo
+  - bits: '15:14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: FPD_SWDT
+    type: wo
+  - bits: '12'
+    name: LPD_SWDT
+    type: wo
+  - bits: '11:10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: RPU_CCF
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: wo
+  - bits: '7:6'
+    name: RPU_LS
+    type: wo
+  - bits: '5'
+    name: FPD_TEMP
+    type: wo
+  - bits: '4'
+    name: LPD_TEMP
+    type: wo
+  - bits: '3'
+    name: RPU1
+    type: wo
+  - bits: '2'
+    name: RPU0
+    type: wo
+  - bits: '1'
+    name: OCM_ECC
+    type: wo
+  - bits: '0'
+    name: DDR_ECC
+    type: wo
+  name: ERROR_SRST_EN_1
+  offset: '0x0000056C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: System Errors to Reset; Interrupt Disable, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_SWDT
+    shortdesc: CSU_SWDT timeout.
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CLK_MON
+    shortdesc: Clock Monitor (ClkMon).
+    type: wo
+  - bits: '25:24'
+    name: XMPU
+    type: wo
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: wo
+  - bits: '15:14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: FPD_SWDT
+    type: wo
+  - bits: '12'
+    name: LPD_SWDT
+    type: wo
+  - bits: '11:10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: RPU_CCF
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: wo
+  - bits: '7:6'
+    name: RPU_LS
+    type: wo
+  - bits: '5'
+    name: FPD_TEMP
+    type: wo
+  - bits: '4'
+    name: LPD_TEMP
+    type: wo
+  - bits: '3'
+    name: RPU1
+    type: wo
+  - bits: '2'
+    name: RPU0
+    type: wo
+  - bits: '1'
+    name: OCM_ECC
+    type: wo
+  - bits: '0'
+    name: DDR_ECC
+    type: wo
+  name: ERROR_SRST_DIS_1
+  offset: '0x00000570'
+  type: wo
+  width: 32
+- default: '0x073F1F3F'
+  description: System Errors to Reset; Interrupt Mask, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: ro
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_ROM
+    shortdesc: CSU BootROM Sequence failure.
+    type: ro
+  - bits: '25'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: PMU_PB
+    shortdesc: PMU Pre-BootROM Sequence failure.
+    type: ro
+  - bits: '24'
+    name: PMU_SERVICE
+    type: ro
+  - bits: '23:22'
+    name: RESERVED
+    type: ro
+  - bits: '21:18'
+    name: PMU_FW
+    type: ro
+  - bits: '17'
+    name: PMU_UC
+    type: ro
+  - bits: '16'
+    name: CSU
+    type: ro
+  - bits: '15:13'
+    name: RESERVED
+    type: ro
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: ro
+  - bits: '7:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:2'
+    name: PL
+    type: ro
+  - bits: '1:0'
+    name: TO
+    type: ro
+  name: ERROR_SRST_MASK_2
+  offset: '0x00000574'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: System Errors to Reset; Interrupt Enable, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_ROM
+    shortdesc: CSU BootROM Sequence failure.
+    type: wo
+  - bits: '25'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: PMU_PB
+    shortdesc: PMU Pre-BootROM Sequence failure.
+    type: wo
+  - bits: '24'
+    name: PMU_SERVICE
+    type: wo
+  - bits: '23:22'
+    name: RESERVED
+    type: wo
+  - bits: '21:18'
+    name: PMU_FW
+    type: wo
+  - bits: '17'
+    name: PMU_UC
+    type: wo
+  - bits: '16'
+    name: CSU
+    type: wo
+  - bits: '15:13'
+    name: RESERVED
+    type: wo
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: wo
+  - bits: '7:6'
+    name: RESERVED
+    type: wo
+  - bits: '5:2'
+    name: PL
+    type: wo
+  - bits: '1:0'
+    name: TO
+    type: wo
+  name: ERROR_SRST_EN_2
+  offset: '0x00000578'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: System Errors to Reset; Interrupt Disable, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: wo
+  - bits: '26'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: CSU_ROM
+    shortdesc: CSU BootROM Sequence failure.
+    type: wo
+  - bits: '25'
+    longdesc: Bit is reset only by the PS_POR_B reset signal pin.
+    name: PMU_PB
+    shortdesc: PMU Pre-BootROM Sequence failure.
+    type: wo
+  - bits: '24'
+    name: PMU_SERVICE
+    type: wo
+  - bits: '23:22'
+    name: RESERVED
+    type: wo
+  - bits: '21:18'
+    name: PMU_FW
+    type: wo
+  - bits: '17'
+    name: PMU_UC
+    type: wo
+  - bits: '16'
+    name: CSU
+    type: wo
+  - bits: '15:13'
+    name: RESERVED
+    type: wo
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: wo
+  - bits: '7:6'
+    name: RESERVED
+    type: wo
+  - bits: '5:2'
+    name: PL
+    type: wo
+  - bits: '1:0'
+    name: TO
+    type: wo
+  name: ERROR_SRST_DIS_2
+  offset: '0x0000057C'
+  type: wo
+  width: 32
+- default: '0x000000C3'
+  description: System Errors to PL; Interrupt Mask, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    name: CSU_SWDT
+    type: ro
+  - bits: '26'
+    name: CLK_MON
+    type: ro
+  - bits: '25:24'
+    name: XMPU
+    type: ro
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: ro
+  - bits: '15:14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: FPD_SWDT
+    type: ro
+  - bits: '12'
+    name: LPD_SWDT
+    type: ro
+  - bits: '11:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: RPU_CCF
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7:6'
+    name: RPU_LS
+    type: ro
+  - bits: '5'
+    name: FPD_TEMP
+    type: ro
+  - bits: '4'
+    name: LPD_TEMP
+    type: ro
+  - bits: '3'
+    name: RPU1
+    type: ro
+  - bits: '2'
+    name: RPU0
+    type: ro
+  - bits: '1'
+    name: OCM_ECC
+    type: ro
+  - bits: '0'
+    name: DDR_ECC
+    type: ro
+  name: ERROR_SIG_MASK_1
+  offset: '0x00000580'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: System Errors to PL; Interrupt Enable, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    name: CSU_SWDT
+    type: wo
+  - bits: '26'
+    name: CLK_MON
+    type: wo
+  - bits: '25:24'
+    name: XMPU
+    type: wo
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: wo
+  - bits: '15:14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: FPD_SWDT
+    type: wo
+  - bits: '12'
+    name: LPD_SWDT
+    type: wo
+  - bits: '11:10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: RPU_CCF
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: wo
+  - bits: '7:6'
+    name: RPU_LS
+    type: wo
+  - bits: '5'
+    name: FPD_TEMP
+    type: wo
+  - bits: '4'
+    name: LPD_TEMP
+    type: wo
+  - bits: '3'
+    name: RPU1
+    type: wo
+  - bits: '2'
+    name: RPU0
+    type: wo
+  - bits: '1'
+    name: OCM_ECC
+    type: wo
+  - bits: '0'
+    name: DDR_ECC
+    type: wo
+  name: ERROR_SIG_EN_1
+  offset: '0x00000584'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: System Errors to PL; Interrupt Disable, Reg 1.
+  field:
+  - bits: '31'
+    name: AUX3
+    shortdesc: AUX3 user bit.
+    type: wo
+  - bits: '30'
+    name: AUX2
+    shortdesc: AUX2 user bit.
+    type: wo
+  - bits: '29'
+    name: AUX1
+    shortdesc: AUX1 user bit.
+    type: wo
+  - bits: '28'
+    name: AUX0
+    shortdesc: AUX0 user bit.
+    type: wo
+  - bits: '27'
+    name: CSU_SWDT
+    type: wo
+  - bits: '26'
+    name: CLK_MON
+    type: wo
+  - bits: '25:24'
+    name: XMPU
+    type: wo
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: wo
+  - bits: '15:14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: FPD_SWDT
+    type: wo
+  - bits: '12'
+    name: LPD_SWDT
+    type: wo
+  - bits: '11:10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: RPU_CCF
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: wo
+  - bits: '7:6'
+    name: RPU_LS
+    type: wo
+  - bits: '5'
+    name: FPD_TEMP
+    type: wo
+  - bits: '4'
+    name: LPD_TEMP
+    type: wo
+  - bits: '3'
+    name: RPU1
+    type: wo
+  - bits: '2'
+    name: RPU0
+    type: wo
+  - bits: '1'
+    name: OCM_ECC
+    type: wo
+  - bits: '0'
+    name: DDR_ECC
+    type: wo
+  name: ERROR_SIG_DIS_1
+  offset: '0x00000588'
+  type: wo
+  width: 32
+- default: '0x00001F00'
+  description: System Errors to PL; Interrupt Mask, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: ro
+  - bits: '26'
+    name: CSU_ROM
+    type: ro
+  - bits: '25'
+    name: PMU_PB
+    type: ro
+  - bits: '24'
+    name: PMU_SERVICE
+    type: ro
+  - bits: '23:22'
+    name: RESERVED
+    type: ro
+  - bits: '21:18'
+    name: PMU_FW
+    type: ro
+  - bits: '17'
+    name: PMU_UC
+    type: ro
+  - bits: '16'
+    name: CSU
+    type: ro
+  - bits: '15:13'
+    name: RESERVED
+    type: ro
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: ro
+  - bits: '7:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:2'
+    name: PL
+    type: ro
+  - bits: '1:0'
+    name: TO
+    type: ro
+  name: ERROR_SIG_MASK_2
+  offset: '0x0000058C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: System Errors to PL; Interrupt Enable, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: wo
+  - bits: '26'
+    name: CSU_ROM
+    type: wo
+  - bits: '25'
+    name: PMU_PB
+    type: wo
+  - bits: '24'
+    name: PMU_SERVICE
+    type: wo
+  - bits: '23:22'
+    name: RESERVED
+    type: wo
+  - bits: '21:18'
+    name: PMU_FW
+    type: wo
+  - bits: '17'
+    name: PMU_UC
+    type: wo
+  - bits: '16'
+    name: CSU
+    type: wo
+  - bits: '15:13'
+    name: RESERVED
+    type: wo
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: wo
+  - bits: '7:6'
+    name: RESERVED
+    type: wo
+  - bits: '5:2'
+    name: PL
+    type: wo
+  - bits: '1:0'
+    name: TO
+    type: wo
+  name: ERROR_SIG_EN_2
+  offset: '0x00000590'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: System Errors to PL; Interrupt Disable, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: wo
+  - bits: '26'
+    name: CSU_ROM
+    type: wo
+  - bits: '25'
+    name: PMU_PB
+    type: wo
+  - bits: '24'
+    name: PMU_SERVICE
+    type: wo
+  - bits: '23:22'
+    name: RESERVED
+    type: wo
+  - bits: '21:18'
+    name: PMU_FW
+    type: wo
+  - bits: '17'
+    name: PMU_UC
+    type: wo
+  - bits: '16'
+    name: CSU
+    type: wo
+  - bits: '15:13'
+    name: RESERVED
+    type: wo
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: wo
+  - bits: '7:6'
+    name: RESERVED
+    type: wo
+  - bits: '5:2'
+    name: PL
+    type: wo
+  - bits: '1:0'
+    name: TO
+    type: wo
+  name: ERROR_SIG_DIS_2
+  offset: '0x00000594'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: System Error Enables, Reg 1.
+  field:
+  - bits: '27'
+    name: CSU_SWDT
+    type: rw
+  - bits: '26'
+    name: CLK_MON
+    type: rw
+  - bits: '25:24'
+    name: XMPU
+    type: rw
+  - bits: '23:16'
+    name: PWR_SUPPLY
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13'
+    name: FPD_SWDT
+    type: rw
+  - bits: '12'
+    name: LPD_SWDT
+    type: rw
+  - bits: '11:10'
+    name: RESERVED
+    type: rw
+  - bits: '9'
+    name: RPU_CCF
+    type: rw
+  - bits: '8'
+    name: RESERVED
+    type: rw
+  - bits: '7:6'
+    name: RPU_LS
+    type: rw
+  - bits: '5'
+    name: FPD_TEMP
+    type: rw
+  - bits: '4'
+    name: LPD_TEMP
+    type: rw
+  - bits: '3'
+    name: RPU1
+    type: rw
+  - bits: '2'
+    name: RPU0
+    type: rw
+  - bits: '1'
+    name: OCM_ECC
+    type: rw
+  - bits: '0'
+    name: DDR_ECC
+    type: rw
+  name: ERROR_EN_1
+  offset: '0x000005A0'
+  type: rw
+  width: 32
+- default: '0x073E0000'
+  description: System Error Enables, Reg 2.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: rw
+  - bits: '26'
+    name: CSU_ROM
+    type: rw
+  - bits: '25'
+    name: PMU_PB
+    type: rw
+  - bits: '24'
+    name: PMU_SERVICE
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:18'
+    name: PMU_FW
+    type: rw
+  - bits: '17'
+    name: PMU_UC
+    type: rw
+  - bits: '16'
+    name: CSU
+    type: rw
+  - bits: '15:13'
+    name: RESERVED
+    type: rw
+  - bits: '12:8'
+    name: PLL_LOCK
+    type: rw
+  - bits: '7:6'
+    name: RESERVED
+    type: rw
+  - bits: '5:2'
+    name: PL
+    type: rw
+  - bits: '1:0'
+    name: TO
+    type: rw
+  name: ERROR_EN_2
+  offset: '0x000005A4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: PS-PL AXI Bus Logic Isolation Requests.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: wo
+  - bits: '3'
+    name: FPD_AFI_FS
+    type: wo
+  - bits: '2'
+    name: FPD_AFI_FM
+    type: wo
+  - bits: '1'
+    name: LPD_AFI_FS
+    type: wo
+  - bits: '0'
+    name: LPD_AFI_FM
+    type: wo
+  name: AIB_CNTRL
+  offset: '0x00000600'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: PS-PL AXI Bus Logic Isolation Status.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: FPD_AFI_FS
+    type: ro
+  - bits: '2'
+    name: FPD_AFI_FM
+    type: ro
+  - bits: '1'
+    name: LPD_AFI_FS
+    type: ro
+  - bits: '0'
+    name: LPD_AFI_FM
+    type: ro
+  name: AIB_STATUS
+  offset: '0x00000604'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: GLOBAL_RESET
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    longdesc: '0: reset released to PS. 1: PS held in reset. Refer to PMU_GLOBAL.PS_CNTRL
+      [Prog_Gate] for more information on blocking the reset from propagating to the
+      entire device.'
+    name: PS_ONLY_RST
+    shortdesc: The PS can be reset by itself by clearing [Prog_Gate] and using [PS_ONLY_RST]
+      to initiate the reset.
+    type: rw
+  - bits: '9'
+    longdesc: '0: reset released to FPD. 1: FPD held in reset. Note: this reset should
+      be used to reset the DDR memory controller.'
+    name: FPD_RST
+    shortdesc: FPD Reset to APUs, DDR memory Controller, AXI, etc.
+    type: rw
+  - bits: '8'
+    longdesc: 'Split Mode: 0: reset released to RPU0. 1: RPU0 held in reset. RPU Lockstep
+      Mode: 0: reset released to RPU{0, 1}. 1: RPU{0, 1} held in reset.'
+    name: RPU_LS_RST
+    shortdesc: RPU Lockstep Reset.
+    type: rw
+  - bits: '7:0'
+    name: RESERVED
+    type: ro
+  name: GLOBAL_RESET
+  offset: '0x00000608'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PMU ROM validation engine status.
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    longdesc: '0: failed. 1: passed. This field is only valid after [Done] indicates
+      a completed cycle.'
+    name: PASS
+    shortdesc: Validation Cycle Pass indicator.
+    type: ro
+  - bits: '0'
+    longdesc: 'The result is set in the [Pass] bit. 0: not done. 1: done. This bit
+      always gets set after initiating a validation cycle, regardless of result.'
+    name: DONE
+    shortdesc: Validation Cycle Completed indicator.
+    type: ro
+  name: ROM_VALIDATION_STATUS
+  offset: '0x00000610'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 0.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_0
+  offset: '0x00000614'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 1.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_1
+  offset: '0x00000618'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 2.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_2
+  offset: '0x0000061C'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 3.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_3
+  offset: '0x00000620'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 4.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_4
+  offset: '0x00000624'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 5.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_5
+  offset: '0x00000628'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 6.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_6
+  offset: '0x0000062C'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 7.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_7
+  offset: '0x00000630'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 8.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_8
+  offset: '0x00000634'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 9.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_9
+  offset: '0x00000638'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 10.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_10
+  offset: '0x0000063C'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: PMU ROM Validation SHA value, Word 11.
+  field:
+  - bits: '31:0'
+    name: WORD
+    type: ro
+  name: ROM_VALIDATION_DIGEST_11
+  offset: '0x00000640'
+  type: ro
+  width: 32
+- default: '0x00000007'
+  description: Safety gates disable hardware functions.
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: PMU_LOGCLR_ENABLE
+    type: rw
+  - bits: '1'
+    longdesc: Set [LBIST_Enable] = 0 to help prevent an SEU in the signaling hardware
+      from inadvertently causing LBIST operations to occur during normal operating
+      mode.
+    name: LBIST_ENABLE
+    shortdesc: After a POR reset, the PMU hardware generates a signal to the LBIST
+      controllers.
+    type: rw
+  - bits: '0'
+    longdesc: Set [Scan_Enable] = 0 to help prevent inadvertent assertion of the scan
+      clear signal by software or an SEU in the hardware.
+    name: SCAN_ENABLE
+    shortdesc: Scan Clear Function Enable.
+    type: rw
+  name: SAFETY_GATE
+  offset: '0x00000650'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: On-demand MBIST Controller Reset, Trigger 0.
+  field:
+  - bits: '31'
+    name: PCIE
+    type: rw
+  - bits: '30'
+    name: SIOU
+    type: rw
+  - bits: '29'
+    name: M400_1
+    type: rw
+  - bits: '28'
+    name: M400_0
+    type: rw
+  - bits: '27'
+    name: GPU
+    type: rw
+  - bits: '26'
+    name: DDR
+    type: rw
+  - bits: '25'
+    name: ACPU_3
+    type: rw
+  - bits: '24'
+    name: ACPU_2
+    type: rw
+  - bits: '23'
+    name: ACPU_1
+    type: rw
+  - bits: '22'
+    name: ACPU_0
+    type: rw
+  - bits: '21'
+    name: APU
+    type: rw
+  - bits: '20'
+    name: AFI_5
+    type: rw
+  - bits: '19'
+    name: AFI_4
+    type: rw
+  - bits: '18'
+    name: AFI_3
+    type: rw
+  - bits: '17'
+    name: AFI_2
+    type: rw
+  - bits: '16'
+    name: AFI_1
+    type: rw
+  - bits: '15'
+    name: AFI_0
+    type: rw
+  - bits: '14'
+    name: FPD
+    type: rw
+  - bits: '13'
+    name: PSS_CORE_TOP
+    type: rw
+  - bits: '12'
+    name: OCM
+    type: rw
+  - bits: '11'
+    name: AFI_LPD
+    type: rw
+  - bits: '10'
+    name: USB1
+    type: rw
+  - bits: '9'
+    name: USB0
+    type: rw
+  - bits: '8'
+    name: RPU_TIEOFF_WRAPPER
+    type: rw
+  - bits: '7'
+    name: RPU
+    type: rw
+  - bits: '6'
+    name: IOU
+    type: rw
+  - bits: '5'
+    name: GEGM3
+    type: rw
+  - bits: '4'
+    name: GEM2
+    type: rw
+  - bits: '3'
+    name: GEM1
+    type: rw
+  - bits: '2'
+    name: GEM0
+    type: rw
+  - bits: '1'
+    name: CAN1
+    type: rw
+  - bits: '0'
+    name: CAN0
+    type: rw
+  name: MBIST_RST
+  offset: '0x00000700'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: On-demand MBIST, Trigger 1.
+  field:
+  - bits: '31'
+    name: PCIE
+    type: rw
+  - bits: '30'
+    name: SIOU
+    type: rw
+  - bits: '29'
+    name: M400_1
+    type: rw
+  - bits: '28'
+    name: M400_0
+    type: rw
+  - bits: '27'
+    name: GPU
+    type: rw
+  - bits: '26'
+    name: DDR
+    type: rw
+  - bits: '25'
+    name: ACPU_3
+    type: rw
+  - bits: '24'
+    name: ACPU_2
+    type: rw
+  - bits: '23'
+    name: ACPU_1
+    type: rw
+  - bits: '22'
+    name: ACPU_0
+    type: rw
+  - bits: '21'
+    name: APU
+    type: rw
+  - bits: '20'
+    name: AFI_5
+    type: rw
+  - bits: '19'
+    name: AFI_4
+    type: rw
+  - bits: '18'
+    name: AFI_3
+    type: rw
+  - bits: '17'
+    name: AFI_2
+    type: rw
+  - bits: '16'
+    name: AFI_1
+    type: rw
+  - bits: '15'
+    name: AFI_0
+    type: rw
+  - bits: '14'
+    name: FPD
+    type: rw
+  - bits: '13'
+    name: PSS_CORE_TOP
+    type: rw
+  - bits: '12'
+    name: OCM
+    type: rw
+  - bits: '11'
+    name: AFI_LPD
+    type: rw
+  - bits: '10'
+    name: USB1
+    type: rw
+  - bits: '9'
+    name: USB0
+    type: rw
+  - bits: '8'
+    name: RPU_TIEOFF_WRAPPER
+    type: rw
+  - bits: '7'
+    name: RPU
+    type: rw
+  - bits: '6'
+    name: IOU
+    type: rw
+  - bits: '5'
+    name: GEGM3
+    type: rw
+  - bits: '4'
+    name: GEM2
+    type: rw
+  - bits: '3'
+    name: GEM1
+    type: rw
+  - bits: '2'
+    name: GEM0
+    type: rw
+  - bits: '1'
+    name: CAN1
+    type: rw
+  - bits: '0'
+    name: CAN0
+    type: rw
+  name: MBIST_PG_EN
+  offset: '0x00000704'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: On-demand MBIST, Trigger 2.
+  field:
+  - bits: '31'
+    name: PCIE
+    type: rw
+  - bits: '30'
+    name: SIOU
+    type: rw
+  - bits: '29'
+    name: M400_1
+    type: rw
+  - bits: '28'
+    name: M400_0
+    type: rw
+  - bits: '27'
+    name: GPU
+    type: rw
+  - bits: '26'
+    name: DDR
+    type: rw
+  - bits: '25'
+    name: ACPU_3
+    type: rw
+  - bits: '24'
+    name: ACPU_2
+    type: rw
+  - bits: '23'
+    name: ACPU_1
+    type: rw
+  - bits: '22'
+    name: ACPU_0
+    type: rw
+  - bits: '21'
+    name: APU
+    type: rw
+  - bits: '20'
+    name: AFI_5
+    type: rw
+  - bits: '19'
+    name: AFI_4
+    type: rw
+  - bits: '18'
+    name: AFI_3
+    type: rw
+  - bits: '17'
+    name: AFI_2
+    type: rw
+  - bits: '16'
+    name: AFI_1
+    type: rw
+  - bits: '15'
+    name: AFI_0
+    type: rw
+  - bits: '14'
+    name: FPD
+    type: rw
+  - bits: '13'
+    name: PSS_CORE_TOP
+    type: rw
+  - bits: '12'
+    name: OCM
+    type: rw
+  - bits: '11'
+    name: AFI_LPD
+    type: rw
+  - bits: '10'
+    name: USB1
+    type: rw
+  - bits: '9'
+    name: USB0
+    type: rw
+  - bits: '8'
+    name: RPU_TIEOFF_WRAPPER
+    type: rw
+  - bits: '7'
+    name: RPU
+    type: rw
+  - bits: '6'
+    name: IOU
+    type: rw
+  - bits: '5'
+    name: GEGM3
+    type: rw
+  - bits: '4'
+    name: GEM2
+    type: rw
+  - bits: '3'
+    name: GEM1
+    type: rw
+  - bits: '2'
+    name: GEM0
+    type: rw
+  - bits: '1'
+    name: CAN1
+    type: rw
+  - bits: '0'
+    name: CAN0
+    type: rw
+  name: MBIST_SETUP
+  offset: '0x00000708'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MBIST Done Indicator.
+  field:
+  - bits: '31'
+    name: PCIE
+    type: ro
+  - bits: '30'
+    name: SIOU
+    type: ro
+  - bits: '29'
+    name: M400_1
+    type: ro
+  - bits: '28'
+    name: M400_0
+    type: ro
+  - bits: '27'
+    name: GPU
+    type: ro
+  - bits: '26'
+    name: DDR
+    type: ro
+  - bits: '25'
+    name: ACPU_3
+    type: ro
+  - bits: '24'
+    name: ACPU_2
+    type: ro
+  - bits: '23'
+    name: ACPU_1
+    type: ro
+  - bits: '22'
+    name: ACPU_0
+    type: ro
+  - bits: '21'
+    name: APU
+    type: ro
+  - bits: '20'
+    name: AFI_5
+    type: ro
+  - bits: '19'
+    name: AFI_4
+    type: ro
+  - bits: '18'
+    name: AFI_3
+    type: ro
+  - bits: '17'
+    name: AFI_2
+    type: ro
+  - bits: '16'
+    name: AFI_1
+    type: ro
+  - bits: '15'
+    name: AFI_0
+    type: ro
+  - bits: '14'
+    name: FPD
+    type: ro
+  - bits: '13'
+    name: PSS_CORE_TOP
+    type: ro
+  - bits: '12'
+    name: OCM
+    type: ro
+  - bits: '11'
+    name: AFI_LPD
+    type: ro
+  - bits: '10'
+    name: USB1
+    type: ro
+  - bits: '9'
+    name: USB0
+    type: ro
+  - bits: '8'
+    name: RPU_TIEOFF_WRAPPER
+    type: ro
+  - bits: '7'
+    name: RPU
+    type: ro
+  - bits: '6'
+    name: IOU
+    type: ro
+  - bits: '5'
+    name: GEGM3
+    type: ro
+  - bits: '4'
+    name: GEM2
+    type: ro
+  - bits: '3'
+    name: GEM1
+    type: ro
+  - bits: '2'
+    name: GEM0
+    type: ro
+  - bits: '1'
+    name: CAN1
+    type: ro
+  - bits: '0'
+    name: CAN0
+    type: ro
+  name: MBIST_DONE
+  offset: '0x00000710'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: MBIST Result Status.
+  field:
+  - bits: '31'
+    name: PCIE
+    type: ro
+  - bits: '30'
+    name: SIOU
+    type: ro
+  - bits: '29'
+    name: M400_1
+    type: ro
+  - bits: '28'
+    name: M400_0
+    type: ro
+  - bits: '27'
+    name: GPU
+    type: ro
+  - bits: '26'
+    name: DDR
+    type: ro
+  - bits: '25'
+    name: ACPU_3
+    type: ro
+  - bits: '24'
+    name: ACPU_2
+    type: ro
+  - bits: '23'
+    name: ACPU_1
+    type: ro
+  - bits: '22'
+    name: ACPU_0
+    type: ro
+  - bits: '21'
+    name: APU
+    type: ro
+  - bits: '20'
+    name: AFI_5
+    type: ro
+  - bits: '19'
+    name: AFI_4
+    type: ro
+  - bits: '18'
+    name: AFI_3
+    type: ro
+  - bits: '17'
+    name: AFI_2
+    type: ro
+  - bits: '16'
+    name: AFI_1
+    type: ro
+  - bits: '15'
+    name: AFI_0
+    type: ro
+  - bits: '14'
+    name: FPD
+    type: ro
+  - bits: '13'
+    name: PSS_CORE_TOP
+    type: ro
+  - bits: '12'
+    name: OCM
+    type: ro
+  - bits: '11'
+    name: AFI_LPD
+    type: ro
+  - bits: '10'
+    name: USB1
+    type: ro
+  - bits: '9'
+    name: USB0
+    type: ro
+  - bits: '8'
+    name: RPU_TIEOFF_WRAPPER
+    type: ro
+  - bits: '7'
+    name: RPU
+    type: ro
+  - bits: '6'
+    name: IOU
+    type: ro
+  - bits: '5'
+    name: GEGM3
+    type: ro
+  - bits: '4'
+    name: GEM2
+    type: ro
+  - bits: '3'
+    name: GEM1
+    type: ro
+  - bits: '2'
+    name: GEM0
+    type: ro
+  - bits: '1'
+    name: CAN1
+    type: ro
+  - bits: '0'
+    name: CAN0
+    type: ro
+  name: MBIST_GOOD
+  offset: '0x00000714'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Test ability to access this register set. Can be used at any time by
+    any master with accessibility.
+  field:
+  - bits: '31:0'
+    name: REG
+    type: rw
+  name: SAFETY_CHK
+  offset: '0x00000800'
+  type: rw
+  width: 32

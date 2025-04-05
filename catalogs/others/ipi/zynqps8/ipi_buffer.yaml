@@ -1,0 +1,746 @@
+description: Inter-Processor buffers
+register:
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH0_MSG_CH0
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH0_RESPONSE_CH0
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH0_MSG_CH1
+  offset: '0x00000040'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH0_RESPONSE_CH1
+  offset: '0x00000060'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH0_MSG_CH2
+  offset: '0x00000080'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH0_RESPONSE_CH2
+  offset: '0x000000a0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH0_MSG_CH3
+  offset: '0x000000c0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH0_RESPONSE_CH3
+  offset: '0x000000e0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH0_MSG_CH4
+  offset: '0x00000100'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH0_RESPONSE_CH4
+  offset: '0x00000120'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH0_MSG_CH5
+  offset: '0x00000140'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH0_RESPONSE_CH5
+  offset: '0x00000160'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH0_MSG_CH6
+  offset: '0x00000180'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH0_RESPONSE_CH6
+  offset: '0x000001a0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH0_MSG_CH7
+  offset: '0x000001c0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH0_RESPONSE_CH7
+  offset: '0x000001e0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH1_MSG_CH0
+  offset: '0x00000200'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH1_RESPONSE_CH0
+  offset: '0x00000220'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH1_MSG_CH1
+  offset: '0x00000240'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH1_RESPONSE_CH1
+  offset: '0x00000260'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH1_MSG_CH2
+  offset: '0x00000280'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH1_RESPONSE_CH2
+  offset: '0x000002a0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH1_MSG_CH3
+  offset: '0x000002c0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH1_RESPONSE_CH3
+  offset: '0x000002e0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH1_MSG_CH4
+  offset: '0x00000300'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH1_RESPONSE_CH4
+  offset: '0x00000320'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH1_MSG_CH5
+  offset: '0x00000340'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH1_RESPONSE_CH5
+  offset: '0x00000360'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH1_MSG_CH6
+  offset: '0x00000380'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH1_RESPONSE_CH6
+  offset: '0x000003a0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH1_MSG_CH7
+  offset: '0x000003c0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH1_RESPONSE_CH7
+  offset: '0x000003e0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH2_MSG_CH0
+  offset: '0x00000400'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH2_RESPONSE_CH0
+  offset: '0x00000420'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH2_MSG_CH1
+  offset: '0x00000440'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH2_RESPONSE_CH1
+  offset: '0x00000460'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH2_MSG_CH2
+  offset: '0x00000480'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH2_RESPONSE_CH2
+  offset: '0x000004a0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH2_MSG_CH3
+  offset: '0x000004c0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH2_RESPONSE_CH3
+  offset: '0x000004e0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH2_MSG_CH4
+  offset: '0x00000500'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH2_RESPONSE_CH4
+  offset: '0x00000520'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH2_MSG_CH5
+  offset: '0x00000540'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH2_RESPONSE_CH5
+  offset: '0x00000560'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH2_MSG_CH6
+  offset: '0x00000580'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH2_RESPONSE_CH6
+  offset: '0x000005a0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH2_MSG_CH7
+  offset: '0x000005c0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH2_RESPONSE_CH7
+  offset: '0x000005e0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH3_MSG_CH0
+  offset: '0x00000600'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH3_RESPONSE_CH0
+  offset: '0x00000620'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH3_MSG_CH1
+  offset: '0x00000640'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH3_RESPONSE_CH1
+  offset: '0x00000660'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH3_MSG_CH2
+  offset: '0x00000680'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH3_RESPONSE_CH2
+  offset: '0x000006a0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH3_MSG_CH3
+  offset: '0x000006c0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH3_RESPONSE_CH3
+  offset: '0x000006e0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH3_MSG_CH4
+  offset: '0x00000700'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH3_RESPONSE_CH4
+  offset: '0x00000720'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH3_MSG_CH5
+  offset: '0x00000740'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH3_RESPONSE_CH5
+  offset: '0x00000760'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH3_MSG_CH6
+  offset: '0x00000780'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH3_RESPONSE_CH6
+  offset: '0x000007a0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH3_MSG_CH7
+  offset: '0x000007c0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH3_RESPONSE_CH7
+  offset: '0x000007e0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH4_RESPONSE_CH0
+  offset: '0x00000820'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH4_MSG_CH0
+  offset: '0x00000840'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH4_RESPONSE_CH1
+  offset: '0x00000860'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH4_MSG_CH2
+  offset: '0x00000880'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH4_RESPONSE_CH2
+  offset: '0x000008a0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH4_MSG_CH3
+  offset: '0x000008c0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH4_RESPONSE_CH3
+  offset: '0x000008e0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH4_MSG_CH4
+  offset: '0x00000900'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH4_RESPONSE_CH4
+  offset: '0x00000920'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH4_MSG_CH5
+  offset: '0x00000940'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH4_RESPONSE_CH5
+  offset: '0x00000960'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH4_MSG_CH6
+  offset: '0x00000980'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH4_RESPONSE_CH6
+  offset: '0x000009a0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH4_MSG_CH7
+  offset: '0x000009c0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH4_RESPONSE_CH7
+  offset: '0x000009e0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH5_RESPONSE_CH0
+  offset: '0x00000a20'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH5_MSG_CH1
+  offset: '0x00000a40'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH5_RESPONSE_CH1
+  offset: '0x00000a60'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH5_MSG_CH2
+  offset: '0x00000a80'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH5_RESPONSE_CH2
+  offset: '0x00000aa0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH5_MSG_CH3
+  offset: '0x00000ac0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH5_RESPONSE_CH3
+  offset: '0x00000ae0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH5_MSG_CH4
+  offset: '0x00000b00'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH5_RESPONSE_CH4
+  offset: '0x00000b20'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH5_MSG_CH5
+  offset: '0x00000b40'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH5_RESPONSE_CH5
+  offset: '0x00000b60'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH5_MSG_CH6
+  offset: '0x00000b80'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH5_RESPONSE_CH6
+  offset: '0x00000ba0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH5_MSG_CH7
+  offset: '0x00000bc0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH5_RESPONSE_CH7
+  offset: '0x00000be0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH6_RESPONSE_CH0
+  offset: '0x00000c20'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH6_MSG_CH1
+  offset: '0x00000c40'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH6_RESPONSE_CH1
+  offset: '0x00000c60'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH6_MSG_CH2
+  offset: '0x00000c80'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH6_RESPONSE_CH2
+  offset: '0x00000ca0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH6_MSG_CH3
+  offset: '0x00000cc0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH6_RESPONSE_CH3
+  offset: '0x00000ce0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH6_MSG_CH4
+  offset: '0x00000d00'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH6_RESPONSE_CH4
+  offset: '0x00000d20'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH6_MSG_CH5
+  offset: '0x00000d40'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH6_RESPONSE_CH5
+  offset: '0x00000d60'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH6_MSG_CH6
+  offset: '0x00000d80'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH6_RESPONSE_CH6
+  offset: '0x00000da0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH6_MSG_CH7
+  offset: '0x00000dc0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH6_RESPONSE_CH7
+  offset: '0x00000de0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH7_RESPONSE_CH0
+  offset: '0x00000e20'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH7_MSG_CH1
+  offset: '0x00000e40'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH7_RESPONSE_CH1
+  offset: '0x00000e60'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH7_MSG_CH2
+  offset: '0x00000e80'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH7_RESPONSE_CH2
+  offset: '0x00000ea0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH7_MSG_CH3
+  offset: '0x00000ec0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH7_RESPONSE_CH3
+  offset: '0x00000ee0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH7_MSG_CH4
+  offset: '0x00000f00'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH7_RESPONSE_CH4
+  offset: '0x00000f20'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH7_MSG_CH5
+  offset: '0x00000f40'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH7_RESPONSE_CH5
+  offset: '0x00000f60'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH7_MSG_CH6
+  offset: '0x00000f80'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH7_RESPONSE_CH6
+  offset: '0x00000fa0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte message buffer
+  name: CH7_MSG_CH7
+  offset: '0x00000fc0'
+  type: mixed
+  width: 32
+- default: '0x0'
+  description: offset of 32 Byte response buffer
+  name: CH7_RESPONSE_CH7
+  offset: '0x00000fe0'
+  type: mixed
+  width: 32

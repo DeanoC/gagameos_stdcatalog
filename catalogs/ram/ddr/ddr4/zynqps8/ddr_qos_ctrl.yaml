@@ -1,0 +1,684 @@
+bank:
+- address: '0xfd090000'
+  name: DDR_QOS_CTRL
+description: DDR QoS Control
+register:
+- default: '0x0000A845'
+  description: Set Port Type Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:14'
+    name: PORT5_TYPE
+    type: rw
+  - bits: '13:12'
+    name: PORT4_TYPE
+    type: rw
+  - bits: '11:10'
+    name: PORT3_TYPE
+    type: rw
+  - bits: '9:8'
+    name: PORT2B_TYPE
+    type: rw
+  - bits: '7:6'
+    name: PORT2R_TYPE
+    type: rw
+  - bits: '5:4'
+    name: PORT1B_TYPE
+    type: rw
+  - bits: '3:2'
+    name: PORT1R_TYPE
+    type: rw
+  - bits: '1:0'
+    name: PORT0_TYPE
+    type: rw
+  name: PORT_TYPE
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00400000'
+  description: Set Port Type Register
+  field:
+  - bits: '31:23'
+    name: RESERVED
+    type: raz
+  - bits: '22'
+    name: APB_ERR_RES
+    type: rw
+  - bits: '21'
+    name: PORT5_WR_CTRL
+    type: rw
+  - bits: '20'
+    name: PORT5_HPR_CTRL
+    type: rw
+  - bits: '19'
+    name: PORT5_LPR_CTRL
+    type: rw
+  - bits: '18'
+    name: PORT4_WR_CTRL
+    type: rw
+  - bits: '17'
+    name: PORT4_HPR_CTRL
+    type: rw
+  - bits: '16'
+    name: PORT4_LPR_CTRL
+    type: rw
+  - bits: '15'
+    name: PORT3_WR_CTRL
+    type: rw
+  - bits: '14'
+    name: PORT3_HPR_CTRL
+    type: rw
+  - bits: '13'
+    name: PORT3_LPR_CTRL
+    type: rw
+  - bits: '12'
+    name: PORT2_WR_CTRL
+    type: rw
+  - bits: '11'
+    name: PORT2B_HPR_CTRL
+    type: rw
+  - bits: '10'
+    name: PORT2B_LPR_CTRL
+    type: rw
+  - bits: '9'
+    name: PORT2R_HPR_CTRL
+    type: rw
+  - bits: '8'
+    name: PORT2R_LPR_CTRL
+    type: rw
+  - bits: '7'
+    name: PORT1_WR_CTRL
+    type: rw
+  - bits: '6'
+    name: PORT1B_HPR_CTRL
+    type: rw
+  - bits: '5'
+    name: PORT1B_LPR_CTRL
+    type: rw
+  - bits: '4'
+    name: PORT1R_HPR_CTRL
+    type: rw
+  - bits: '3'
+    name: PORT1R_LPR_CTRL
+    type: rw
+  - bits: '2'
+    name: PORT0_WR_CTRL
+    type: rw
+  - bits: '1'
+    name: PORT0_HPR_CTRL
+    type: rw
+  - bits: '0'
+    name: PORT0_LPR_CTRL
+    type: rw
+  name: QOS_CTRL
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Set Value for Read HPR (High Priority Read) CAM Threshold
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:0'
+    name: VALUE
+    type: rw
+  name: RD_HPR_THRSLD
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Set Value for Read LPR (Low Priority Read) CAM Threshold
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:0'
+    name: VALUE
+    type: rw
+  name: RD_LPR_THRSLD
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Set Value for Write CAM Threshold
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: raz
+  - bits: '6:0'
+    name: VALUE
+    type: rw
+  name: WR_THRSLD
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ZQCS Control Register 0
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: ENABLE
+    type: rw
+  name: ZQCS_CTRL0
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ZQCS Control Register 2
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3:0'
+    name: VSYNC_CNT
+    type: rw
+  name: ZQCS_CTRL1
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ZQCS Status Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: This signal goes high in the clock after the uMCTL2 accepts the ZQCS
+      request. It goes low when the ZQCS operation is initiated in the uMCTL2. It
+      is recommended not to perform ZQCS operations when this signal is high. 0 -
+      Indicates that the QoS Controller can initiate a ZQCS operation 1 - Indicates
+      that ZQCS operation has not been initiated yet in the uMCTL2
+    name: BUSY
+    shortdesc: QoS Controller may initiate a ZQCS (ZQ calibration short) operation
+      only if this signal is low.
+    type: ro
+  name: ZQCS_STATUS
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DDRC External Refresh Control Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: ENABLE
+    type: rw
+  name: DDRC_EXT_REFRESH
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    longdesc: OR'd of Write poison interrupt from all XPIs. Program DDRC.POISONCFG.wr_poison_intr_en
+      to enables/disables interrupts for write transaction poisoning. Use DDRC.POISONSTAT
+      status register to find which XPI cause transaction poisoning.
+    name: DDRC_WR_POISON
+    shortdesc: Write poison interrupt status from DDRC.
+    type: wtc
+  - bits: '9'
+    longdesc: OR'd of Read poison from all XPIs. Program DDRC.POISONCFG.rd_poison_intr_en
+      to enables/disables interrupts for read transaction poisoning. Use DDRC.POISONSTAT
+      status register to find which XPI cause transaction poisoning.
+    name: DDRC_RD_POISON
+    shortdesc: Read poison interrupt status from DDRC.
+    type: wtc
+  - bits: '8'
+    longdesc: DDRC_MRR_DATA* is valid.
+    name: MRR_DATA_VALID
+    shortdesc: When asserted high, indicates that data on DDR_QOS_CTRL.
+    type: wtc
+  - bits: '7'
+    name: PC_COPY_DONE
+    type: wtc
+  - bits: '6'
+    name: DFI_ALT_ERR
+    type: wtc
+  - bits: '5'
+    longdesc: CRCPARSTAT.dfi_alert_err_cnt reaches it maximum value, and the interrupt
+      is enabled by DDRC.CRCPARCTL0.dfi_alert_err_int_en.
+    name: DFI_ALT_ERR_MAX
+    shortdesc: This interrupt is asserted when the DDRC.
+    type: wtc
+  - bits: '4'
+    name: DFI_ALT_ERR_FTL
+    type: wtc
+  - bits: '3'
+    name: DFI_INIT_COMP
+    type: wtc
+  - bits: '2'
+    name: DDRECC_UNCRERR
+    type: wtc
+  - bits: '1'
+    name: DDRECC_CORERR
+    type: wtc
+  - bits: '0'
+    name: INV_APB
+    type: wtc
+  name: QOS_IRQ_STATUS
+  offset: '0x00000200'
+  type: mixed
+  width: 32
+- default: '0x000007FF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    name: DDRC_WR_POISON
+    type: ro
+  - bits: '9'
+    name: DDRC_RD_POISON
+    type: ro
+  - bits: '8'
+    name: MRR_DATA_VALID
+    type: ro
+  - bits: '7'
+    name: PC_COPY_DONE
+    type: ro
+  - bits: '6'
+    name: DFI_ALT_ERR
+    type: ro
+  - bits: '5'
+    name: DFI_ALT_ERR_MAX
+    type: ro
+  - bits: '4'
+    name: DFI_ALT_ERR_FTL
+    type: ro
+  - bits: '3'
+    name: DFI_INIT_COMP
+    type: ro
+  - bits: '2'
+    name: DDRECC_UNCRERR
+    type: ro
+  - bits: '1'
+    name: DDRECC_CORERR
+    type: ro
+  - bits: '0'
+    name: INV_APB
+    type: ro
+  name: QOS_IRQ_MASK
+  offset: '0x00000204'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    name: DDRC_WR_POISON
+    type: wo
+  - bits: '9'
+    name: DDRC_RD_POISON
+    type: wo
+  - bits: '8'
+    name: MRR_DATA_VALID
+    type: wo
+  - bits: '7'
+    name: PC_COPY_DONE
+    type: wo
+  - bits: '6'
+    name: DFI_ALT_ERR
+    type: wo
+  - bits: '5'
+    name: DFI_ALT_ERR_MAX
+    type: wo
+  - bits: '4'
+    name: DFI_ALT_ERR_FTL
+    type: wo
+  - bits: '3'
+    name: DFI_INIT_COMP
+    type: wo
+  - bits: '2'
+    name: DDRECC_UNCRERR
+    type: wo
+  - bits: '1'
+    name: DDRECC_CORERR
+    type: wo
+  - bits: '0'
+    name: INV_APB
+    type: wo
+  name: QOS_IRQ_ENABLE
+  offset: '0x00000208'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    name: DDRC_WR_POISON
+    type: wo
+  - bits: '9'
+    name: DDRC_RD_POISON
+    type: wo
+  - bits: '8'
+    name: MRR_DATA_VALID
+    type: wo
+  - bits: '7'
+    name: PC_COPY_DONE
+    type: wo
+  - bits: '6'
+    name: DFI_ALT_ERR
+    type: wo
+  - bits: '5'
+    name: DFI_ALT_ERR_MAX
+    type: wo
+  - bits: '4'
+    name: DFI_ALT_ERR_FTL
+    type: wo
+  - bits: '3'
+    name: DFI_INIT_COMP
+    type: wo
+  - bits: '2'
+    name: DDRECC_UNCRERR
+    type: wo
+  - bits: '1'
+    name: DDRECC_CORERR
+    type: wo
+  - bits: '0'
+    name: INV_APB
+    type: wo
+  name: QOS_IRQ_DISABLE
+  offset: '0x0000020C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DDRC URGENT Sideband signal control register
+  field:
+  - bits: '31:14'
+    name: RESERVED
+    type: raz
+  - bits: '13'
+    longdesc: When asserted, if DDRC.rd_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to read.
+    name: ARURGENT_5
+    shortdesc: Sideband signal to indicate a DDRC Port 5 read queue urgent transaction.
+    type: rw
+  - bits: '12'
+    longdesc: When asserted, if DDRC.wr_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to write.
+    name: AWURGENT_5
+    shortdesc: Sideband signal to indicate a DDRC Port 5 write urgent transaction.
+    type: rw
+  - bits: '11'
+    longdesc: When asserted, if DDRC.rd_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to read.
+    name: ARURGENT_4
+    shortdesc: Sideband signal to indicate a DDRC Port 4 read queue urgent transaction.
+    type: rw
+  - bits: '10'
+    longdesc: When asserted, if wr_port_urgent_en register is set, causes the port
+      arbiter to switch immediately to write.
+    name: AWURGENT_4
+    shortdesc: Sideband signal to indicate a DDRC Port 4 write urgent transaction.
+    type: rw
+  - bits: '9'
+    longdesc: When asserted, if DDRC.rd_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to read.
+    name: ARURGENT_3
+    shortdesc: Sideband signal to indicate a DDRC Port 3 read queue urgent transaction.
+    type: rw
+  - bits: '8'
+    longdesc: When asserted, if DDRC.wr_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to write.
+    name: AWURGENT_3
+    shortdesc: Sideband signal to indicate a DDRC Port 3 write urgent transaction.
+    type: rw
+  - bits: '7'
+    longdesc: When asserted, if DDRC.rd_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to read.
+    name: ARURGENTR_2
+    shortdesc: Sideband signal to indicate a DDRC Port 2 read red queue urgent transaction.
+    type: rw
+  - bits: '6'
+    longdesc: When asserted, if DDRC.rd_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to read.
+    name: ARURGENTB_2
+    shortdesc: Sideband signal to indicate a DDRC Port 2 read blue queue urgent transaction.
+    type: rw
+  - bits: '5'
+    longdesc: When asserted, if DDRC.wr_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to write.
+    name: AWURGENT_2
+    shortdesc: Sideband signal to indicate a DDRC Port 2 write urgent transaction.
+    type: rw
+  - bits: '4'
+    longdesc: When asserted, if DDRC.rd_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to read.
+    name: ARURGENTR_1
+    shortdesc: Sideband signal to indicate a DDRC Port 1 read red queue urgent transaction.
+    type: rw
+  - bits: '3'
+    longdesc: When asserted, if DDRC.rd_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to read.
+    name: ARURGENTB_1
+    shortdesc: Sideband signal to indicate a DDRC Port 1 read blue queue urgent transaction.
+    type: rw
+  - bits: '2'
+    longdesc: When asserted, if DDRC.wr_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to write.
+    name: AWURGENT_1
+    shortdesc: Sideband signal to indicate a DDRC Port 1 write urgent transaction.
+    type: rw
+  - bits: '1'
+    longdesc: When asserted, if DDRC.rd_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to read.
+    name: ARURGENT_0
+    shortdesc: Sideband signal to indicate a DDRC Port 0 read queue urgent transaction.
+    type: rw
+  - bits: '0'
+    longdesc: When asserted, if DDRC.wr_port_urgent_en register is set, causes the
+      port arbiter to switch immediately to write.
+    name: AWURGENT_0
+    shortdesc: Sideband signal to indicate a DDRC Port 0 write urgent transaction.
+    type: rw
+  name: DDRC_URGENT
+  offset: '0x00000510'
+  type: mixed
+  width: 32
+- default: '0x0000003C'
+  description: DDRC QVN Control register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: raz
+  - bits: '5:4'
+    name: PREALLOC_P2
+    type: rw
+  - bits: '3:2'
+    name: PREALLOC_P1
+    type: rw
+  - bits: '1'
+    name: EN_P2
+    type: rw
+  - bits: '0'
+    name: EN_P1
+    type: rw
+  name: DDRC_QVN_CTRL
+  offset: '0x00000514'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Status
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3:1'
+    name: VALID_CNT
+    type: ro
+  - bits: '0'
+    name: VALID
+    type: ro
+  name: DDRC_MRR_STATUS
+  offset: '0x00000518'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: DDRC_MRR_DATA0
+  offset: '0x0000051C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:0'
+    name: MSB
+    type: ro
+  name: DDRC_MRR_DATA1
+  offset: '0x00000520'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    name: ECC
+    type: ro
+  name: DDRC_MRR_DATA2
+  offset: '0x00000524'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: DDRC_MRR_DATA3
+  offset: '0x00000528'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:0'
+    name: MSB
+    type: ro
+  name: DDRC_MRR_DATA4
+  offset: '0x0000052C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    name: ECC
+    type: ro
+  name: DDRC_MRR_DATA5
+  offset: '0x00000530'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: DDRC_MRR_DATA6
+  offset: '0x00000534'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:0'
+    name: MSB
+    type: ro
+  name: DDRC_MRR_DATA7
+  offset: '0x00000538'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    name: ECC
+    type: ro
+  name: DDRC_MRR_DATA8
+  offset: '0x0000053C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:0'
+    name: LSB
+    type: ro
+  name: DDRC_MRR_DATA9
+  offset: '0x00000540'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:0'
+    name: MSB
+    type: ro
+  name: DDRC_MRR_DATA10
+  offset: '0x00000544'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: DDRC MRR Register Data
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    name: ECC
+    type: ro
+  name: DDRC_MRR_DATA11
+  offset: '0x00000548'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: DDR Sub system clock control
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    longdesc: Switch to 0 to disable the clock
+    name: CLKACT
+    shortdesc: Clock active signal.
+    type: rw
+  name: DDR_CLK_CTRL
+  offset: '0x00000700'
+  type: mixed
+  width: 32

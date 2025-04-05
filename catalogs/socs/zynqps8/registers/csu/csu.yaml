@@ -1,0 +1,1755 @@
+bank:
+- address: '0xffca0000'
+  name: CSU
+description: CSU Control
+register:
+- default: '0x00000000'
+  description: CSU Status
+  field:
+  - bits: '31:2'
+    name: UNUSED
+    type: ro
+  - bits: '1'
+    longdesc: '1: encrypted.'
+    name: BOOT_ENC
+    shortdesc: 'FSBL encryption state: 0: not encrypted.'
+    type: ro
+  - bits: '0'
+    longdesc: '1: authenticated.'
+    name: BOOT_AUTH
+    shortdesc: 'FSBL authentication state: 0: not authenticated.'
+    type: ro
+  name: CSU_STATUS
+  offset: '0x00000000'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: CSU Control
+  field:
+  - bits: '4'
+    longdesc: '0: disable (default), invalid address requests are ignored and the
+      system can hang. 1: enable, the SLVERR signal is asserted back to the master;
+      writes are ignored and a read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: Enable for the SLVERR signal during an address decode failure on the
+      APB interface.
+    type: rw
+  - bits: '3:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    longdesc: 'This clock goes to the DMA, AES, SHA, & RSA. 0: SysOsc 1: PLL'
+    name: CSU_CLK_SEL
+    shortdesc: Selects the clock source for the CSU clock.
+    type: rw
+  name: CSU_CTRL
+  offset: '0x00000004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CSU Secure Stream Switch Configuration
+  field:
+  - bits: '15:12'
+    name: SHA_SSS
+    type: rw
+  - bits: '11:8'
+    name: AES_SSS
+    type: rw
+  - bits: '7:4'
+    name: DMA_SSS
+    type: rw
+  - bits: '3:0'
+    name: PCAP_SSS
+    type: rw
+  name: CSU_SSS_CFG
+  offset: '0x00000008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CSU DMA Reset
+  field:
+  - bits: '0'
+    longdesc: The DMA will remain in reset until this bit is unset.
+    name: RESET
+    shortdesc: Asserts reset to the CSU DMA when set.
+    type: rw
+  name: CSU_DMA_RESET
+  offset: '0x0000000C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Multiboot Address
+  field:
+  - bits: '31:0'
+    longdesc: Reset by POR only.
+    name: SSSS_MULTI_BOOT_ADDR
+    shortdesc: Multi-boot address offset.
+    type: rw
+  name: CSU_MULTI_BOOT
+  offset: '0x00000010'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CSU Secure Lockdown
+  field:
+  - bits: '0'
+    name: TAMPER
+    type: wo
+  name: CSU_TAMPER_TRIG
+  offset: '0x00000014'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: CSU Secure Processor Fault Tolerant Status
+  field:
+  - bits: '31'
+    name: R_UE
+    type: ro
+  - bits: '30'
+    name: R_VOTER_ERROR
+    type: ro
+  - bits: '29'
+    name: R_COMP_ERR_23
+    type: ro
+  - bits: '28'
+    name: R_COMP_ERR_13
+    type: ro
+  - bits: '27'
+    name: R_COMP_ERR_12
+    type: ro
+  - bits: '26'
+    name: R_MISMATCH_23_A
+    type: ro
+  - bits: '25'
+    name: R_MISMATCH_13_A
+    type: ro
+  - bits: '24'
+    name: R_MISMATCH_12_A
+    type: ro
+  - bits: '23'
+    name: R_FT_ST_MISMATCH
+    type: ro
+  - bits: '22'
+    name: R_CPU_ID_MISMATCH
+    type: ro
+  - bits: '21:20'
+    name: RESERVED
+    type: ro
+  - bits: '19'
+    name: R_SLEEP_RESET
+    type: ro
+  - bits: '18'
+    name: R_MISMATCH_23_B
+    type: ro
+  - bits: '17'
+    name: R_MISMATCH_13_B
+    type: ro
+  - bits: '16'
+    name: R_MISMATCH_12_B
+    type: ro
+  - bits: '15'
+    name: N_UE
+    type: ro
+  - bits: '14'
+    name: N_VOTER_ERROR
+    type: ro
+  - bits: '13'
+    name: N_COMP_ERR_23
+    type: ro
+  - bits: '12'
+    name: N_COMP_ERR_13
+    type: ro
+  - bits: '11'
+    name: N_COMP_ERR_12
+    type: ro
+  - bits: '10'
+    name: N_MISMATCH_23_A
+    type: ro
+  - bits: '9'
+    name: N_MISMATCH_13_A
+    type: ro
+  - bits: '8'
+    name: N_MISMATCH_12_A
+    type: ro
+  - bits: '7'
+    name: N_FT_ST_MISMATCH
+    type: ro
+  - bits: '6'
+    name: N_CPU_ID_MISMATCH
+    type: ro
+  - bits: '5:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: N_SLEEP_RESET
+    type: ro
+  - bits: '2'
+    name: N_MISMATCH_23_B
+    type: ro
+  - bits: '1'
+    name: N_MISMATCH_13_B
+    type: ro
+  - bits: '0'
+    name: N_MISMATCH_12_B
+    type: ro
+  name: CSU_FT_STATUS
+  offset: '0x00000018'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: CSU Interrupt Status
+  field:
+  - bits: '15'
+    longdesc: Communication between the PS and PL has been disabled.
+    name: CSU_PL_ISO
+    shortdesc: Indicates that the CSU has enabled the isolation for the PS / PL.
+    type: wtc
+  - bits: '14'
+    longdesc: CSU Secure Processor will automatically reset to clear the error.
+    name: CSU_RAM_ECC_ERROR
+    shortdesc: Uncorrectable ECC error encountered on CSU RAM.
+    type: wtc
+  - bits: '13'
+    longdesc: See tamper response Status register to see which tamper occurred.
+    name: TAMPER
+    shortdesc: Tamper response interrupt.
+    type: wtc
+  - bits: '11'
+    name: APB_SLVERR
+    type: wtc
+  - bits: '10'
+    name: TMR_FATAL
+    type: wtc
+  - bits: '9'
+    name: PL_SEU_ERROR
+    type: wtc
+  - bits: '8'
+    name: AES_ERROR
+    type: wtc
+  - bits: '7'
+    name: PCAP_WR_OVERFLOW
+    type: wtc
+  - bits: '6'
+    name: PCAP_RD_OVERFLOW
+    type: wtc
+  - bits: '5'
+    name: PL_POR_B
+    type: wtc
+  - bits: '4'
+    name: PL_INIT
+    type: wtc
+  - bits: '3'
+    name: PL_DONE
+    type: wtc
+  - bits: '2'
+    name: SHA_DONE
+    type: wtc
+  - bits: '1'
+    name: RSA_DONE
+    type: wtc
+  - bits: '0'
+    name: AES_DONE
+    type: wtc
+  name: CSU_ISR
+  offset: '0x00000020'
+  type: wtc
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU Interrupt Mask
+  field:
+  - bits: '15'
+    name: CSU_PL_ISO
+    type: ro
+  - bits: '14'
+    name: CSU_RAM_ECC_ERROR
+    type: ro
+  - bits: '13'
+    name: TAMPER
+    type: ro
+  - bits: '11'
+    name: APB_SLVERR
+    type: ro
+  - bits: '10'
+    name: TMR_FATAL
+    type: ro
+  - bits: '9'
+    name: PL_SEU_ERROR
+    type: ro
+  - bits: '8'
+    name: AES_ERROR
+    type: ro
+  - bits: '7'
+    name: PCAP_WR_OVERFLOW
+    type: ro
+  - bits: '6'
+    name: PCAP_RD_OVERFLOW
+    type: ro
+  - bits: '5'
+    name: PL_POR_B
+    type: ro
+  - bits: '4'
+    name: PL_INIT
+    type: ro
+  - bits: '3'
+    name: PL_DONE
+    type: ro
+  - bits: '2'
+    name: SHA_DONE
+    type: ro
+  - bits: '1'
+    name: RSA_DONE
+    type: ro
+  - bits: '0'
+    name: AES_DONE
+    type: ro
+  name: CSU_IMR
+  offset: '0x00000024'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: CSU Interrupt Enable
+  field:
+  - bits: '15'
+    name: CSU_PL_ISO
+    type: wo
+  - bits: '14'
+    name: CSU_RAM_ECC_ERROR
+    type: wo
+  - bits: '13'
+    name: TAMPER
+    type: wo
+  - bits: '11'
+    name: APB_SLVERR
+    type: wo
+  - bits: '10'
+    name: TMR_FATAL
+    type: wo
+  - bits: '9'
+    name: PL_SEU_ERROR
+    type: wo
+  - bits: '8'
+    name: AES_ERROR
+    type: wo
+  - bits: '7'
+    name: PCAP_WR_OVERFLOW
+    type: wo
+  - bits: '6'
+    name: PCAP_RD_OVERFLOW
+    type: wo
+  - bits: '5'
+    name: PL_POR_B
+    type: wo
+  - bits: '4'
+    name: PL_INIT
+    type: wo
+  - bits: '3'
+    name: PL_DONE
+    type: wo
+  - bits: '2'
+    name: SHA_DONE
+    type: wo
+  - bits: '1'
+    name: RSA_DONE
+    type: wo
+  - bits: '0'
+    name: AES_DONE
+    type: wo
+  name: CSU_IER
+  offset: '0x00000028'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: CSU Interrupt Disable
+  field:
+  - bits: '15'
+    name: CSU_PL_ISO
+    type: wo
+  - bits: '14'
+    name: CSU_RAM_ECC_ERROR
+    type: wo
+  - bits: '13'
+    name: TAMPER
+    type: wo
+  - bits: '11'
+    name: APB_SLVERR
+    type: wo
+  - bits: '10'
+    name: TMR_FATAL
+    type: wo
+  - bits: '9'
+    name: PL_SEU_ERROR
+    type: wo
+  - bits: '8'
+    name: AES_ERROR
+    type: wo
+  - bits: '7'
+    name: PCAP_WR_OVERFLOW
+    type: wo
+  - bits: '6'
+    name: PCAP_RD_OVERFLOW
+    type: wo
+  - bits: '5'
+    name: PL_POR_B
+    type: wo
+  - bits: '4'
+    name: PL_INIT
+    type: wo
+  - bits: '3'
+    name: PL_DONE
+    type: wo
+  - bits: '2'
+    name: SHA_DONE
+    type: wo
+  - bits: '1'
+    name: RSA_DONE
+    type: wo
+  - bits: '0'
+    name: AES_DONE
+    type: wo
+  name: CSU_IDR
+  offset: '0x0000002C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: JTAG Chain Configuration Status
+  field:
+  - bits: '1'
+    name: ARM_DAP
+    type: ro
+  - bits: '0'
+    name: PL_TAP
+    type: ro
+  name: JTAG_CHAIN_STATUS
+  offset: '0x00000034'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: JTAG Security
+  field:
+  - bits: '8:6'
+    longdesc: All bits must be set to 1 for the security gate to be released. (POR
+      reset only)
+    name: SSSS_PMU_SEC
+    shortdesc: Setting these bits disables the security gate for the PMU MDM and allows
+      the PS TAP to connect to the PMU.
+    type: rw
+  - bits: '5:3'
+    longdesc: All bits must be set to 1 to release the security gate. (POR only)
+    name: SSSS_PLTAP_SEC
+    shortdesc: Setting these bits disables the security gate for the PLTAP and allows
+      the PSTAP to connect to the PL for bitstream loading and boundary scan operations.
+    type: rw
+  - bits: '2:0'
+    longdesc: All bits must be set to 1 for the security gate to be released. (POR
+      only)
+    name: SSSS_DAP_SEC
+    shortdesc: Setting these bits disables the security gate for the ARM DAP and allows
+      the PS TAP or PJTAG to connect to the DAP.
+    type: rw
+  name: JTAG_SEC
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: DAP Configuration
+  field:
+  - bits: '5'
+    name: SSSS_RPU_NIDEN
+    type: rw
+  - bits: '4'
+    name: SSSS_RPU_DBGEN
+    type: rw
+  - bits: '3'
+    name: SSSS_APU_SPNIDEN
+    type: rw
+  - bits: '2'
+    name: SSSS_APU_SPIDEN
+    type: rw
+  - bits: '1'
+    name: SSSS_APU_NIDEN
+    type: rw
+  - bits: '0'
+    name: SSSS_APU_DBGEN
+    type: rw
+  name: JTAG_DAP_CFG
+  offset: '0x0000003C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Device IDCODE
+  field:
+  - bits: '31:0'
+    longdesc: Refer to UG1085 Technical Reference Manual for the ID code definition
+      table.
+    name: IDCODE
+    shortdesc: Reads the same value as returned by the PS TAP controller IDCODE instruction.
+    type: ro
+  name: IDCODE
+  offset: '0x00000040'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PS Version
+  field:
+  - bits: '3:0'
+    longdesc: '1: XCZU3EG-ES1, XCZU15EG-ES1. 2: XCZU7EV-ES1, XCZU9EG-ES2, XCZU19EG-ES1.
+      3: All devices as of October 2017 (Production Level).'
+    name: PS_VERSION
+    shortdesc: 'PS Version: 0: XCZU9EG-ES1.'
+    type: ro
+  name: VERSION
+  offset: '0x00000044'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 0
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_0
+  offset: '0x00000050'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 1
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_1
+  offset: '0x00000054'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 2
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_2
+  offset: '0x00000058'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 3
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_3
+  offset: '0x0000005C'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 4
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_4
+  offset: '0x00000060'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 5
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_5
+  offset: '0x00000064'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 6
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_6
+  offset: '0x00000068'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 7
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_7
+  offset: '0x0000006C'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 8
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_8
+  offset: '0x00000070'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 9
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_9
+  offset: '0x00000074'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 10
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_10
+  offset: '0x00000078'
+  type: ro
+  width: 32
+- default: '0xFFFFFFFF'
+  description: CSU ROM SHA-3 Digest 11
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: CSU_ROM_DIGEST_11
+  offset: '0x0000007C'
+  type: ro
+  width: 32
+- default: '0x00000F00'
+  description: AES Status
+  field:
+  - bits: '11'
+    name: OKR_ZEROED
+    type: ro
+  - bits: '10'
+    name: BOOT_ZEROED
+    type: ro
+  - bits: '9'
+    name: KUP_ZEROED
+    type: ro
+  - bits: '8'
+    name: AES_KEY_ZEROED
+    type: ro
+  - bits: '7:6'
+    longdesc: Do not modify.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '4'
+    name: KEY_INIT_DONE
+    type: ro
+  - bits: '3'
+    name: GCM_TAG_PASS
+    type: ro
+  - bits: '2'
+    name: DONE
+    type: ro
+  - bits: '1'
+    name: READY
+    type: ro
+  - bits: '0'
+    name: BUSY
+    type: ro
+  name: AES_STATUS
+  offset: '0x00001000'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: AES Key Source
+  field:
+  - bits: '3:0'
+    longdesc: 0x1 = Device Key 0x0 = KUP
+    name: KEY_SRC
+    shortdesc: AES key source selection, the device key is selected and locked by
+      the CSU ROM during boot.
+    type: rw
+  name: AES_KEY_SRC
+  offset: '0x00001004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: AES Key Load
+  field:
+  - bits: '0'
+    name: KEY_LOAD
+    type: rw
+  name: AES_KEY_LOAD
+  offset: '0x00001008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: AES Start Message
+  field:
+  - bits: '0'
+    longdesc: The IV must be loaded before the AES will decrypt a payload (self clearing)
+    name: START_MSG
+    shortdesc: Starts the decryption process.
+    type: rw
+  name: AES_START_MSG
+  offset: '0x0000100C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: AES Reset
+  field:
+  - bits: '0'
+    longdesc: The AES will remain in reset until this bit is unset.
+    name: RESET
+    shortdesc: Setting this bit resets the AES.
+    type: rw
+  name: AES_RESET
+  offset: '0x00001010'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: AES Key Clear
+  field:
+  - bits: '1'
+    longdesc: The zeroization is confirmed by the AES_KUP_ZEROED bit in the AES_STATUS
+      register.
+    name: AES_KUP_ZERO
+    shortdesc: Setting this bit zeroes the KUP register.
+    type: rw
+  - bits: '0'
+    longdesc: The zeroization is confirmed by AES_KEY_ZEROED in the AES_STATUS register.
+    name: AES_KEY_ZERO
+    shortdesc: Setting this bit zeroes the expanded key from the AES.
+    type: rw
+  name: AES_KEY_CLEAR
+  offset: '0x00001014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: AES Operational Mode
+  field:
+  - bits: '0'
+    name: ENCRYPT_DECRYPT_N
+    type: rw
+  name: AES_CFG
+  offset: '0x00001018'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: AES KUP Write Control
+  field:
+  - bits: '1'
+    longdesc: This bit can be combined with the KUP_WRITE to write the KUP and IV
+      at the same time. The data format is {KUP0:KUP7,IV0:IV3}. All registers must
+      be written before the key/iv will be updated.
+    name: IV_WRITE
+    shortdesc: When this bit is set the IV register will be written with the output
+      of the AES.
+    type: rw
+  - bits: '0'
+    longdesc: This bit can be combined with the IV_WRITE to write the KUP and IV at
+      the same time. All 12 registers must be written to in order to correctly set
+      the KUP and IV values. The data must be loaded {KUP0:KUP7,IV0:IV3}
+    name: KUP_WRITE
+    shortdesc: When this bit is set, the output of the AES will be written into the
+      KUP.
+    type: rw
+  name: AES_KUP_WR
+  offset: '0x0000101C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: AES Key Update 0
+  field:
+  - bits: '31:0'
+    name: AES_KEY
+    type: wo
+  name: AES_KUP_0
+  offset: '0x00001020'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: AES Key Update 1
+  field:
+  - bits: '31:0'
+    name: AES_KEY
+    type: wo
+  name: AES_KUP_1
+  offset: '0x00001024'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: AES Key Update 2
+  field:
+  - bits: '31:0'
+    name: AES_KEY
+    type: wo
+  name: AES_KUP_2
+  offset: '0x00001028'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: AES Key Update 3
+  field:
+  - bits: '31:0'
+    name: AES_KEY
+    type: wo
+  name: AES_KUP_3
+  offset: '0x0000102C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: AES Key Update 4
+  field:
+  - bits: '31:0'
+    name: AES_KEY
+    type: wo
+  name: AES_KUP_4
+  offset: '0x00001030'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: AES Key Update 5
+  field:
+  - bits: '31:0'
+    name: AES_KEY
+    type: wo
+  name: AES_KUP_5
+  offset: '0x00001034'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: AES Key Update 6
+  field:
+  - bits: '31:0'
+    name: AES_KEY
+    type: wo
+  name: AES_KUP_6
+  offset: '0x00001038'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: AES Key Update 7
+  field:
+  - bits: '31:0'
+    name: AES_KEY
+    type: wo
+  name: AES_KUP_7
+  offset: '0x0000103C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: AES IV 0
+  field:
+  - bits: '31:0'
+    longdesc: '[127:96]'
+    name: AES_IV
+    shortdesc: AES Initialization Vector.
+    type: ro
+  name: AES_IV_0
+  offset: '0x00001040'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: AES IV 1
+  field:
+  - bits: '31:0'
+    longdesc: '[95:64]'
+    name: AES_IV
+    shortdesc: AES Initialization Vector.
+    type: ro
+  name: AES_IV_1
+  offset: '0x00001044'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: AES IV 2
+  field:
+  - bits: '31:0'
+    longdesc: '[63:32]'
+    name: AES_IV
+    shortdesc: AES Initialization Vector.
+    type: ro
+  name: AES_IV_2
+  offset: '0x00001048'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: AES IV 3
+  field:
+  - bits: '31:0'
+    longdesc: The AES only uses the first 96-bits of the IV for counter initialization.
+      The value stored here will be the decyrpt length count, which is the amount
+      of encrypted configuration data associated with the current AES key.
+    name: AES_IV_DLC
+    shortdesc: AES initialization vector [31:0].
+    type: ro
+  name: AES_IV_3
+  offset: '0x0000104C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Start Message
+  field:
+  - bits: '0'
+    longdesc: This bit is self-clearing.
+    name: START_MSG
+    shortdesc: Write a 1 to this bit to start a new SHA-3 calculation.
+    type: wo
+  name: SHA_START
+  offset: '0x00002000'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: SHA Reset
+  field:
+  - bits: '0'
+    name: RESET
+    type: rw
+  name: SHA_RESET
+  offset: '0x00002004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SHA Done
+  field:
+  - bits: '0'
+    name: SHA_DONE
+    type: ro
+  name: SHA_DONE
+  offset: '0x00002008'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 0
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_0
+  offset: '0x00002010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 1
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_1
+  offset: '0x00002014'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 2
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_2
+  offset: '0x00002018'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 3
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_3
+  offset: '0x0000201C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 4
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_4
+  offset: '0x00002020'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 5
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_5
+  offset: '0x00002024'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 6
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_6
+  offset: '0x00002028'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 7
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_7
+  offset: '0x0000202C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 8
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_8
+  offset: '0x00002030'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 9
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_9
+  offset: '0x00002034'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 10
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_10
+  offset: '0x00002038'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SHA Digest 11
+  field:
+  - bits: '31:0'
+    name: DIGEST
+    type: ro
+  name: SHA_DIGEST_11
+  offset: '0x0000203C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PCAP PROG
+  field:
+  - bits: '0'
+    longdesc: The PL is reset when this bit is deasserted and will remain in reset
+      until this register is asserted. After PROG is released, wait for PCAP_STATUS[INIT]
+      before sending configuration data. 0x0 - PL in reset 0x1 - PL not in reset
+    name: PCFG_PROG_B
+    shortdesc: PROG control to the PL.
+    type: rw
+  name: PCAP_PROG
+  offset: '0x00003000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: PCAP Read Write Control
+  field:
+  - bits: '0'
+    name: PCAP_RDWR_B
+    type: rw
+  name: PCAP_RDWR
+  offset: '0x00003004'
+  type: rw
+  width: 32
+- default: '0x00000001'
+  description: PCAP Control
+  field:
+  - bits: '3'
+    name: PCFG_GSR
+    type: rw
+  - bits: '2'
+    name: PCFG_GTS
+    type: rw
+  - bits: '1'
+    name: PCFG_POR_CNT_4K
+    type: rw
+  - bits: '0'
+    name: PCAP_PR
+    type: rw
+  name: PCAP_CTRL
+  offset: '0x00003008'
+  type: rw
+  width: 32
+- default: '0x00000001'
+  description: PCAP Reset
+  field:
+  - bits: '0'
+    longdesc: The PCAP remains in reset until this bit is set low.
+    name: RESET
+    shortdesc: Reset for the PCAP, including the RD/WR FIFO.
+    type: rw
+  name: PCAP_RESET
+  offset: '0x0000300C'
+  type: rw
+  width: 32
+- default: '0x00000003'
+  description: PCAP Status
+  field:
+  - bits: '28:14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: PCFG_GWE
+    type: ro
+  - bits: '12'
+    name: PCFG_MCAP_MODE
+    type: ro
+  - bits: '11'
+    name: PL_GTS_USR_B
+    type: ro
+  - bits: '10'
+    name: PL_GTS_CFG_B
+    type: ro
+  - bits: '9'
+    name: PL_GPWRDWN_B
+    type: ro
+  - bits: '8'
+    name: PL_GHIGH_B
+    type: ro
+  - bits: '7'
+    name: PL_FST_CFG
+    type: ro
+  - bits: '6'
+    name: PL_CFG_RESET_B
+    type: ro
+  - bits: '5'
+    name: PL_SEU_ERROR
+    type: ro
+  - bits: '4'
+    name: PL_EOS
+    type: ro
+  - bits: '3'
+    name: PL_DONE
+    type: ro
+  - bits: '2'
+    name: PL_INIT
+    type: ro
+  - bits: '1'
+    longdesc: This should be used in conjuction with the CSU DMA status to determine
+      when the PL readback has completed. This bit is not valid when the PCAP is in
+      reset. 0x1 - Idle 0x0 - Readback in progress
+    name: PCAP_RD_IDLE
+    shortdesc: Indicates that all reads from the PL have completed.
+    type: ro
+  - bits: '0'
+    longdesc: This should be used in conjunction with the CSU DMA status to indicate
+      when a PCAP write cycle has fully finished. This bit is not valid when the PCAP
+      is in reset. 0x1 - Idle 0x0 - Writing to PL in progress
+    name: PCAP_WR_IDLE
+    shortdesc: Indicates that all writes to the PL have completed.
+    type: ro
+  name: PCAP_STATUS
+  offset: '0x00003010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PUF Command
+  field:
+  - bits: '3:0'
+    longdesc: 0x6 - Clear PUF status 0x5 - Read out regeneration status 0x4 - Key
+      regeneration 0x1 - Key registration
+    name: CMD
+    shortdesc: PUF command, sends the PUF service request to the CSU Secure Processor.
+    type: rw
+  name: PUF_CMD
+  offset: '0x00004000'
+  type: rw
+  width: 32
+- default: '0x00000002'
+  description: PUF Configuration 0
+  field:
+  - bits: '31:0'
+    longdesc: For "4k" bit Syndrome, use CFG0 = 0x2.
+    name: CFG0
+    shortdesc: Configures digital procesing pipeline.
+    type: rw
+  name: PUF_CFG0
+  offset: '0x00004004'
+  type: rw
+  width: 32
+- default: '0x00080080'
+  description: PUF Configuration 1
+  field:
+  - bits: '31:0'
+    longdesc: For "4k" bits Syndrome, use CFG1 = 0x08210080.
+    name: CFG1
+    shortdesc: Syndrome format configuration.
+    type: rw
+  name: PUF_CFG1
+  offset: '0x00004008'
+  type: rw
+  width: 32
+- default: '0x01000020'
+  description: PUF Configuration 2
+  field:
+  - bits: '31:24'
+    longdesc: Program this vlaue to 0x01.
+    name: SOSET
+    shortdesc: Shutter Offset Time.
+    type: rw
+  - bits: '23:0'
+    longdesc: The oscillator values can be captured only while the "shutter" is open.
+      The minimum valud to program is 0x20, which means that each PUF oscillator is
+      on for 32 PUF clock cycles. A starting recommneded value is between 10us and
+      40us. The four least significant bits are ignored This should be programmed
+      to 0x00100, and might be adjusted depending on overflow conditions in STATUS
+      register.
+    name: SOPEN
+    shortdesc: Shutter Open Time SOPEN * 16 is the number of PUF clock cycles (200MHz
+      +/-10%) where the "shutter" is open.
+    type: rw
+  name: PUF_SHUT
+  offset: '0x0000400C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: PUF Status
+  field:
+  - bits: '29:28'
+    longdesc: reduce SHUT[SOPEN] valiue. This value is only valid when STATUS[KEY_RDY]
+      is asserted.
+    name: OVERFLOW
+    shortdesc: Overflow, if bits are not 0.
+    type: ro
+  - bits: '27:4'
+    longdesc: During regeneration, AUX outputs auxiliary regeneration converges statistcs
+      indicating whether convergence has ocurred during an interative recover process
+      (iterative recovery is used in "4K" mode. This value is only valid when STATUS[KEY_RDY]
+      is asserted.
+    name: AUX
+    shortdesc: During provisioning, auxiliary sundrome bits are stored here and must
+      be written to the eFuse or boot image.
+    type: ro
+  - bits: '3'
+    name: KEY_RDY
+    type: ro
+  - bits: '2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    name: KEY_ZERO
+    type: ro
+  - bits: '0'
+    name: SYN_WRD_RDY
+    type: ro
+  name: PUF_STATUS
+  offset: '0x00004010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PUF Word
+  field:
+  - bits: '31:0'
+    longdesc: The syndrome word is ready when PUF_STATUS[WR] is set. Reading this
+      register clears the PUF_STATUS[WR] bit. The CSU Secure Processor will continue
+      to load syndrome words into this register until all syndrome data has been generated.
+      The CHASH value is stored here also but is not valid until PUF_STATUS[KEY_RDY]
+      is asserted.
+    name: WORD
+    shortdesc: PUF syndrome word generated by key registration.
+    type: ro
+  name: PUF_WORD
+  offset: '0x00004018'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Tamper Response Status
+  field:
+  - bits: '12'
+    name: TAMPER_12
+    type: wtc
+  - bits: '11'
+    name: TAMPER_11
+    type: wtc
+  - bits: '10'
+    name: TAMPER_10
+    type: wtc
+  - bits: '9'
+    name: TAMPER_9
+    type: wtc
+  - bits: '8'
+    name: TAMPER_8
+    type: wtc
+  - bits: '7'
+    name: TAMPER_7
+    type: wtc
+  - bits: '6'
+    name: TAMPER_6
+    type: wtc
+  - bits: '5'
+    name: TAMPER_5
+    type: wtc
+  - bits: '4'
+    name: TAMPER_4
+    type: wtc
+  - bits: '3'
+    name: TAMPER_3
+    type: wtc
+  - bits: '2'
+    name: TAMPER_2
+    type: wtc
+  - bits: '1'
+    name: TAMPER_1
+    type: wtc
+  - bits: '0'
+    name: TAMPER_0
+    type: wtc
+  name: TAMPER_STATUS
+  offset: '0x00005000'
+  type: wtc
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 0, CSU Register.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_0
+  offset: '0x00005004'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 1, MIO Signal Pin.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_1
+  offset: '0x00005008'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 2, PS JTAG.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_2
+  offset: '0x0000500C'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 3, PL SEU or Error.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_3
+  offset: '0x00005010'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 4, LPD Over Temp.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_4
+  offset: '0x00005014'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 5, FPD Over Temp.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_5
+  offset: '0x00005018'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 6, LPD Voltage.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_6
+  offset: '0x0000501C'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 7, FPD Voltage.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_7
+  offset: '0x00005020'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 8, PS Auxiliary Voltage.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_8
+  offset: '0x00005024'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 9, DDR Controller Voltage.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_9
+  offset: '0x00005028'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 10, MIO Voltage Banks.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_10
+  offset: '0x0000502C'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 11, PS Dedicated Pins Voltage.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_11
+  offset: '0x00005030'
+  type: rwso
+  width: 32
+- default: '0x00000000'
+  description: CSU Tamper Response 12, PS GTR VCC or VTT Voltage.
+  field:
+  - bits: '4'
+    name: BBRAM_ERASE
+    type: rwso
+  - bits: '3'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_1
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown and
+      all GPIOB to be tri-stated when the tamper event occurs.
+    type: rwso
+  - bits: '2'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SEC_LOCKDOWN_0
+    shortdesc: Setting this bit causes the CSU ROM to issue a secure lockdown when
+      the tamper event occurs.
+    type: rwso
+  - bits: '1'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_RESET
+    shortdesc: Setting this bit causes the CSU ROM to issue a system reset when the
+      tamper event occurs.
+    type: rwso
+  - bits: '0'
+    longdesc: Only the action of the most significant bit is taken.
+    name: SYS_INTERRUPT
+    shortdesc: Setting this bit cuases the CSU ROM to issue a system interrupt when
+      the tamper event occurs.
+    type: rwso
+  name: CSU_TAMPER_12
+  offset: '0x00005034'
+  type: rwso
+  width: 32

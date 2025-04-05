@@ -1,0 +1,3179 @@
+description: Clock and Reset control registers for LPD.
+register:
+- default: '0x00000000'
+  description: SLVERR Error Signal Enable.
+  field:
+  - bits: '0'
+    longdesc: '0: disable. 1: enable. Regardless of the setting of the [slverr_enable]
+      bit setting: * The [addr_decode_err] interrupt bit is set in the interrupt status
+      register. * APB writes are ignored and reads returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: Accesses to an unimplemented register asserts the SLVERR error signal
+      on the APB bus interface and generates an interrupt.
+    type: rw
+  name: ERR_CTRL
+  offset: '0x00000000'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Status and Clear.
+  field:
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: wtc
+  name: IR_STATUS
+  offset: '0x00000004'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Interrupt Mask.
+  field:
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: ro
+  name: IR_MASK
+  offset: '0x00000008'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Enable.
+  field:
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: wo
+  name: IR_ENABLE
+  offset: '0x0000000C'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Disable.
+  field:
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: wo
+  name: IR_DISABLE
+  offset: '0x00000010'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: CRL SLCR Write Register Protection Control.
+  field:
+  - bits: '0'
+    name: ACTIVE
+    type: rw
+  name: CRL_WPROT
+  offset: '0x0000001C'
+  type: rw
+  width: 1
+- default: '0x00012C09'
+  description: IOPLL Clock Unit Control.
+  field:
+  - bits: '26:24'
+    enum:
+    - name: PS_REF_CLK
+      value: 0
+    - name: VIDEO_REF_CLK
+      value: 4
+    - name: ALT_REF_CLK
+      value: 6
+    - name: GT_REF_CLK
+      value: 7
+    longdesc: '0xx: PS_REF_CLK 100: VIDEO_REF_CLK 101: ALT_REF_CLK 110: AUX_REF_CLK
+      111: GT_REF_CLK'
+    name: POST_SRC
+    shortdesc: Select the pass-thru clock source for PLL Bypass mode.
+    type: rw
+  - bits: '22:20'
+    enum:
+    - name: PS_REF_CLK
+      value: 0
+    - name: VIDEO_REF_CLK
+      value: 4
+    - name: ALT_REF_CLK
+      value: 6
+    - name: GT_REF_CLK
+      value: 7
+    longdesc: '0xx: PS_REF_CLK 100: VIDEO_REF_CLK 101: ALT_REF_CLK 110: AUX_REF_CLK
+      111: GT_REF_CLK'
+    name: PRE_SRC
+    shortdesc: Select the clock source for PLL input.
+    type: rw
+  - bits: '16'
+    longdesc: '0: no effect. 1: divide clock by 2. Note: this does not change the
+      VCO frequency, just the output frequency.'
+    name: DIV2
+    shortdesc: Enable the divide by 2 function inside of the PLL.
+    type: rw
+  - bits: '14:8'
+    name: FBDIV
+    type: rw
+  - bits: '3'
+    longdesc: '0: normal PLL mode; the source clock is selected using [PRE_SRC]. 1:
+      bypass the PLL; the source clock is selected using [POST_SRC].'
+    name: BYPASS
+    shortdesc: PLL Clock Bypass Mode.
+    type: rw
+  - bits: '0'
+    longdesc: '0: active. 1: held in reset. Note: Program the PLL into bypass mode
+      before resetting the PLL.'
+    name: RESET
+    shortdesc: PLL reset.
+    type: rw
+  name: IOPLL_CTRL
+  offset: '0x00000020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: IOPLL Integer Helper Data Config.
+  field:
+  - bits: '31:25'
+    name: LOCK_DLY
+    type: rw
+  - bits: '22:13'
+    name: LOCK_CNT
+    type: rw
+  - bits: '11:10'
+    name: LFHF
+    type: rw
+  - bits: '8:5'
+    name: CP
+    type: rw
+  - bits: '3:0'
+    name: RES
+    type: rw
+  name: IOPLL_CFG
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Fractional control for the PLL
+  field:
+  - bits: '31'
+    longdesc: '0: PLL is in integer mode and it ignores all fractional data. 1: PLL
+      is in fractional mode and uses [DATA] bitfield for the fractional portion of
+      the feedback divider.'
+    name: ENABLED
+    shortdesc: Fractional SDM bypass control.
+    type: rw
+  - bits: '15:0'
+    name: DATA
+    type: rw
+  name: IOPLL_FRAC_CFG
+  offset: '0x00000028'
+  type: rw
+  width: 32
+- default: '0x00012C09'
+  description: RPLL Clock Unit Control.
+  field:
+  - bits: '26:24'
+    enum:
+    - name: PS_REF_CLK
+      value: 0
+    - name: VIDEO_REF_CLK
+      value: 4
+    - name: ALT_REF_CLK
+      value: 6
+    - name: GT_REF_CLK
+      value: 7
+    longdesc: '0xx: PS_REF_CLK 100: VIDEO_REF_CLK 101: ALT_REF_CLK 110: AUX_REF_CLK
+      111: GT_REF_CLK'
+    name: POST_SRC
+    shortdesc: Select the pass-thru clock source for PLL Bypass mode.
+    type: rw
+  - bits: '22:20'
+    enum:
+    - name: PS_REF_CLK
+      value: 0
+    - name: VIDEO_REF_CLK
+      value: 4
+    - name: ALT_REF_CLK
+      value: 6
+    - name: GT_REF_CLK
+      value: 7
+    longdesc: '0xx: PS_REF_CLK 100: VIDEO_REF_CLK 101: ALT_REF_CLK 110: AUX_REF_CLK
+      111: GT_REF_CLK'
+    name: PRE_SRC
+    shortdesc: Select the clock source for PLL input.
+    type: rw
+  - bits: '16'
+    longdesc: '0: no effect. 1: divide clock by 2. Note: this does not change the
+      VCO frequency, just the output frequency.'
+    name: DIV2
+    shortdesc: Enable the divide by 2 function inside of the PLL.
+    type: rw
+  - bits: '14:8'
+    name: FBDIV
+    type: rw
+  - bits: '3'
+    longdesc: '0: normal PLL mode; the source clock is selected using [PRE_SRC]. 1:
+      bypass the PLL; the source clock is selected using [POST_SRC].'
+    name: BYPASS
+    shortdesc: PLL Clock Bypass Mode.
+    type: rw
+  - bits: '0'
+    longdesc: '0: active. 1: reset. Note: Program the PLL into bypass mode before
+      resetting the PLL.'
+    name: RESET
+    shortdesc: PLL reset.
+    type: rw
+  name: RPLL_CTRL
+  offset: '0x00000030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RPLL Integer Helper Data Configuration.
+  field:
+  - bits: '31:25'
+    name: LOCK_DLY
+    type: rw
+  - bits: '22:13'
+    name: LOCK_CNT
+    type: rw
+  - bits: '11:10'
+    name: LFHF
+    type: rw
+  - bits: '8:5'
+    name: CP
+    type: rw
+  - bits: '3:0'
+    name: RES
+    type: rw
+  name: RPLL_CFG
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Fractional control for the PLL
+  field:
+  - bits: '31'
+    longdesc: '0: PLL is in integer mode and it ignores all fractional data. 1: PLL
+      is in fractional mode and uses [DATA] bitfield for the fractional portion of
+      the feedback divider.'
+    name: ENABLED
+    shortdesc: Fractional SDM bypass control.
+    type: rw
+  - bits: '15:0'
+    name: DATA
+    type: rw
+  name: RPLL_FRAC_CFG
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000018'
+  description: LPD PLL Clocking Status.
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: rw
+  - bits: '4'
+    longdesc: '0: not locked or bypassed. 1: locked or bypassed.'
+    name: RPLL_STABLE
+    shortdesc: RPLL stability status.
+    type: ro
+  - bits: '3'
+    longdesc: '0: not locked or bypassed. 1: locked or bypassed.'
+    name: IOPLL_STABLE
+    shortdesc: IOPLL stability status.
+    type: ro
+  - bits: '2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: '0: not locked. 1: locked.'
+    name: RPLL_LOCK
+    shortdesc: RPLL lock status.
+    type: ro
+  - bits: '0'
+    longdesc: '0: not locked. 1: locked.'
+    name: IOPLL_LOCK
+    shortdesc: IOPLL lock status.
+    type: ro
+  name: PLL_STATUS
+  offset: '0x00000040'
+  type: mixed
+  width: 32
+- default: '0x00000400'
+  description: IOPLL clock divider for distribution in FPD.
+  field:
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:0'
+    name: RESERVED
+    type: rw
+  name: IOPLL_TO_FPD_CTRL
+  offset: '0x00000044'
+  type: rw
+  width: 16
+- default: '0x00000400'
+  description: RPLL clock divider for distribution in FPD.
+  field:
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:0'
+    name: RESERVED
+    type: rw
+  name: RPLL_TO_FPD_CTRL
+  offset: '0x00000048'
+  type: rw
+  width: 16
+- default: '0x00052000'
+  description: USB 3.0 Unit Clock Generator Control.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: rw
+  - bits: '25'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '24:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: USB3_DUAL_REF_CTRL
+  offset: '0x0000004C'
+  type: rw
+  width: 32
+- default: '0x00002500'
+  description: GEM 0 Clock Generator Control.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: rw
+  - bits: '26'
+    longdesc: '0: disable. 1: enable.'
+    name: RX_CLKACT
+    shortdesc: RX Channel Clock active control.
+    type: rw
+  - bits: '25'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '24:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: GEM0_REF_CTRL
+  offset: '0x00000050'
+  type: rw
+  width: 32
+- default: '0x00002500'
+  description: GEM 1 Clock Generator Control.
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: rw
+  - bits: '26'
+    longdesc: '0: disable. 1: enable.'
+    name: RX_CLKACT
+    shortdesc: RX Channel Clock active control.
+    type: rw
+  - bits: '25'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '24:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: GEM1_REF_CTRL
+  offset: '0x00000054'
+  type: rw
+  width: 32
+- default: '0x00002500'
+  description: GEM 2 Clock Generator Config
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: rw
+  - bits: '26'
+    longdesc: '0: disable. 1: enable.'
+    name: RX_CLKACT
+    shortdesc: RX Channel Clock active control.
+    type: rw
+  - bits: '25'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '24:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: GEM2_REF_CTRL
+  offset: '0x00000058'
+  type: rw
+  width: 32
+- default: '0x00002500'
+  description: GEM 3 Clock Generator Config
+  field:
+  - bits: '31:27'
+    name: RESERVED
+    type: rw
+  - bits: '26'
+    longdesc: '0: disable. 1: enable.'
+    name: RX_CLKACT
+    shortdesc: RX Channel Clock active control.
+    type: rw
+  - bits: '25'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '24:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: GEM3_REF_CTRL
+  offset: '0x0000005C'
+  type: rw
+  width: 32
+- default: '0x00052000'
+  description: USB 0 Clock Generator Config
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: rw
+  - bits: '25'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '24:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: USB0_BUS_REF_CTRL
+  offset: '0x00000060'
+  type: rw
+  width: 32
+- default: '0x00052000'
+  description: USB 1 Clock Generator Config
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: rw
+  - bits: '25'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '24:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: USB1_BUS_REF_CTRL
+  offset: '0x00000064'
+  type: rw
+  width: 32
+- default: '0x01000800'
+  description: Quad-SPI Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: QSPI_REF_CTRL
+  offset: '0x00000068'
+  type: rw
+  width: 32
+- default: '0x01000F00'
+  description: SDIO 0 Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: VPLL_CLK_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: VPLL_CLK_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: SDIO0_REF_CTRL
+  offset: '0x0000006C'
+  type: rw
+  width: 32
+- default: '0x01000F00'
+  description: SDIO 1 Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: VPLL_CLK_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: VPLL_CLK_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: SDIO1_REF_CTRL
+  offset: '0x00000070'
+  type: rw
+  width: 32
+- default: '0x01001800'
+  description: USRT 0 Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: UART0_REF_CTRL
+  offset: '0x00000074'
+  type: rw
+  width: 32
+- default: '0x01001800'
+  description: UART 1 Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: UART1_REF_CTRL
+  offset: '0x00000078'
+  type: rw
+  width: 32
+- default: '0x01001800'
+  description: SPI 0 Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: SPI0_REF_CTRL
+  offset: '0x0000007C'
+  type: rw
+  width: 32
+- default: '0x01001800'
+  description: SPI 1 Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: SPI1_REF_CTRL
+  offset: '0x00000080'
+  type: rw
+  width: 32
+- default: '0x01001800'
+  description: CAN 0 Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: CAN0_REF_CTRL
+  offset: '0x00000084'
+  type: rw
+  width: 32
+- default: '0x01001800'
+  description: CAN 1 Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: CAN1_REF_CTRL
+  offset: '0x00000088'
+  type: rw
+  width: 32
+- default: '0x03000600'
+  description: RPU MPCore and OCM Clock Generator Config
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: rw
+  - bits: '25'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT_CORE
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '24'
+    name: CLKACT
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 2
+    - name: RPLL
+      value: 0
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: RPLL 010: IOPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: CPU_R5_CTRL
+  offset: '0x00000090'
+  type: rw
+  width: 32
+- default: '0x00001500'
+  description: IOP Switch Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 2
+    - name: RPLL
+      value: 0
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: RPLL 010: IOPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: IOU_SWITCH_CTRL
+  offset: '0x0000009C'
+  type: rw
+  width: 32
+- default: '0x01001500'
+  description: CSU Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:4'
+    name: RESERVED
+    type: rw
+  - bits: '3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: CSU_PLL_CTRL
+  offset: '0x000000A0'
+  type: rw
+  width: 32
+- default: '0x00001500'
+  description: PCAP Clock Generator Config
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: PCAP_CTRL
+  offset: '0x000000A4'
+  type: rw
+  width: 32
+- default: '0x01000500'
+  description: AXI Clock Generator Config in LPD
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 2
+    - name: RPLL
+      value: 0
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: RPLL 010: IOPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: LPD_SWITCH_CTRL
+  offset: '0x000000A8'
+  type: rw
+  width: 32
+- default: '0x01001800'
+  description: APB Clock Generator Config in LPD
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 2
+    - name: RPLL
+      value: 0
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: RPLL 010: IOPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: LPD_LSBUS_CTRL
+  offset: '0x000000AC'
+  type: rw
+  width: 32
+- default: '0x01002000'
+  description: Debug Clock Generator Config in LPD
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 2
+    - name: RPLL
+      value: 0
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: RPLL 010: IOPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: DBG_LPD_CTRL
+  offset: '0x000000B0'
+  type: rw
+  width: 32
+- default: '0x00052000'
+  description: NAND Clock Generator Config.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: NAND_REF_CTRL
+  offset: '0x000000B4'
+  type: rw
+  width: 32
+- default: '0x00002000'
+  description: LPD DMA Clock Generator Config.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 2
+    - name: RPLL
+      value: 0
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: RPLL 010: IOPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: LPD_DMA_REF_CTRL
+  offset: '0x000000B8'
+  type: rw
+  width: 32
+- default: '0x00052000'
+  description: PL 0 Clock Generator Config.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: PL0_REF_CTRL
+  offset: '0x000000C0'
+  type: rw
+  width: 32
+- default: '0x00052000'
+  description: PL 1 Clock Generator Config.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: PL1_REF_CTRL
+  offset: '0x000000C4'
+  type: rw
+  width: 32
+- default: '0x00052000'
+  description: PL 2 Clock Generator Config.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: PL2_REF_CTRL
+  offset: '0x000000C8'
+  type: rw
+  width: 32
+- default: '0x00052000'
+  description: PL 3 Clock Generator Config.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: PL3_REF_CTRL
+  offset: '0x000000CC'
+  type: rw
+  width: 32
+- default: '0x00000001'
+  description: PL Clock 0 Threshold Control and status
+  field:
+  - bits: '31:16'
+    longdesc: Valid when the [RUNNING] bit = 0, undefined when [RUNNING] = 1.
+    name: CURR_VAL
+    shortdesc: Current clock value as it counts down to 0.
+    type: ro
+  - bits: '15'
+    longdesc: '0: not running. 1: running.'
+    name: RUNNING
+    shortdesc: Counter Status.
+    type: ro
+  - bits: '14:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: 'Prerequisite: program the count into PLx_THR_CNT [LAST_CNT].'
+    name: CPU_START
+    shortdesc: Start counting.
+    type: rw
+  - bits: '0'
+    longdesc: '0: run. 1: held in reset.'
+    name: CNT_RST
+    shortdesc: Reset internal counter.
+    type: rw
+  name: PL0_THR_CTRL
+  offset: '0x000000D0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PL Clock 0 Count Value.
+  field:
+  - bits: '15:0'
+    name: LAST_CNT
+    type: rw
+  name: PL0_THR_CNT
+  offset: '0x000000D4'
+  type: rw
+  width: 16
+- default: '0x00000001'
+  description: PL Clock 1 Threshold Control and status
+  field:
+  - bits: '31:16'
+    longdesc: Valid when the [RUNNING] bit = 0, undefined when [RUNNING] = 1.
+    name: CURR_VAL
+    shortdesc: Current clock value as it counts down to 0.
+    type: ro
+  - bits: '15'
+    longdesc: '0: not running. 1: running.'
+    name: RUNNING
+    shortdesc: Counter Status.
+    type: ro
+  - bits: '14:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: 'Prerequisite: program the count into PLx_THR_CNT [LAST_CNT].'
+    name: CPU_START
+    shortdesc: Start counting.
+    type: rw
+  - bits: '0'
+    longdesc: '0: run. 1: held in reset.'
+    name: CNT_RST
+    shortdesc: Reset internal counter.
+    type: rw
+  name: PL1_THR_CTRL
+  offset: '0x000000D8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PL Clock 1 Threshold Count Value.
+  field:
+  - bits: '15:0'
+    name: LAST_CNT
+    type: rw
+  name: PL1_THR_CNT
+  offset: '0x000000DC'
+  type: rw
+  width: 16
+- default: '0x00000001'
+  description: PL Clock 2 Threshold Control and status
+  field:
+  - bits: '31:16'
+    longdesc: Valid when the [RUNNING] bit = 0, undefined when [RUNNING] = 1.
+    name: CURR_VAL
+    shortdesc: Current clock value as it counts down to 0.
+    type: ro
+  - bits: '15'
+    longdesc: '0: not running. 1: running.'
+    name: RUNNING
+    shortdesc: Counter Status.
+    type: ro
+  - bits: '14:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: 'Prerequisite: program the count into PLx_THR_CNT [LAST_CNT].'
+    name: CPU_START
+    shortdesc: Start counting.
+    type: rw
+  - bits: '0'
+    longdesc: '0: run. 1: held in reset.'
+    name: CNT_RST
+    shortdesc: Reset internal counter.
+    type: rw
+  name: PL2_THR_CTRL
+  offset: '0x000000E0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PL Clock 2 Threshold Count Value.
+  field:
+  - bits: '15:0'
+    name: LAST_CNT
+    type: rw
+  name: PL2_THR_CNT
+  offset: '0x000000E4'
+  type: rw
+  width: 16
+- default: '0x00000001'
+  description: PL Clock 3 Threshold Control and status
+  field:
+  - bits: '31:16'
+    longdesc: Valid when the [RUNNING] bit = 0, undefined when [RUNNING] = 1.
+    name: CURR_VAL
+    shortdesc: Current clock value as it counts down to 0.
+    type: ro
+  - bits: '15'
+    longdesc: '0: not running. 1: running.'
+    name: RUNNING
+    shortdesc: Counter Status.
+    type: ro
+  - bits: '14:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: 'Prerequisite: program the count into PLx_THR_CNT [LAST_CNT].'
+    name: CPU_START
+    shortdesc: Start counting.
+    type: rw
+  - bits: '0'
+    longdesc: '0: run. 1: held in reset.'
+    name: CNT_RST
+    shortdesc: Reset internal counter.
+    type: rw
+  name: PL3_THR_CTRL
+  offset: '0x000000E8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PL Clock 3 Threshold Count Value.
+  field:
+  - bits: '15:0'
+    name: LAST_CNT
+    type: rw
+  name: PL3_THR_CNT
+  offset: '0x000000FC'
+  type: rw
+  width: 16
+- default: '0x00051000'
+  description: GEM TimeStamp Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: GEM_TSU_REF_CTRL
+  offset: '0x00000100'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Clock Generator Control.
+  field:
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 1
+    longdesc: '000: IOPLL 001: RPLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: DLL_REF_CTRL
+  offset: '0x00000104'
+  type: rw
+  width: 8
+- default: '0x01001800'
+  description: PS SYSMON Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 2
+    - name: RPLL
+      value: 0
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: RPLL 010: IOPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: PSSYSMON_REF_CTRL
+  offset: '0x00000108'
+  type: rw
+  width: 32
+- default: '0x01000500'
+  description: I2C 0 Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: I2C0_REF_CTRL
+  offset: '0x00000120'
+  type: rw
+  width: 32
+- default: '0x01000500'
+  description: I2C 1 Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:22'
+    name: RESERVED
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: I2C1_REF_CTRL
+  offset: '0x00000124'
+  type: rw
+  width: 32
+- default: '0x00001800'
+  description: Timestamp Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL
+      value: 0
+    - name: RPLL
+      value: 2
+    - name: DPLL_TO_LPD
+      value: 3
+    - name: PS_REF_CLK
+      value: 4
+    longdesc: '000: IOPLL 010: RPLL 011: DPLL_TO_LPD 1xx: PS_REF_CLK'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: TIMESTAMP_REF_CTRL
+  offset: '0x00000128'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Safety Endpoint Connectivity Check.
+  field:
+  - bits: '31:0'
+    name: CHK_VAL
+    type: rw
+  name: SAFETY_CHK
+  offset: '0x00000130'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Clock Monitor Interrupt Status.
+  field:
+  - bits: '15'
+    name: CNTA7_OVER_ERR
+    type: wtc
+  - bits: '14'
+    name: MON7_ERR
+    type: wtc
+  - bits: '13'
+    name: CNTA6_OVER_ERR
+    type: wtc
+  - bits: '12'
+    name: MON6_ERR
+    type: wtc
+  - bits: '11'
+    name: CNTA5_OVER_ERR
+    type: wtc
+  - bits: '10'
+    name: MON5_ERR
+    type: wtc
+  - bits: '9'
+    name: CNTA4_OVER_ERR
+    type: wtc
+  - bits: '8'
+    name: MON4_ERR
+    type: wtc
+  - bits: '7'
+    name: CNTA3_OVER_ERR
+    type: wtc
+  - bits: '6'
+    name: MON3_ERR
+    type: wtc
+  - bits: '5'
+    name: CNTA2_OVER_ERR
+    type: wtc
+  - bits: '4'
+    name: MON2_ERR
+    type: wtc
+  - bits: '3'
+    name: CNTA1_OVER_ERR
+    type: wtc
+  - bits: '2'
+    name: MON1_ERR
+    type: wtc
+  - bits: '1'
+    name: CNTA0_OVER_ERR
+    type: wtc
+  - bits: '0'
+    name: MON0_ERR
+    type: wtc
+  name: CLKMON_STATUS
+  offset: '0x00000140'
+  type: wtc
+  width: 16
+- default: '0x0000FFFF'
+  description: Clock Monitor Interrupt Mask.
+  field:
+  - bits: '15'
+    name: CNTA7_OVER_ERR
+    type: ro
+  - bits: '14'
+    name: MON7_ERR
+    type: ro
+  - bits: '13'
+    name: CNTA6_OVER_ERR
+    type: ro
+  - bits: '12'
+    name: MON6_ERR
+    type: ro
+  - bits: '11'
+    name: CNTA5_OVER_ERR
+    type: ro
+  - bits: '10'
+    name: MON5_ERR
+    type: ro
+  - bits: '9'
+    name: CNTA4_OVER_ERR
+    type: ro
+  - bits: '8'
+    name: MON4_ERR
+    type: ro
+  - bits: '7'
+    name: CNTA3_OVER_ERR
+    type: ro
+  - bits: '6'
+    name: MON3_ERR
+    type: ro
+  - bits: '5'
+    name: CNTA2_OVER_ERR
+    type: ro
+  - bits: '4'
+    name: MON2_ERR
+    type: ro
+  - bits: '3'
+    name: CNTA1_OVER_ERR
+    type: ro
+  - bits: '2'
+    name: MON1_ERR
+    type: ro
+  - bits: '1'
+    name: CNTA0_OVER_ERR
+    type: ro
+  - bits: '0'
+    name: MON0_ERR
+    type: ro
+  name: CLKMON_MASK
+  offset: '0x00000144'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Clock Monitor Interrupt Enable.
+  field:
+  - bits: '15'
+    name: CNTA7_OVER_ERR
+    type: wo
+  - bits: '14'
+    name: MON7_ERR
+    type: wo
+  - bits: '13'
+    name: CNTA6_OVER_ERR
+    type: wo
+  - bits: '12'
+    name: MON6_ERR
+    type: wo
+  - bits: '11'
+    name: CNTA5_OVER_ERR
+    type: wo
+  - bits: '10'
+    name: MON5_ERR
+    type: wo
+  - bits: '9'
+    name: CNTA4_OVER_ERR
+    type: wo
+  - bits: '8'
+    name: MON4_ERR
+    type: wo
+  - bits: '7'
+    name: CNTA3_OVER_ERR
+    type: wo
+  - bits: '6'
+    name: MON3_ERR
+    type: wo
+  - bits: '5'
+    name: CNTA2_OVER_ERR
+    type: wo
+  - bits: '4'
+    name: MON2_ERR
+    type: wo
+  - bits: '3'
+    name: CNTA1_OVER_ERR
+    type: wo
+  - bits: '2'
+    name: MON1_ERR
+    type: wo
+  - bits: '1'
+    name: CNTA0_OVER_ERR
+    type: wo
+  - bits: '0'
+    name: MON0_ERR
+    type: wo
+  name: CLKMON_ENABLE
+  offset: '0x00000148'
+  type: wo
+  width: 16
+- default: '0x00000000'
+  description: Clock Monitor Interrupt Disable.
+  field:
+  - bits: '15'
+    name: CNTA7_OVER_ERR
+    type: wo
+  - bits: '14'
+    name: MON7_ERR
+    type: wo
+  - bits: '13'
+    name: CNTA6_OVER_ERR
+    type: wo
+  - bits: '12'
+    name: MON6_ERR
+    type: wo
+  - bits: '11'
+    name: CNTA5_OVER_ERR
+    type: wo
+  - bits: '10'
+    name: MON5_ERR
+    type: wo
+  - bits: '9'
+    name: CNTA4_OVER_ERR
+    type: wo
+  - bits: '8'
+    name: MON4_ERR
+    type: wo
+  - bits: '7'
+    name: CNTA3_OVER_ERR
+    type: wo
+  - bits: '6'
+    name: MON3_ERR
+    type: wo
+  - bits: '5'
+    name: CNTA2_OVER_ERR
+    type: wo
+  - bits: '4'
+    name: MON2_ERR
+    type: wo
+  - bits: '3'
+    name: CNTA1_OVER_ERR
+    type: wo
+  - bits: '2'
+    name: MON1_ERR
+    type: wo
+  - bits: '1'
+    name: CNTA0_OVER_ERR
+    type: wo
+  - bits: '0'
+    name: MON0_ERR
+    type: wo
+  name: CLKMON_DISABLE
+  offset: '0x0000014C'
+  type: wo
+  width: 16
+- default: '0x00000000'
+  description: Clock Monitor Interrupt Trigger.
+  field:
+  - bits: '15'
+    name: CNTA7_OVER_ERR
+    type: wo
+  - bits: '14'
+    name: MON7_ERR
+    type: wo
+  - bits: '13'
+    name: CNTA6_OVER_ERR
+    type: wo
+  - bits: '12'
+    name: MON6_ERR
+    type: wo
+  - bits: '11'
+    name: CNTA5_OVER_ERR
+    type: wo
+  - bits: '10'
+    name: MON5_ERR
+    type: wo
+  - bits: '9'
+    name: CNTA4_OVER_ERR
+    type: wo
+  - bits: '8'
+    name: MON4_ERR
+    type: wo
+  - bits: '7'
+    name: CNTA3_OVER_ERR
+    type: wo
+  - bits: '6'
+    name: MON3_ERR
+    type: wo
+  - bits: '5'
+    name: CNTA2_OVER_ERR
+    type: wo
+  - bits: '4'
+    name: MON2_ERR
+    type: wo
+  - bits: '3'
+    name: CNTA1_OVER_ERR
+    type: wo
+  - bits: '2'
+    name: MON1_ERR
+    type: wo
+  - bits: '1'
+    name: CNTA0_OVER_ERR
+    type: wo
+  - bits: '0'
+    name: MON0_ERR
+    type: wo
+  name: CLKMON_TRIGGER
+  offset: '0x00000150'
+  type: wo
+  width: 16
+- default: '0x00000000'
+  description: Upper Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Upper Threshold.
+    type: rw
+  name: CHKR0_CLKA_UPPER
+  offset: '0x00000160'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Lower Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Lower Threshold.
+    type: rw
+  name: CHKR0_CLKA_LOWER
+  offset: '0x00000164'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CLK B Counting Value.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: rw
+  name: CHKR0_CLKB_CNT
+  offset: '0x00000168'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Clock Checker 0 Control.
+  field:
+  - bits: '8'
+    longdesc: '0: no effect. 1: check the clock once (self clearing to 0). The start
+      bit must be asserted after all other control bits are set.'
+    name: START_SINGLE
+    shortdesc: Start checking mechanism once.
+    type: rw
+  - bits: '7'
+    longdesc: '0: single check. (or stop checking) 1: continous clock checking. The
+      start bit must be asserted after all other control bits are set.'
+    name: START_CONTINUOUS
+    shortdesc: Start the checking mechanism and keep checking until bit is set back
+      to zero.
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: CLKB_MUX_CTRL
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: rw
+  - bits: '3:1'
+    longdesc: '001: OCM clock. 010: LPD_SWITCH_CLK clock. 011: LPD_LSBUS_CLK clock.
+      100: PMU clock. 101: CSU_PLL_CLK 110: IRO_CLK 111: PS_REF_CLK'
+    name: CLKA_MUX_CTRL
+    shortdesc: '000: RPU clock.'
+    type: rw
+  - bits: '0'
+    name: ENABLE
+    type: rw
+  name: CHKR0_CTRL
+  offset: '0x0000016C'
+  type: rw
+  width: 9
+- default: '0x00000000'
+  description: Upper Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Upper Threshold.
+    type: rw
+  name: CHKR1_CLKA_UPPER
+  offset: '0x00000170'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Lower Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Lower Threshold.
+    type: rw
+  name: CHKR1_CLKA_LOWER
+  offset: '0x00000174'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CLK B Counting Value.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: rw
+  name: CHKR1_CLKB_CNT
+  offset: '0x00000178'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Clock Checker 1 Control.
+  field:
+  - bits: '8'
+    longdesc: '0: no effect. 1: check the clock once (self clearing to 0). The start
+      bit must be asserted after all other control bits are set.'
+    name: START_SINGLE
+    shortdesc: Start checking mechanism once.
+    type: rw
+  - bits: '7'
+    longdesc: '0: single check. (or stop checking) 1: continous clock checking. The
+      start bit must be asserted after all other control bits are set.'
+    name: START_CONTINUOUS
+    shortdesc: Start the checking mechanism and keep checking until bit is set back
+      to zero.
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: CLKB_MUX_CTRL
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: rw
+  - bits: '3:1'
+    longdesc: '001: OCM clock. 010: LPD_SWITCH_CLK clock. 011: LPD_LSBUS_CLK clock.
+      100: PMU clock. 101: CSU_PLL_CLK 110: IRO_CLK 111: PS_REF_CLK'
+    name: CLKA_MUX_CTRL
+    shortdesc: '000: RPU clock.'
+    type: rw
+  - bits: '0'
+    name: ENABLE
+    type: rw
+  name: CHKR1_CTRL
+  offset: '0x0000017C'
+  type: rw
+  width: 9
+- default: '0x00000000'
+  description: Upper Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Upper Threshold.
+    type: rw
+  name: CHKR2_CLKA_UPPER
+  offset: '0x00000180'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Lower Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Lower Threshold.
+    type: rw
+  name: CHKR2_CLKA_LOWER
+  offset: '0x00000184'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CLK B Counting Value.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: rw
+  name: CHKR2_CLKB_CNT
+  offset: '0x00000188'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Clock Checker 2 Control.
+  field:
+  - bits: '8'
+    longdesc: '0: no effect. 1: check the clock once (self clearing to 0). The start
+      bit must be asserted after all other control bits are set.'
+    name: START_SINGLE
+    shortdesc: Start checking mechanism once.
+    type: rw
+  - bits: '7'
+    longdesc: '0: single check. (or stop checking) 1: continous clock checking. The
+      start bit must be asserted after all other control bits are set.'
+    name: START_CONTINUOUS
+    shortdesc: Start the checking mechanism and keep checking until bit is set back
+      to zero.
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: CLKB_MUX_CTRL
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: rw
+  - bits: '3:1'
+    longdesc: '001: OCM clock. 010: LPD_SWITCH_CLK clock. 011: LPD_LSBUS_CLK clock.
+      100: PMU clock. 101: CSU_PLL_CLK 110: IRO_CLK 111: PS_REF_CLK'
+    name: CLKA_MUX_CTRL
+    shortdesc: '000: RPU clock.'
+    type: rw
+  - bits: '0'
+    name: ENABLE
+    type: rw
+  name: CHKR2_CTRL
+  offset: '0x0000018C'
+  type: rw
+  width: 9
+- default: '0x00000000'
+  description: Upper Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Upper Threshold.
+    type: rw
+  name: CHKR3_CLKA_UPPER
+  offset: '0x00000190'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Lower Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Lower Threshold.
+    type: rw
+  name: CHKR3_CLKA_LOWER
+  offset: '0x00000194'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CLK B Counting Value.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: rw
+  name: CHKR3_CLKB_CNT
+  offset: '0x00000198'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Clock Checker 3 Control.
+  field:
+  - bits: '8'
+    longdesc: '0: no effect. 1: check the clock once (self clearing to 0). The start
+      bit must be asserted after all other control bits are set.'
+    name: START_SINGLE
+    shortdesc: Start checking mechanism once.
+    type: rw
+  - bits: '7'
+    longdesc: '0: single check. (or stop checking) 1: continous clock checking. The
+      start bit must be asserted after all other control bits are set.'
+    name: START_CONTINUOUS
+    shortdesc: Start the checking mechanism and keep checking until bit is set back
+      to zero.
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: CLKB_MUX_CTRL
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: rw
+  - bits: '3:1'
+    longdesc: '001: OCM clock. 010: LPD_SWITCH_CLK clock. 011: LPD_LSBUS_CLK clock.
+      100: PMU clock. 101: CSU_PLL_CLK 110: IRO_CLK 111: PS_REF_CLK'
+    name: CLKA_MUX_CTRL
+    shortdesc: '000: RPU clock.'
+    type: rw
+  - bits: '0'
+    name: ENABLE
+    type: rw
+  name: CHKR3_CTRL
+  offset: '0x0000019C'
+  type: rw
+  width: 9
+- default: '0x00000000'
+  description: Upper Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Upper Threshold.
+    type: rw
+  name: CHKR4_CLKA_UPPER
+  offset: '0x000001A0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Lower Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Lower Threshold.
+    type: rw
+  name: CHKR4_CLKA_LOWER
+  offset: '0x000001A4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CLK B Counting Value.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: rw
+  name: CHKR4_CLKB_CNT
+  offset: '0x000001A8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Clock Checker 4 Control.
+  field:
+  - bits: '8'
+    longdesc: '0: no effect. 1: check the clock once (self clearing to 0). The start
+      bit must be asserted after all other control bits are set.'
+    name: START_SINGLE
+    shortdesc: Start checking mechanism once.
+    type: rw
+  - bits: '7'
+    longdesc: '0: single check. (or stop checking) 1: continous clock checking. The
+      start bit must be asserted after all other control bits are set.'
+    name: START_CONTINUOUS
+    shortdesc: Start the checking mechanism and keep checking until bit is set back
+      to zero.
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: CLKB_MUX_CTRL
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: rw
+  - bits: '3:1'
+    longdesc: '001: OCM clock. 010: LPD_SWITCH_CLK clock. 011: LPD_LSBUS_CLK clock.
+      100: PMU clock. 101: CSU_PLL_CLK 110: IRO_CLK 111: PS_REF_CLK'
+    name: CLKA_MUX_CTRL
+    shortdesc: '000: RPU clock.'
+    type: rw
+  - bits: '0'
+    name: ENABLE
+    type: rw
+  name: CHKR4_CTRL
+  offset: '0x000001AC'
+  type: rw
+  width: 9
+- default: '0x00000000'
+  description: Upper Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Upper Threshold.
+    type: rw
+  name: CHKR5_CLKA_UPPER
+  offset: '0x000001B0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Lower Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Lower Threshold.
+    type: rw
+  name: CHKR5_CLKA_LOWER
+  offset: '0x000001B4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CLK B Counting Value.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: rw
+  name: CHKR5_CLKB_CNT
+  offset: '0x000001B8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Clock Checker 5 Control.
+  field:
+  - bits: '8'
+    longdesc: '0: no effect. 1: check the clock once (self clearing to 0). The start
+      bit must be asserted after all other control bits are set.'
+    name: START_SINGLE
+    shortdesc: Start checking mechanism once.
+    type: rw
+  - bits: '7'
+    longdesc: '0: single check. (or stop checking) 1: continous clock checking. The
+      start bit must be asserted after all other control bits are set.'
+    name: START_CONTINUOUS
+    shortdesc: Start the checking mechanism and keep checking until bit is set back
+      to zero.
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: CLKB_MUX_CTRL
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: rw
+  - bits: '3:1'
+    longdesc: '001: OCM clock. 010: LPD_SWITCH_CLK clock. 011: LPD_LSBUS_CLK clock.
+      100: PMU clock. 101: CSU_PLL_CLK 110: IRO_CLK 111: PS_REF_CLK'
+    name: CLKA_MUX_CTRL
+    shortdesc: '000: RPU clock.'
+    type: rw
+  - bits: '0'
+    name: ENABLE
+    type: rw
+  name: CHKR5_CTRL
+  offset: '0x000001BC'
+  type: rw
+  width: 9
+- default: '0x00000000'
+  description: Upper Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Upper Threshold.
+    type: rw
+  name: CHKR6_CLKA_UPPER
+  offset: '0x000001C0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Lower Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Lower Threshold.
+    type: rw
+  name: CHKR6_CLKA_LOWER
+  offset: '0x000001C4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CLK B Counting Value.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: rw
+  name: CHKR6_CLKB_CNT
+  offset: '0x000001C8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Clock Checker 6 H723Control.
+  field:
+  - bits: '8'
+    longdesc: '0: no effect. 1: check the clock once (self clearing to 0). The start
+      bit must be asserted after all other control bits are set.'
+    name: START_SINGLE
+    shortdesc: Start checking mechanism once.
+    type: rw
+  - bits: '7'
+    longdesc: '0: single check. (or stop checking) 1: continous clock checking. The
+      start bit must be asserted after all other control bits are set.'
+    name: START_CONTINUOUS
+    shortdesc: Start the checking mechanism and keep checking until bit is set back
+      to zero.
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: CLKB_MUX_CTRL
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: rw
+  - bits: '3:1'
+    longdesc: '001: OCM clock. 010: LPD_SWITCH_CLK clock. 011: LPD_LSBUS_CLK clock.
+      100: PMU clock. 101: CSU_PLL_CLK 110: IRO_CLK 111: PS_REF_CLK'
+    name: CLKA_MUX_CTRL
+    shortdesc: '000: RPU clock.'
+    type: rw
+  - bits: '0'
+    name: ENABLE
+    type: rw
+  name: CHKR6_CTRL
+  offset: '0x000001CC'
+  type: rw
+  width: 9
+- default: '0x00000000'
+  description: Upper Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Upper Threshold.
+    type: rw
+  name: CHKR7_CLKA_UPPER
+  offset: '0x000001D0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Lower Clock Comparison Threshold.
+  field:
+  - bits: '31:0'
+    longdesc: This must be set up before a start bit is set (there is no clock crossing
+      from this bus to the comparison logic.)
+    name: THRSHLD
+    shortdesc: Lower Threshold.
+    type: rw
+  name: CHKR7_CLKA_LOWER
+  offset: '0x000001D4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: CLK B Counting Value.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: rw
+  name: CHKR7_CLKB_CNT
+  offset: '0x000001D8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Clock Checker 7 Control.
+  field:
+  - bits: '8'
+    longdesc: '0: no effect. 1: check the clock once (self clearing to 0). The start
+      bit must be asserted after all other control bits are set.'
+    name: START_SINGLE
+    shortdesc: Start checking mechanism once.
+    type: rw
+  - bits: '7'
+    longdesc: '0: single check. (or stop checking) 1: continous clock checking. The
+      start bit must be asserted after all other control bits are set.'
+    name: START_CONTINUOUS
+    shortdesc: Start the checking mechanism and keep checking until bit is set back
+      to zero.
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: CLKB_MUX_CTRL
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: rw
+  - bits: '3:1'
+    longdesc: '001: OCM clock. 010: LPD_SWITCH_CLK clock. 011: LPD_LSBUS_CLK clock.
+      100: PMU clock. 101: CSU_PLL_CLK 110: IRO_CLK 111: PS_REF_CLK'
+    name: CLKA_MUX_CTRL
+    shortdesc: '000: RPU clock.'
+    type: rw
+  - bits: '0'
+    name: ENABLE
+    type: rw
+  name: CHKR7_CTRL
+  offset: '0x000001DC'
+  type: rw
+  width: 9
+- default: '0x00000000'
+  description: Software controlled BOOT MODE.
+  field:
+  - bits: '19:16'
+    name: RESERVED
+    type: rw
+  - bits: '15:12'
+    name: ALT_BOOT_MODE
+    type: rw
+  - bits: '11:9'
+    name: RESERVED
+    type: rw
+  - bits: '8'
+    longdesc: '0: POR reset value. 1: Software value [alt_boot_mode] bit field.'
+    name: USE_ALT
+    shortdesc: Used to control which value is in the [boot_mode] field.
+    type: rw
+  - bits: '7:4'
+    name: RESERVED
+    type: rw
+  - bits: '3:0'
+    longdesc: Once that happens, this bit field will contain the [alt_boot_mode] value
+      written by software. Since the initial value is defined from the Boot Mode pins,
+      the reset value is listed as 'X.
+    name: BOOT_MODE
+    shortdesc: Boot Mode values from the mode pins captured at POR until software
+      asserts the [use_alt] bit.
+    type: ro
+  name: BOOT_MODE_USER
+  offset: '0x00000200'
+  type: mixed
+  width: 20
+- default: '0x00000000'
+  description: Hardware controlled BOOT MODE register.
+  field:
+  - bits: '15:12'
+    name: RESERVED
+    type: rw
+  - bits: '11:8'
+    name: BOOT_MODE2
+    type: ro
+  - bits: '7:4'
+    name: BOOT_MODE1
+    type: ro
+  - bits: '3:0'
+    name: BOOT_MODE0
+    type: ro
+  name: BOOT_MODE_POR
+  offset: '0x00000204'
+  type: mixed
+  width: 16
+- default: '0x00000001'
+  description: PS_SRST_B Pin Control and Trigger.
+  field:
+  - bits: '4'
+    longdesc: Cause a system reset to occur. This is the equivalent to asserting the
+      external PS_SRST_B reset signal pin.
+    name: SOFT_RESET
+    shortdesc: Software reset.
+    type: rw
+  - bits: '0'
+    longdesc: '1: PS_SRST_B reset pin will be disabled. System reset will disable.
+      BootROM will enable.'
+    name: SRST_DIS
+    shortdesc: '0: PS_SRST_B reset pin will functional properly.'
+    type: rw
+  name: RESET_CTRL
+  offset: '0x00000218'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Records the Reason for the Block-only Reset.
+  field:
+  - bits: '0'
+    name: DEBUG_ONLY
+    type: wtc
+  name: BLOCKONLY_RST
+  offset: '0x0000021C'
+  type: mixed
+  width: 4
+- default: '0x00000001'
+  description: Records the Reason for the Reset.
+  field:
+  - bits: '14:7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    longdesc: Write to BLOCKONLY_RST [debug_only].
+    name: DEBUG_SYS
+    shortdesc: Software Debugger Reset.
+    type: wtc
+  - bits: '5'
+    longdesc: Write to RESET_CTRL [soft_reset].
+    name: SOFT
+    shortdesc: Software System Reset.
+    type: wtc
+  - bits: '4'
+    name: SRST
+    type: wtc
+  - bits: '3'
+    longdesc: Write to PMU_GLOBAL.GLOBAL_RESET [PS_ONLY_RST].
+    name: PSONLY_RESET_REQ
+    shortdesc: PS-only Reset.
+    type: wtc
+  - bits: '2'
+    longdesc: A system error triggered a system reset.
+    name: PMU_SYS_RESET
+    shortdesc: Internal System Reset.
+    type: wtc
+  - bits: '1'
+    longdesc: A system error triggered a POR reset.
+    name: INTERNAL_POR
+    shortdesc: Internal POR.
+    type: wtc
+  - bits: '0'
+    name: EXTERNAL_POR
+    type: wtc
+  name: RESET_REASON
+  offset: '0x00000220'
+  type: mixed
+  width: 16
+- default: '0x0000000F'
+  description: Software Reset of Ethernet GEM Controllers
+  field:
+  - bits: '15:4'
+    name: RESERVED
+    type: rw
+  - bits: '3'
+    name: GEM3_RESET
+    type: rw
+  - bits: '2'
+    name: GEM2_RESET
+    type: rw
+  - bits: '1'
+    name: GEM1_RESET
+    type: rw
+  - bits: '0'
+    name: GEM0_RESET
+    type: rw
+  name: RST_LPD_IOU0
+  offset: '0x00000230'
+  type: rw
+  width: 16
+- default: '0x0017FFFF'
+  description: IOP Software Reset Controls
+  field:
+  - bits: '31:21'
+    name: RESERVED
+    type: rw
+  - bits: '20'
+    name: TIMESTAMP_RESET
+    type: rw
+  - bits: '19'
+    name: IOU_CC_RESET
+    type: rw
+  - bits: '18'
+    name: GPIO_RESET
+    type: rw
+  - bits: '17'
+    name: LPD_DMA_RESET
+    type: rw
+  - bits: '16'
+    name: NAND_RESET
+    type: rw
+  - bits: '15'
+    name: SWDT_RESET
+    type: rw
+  - bits: '14'
+    name: TTC3_RESET
+    type: rw
+  - bits: '13'
+    name: TTC2_RESET
+    type: rw
+  - bits: '12'
+    name: TTC1_RESET
+    type: rw
+  - bits: '11'
+    name: TTC0_RESET
+    type: rw
+  - bits: '10'
+    name: I2C1_RESET
+    type: rw
+  - bits: '9'
+    name: I2C0_RESET
+    type: rw
+  - bits: '8'
+    name: CAN1_RESET
+    type: rw
+  - bits: '7'
+    name: CAN0_RESET
+    type: rw
+  - bits: '6'
+    name: SDIO1_RESET
+    type: rw
+  - bits: '5'
+    name: SDIO0_RESET
+    type: rw
+  - bits: '4'
+    name: SPI1_RESET
+    type: rw
+  - bits: '3'
+    name: SPI0_RESET
+    type: rw
+  - bits: '2'
+    name: UART1_RESET
+    type: rw
+  - bits: '1'
+    name: UART0_RESET
+    type: rw
+  - bits: '0'
+    name: QSPI_RESET
+    type: rw
+  name: RST_LPD_IOU2
+  offset: '0x00000238'
+  type: rw
+  width: 32
+- default: '0x00188FDF'
+  description: Software Reset Control for LPD System Elements.
+  field:
+  - bits: '23'
+    name: FPD_RESET
+    type: rw
+  - bits: '22:21'
+    name: RESERVED
+    type: rw
+  - bits: '20'
+    name: LPD_SWDT_RESET
+    type: rw
+  - bits: '19'
+    name: S_AXI_LPD_RESET
+    type: rw
+  - bits: '18'
+    name: RESERVED
+    type: rw
+  - bits: '17'
+    name: SYSMON_RESET
+    type: rw
+  - bits: '16'
+    name: RTC_RESET
+    type: rw
+  - bits: '15'
+    name: APM_RESET
+    type: rw
+  - bits: '14'
+    name: IPI_RESET
+    type: rw
+  - bits: '13:12'
+    name: RESERVED
+    type: rw
+  - bits: '11'
+    name: USB1_APB_RESET
+    type: rw
+  - bits: '10'
+    name: USB0_APB_RESET
+    type: rw
+  - bits: '9'
+    name: USB1_HIBERRESET
+    type: rw
+  - bits: '8'
+    name: USB0_HIBERRESET
+    type: rw
+  - bits: '7'
+    name: USB1_CORERESET
+    type: rw
+  - bits: '6'
+    name: USB0_CORERESET
+    type: rw
+  - bits: '5'
+    name: RESERVED
+    type: rw
+  - bits: '4'
+    name: RPU_PGE_RESET
+    type: rw
+  - bits: '3'
+    name: OCM_RESET
+    type: rw
+  - bits: '2'
+    name: RPU_AMBA_RESET
+    type: rw
+  - bits: '1'
+    name: RPU_R51_RESET
+    type: rw
+  - bits: '0'
+    name: RPU_R50_RESET
+    type: rw
+  name: RST_LPD_TOP
+  offset: '0x0000023C'
+  type: rw
+  width: 24
+- default: '0x00000033'
+  description: Debug control for both the LPD and FPD.
+  field:
+  - bits: '15'
+    longdesc: After debugger requests reset, it is up to the user to toggle this and
+      the debug signals correctly.
+    name: DBG_ACK
+    shortdesc: This is the ACK signal to the debug reset request from DAP controller.
+    type: rw
+  - bits: '14:6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: RPU_DBG1_RESET
+    type: rw
+  - bits: '4'
+    name: RPU_DBG0_RESET
+    type: rw
+  - bits: '3:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: DBG_LPD_RESET
+    type: rw
+  - bits: '0'
+    name: DBG_FPD_RESET
+    type: rw
+  name: RST_LPD_DBG
+  offset: '0x00000240'
+  type: rw
+  width: 16
+- default: '0x000003FF'
+  description: I/O Bank 503 Drive0 Control.
+  field:
+  - bits: '9:0'
+    longdesc: 'Bit[0]: Bit[1]: Bit[2]: Bit[3]: Bit[4]: Bit[5]: Bit[6]: Bit[7]:'
+    name: DRIVE0
+    shortdesc: Each bit applies to a single I/O.
+    type: rw
+  name: BANK3_CTRL0
+  offset: '0x00000270'
+  type: rw
+  width: 10
+- default: '0x000003FF'
+  description: I/O Bank 503 Drive1 Control.
+  field:
+  - bits: '9:0'
+    name: DRIVE1
+    type: rw
+  name: BANK3_CTRL1
+  offset: '0x00000274'
+  type: rw
+  width: 10
+- default: '0x000003FF'
+  description: I/O Bank 503 Schmitt or CMOS Input Select.
+  field:
+  - bits: '9:0'
+    name: SCHMITT_CMOS_N
+    type: rw
+  name: BANK3_CTRL2
+  offset: '0x00000278'
+  type: rw
+  width: 10
+- default: '0x000003FF'
+  description: I/O Bank 503 Pull-up/down Select.
+  field:
+  - bits: '9:0'
+    name: PULL_HIGH_LOW_N
+    type: rw
+  name: BANK3_CTRL3
+  offset: '0x0000027C'
+  type: rw
+  width: 10
+- default: '0x000003FF'
+  description: I/O Bank 503 Pull-up/down Enable.
+  field:
+  - bits: '9:0'
+    name: PULL_ENABLE
+    type: rw
+  name: BANK3_CTRL4
+  offset: '0x00000280'
+  type: rw
+  width: 10
+- default: '0x00000000'
+  description: I/O Bank 503 Slew Rate Control.
+  field:
+  - bits: '9:0'
+    name: SLOW_FAST_SLEW_N
+    type: rw
+  name: BANK3_CTRL5
+  offset: '0x00000284'
+  type: rw
+  width: 10
+- default: '0x00000000'
+  description: Voltage mode status for DIO bank 3
+  field:
+  - bits: '0'
+    longdesc: 0 = 2.5/3.3v mode. 1 = 1.8v mode.
+    name: VMODE_1P8_3P3_N
+    shortdesc: Single bit for the bank.
+    type: ro
+  name: BANK3_STATUS
+  offset: '0x00000288'
+  type: ro
+  width: 10

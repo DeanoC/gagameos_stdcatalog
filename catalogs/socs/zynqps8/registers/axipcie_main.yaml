@@ -1,0 +1,1762 @@
+bank:
+- address: '0xfd0e0000'
+  name: AXIPCIE_MAIN
+description: PCIe Bridge - Main Control and Status
+register:
+- default: '0x00010000'
+  description: PCI Express Receive Access and BAR Configuration
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17'
+    name: CFG_DISABLE_PCIE_DMA_REG_ACCESS
+    type: rw
+  - bits: '16'
+    name: CFG_DISABLE_PCIE_BRIDGE_REG_ACCESS
+    type: rw
+  - bits: '15:3'
+    name: RESERVED
+    type: ro
+  - bits: '2:0'
+    longdesc: If a received PCI Express read/write requests' BAR hit information is
+      equal to cfg_dma_reg_bar, then the transaction is terminated by the internal
+      DMA/Bridge Register implementation, otherwise the transaction is forwarded to
+      the AXI Master Interface. cfg_dma_reg_bar is only for received PCI Express read
+      and write requests and has no impact on received AXI Slave Interface requests.
+    name: CFG_DMA_REG_BAR
+    shortdesc: Determines which PCI Express Base Address Region (BAR) is used to access
+      DMA and Bridge Registers from PCI Express.
+    type: rw
+  name: BRIDGE_CORE_CFG_PCIE_RX0
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PCI Express Receive Transaction Attribute Handling
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    longdesc: During Root Port PCI Express hierarchy enumeration, PCI Express software
+      is generally required to issue read and write PCI Express Configuration transactions
+      to PCI Express function numbers that may not exist in order to determine which
+      function numbers have devices present. PCI Express Configuration read/write
+      requests to non-existent functions will return completions with Unsupported
+      Requests status which is considered a serious error for other types of AXI Slave
+      Interface transactions. Since Unsupported Request responses are expected during
+      PCI Express hierarchy enumeration, this register enables such responses to optionally
+      be downgraded in severity. In many cases Root Complex PCI Express Configuration
+      Software will require (cfg_rd_ur_is_ur_ok1s_n == 0) behavior.
+    name: CFG_RD_UR_IS_UR_OK1S_N
+    shortdesc: Determines the AXI response for AXI Slave Interface-initiated PCI Express
+      Configuration read/write transactions that are completed with Unsupported Request
+      status.
+    type: rw
+  - bits: '7:4'
+    longdesc: If a received PCI Express read request that is forwarded to the AXI
+      Master Interface hits an Ingress Translation that has cache attribute replacement
+      enabled, then the Ingress Translation cache value takes priority.
+    name: CFG_PCIE_RX_ARCACHE
+    shortdesc: Value to use for the AXI Master Interface m_arcache port for received
+      PCI Express Memory Read requests, with the No Snoop attribute = 0, that are
+      forwarded to the AXI Master Interface for completion.
+    type: rw
+  - bits: '3:0'
+    longdesc: If a received PCI Express write request that is forwarded to the AXI
+      Master Interface hits an Ingress Translation that has cache attribute replacement
+      enabled, then the Ingress Translation cache value takes priority.
+    name: CFG_PCIE_RX_AWCACHE
+    shortdesc: Value to use for the AXI Master Interface m_awcache port for received
+      PCI Express Memory Write requests, with the No Snoop attribute = 0, that are
+      forwarded to the AXI Master Interface for completion.
+    type: rw
+  name: BRIDGE_CORE_CFG_PCIE_RX1
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AXI Master Max Payload Size Configuration
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: ro
+  - bits: '6:4'
+    longdesc: AXI Master Interface read requests exceeding the configured maximum
+      read request size are fragmented into multiple AXI transactions to comply with
+      the requested max read request size.
+    name: CFG_M_MAX_RD_REQ_SIZE
+    shortdesc: Maximum read request size allowed for AXI Master Interface read transactions.
+    type: rw
+  - bits: '3'
+    name: RESERVED
+    type: ro
+  - bits: '2:0'
+    longdesc: AXI Master Interface write requests exceeding the configured maximum
+      write request size are fragmented into multiple AXI transactions to comply with
+      the requested max write request size.
+    name: CFG_M_MAX_WR_REQ_SIZE
+    shortdesc: Maximum write request size allowed for AXI Master Interface write transactions.
+    type: rw
+  name: BRIDGE_CORE_CFG_AXI_MASTER
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PCI Express Transmit Cut Through Configuration
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: Enabling cut-through routing reduces latency, but may only be enabled
+      when AXI bandwidth is guaranteed to be >= PCI Express bandwidth under all possible
+      conditions.
+    name: CFG_PCIE_TX_CUT_THROUGH
+    shortdesc: Enables/Disables cut-through routing for PCIe TLP transmissions.
+    type: rw
+  name: BRIDGE_CORE_CFG_PCIE_TX
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PCI Express Core Interrupt Routing Configuration
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'These interrupt sources should generally be routed to the Root Complex
+      unless the local CPU software is designed to handle them. 0: Generate Interrupts
+      to the PCIe Host; 1: Generate Interrupts to the local processor on the AXI side'
+    name: CFG_PCIE_INT_AXI_PCIE_N
+    shortdesc: Determines whether the interrupt events whose status is recorded in
+      Received Interrupt and Message Controller - Miscellaneous Interrupt Status are
+      routed to PCI Express or AXI.
+    type: rw
+  name: BRIDGE_CORE_CFG_INTERRUPT
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ECC RAM 1-bit Error Correction Enable/Disable (designs with ECC support
+    only)
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: ro
+  - bits: '14'
+    name: CFG_RAM_DMA_SGL_DST_DIS_COR
+    type: rw
+  - bits: '13'
+    name: CFG_RAM_DMA_SGL_SRC_DIS_COR
+    type: rw
+  - bits: '12'
+    name: CFG_RAM_DMA_CH_REG_DIS_COR
+    type: rw
+  - bits: '11'
+    name: CFG_RAM_DMA_MSIX_TAB_DIS_COR
+    type: rw
+  - bits: '10:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: CFG_RAM_DMA_AXI_S_W_DIS_COR
+    type: rw
+  - bits: '7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    name: CFG_RAM_DMA_AXI_M_R_DIS_COR
+    type: rw
+  - bits: '5'
+    name: CFG_RAM_DMA_PCIE_S_CD_DIS_COR
+    type: rw
+  - bits: '4'
+    name: CFG_RAM_DMA_PCIE_S_RA_DIS_COR
+    type: rw
+  - bits: '3'
+    name: CFG_RAM_DMA_PCIE_S_W_DIS_COR
+    type: rw
+  - bits: '2'
+    name: CFG_RAM_DMA_PCIE_S_WA_DIS_COR
+    type: rw
+  - bits: '1'
+    name: CFG_RAM_DMA_PCIE_TX_W_DIS_COR
+    type: rw
+  - bits: '0'
+    name: CFG_RAM_DMA_PCIE_M_R_DIS_COR
+    type: rw
+  name: BRIDGE_CORE_CFG_RAM_DISABLE0
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ECC RAM 2-bit Error Handling Enable/Disable (designs with ECC support
+    only)
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: ro
+  - bits: '14'
+    name: CFG_RAM_DMA_SGL_DST_DIS_ERR
+    type: rw
+  - bits: '13'
+    name: CFG_RAM_DMA_SGL_SRC_DIS_ERR
+    type: rw
+  - bits: '12'
+    name: CFG_RAM_DMA_CH_REG_DIS_ERR
+    type: rw
+  - bits: '11'
+    name: CFG_RAM_DMA_MSIX_TAB_DIS_ERR
+    type: rw
+  - bits: '10:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: CFG_RAM_DMA_AXI_S_W_DIS_ERR
+    type: rw
+  - bits: '7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    name: CFG_RAM_DMA_AXI_M_R_DIS_ERR
+    type: rw
+  - bits: '5'
+    name: CFG_RAM_DMA_PCIE_S_CD_DIS_ERR
+    type: rw
+  - bits: '4'
+    name: CFG_RAM_DMA_PCIE_S_RA_DIS_ERR
+    type: rw
+  - bits: '3'
+    name: CFG_RAM_DMA_PCIE_S_W_DIS_ERR
+    type: rw
+  - bits: '2'
+    name: CFG_RAM_DMA_PCIE_S_WA_DIS_ERR
+    type: rw
+  - bits: '1'
+    name: CFG_RAM_DMA_PCIE_TX_W_DIS_ERR
+    type: rw
+  - bits: '0'
+    name: CFG_RAM_DMA_PCIE_M_R_DIS_ERR
+    type: rw
+  name: BRIDGE_CORE_CFG_RAM_DISABLE1
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000003'
+  description: PCI Express Receive Completion Ordering Configuration
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    longdesc: cfg_enable_cfgio_wr_ro == 1 and == 0 are both compliant with PCIe ordering
+      rules as received write transaction passing is permitted but not required for
+      Configuration Writes and I/O Writes.
+    name: CFG_ENABLE_CFGIO_WR_RO
+    shortdesc: Configuration Write and I/O Write Received Completion Ordering Configuration.
+    type: rw
+  - bits: '0'
+    longdesc: cfg_enable_dma_ro == 1 is not PCIe compliant, however, this optimization
+      is typically fine for most applications and has higher DMA performance due to
+      removing unnecessary transaction blocking.
+    name: CFG_ENABLE_DMA_RO
+    shortdesc: PCI Express Received DMA Read Completion Ordering Configuration.
+    type: rw
+  name: BRIDGE_CORE_CFG_PCIE_RELAXED_ORDER
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PCI Express Receive Message Filtering Configuration
+  field:
+  - bits: '31:16'
+    name: CFG_DESIRED_VEN_MSG_VEN_ID
+    type: rw
+  - bits: '15'
+    name: CFG_DESIRED_VEN_MSG_VEN_INV
+    type: rw
+  - bits: '14'
+    name: CFG_DESIRED_VEN_MSG_EN
+    type: rw
+  - bits: '13'
+    longdesc: When 0 such messages will be silently dropped and not forwarded.
+    name: CFG_ENABLE_OTH_MSG_FWD
+    shortdesc: When 1, received PCIe messages with msg_code[7:4] not matching 0x1,
+      0x2, 0x3, 0x5, or 0x7 (other message types) will be forwarded to the AXI Master
+      Interface.
+    type: rw
+  - bits: '12:8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    longdesc: When 0 such messages will be silently dropped and not forwarded.
+    name: CFG_ENABLE_VEN_MSG_FWD
+    shortdesc: When 1, received PCIe messages with msg_code[7:4] not matching 0x1,
+      0x2, 0x3, 0x5, or 0x7 (other message types) will be forwarded to the AXI Master
+      Interface.
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    longdesc: When 0 such messages will silently be dropped and not forwarded.
+    name: CFG_ENABLE_SLT_MSG_FWD
+    shortdesc: When 1, received PCIe messages with msg_code[7:4] == 0x5 (such as Set
+      Slot Power Limit) will be forwarded to the AXI Master Interface.
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    longdesc: When 0 such messages will be silently dropped and not forwarded.
+    name: CFG_ENABLE_ERR_MSG_FWD
+    shortdesc: When 1, received PCIe messages with msg_code[7:4] == 0x3 (such as ERR_COR,
+      ERR_NONFATAL, ERR_FATAL) will be forwarded to the AXI Master Interface.
+    type: rw
+  - bits: '2'
+    longdesc: When 0 such messages will be silently dropped and not forwarded.
+    name: CFG_ENABLE_INT_MSG_FWD
+    shortdesc: When 1, received PCIe messages with msg_code[7:4] == 0x2 (Assert_INT[A,B,C,D],
+      Deassert_INT[A,B,C,D]) will be forwarded to the AXI Master Interface.
+    type: rw
+  - bits: '1'
+    longdesc: When 0 such messages will be silently dropped and not forwarded.
+    name: CFG_ENABLE_PM_MSG_FWD
+    shortdesc: When 1, received PCIe messages with msg_code[7:4] == 0x1 (Power Management
+      messages such as PME_Turn_Off, PME_TO_ACK) will be forwarded to the AXI Master
+      Interface.
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: ro
+  name: BRIDGE_CORE_CFG_PCIE_RX_MSG_FILTER
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PCI Express and AXI Read Reorder Queue Completion Ordering Configuration
+  field:
+  - bits: '31'
+    longdesc: Both 0 & 1 values are compliant with PCIe and AXI ordering requirements.
+      A 1 value will increase read completion latency when read completions are received
+      out of order. The recommended default is 0 and will produce the highest performance.
+    name: CFG_PCIE_REQ_ORDER_STRICT
+    shortdesc: For AXI Master Read Requests.
+    type: rw
+  - bits: '30'
+    longdesc: Both 0 & 1 values are compliant with PCIe and AXI ordering requirements.
+      A 1 value will increase read completion latency when read completions are received
+      out of order. The recommended default is 0 and will produce the highest performance.
+    name: CFG_AXI_REQ_ORDER_STRICT
+    shortdesc: For PCIe Master (Transmitted) Read Requests.
+    type: rw
+  - bits: '29:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: '* cfg_axi_req_order_id_mask[i] == 1. Consider s_arid[i] when determining
+      the allowed order of read completions to AXI Slave read requests. * cfg_axi_req_order_id_mask[i]
+      == 0. Do not consider s_arid[i] when determining the allowed order of read completions
+      to AXI.'
+    name: CFG_AXI_REQ_ORDER_ID_MASK
+    shortdesc: Determines which AXI Slave Interface s_arid[SID-1:0] bits are considered
+      when cfg_axi_rq_req_order_strict = 0.
+    type: rw
+  name: BRIDGE_CORE_CFG_RQ_REQ_ORDER
+  offset: '0x00000024'
+  type: mixed
+  width: 32
+- default: '0x00200200'
+  description: PCI Express Transmit Completion Header and Data Credit Metering Configuration
+  field:
+  - bits: '31'
+    name: CFG_PCIE_CREDIT_EN
+    type: rw
+  - bits: '30'
+    name: CFG_PCIE_CREDIT_CH_INF
+    type: rw
+  - bits: '29'
+    name: CFG_PCIE_CREDIT_CD_INF
+    type: rw
+  - bits: '28:24'
+    name: RESERVED
+    type: ro
+  - bits: '23:16'
+    longdesc: One CH credit == space for 1 Completion TLP Header.
+    name: CFG_PCIE_CREDIT_CH_VAL
+    shortdesc: Number of available CH credits.
+    type: rw
+  - bits: '15:12'
+    name: RESERVED
+    type: ro
+  - bits: '11:0'
+    longdesc: One CD credit == space for 16 bytes of Completion TLP Payload.
+    name: CFG_PCIE_CREDIT_CD_VAL
+    shortdesc: Number of available CD credits.
+    type: rw
+  name: BRIDGE_CORE_CFG_PCIE_CREDIT
+  offset: '0x00000028'
+  type: mixed
+  width: 32
+- default: '0x00000BEA'
+  description: AXI Master Write Completion Timeout Configuration
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: A timeout will occur after 14 to 15 w_ticks with w_ticks occuring at
+      an interval of (256*axi_m_w_tick_count) AXI clocks. A value of 0 disables the
+      timeout mechanism. For example axi_m_w_tick_count==7 results in a timeout range
+      of 50.176uS to 53.760uS when the AXI Clock is 500 MHz.
+    name: AXI_M_W_TICK_COUNT
+    shortdesc: Determines the AXI Master write request timeout period.
+    type: rw
+  name: BRIDGE_CORE_CFG_AXI_M_W_TICK_COUNT
+  offset: '0x0000002C'
+  type: mixed
+  width: 32
+- default: '0x00000BEA'
+  description: AXI Master Read Completion Timeout Configuration
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: A timeout will occur after 14 to 15 r_ticks with r_ticks occuring at
+      an interval of (256*axi_m_r_tick_count) AXI clocks. A value of 0 disables the
+      timeout mechanism. For example axi_m_r_tick_count==7000 results in a timeout
+      range of 50.176mS to 53.760mS when the AXI Clock is 500 MHz.
+    name: AXI_M_R_TICK_COUNT
+    shortdesc: Determines the AXI Master read request timeout period.
+    type: rw
+  name: BRIDGE_CORE_CFG_AXI_M_R_TICK_COUNT
+  offset: '0x00000030'
+  type: mixed
+  width: 32
+- default: '0x00002210'
+  description: PCIe Configuration Write/Read Request CRS Replay Timeout Configuration
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: AXI Slave Interface initiated PCI Express Configuration Write and Read
+      (ECAM) requests which return Configuration Request Retry Status (CRS), and which
+      are not handled with CRS Software Visbility, will be retried until the timeout
+      period expires. After the timeout expires, the next CRS response received for
+      the transaction is converted to response Slave Error and no longer retried.
+      A timeout will occur after 14 to 15 l_ticks with l_ticks occuring at an interval
+      of (4096*crs_rpl_tick_count) AXI clocks. A value of 0 disables the timeout mechanism.
+      For example crs_rpl_tick_count==8720 results in a timeout range of 1.000S to
+      1.017S when the AXI Clock is 500 MHz.
+    name: CRS_RPL_TICK_COUNT
+    shortdesc: Determines the CRS Replay timeout period.
+    type: rw
+  name: BRIDGE_CORE_CFG_CRS_RPL_TICK_COUNT
+  offset: '0x00000034'
+  type: mixed
+  width: 32
+- default: '0x030C0001'
+  description: Egress Bridge Register Translation - Capabilities
+  field:
+  - bits: '31:24'
+    longdesc: Maximum translation size is 2^(breg_size_offset+breg_size_max).
+    name: BREG_SIZE_MAX
+    shortdesc: breg_size supports values between 0 and breg_size_max.
+    type: ro
+  - bits: '23:16'
+    name: BREG_SIZE_OFFSET
+    type: ro
+  - bits: '15:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: BREG_PRESENT
+    type: ro
+  name: E_BREG_CAPABILITIES
+  offset: '0x00000200'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress Bridge Register Translation - Status
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24:16'
+    name: WR_PENDING_CTR
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:0'
+    name: RD_PENDING_CTR
+    type: ro
+  name: E_BREG_STATUS
+  offset: '0x00000204'
+  type: ro
+  width: 32
+- default: '0x00000002'
+  description: Egress Bridge Register Translation - Control
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17:16'
+    longdesc: Constrained by the breg_size_max and breg_size_offset fields.
+    name: BREG_SIZE
+    shortdesc: Size of this translation window, expressed as 2^(breg_size_offset+breg_size).
+    type: rw
+  - bits: '15:3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: BREG_SECURITY_ENABLE
+    type: rw
+  - bits: '1'
+    name: BREG_ENABLE_FORCE
+    type: rw
+  - bits: '0'
+    longdesc: 'The translation is hit when both of the following are true: * breg_enable
+      == 1 * breg_src_base[63:(12+breg_size)] == AXI Address[63:(12+breg_size)]'
+    name: BREG_ENABLE
+    shortdesc: Translation Enable.
+    type: rw
+  name: E_BREG_CONTROL
+  offset: '0x00000208'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress Bridge Register Translation - Source Address Low
+  field:
+  - bits: '31:12'
+    name: BREG_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: E_BREG_BASE_LO
+  offset: '0x00000210'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress Bridge Register Translation - Source Address High
+  field:
+  - bits: '31:0'
+    name: BREG_BASE_HI
+    type: rw
+  name: E_BREG_BASE_HI
+  offset: '0x00000214'
+  type: rw
+  width: 32
+- default: '0x100C0001'
+  description: Egress ECAM Translation - Capabilities
+  field:
+  - bits: '31:24'
+    longdesc: Maximum translation size is 2^(ecam_size_offset+ecam_size_max).
+    name: ECAM_SIZE_MAX
+    shortdesc: ecam_size supports values between 0 and ecam_size_max.
+    type: ro
+  - bits: '23:16'
+    name: ECAM_SIZE_OFFSET
+    type: ro
+  - bits: '15:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: ECAM_PRESENT
+    type: ro
+  name: E_ECAM_CAPABILITIES
+  offset: '0x00000220'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress ECAM Translation - Status
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24:16'
+    name: WR_PENDING_CTR
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:0'
+    name: RD_PENDING_CTR
+    type: ro
+  name: E_ECAM_STATUS
+  offset: '0x00000224'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress ECAM Translation - Control
+  field:
+  - bits: '31:21'
+    name: RESERVED
+    type: ro
+  - bits: '20:16'
+    longdesc: Constrained by the ecam_size_max and ecam_size_offset fields.
+    name: ECAM_SIZE
+    shortdesc: Size of this translation window, expressed as 2^(ecam_size_offset+ecam_size).
+    type: rw
+  - bits: '15:3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: ECAM_SECURITY_ENABLE
+    type: rw
+  - bits: '1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'The translation is hit when both of the following are true: * ecam_enable
+      == 1 * ecam_src_base[63:(12+ecam_size)] == AXI Address[63:(12+ecam_size)]'
+    name: ECAM_ENABLE
+    shortdesc: Translation Enable.
+    type: rw
+  name: E_ECAM_CONTROL
+  offset: '0x00000228'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress ECAM Translation - Source Address Low
+  field:
+  - bits: '31:12'
+    name: ECAM_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: E_ECAM_BASE_LO
+  offset: '0x00000230'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress ECAM Translation - Source Address High
+  field:
+  - bits: '31:0'
+    name: ECAM_BASE_HI
+    type: rw
+  name: E_ECAM_BASE_HI
+  offset: '0x00000234'
+  type: rw
+  width: 32
+- default: '0x030C0001'
+  description: Egress MSI-X Table Translation - Capabilities
+  field:
+  - bits: '31:24'
+    longdesc: Maximum translation size is 2^(msxt_size_offset+msxt_size_max).
+    name: MSXT_SIZE_MAX
+    shortdesc: msxt_size supports values between 0 and msxt_size_max.
+    type: ro
+  - bits: '23:16'
+    name: MSXT_SIZE_OFFSET
+    type: ro
+  - bits: '15:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: MSXT_PRESENT
+    type: ro
+  name: E_MSXT_CAPABILITIES
+  offset: '0x00000240'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress MSI-X Table Translation - Status
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24:16'
+    name: WR_PENDING_CTR
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:0'
+    name: RD_PENDING_CTR
+    type: ro
+  name: E_MSXT_STATUS
+  offset: '0x00000244'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress MSI-X Table Translation - Control
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17:16'
+    longdesc: Constrained by the msxt_size_max and msxt_size_offset fields.
+    name: MSXT_SIZE
+    shortdesc: Size of this translation window, expressed as 2^(msxt_size_offset+msxt_size).
+    type: rw
+  - bits: '15:3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: MSXT_SECURITY_ENABLE
+    type: rw
+  - bits: '1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'The translation is hit when both of the following are true: * msxt_enable
+      == 1 * msxt_src_base[63:(12+msxt_size)] == AXI Address[63:(12+msxt_size)]'
+    name: MSXT_ENABLE
+    shortdesc: Translation Enable.
+    type: rw
+  name: E_MSXT_CONTROL
+  offset: '0x00000248'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress MSI-X Table Translation - Source Address Low
+  field:
+  - bits: '31:12'
+    name: MSXT_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: E_MSXT_BASE_LO
+  offset: '0x00000250'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress MSI-X Table Translation - Source Address High
+  field:
+  - bits: '31:0'
+    name: MSXT_BASE_HI
+    type: rw
+  name: E_MSXT_BASE_HI
+  offset: '0x00000254'
+  type: rw
+  width: 32
+- default: '0x030C0001'
+  description: Egress MSI-X PBA Translation - Capabilities
+  field:
+  - bits: '31:24'
+    longdesc: Maximum translation size is 2^(msxp_size_offset+msxp_size_max).
+    name: MSXP_SIZE_MAX
+    shortdesc: msxp_size supports values between 0 and msxp_size_max.
+    type: ro
+  - bits: '23:16'
+    name: MSXP_SIZE_OFFSET
+    type: ro
+  - bits: '15:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: MSXP_PRESENT
+    type: ro
+  name: E_MSXP_CAPABILITIES
+  offset: '0x00000260'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress MSI-X PBA Translation - Status
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24:16'
+    name: WR_PENDING_CTR
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:0'
+    name: RD_PENDING_CTR
+    type: ro
+  name: E_MSXP_STATUS
+  offset: '0x00000264'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress MSI-X PBA Translation - Control
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17:16'
+    longdesc: Constrained by the msxp_size_max and msxp_size_offset fields.
+    name: MSXP_SIZE
+    shortdesc: Size of this translation window, expressed as 2^(msxp_size_offset+msxp_size).
+    type: rw
+  - bits: '15:3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: MSXP_SECURITY_ENABLE
+    type: rw
+  - bits: '1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'The translation is hit when both of the following are true: * msxp_enable
+      == 1 * msxp_src_base[63:(12+msxp_size)] == AXI Address[63:(12+msxp_size)]'
+    name: MSXP_ENABLE
+    shortdesc: Translation Enable.
+    type: rw
+  name: E_MSXP_CONTROL
+  offset: '0x00000268'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress MSI-X PBA Translation - Source Address Low
+  field:
+  - bits: '31:12'
+    name: MSXP_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: E_MSXP_BASE_LO
+  offset: '0x00000270'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress MSI-X PBA Translation - Source Address High
+  field:
+  - bits: '31:0'
+    name: MSXP_BASE_HI
+    type: rw
+  name: E_MSXP_BASE_HI
+  offset: '0x00000274'
+  type: rw
+  width: 32
+- default: '0x030C0001'
+  description: Egress DMA Register Translation - Capabilities
+  field:
+  - bits: '31:24'
+    longdesc: Maximum translation size is 2^(dma_size_offset+dma_size_max).
+    name: DMA_SIZE_MAX
+    shortdesc: dma_size supports values between 0 and dma_size_max.
+    type: ro
+  - bits: '23:16'
+    name: DMA_SIZE_OFFSET
+    type: ro
+  - bits: '15:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: DMA_PRESENT
+    type: ro
+  name: E_DREG_CAPABILITIES
+  offset: '0x00000280'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress DMA Register Translation - Status
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24:16'
+    name: WR_PENDING_CTR
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:0'
+    name: RD_PENDING_CTR
+    type: ro
+  name: E_DREG_STATUS
+  offset: '0x00000284'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress DMA Register Translation - Control
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17:16'
+    longdesc: Constrained by the dma_size_max and dma_size_offset fields.
+    name: DMA_SIZE
+    shortdesc: Size of this translation window, expressed as 2^(dma_size_offset+dma_size).
+    type: rw
+  - bits: '15:3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: DMA_SECURITY_ENABLE
+    type: rw
+  - bits: '1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'The translation is hit when both of the following are true: * dma_enable
+      == 1 * dma_src_base[63:(12+dma_size)] == AXI Address[63:(12+dma_size)]'
+    name: DMA_ENABLE
+    shortdesc: Translation Enable.
+    type: rw
+  name: E_DREG_CONTROL
+  offset: '0x00000288'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress DMA Register Translation - Source Address Low
+  field:
+  - bits: '31:12'
+    name: DMA_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: E_DREG_BASE_LO
+  offset: '0x00000290'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress DMA Register Translation - Source Address High
+  field:
+  - bits: '31:0'
+    name: DMA_BASE_HI
+    type: rw
+  name: E_DREG_BASE_HI
+  offset: '0x00000294'
+  type: rw
+  width: 32
+- default: '0x00000001'
+  description: Egress Subtractive Decode Translation - Capabilities
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: SUBTRACTIVE_DECODE_PRESENT
+    type: ro
+  name: E_ESUB_CAPABILITIES
+  offset: '0x000002E0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress Subtractive Decode Translation - Status
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24:16'
+    name: WR_PENDING_CTR
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:0'
+    name: RD_PENDING_CTR
+    type: ro
+  name: E_ESUB_STATUS
+  offset: '0x000002E4'
+  type: ro
+  width: 32
+- default: '0x00000001'
+  description: Egress Subtractive Decode Translation - Control
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: EGRESS_SUB_ENABLE
+    type: rw
+  name: E_ESUB_CONTROL
+  offset: '0x000002E8'
+  type: mixed
+  width: 32
+- default: '0x1F0C0001'
+  description: Ingress PCI Express Received MSI Interrupt Translation - Capabilities
+  field:
+  - bits: '31:24'
+    longdesc: Maximum translation size is 2^(i_msii_size_offset+i_msii_size_max).
+    name: I_MSII_SIZE_MAX
+    shortdesc: i_msii_size supports values between 0 and i_msii_size_max.
+    type: ro
+  - bits: '23:16'
+    name: I_MSII_SIZE_OFFSET
+    type: ro
+  - bits: '15:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: I_MSII_PRESENT
+    type: ro
+  name: I_MSII_CAPABILITIES
+  offset: '0x00000300'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Ingress PCI Express Received MSI Interrupt Translation - Control
+  field:
+  - bits: '31:21'
+    name: RESERVED
+    type: ro
+  - bits: '20:16'
+    longdesc: Constrained by the i_msii_size_max and i_msii_size_offset fields.
+    name: I_MSII_SIZE
+    shortdesc: Size of this translation window, expressed as 2^(msii_size_offset+msii_size).
+    type: rw
+  - bits: '15'
+    name: I_MSII_STATUS_ENABLE
+    type: rw
+  - bits: '14:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'The translation is hit when both of the following are true: * i_msii_enable
+      == 1 * i_msii_src_base[63:(12+i_msii_size)] == AXI Address[63:(12+i_msii_size)]'
+    name: I_MSII_ENABLE
+    shortdesc: Translation Enable.
+    type: rw
+  name: I_MSII_CONTROL
+  offset: '0x00000308'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Ingress PCI Express Received MSI Interrupt Translation - Source Address
+    Low
+  field:
+  - bits: '31:12'
+    name: I_MSII_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: I_MSII_BASE_LO
+  offset: '0x00000310'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Ingress PCI Express Received MSI Interrupt Translation - Source Address
+    High
+  field:
+  - bits: '31:0'
+    name: I_MSII_BASE_HI
+    type: rw
+  name: I_MSII_BASE_HI
+  offset: '0x00000314'
+  type: rw
+  width: 32
+- default: '0x1F0C0001'
+  description: Ingress PCI Express Received MSI-X Interrupt Translation - Capabilities
+  field:
+  - bits: '31:24'
+    longdesc: Maximum translation size is 2^(i_msix_size_offset+i_msix_size_max).
+    name: I_MSIX_SIZE_MAX
+    shortdesc: i_msix_size supports values between 0 and i_msix_size_max.
+    type: ro
+  - bits: '23:16'
+    name: I_MSIX_SIZE_OFFSET
+    type: ro
+  - bits: '15:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: I_MSIX_PRESENT
+    type: ro
+  name: I_MSIX_CAPABILITIES
+  offset: '0x00000320'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Ingress PCI Express Received MSI-X Interrupt Translation - Control
+  field:
+  - bits: '31:21'
+    name: RESERVED
+    type: ro
+  - bits: '20:16'
+    longdesc: Constrained by the i_msix_size_max and i_msix_size_offset fields.
+    name: I_MSIX_SIZE
+    shortdesc: Size of this translation window, expressed as 2^(msix_size_offset+msix_size).
+    type: rw
+  - bits: '15:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'The translation is hit when both of the following are true: * i_msix_enable
+      == 1 * i_msix_src_base[63:(12+i_msix_size)] == AXI Address[63:(12+i_msix_size)]'
+    name: I_MSIX_ENABLE
+    shortdesc: Translation Enable.
+    type: rw
+  name: I_MSIX_CONTROL
+  offset: '0x00000328'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Ingress PCI Express Received MSI-X Interrupt Translation - Source Address
+    Low
+  field:
+  - bits: '31:12'
+    name: I_MSIX_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: I_MSIX_BASE_LO
+  offset: '0x00000330'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Ingress PCI Express Received MSI-X Interrupt Translation - Source Address
+    High
+  field:
+  - bits: '31:0'
+    name: I_MSIX_BASE_HI
+    type: rw
+  name: I_MSIX_BASE_HI
+  offset: '0x00000334'
+  type: rw
+  width: 32
+- default: '0x00000001'
+  description: Ingress Subtractive Decode Translation - Capabilities
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: SUBTRACTIVE_DECODE_PRESENT
+    type: ro
+  name: I_ISUB_CAPABILITIES
+  offset: '0x000003E0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Ingress Subtractive Decode Translation - Status
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24:16'
+    name: WR_PENDING_CTR
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:0'
+    name: RD_PENDING_CTR
+    type: ro
+  name: I_ISUB_STATUS
+  offset: '0x000003E4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Ingress Subtractive Decode Translation - Control
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: INGRESS_SUB_ENABLE
+    type: rw
+  name: I_ISUB_CONTROL
+  offset: '0x000003E8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Received Interrupt and Message Controller - Miscellaneous Interrupt
+    Status.
+  field:
+  - bits: '31:16'
+    longdesc: This interrupt is only relevant to Root mode [25]:Link Autonomous Bandwidth
+      Management Status bit set in Link Status Register. This interrupt is only relevant
+      to Root mode [24]:PCIe Link down [23]:Fatal Error Detected bit set in Device
+      Status Register [22]:Non-Fatal Error Detected bit set in Device Status Register
+      [21]:Correctable Error Detected bit set in Device Status Register [20]:UR Detected
+      bit set in Device Status Register [19]:TS1/2 with Hot Reset bit set received
+      from link partner. This interrupt is only relevant to EP mode and should be
+      diabled (masked) when operating as Root [18]:Correctable Error logged in AER
+      Root Error Status register and reporting is enabled [17]:Non-Fatal Error logged
+      in AER Root Error Status register and reporting is enabled [16]:Fatal Error
+      logged in AER Root Error Status register and reporting is enabled
+    name: PCIE_CORE_EVENT
+    shortdesc: Misc Interrupts from the PCIe Controller [31:27]:Reserved [26]:Link
+      Bandwidth Management Status bit set in Link Status Register.
+    type: wtc
+  - bits: '15:8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    longdesc: Set to 1 when a Security violation occurs on any Egress Translation.
+    name: EGRESS_ADDRESS_TRANSLATION_ERROR
+    shortdesc: Egress Address Translation Security Violation.
+    type: wtc
+  - bits: '6'
+    longdesc: Set to 1 when a Security violation occurs on any Ingress Translation.
+    name: INGRESS_ADDRESS_TRANSLATION_ERROR
+    shortdesc: Ingress Address Translation Security Violation.
+    type: wtc
+  - bits: '5'
+    longdesc: Set to 1 when a request on the AXI Master Interface is completed with
+      SLVERR or DECERR status.
+    name: MASTER_ERROR
+    shortdesc: AXI Master Error.
+    type: wtc
+  - bits: '4'
+    longdesc: Set to 1 when a request on the AXI Slave Interface is completed with
+      SLVERR or DECERR status.
+    name: SLAVE_ERROR
+    shortdesc: AXI Slave Error.
+    type: wtc
+  - bits: '3'
+    longdesc: Set to 1 when there is an error detected for a write request to a non-DMA
+      register (from either AXI or PCIe).
+    name: UNCORRECTABLE_WRITE_ERROR
+    shortdesc: Uncorrectable write hardware/software Error.
+    type: wtc
+  - bits: '2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    longdesc: Set to 1 whenever a message is attempted to be written into the Received
+      Message FIFO, but the message is discarded because the Received Message FIFO
+      is full. Since there is a finite amount of Received Message FIFO storage space,
+      software should process Received Messages with high priority to keep the Received
+      Message FIFO from becoming full and dropping messages.
+    name: RX_MSG_OVERFLOW
+    shortdesc: Received Message FIFO Overflow.
+    type: wtc
+  - bits: '0'
+    longdesc: Set to 1 whenever the Received Message FIFO becomes not empty. Message
+      contents are available on the msgf_rx_fifo_type/msg/address_lo/address_hi/data
+      ports.
+    name: RX_MSG_AVAIL
+    shortdesc: Received Message FIFO Available.
+    type: wtc
+  name: MSGF_MISC_STATUS
+  offset: '0x00000400'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Received Interrupt and Message Controller - Miscellaneous Interrupt
+    Status.
+  field:
+  - bits: '31:16'
+    longdesc: Set bit[i] to 1 to allow interrupts to be generated for PCI Express
+      Core Event[i].
+    name: PCIE_CORE_EVENT_MASK
+    shortdesc: PCI Express Core Event Interrupt[15:0] Mask.
+    type: rw
+  - bits: '15:8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    longdesc: Set to 1 to allow interrupts to be generated when egress_address_translation_error
+      == 1.
+    name: EGRESS_ADDRESS_TRANSLATION_ERROR_MASK
+    shortdesc: egress_address_translation_error Interrupt Mask.
+    type: rw
+  - bits: '6'
+    longdesc: Set to 1 to allow interrupts to be generated when ingress_address_translation_error
+      == 1.
+    name: INGRESS_ADDRESS_TRANSLATION_ERROR_MASK
+    shortdesc: ingress_address_translation_error Interrupt Mask.
+    type: rw
+  - bits: '5'
+    longdesc: Set to 1 to allow interrupts to be generated when master_error == 1.
+    name: MASTER_ERROR_MASK
+    shortdesc: master_error Interrupt Mask.
+    type: rw
+  - bits: '4'
+    longdesc: Set to 1 to allow interrupts to be generated when slave_error == 1.
+    name: SLAVE_ERROR_MASK
+    shortdesc: slave_error Interrupt Mask.
+    type: rw
+  - bits: '3'
+    longdesc: Set to 1 to allow interrupts to be generated when uncorrectable_write_error
+      == 1.
+    name: UNCORRECTABLE_WRITE_ERROR_MASK
+    shortdesc: uncorrectable_write_error Interrupt Mask.
+    type: rw
+  - bits: '2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    longdesc: Set to 1 to allow interrupts to be generated when rx_msg_overflow ==
+      1.
+    name: RX_MSG_OVERFLOW_MASK
+    shortdesc: rx_msg_overflow Interrupt Mask.
+    type: rw
+  - bits: '0'
+    longdesc: Set to 1 to allow interrupts to be generated when rx_msg_avail == 1.
+    name: RX_MSG_AVAIL_MASK
+    shortdesc: rx_msg_avail Interrupt Mask.
+    type: rw
+  name: MSGF_MISC_MASK
+  offset: '0x00000404'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Slave Error AXI ID.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    longdesc: Cleared when msgf_misc_status[4] is written to 1 to allow a subsequent
+      violation to record the new violation's AXI ID.
+    name: SLAVE_ERROR_ID
+    shortdesc: AXI ID of the first detected AXI Slave Interface SLVERR or DECERR error.
+    type: ro
+  name: MSGF_MISC_SLAVE_ID
+  offset: '0x00000408'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Master Error AXI ID.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    longdesc: Cleared when msgf_misc_status[5] is written to 1 to allow a subsequent
+      violation to record the new violation's AXI ID.
+    name: MASTER_ERROR_ID
+    shortdesc: AXI ID of the first detected AXI Master Interface error.
+    type: ro
+  name: MSGF_MISC_MASTER_ID
+  offset: '0x0000040C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Ingress Error AXI ID.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    longdesc: Cleared when msgf_misc_status[6] is written to 1 to allow a subsequent
+      violation to record the new violation's AXI ID.
+    name: INGRESS_ERROR_ID
+    shortdesc: AXI ID of the first detected Ingress Address Translation Security violation.
+    type: ro
+  name: MSGF_MISC_INGRESS_ID
+  offset: '0x00000410'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress Error AXI ID.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    longdesc: Cleared when msgf_misc_status[7] is written to 1 to allow a subsequent
+      violation to record the new violation's AXI ID.
+    name: EGRESS_ERROR_ID
+    shortdesc: AXI ID of the first detected Egress Address Translation Security violation.
+    type: ro
+  name: MSGF_MISC_EGRESS_ID
+  offset: '0x00000414'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Legacy Interrupt Status.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    longdesc: msgf_leg_status_intd will clear only when all INTD interrupt sources
+      have been serviced and their interrupt status registers cleared.
+    name: MSGF_LEG_STATUS_INTD
+    shortdesc: msgf_leg_status_intd is generated from received PCIe Assert_INTD and
+      Deassert_INTD messages.
+    type: ro
+  - bits: '2'
+    longdesc: msgf_leg_status_intc will clear only when all INTC interrupt sources
+      have been serviced and their interrupt status registers cleared.
+    name: MSGF_LEG_STATUS_INTC
+    shortdesc: msgf_leg_status_intc is generated from received PCIe Assert_INTC and
+      Deassert_INTC messages.
+    type: ro
+  - bits: '1'
+    longdesc: msgf_leg_status_intb will clear only when all INTB interrupt sources
+      have been serviced and their interrupt status registers cleared.
+    name: MSGF_LEG_STATUS_INTB
+    shortdesc: msgf_leg_status_intb is generated from received PCIe Assert_INTB and
+      Deassert_INTB messages.
+    type: ro
+  - bits: '0'
+    longdesc: msgf_leg_status_inta will clear only when all INTA interrupt sources
+      have been serviced and their interrupt status registers cleared.
+    name: MSGF_LEG_STATUS_INTA
+    shortdesc: msgf_leg_status_inta is generated from received PCIe Assert_INTA and
+      Deassert_INTA messages.
+    type: ro
+  name: MSGF_LEG_STATUS
+  offset: '0x00000420'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Legacy Interrupt Mask.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    longdesc: A Legacy INTD interrupt is generated when msgf_leg_status_intd==1 and
+      msgf_leg_mask_intd==1.
+    name: MSGF_LEG_MASK_INTD
+    shortdesc: Legacy INTD Interrupt Mask.
+    type: rw
+  - bits: '2'
+    longdesc: A Legacy INTC interrupt is generated when msgf_leg_status_intc==1 and
+      msgf_leg_mask_intc==1.
+    name: MSGF_LEG_MASK_INTC
+    shortdesc: Legacy INTC Interrupt Mask.
+    type: rw
+  - bits: '1'
+    longdesc: A Legacy INTB interrupt is generated when msgf_leg_status_intb==1 and
+      msgf_leg_mask_intb==1.
+    name: MSGF_LEG_MASK_INTB
+    shortdesc: Legacy INTB Interrupt Mask.
+    type: rw
+  - bits: '0'
+    longdesc: A Legacy INTA interrupt is generated when msgf_leg_status_inta==1 and
+      msgf_leg_mask_inta==1.
+    name: MSGF_LEG_MASK_INTA
+    shortdesc: Legacy INTA Interrupt Mask.
+    type: rw
+  name: MSGF_LEG_MASK
+  offset: '0x00000424'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: MSI Interrupt Status[31:0].
+  field:
+  - bits: '31:0'
+    longdesc: msgf_msi_status[i] is set to 1 when a MSI interrupt with vector i is
+      received.
+    name: MSGF_MSI_STATUS
+    shortdesc: MSI Interrupt Per Vector Status.
+    type: wtc
+  name: MSGF_MSI_STATUS_LO
+  offset: '0x00000440'
+  type: wtc
+  width: 32
+- default: '0x00000000'
+  description: MSI Interrupt Status[63:32].
+  field:
+  - bits: '31:0'
+    longdesc: msgf_msi_status[i] is set to 1 when a MSI interrupt with vector i is
+      received.
+    name: MSGF_MSI_STATUS
+    shortdesc: MSI Interrupt Per Vector Status.
+    type: wtc
+  name: MSGF_MSI_STATUS_HI
+  offset: '0x00000444'
+  type: wtc
+  width: 32
+- default: '0x00000000'
+  description: MSI Interrupt Mask[31:0].
+  field:
+  - bits: '31:0'
+    name: MSGF_MSI_MASK
+    type: rw
+  name: MSGF_MSI_MASK_LO
+  offset: '0x00000448'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: MSI Interrupt Mask[63:32].
+  field:
+  - bits: '31:0'
+    longdesc: An interrupt is generated on the int_msi[1] output port when (msgf_msi_status[63:32]
+      & msgf_msi_mask[63:32]) != 0.
+    name: MSGF_MSI_MASK
+    shortdesc: MSI Interrupt Per Vector Mask.
+    type: rw
+  name: MSGF_MSI_MASK_HI
+  offset: '0x0000044C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: DMA Interrupt Status.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: msgf_dma_status == 1 when one or more DMA interrupts are active. msgf_dma_status
+      is cleared by clearing the associated DMA Channel AXI Interrupt Status registers.
+    name: MSGF_DMA_STATUS
+    shortdesc: DMA Interrupt Status.
+    type: ro
+  name: MSGF_DMA_STATUS
+  offset: '0x00000460'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: DMA Interrupt Mask.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: MSGF_DMA_MASK
+    type: rw
+  name: MSGF_DMA_MASK
+  offset: '0x00000464'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Received Interrupt and Message FIFO - Level
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    longdesc: When non-0 there are received interrupts or messages pending. The oldest
+      received Interrupt/Message contents are available by reading the msgf_rx_fifo_type/msg/address_lo/address_hi/data
+      regsisters. When finished reading the current Interrupt/Message, the current
+      element is removed from the FIFO by writing to the msgf_rx_fifo_pop register.
+    name: LEVEL
+    shortdesc: Received Interrupt and Message FIFO - Level.
+    type: ro
+  name: MSGF_RX_FIFO_LEVEL
+  offset: '0x00000480'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Received Interrupt and Message FIFO - Pop Element
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: POP
+    type: ro
+  name: MSGF_RX_FIFO_POP
+  offset: '0x00000484'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Received Interrupt and Message FIFO - Message/Interrupt Type
+  field:
+  - bits: '31:16'
+    longdesc: Format is {Bus[7:0], Function[7:0]} for sources supporting PCI Express
+      Alternative Routing ID (ARI) and {Bus[7:0], Device[4:0], Function[2:0]} for
+      non-ARI PCIe sources.
+    name: REQUESTER_ID
+    shortdesc: PCI Express Requester ID captured from the ingress PCIe TLP.
+    type: ro
+  - bits: '15:2'
+    name: RESERVED
+    type: ro
+  - bits: '1:0'
+    name: INTR_TYPE
+    type: ro
+  name: MSGF_RX_FIFO_TYPE
+  offset: '0x00000488'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Received Message Header
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23:16'
+    longdesc: Valid only for intr_type == Received Message.
+    name: MESSAGE_TAG
+    shortdesc: Byte 6 (Tag) of received Message TLP.
+    type: ro
+  - bits: '15:8'
+    longdesc: Valid only for intr_type == Received Message.
+    name: MESSAGE_CODE
+    shortdesc: Byte 7 (Message Code) of received Message TLP.
+    type: ro
+  - bits: '7:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    longdesc: Valid only for intr_type == Received Message.
+    name: MESSAGE_PAYLOAD_PRESENT
+    shortdesc: Message Data Payload Presence.
+    type: ro
+  - bits: '2:0'
+    longdesc: Valid only for intr_type == Received Message.
+    name: MESSAGE_ROUTING
+    shortdesc: Byte0[2:0] (Message Routing) of received Message TLP.
+    type: ro
+  name: MSGF_RX_FIFO_MSG
+  offset: '0x0000048C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Received Message/Interrupt Address[31:0].
+  field:
+  - bits: '31:0'
+    longdesc: When intr_type == Received Message [31:24] is Byte 12 of Message TLP.
+      [23:16] is Byte 13 of Message TLP. [15:8] is Byte 14 of Message TLP. [7:0] is
+      Byte 15 of Message TLP.
+    name: ADDRESS_LO
+    shortdesc: When intr_type == Received MSI-X/MSI Interrupt [31:0] is Address[31:0]
+      of the received MSI-X/MSI write TLP.
+    type: ro
+  name: MSGF_RX_FIFO_ADDRESS_LO
+  offset: '0x00000490'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Received Message/Interrupt Address[63:32].
+  field:
+  - bits: '31:0'
+    longdesc: When intr_type == Received Message [31:24] is Byte 8 of Message TLP.
+      [23:16] is Byte 9 of Message TLP. [15:8] is Byte 10 of Message TLP. [7:0] is
+      Byte 11 of Message TLP.
+    name: ADDRESS_HI
+    shortdesc: When intr_type == Received MSI-X/MSI Interrupt [31:0] is Address[63:32]
+      of received MSI-X/MSI write TLP.
+    type: ro
+  name: MSGF_RX_FIFO_ADDRESS_HI
+  offset: '0x00000494'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Received Message/Interrupt Data Payload[31:0].
+  field:
+  - bits: '31:0'
+    longdesc: When intr_type == Received Message [31:0] is Data Payload[31:0] of the
+      received Message TLP. Valid only for intr_type == Received Message with message_payload_present
+      == 1.
+    name: DATA
+    shortdesc: When intr_type == Received MSI-X/MSI Interrupt [31:0] is Data Payload[31:0]
+      of the received MSI-X/MSI write TLP.
+    type: ro
+  name: MSGF_RX_FIFO_DATA
+  offset: '0x00000498'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PCIe Message Request Execution.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25:24'
+    longdesc: Cleared when msg_execute is written to 1. Set to the Message transaction
+      status when msg_done is set to 1.
+    name: MSG_DONE_STATUS
+    shortdesc: Message Transaction Done Status.
+    type: ro
+  - bits: '23:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    longdesc: Cleared when msg_execute is written to 1 to start a new Message transaction.
+      Set to 1 when the transaction is completed.
+    name: MSG_DONE
+    shortdesc: Message Transaction Done.
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    longdesc: Set to 1 when msg_execute is written to 1. Cleared when msg_done is
+      set to 1 indicating that the transaction is completed.
+    name: MSG_BUSY
+    shortdesc: Message Transaction Busy.
+    type: ro
+  - bits: '7:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: Write a 1 to transmit an Message transaction. The transaction is created
+      using the values in the CONTROL, ADDRESS, and DATA regsiters.
+    name: MSG_EXECUTE
+    shortdesc: Message Transaction Execute.
+    type: ro
+  name: TX_PCIE_MSG_EXECUTE
+  offset: '0x00000620'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PCIe Message Request Execution - Control
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24'
+    longdesc: When msg_has_data == 1, msg_data is the data payload transmitted with
+      the message. msg_has_data must be consistent with msg_code.
+    name: MSG_HAS_DATA
+    shortdesc: Message Payload Presence.
+    type: rw
+  - bits: '23:16'
+    longdesc: Byte 6 of the Message TLP Header. Set to 0x0 if the Tag field is unused
+      by the message.
+    name: MSG_TAG
+    shortdesc: Message Tag[7:0].
+    type: rw
+  - bits: '15:8'
+    longdesc: Byte 7 of Message TLP Header. Defines the type of Message. Message Codes
+      are defined by the PCI Express Specification and associated ECNs.
+    name: MSG_CODE
+    shortdesc: Message Code[7:0].
+    type: rw
+  - bits: '7:0'
+    longdesc: Byte 0 of Message TLP Header. Must be consistent with Message Code.
+    name: MSG_FMT_TYPE
+    shortdesc: Message Format and Type.
+    type: rw
+  name: TX_PCIE_MSG_CONTROL
+  offset: '0x00000624'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PCIe Message Request Execution - Message Specific[31:0].
+  field:
+  - bits: '31:24'
+    name: MSG_TLP_HDR11
+    type: rw
+  - bits: '23:16'
+    name: MSG_TLP_HDR10
+    type: rw
+  - bits: '15:8'
+    name: MSG_TLP_HDR9
+    type: rw
+  - bits: '7:0'
+    name: MSG_TLP_HDR8
+    type: rw
+  name: TX_PCIE_MSG_SPECIFIC_LO
+  offset: '0x00000628'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: PCIe Message Request Execution - Message Specific[63:32].
+  field:
+  - bits: '31:24'
+    name: MSG_TLP_HDR15
+    type: rw
+  - bits: '23:16'
+    name: MSG_TLP_HDR14
+    type: rw
+  - bits: '15:8'
+    name: MSG_TLP_HDR13
+    type: rw
+  - bits: '7:0'
+    name: MSG_TLP_HDR12
+    type: rw
+  name: TX_PCIE_MSG_SPECIFIC_HI
+  offset: '0x0000062C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: PCIe Message Request Execution - Message Data Payload[31:0].
+  field:
+  - bits: '31:0'
+    longdesc: Only used when msg_has_data is set to 1.
+    name: MSG_DATA
+    shortdesc: Message payload data.
+    type: rw
+  name: TX_PCIE_MSG_DATA
+  offset: '0x00000630'
+  type: rw
+  width: 32

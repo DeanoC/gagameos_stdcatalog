@@ -1,0 +1,6 @@
+definition:
+- max_atomic_width: 128
+  max_bitop_type_width: 128
+  triple: x86_64-pc-linux-gnu
+  type: cpu.x86_64.linux.host
+  width: 64

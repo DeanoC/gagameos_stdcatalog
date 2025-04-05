@@ -1,0 +1,157 @@
+description: IOP System-level Control - Secure
+register:
+- default: '0x00000000'
+  description: AXI write protection type selection
+  field:
+  - bits: '31:28'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '27:25'
+    name: QSPI_AXI_AWPROT
+    type: rw
+  - bits: '24:22'
+    name: NAND_AXI_AWPROT
+    type: rw
+  - bits: '21:19'
+    name: SD1_AXI_AWPROT
+    type: rw
+  - bits: '18:16'
+    name: SD0_AXI_AWPROT
+    type: rw
+  - bits: '15:12'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '11:9'
+    name: GEM3_AXI_AWPROT
+    type: rw
+  - bits: '8:6'
+    name: GEM2_AXI_AWPROT
+    type: rw
+  - bits: '5:3'
+    name: GEM1_AXI_AWPROT
+    type: rw
+  - bits: '2:0'
+    name: GEM0_AXI_AWPROT
+    type: rw
+  name: IOU_AXI_WPRTCN
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: AXI read protection type selection
+  field:
+  - bits: '31:25'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '24:22'
+    name: NAND_AXI_ARPROT
+    type: rw
+  - bits: '21:19'
+    name: SD1_AXI_ARPROT
+    type: rw
+  - bits: '18:16'
+    name: SD0_AXI_ARPROT
+    type: rw
+  - bits: '15:12'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '11:9'
+    name: GEM3_AXI_ARPROT
+    type: rw
+  - bits: '8:6'
+    name: GEM2_AXI_ARPROT
+    type: rw
+  - bits: '5:3'
+    name: GEM1_AXI_ARPROT
+    type: rw
+  - bits: '2:0'
+    name: GEM0_AXI_ARPROT
+    type: rw
+  name: IOU_AXI_RPRTCN
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: General control register for the IOU SLCR
+  field:
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: CTRL
+  offset: '0x00000040'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Status Register
+  field:
+  - bits: '0'
+    longdesc: '0: No Event 1: Event Occurred'
+    name: ADDR_DECODE_ERR
+    shortdesc: Status for an address decode error.
+    type: wtc
+  name: ISR
+  offset: '0x00000044'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Interrupt Mask Register
+  field:
+  - bits: '0'
+    longdesc: '0: Interrupt Enabled 1: Interrupt Disabled'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error.
+    type: ro
+  name: IMR
+  offset: '0x00000048'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Enable Register
+  field:
+  - bits: '0'
+    longdesc: '0: Ignored 1: iou_slcr_imr -> 0'
+    name: ADDR_DECODE_ERR
+    shortdesc: Enable for an address decode error.
+    type: wo
+  name: IER
+  offset: '0x0000004C'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Disable Register
+  field:
+  - bits: '0'
+    longdesc: '0: Ignored 1: iou_slcr_imr -> 1'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error.
+    type: wo
+  name: IDR
+  offset: '0x00000050'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Trigger Register
+  field:
+  - bits: '0'
+    longdesc: '0: Ignored 1: iou_slcr_isr -> 1'
+    name: ADDR_DECODE_ERR
+    shortdesc: Trigger an address decode error interrupt.
+    type: wo
+  name: ITR
+  offset: '0x00000054'
+  type: wo
+  width: 1

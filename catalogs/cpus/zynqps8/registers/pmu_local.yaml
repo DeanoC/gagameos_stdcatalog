@@ -1,0 +1,1419 @@
+bank:
+- address: '0xffd60000'
+  name: PMU_LOCAL
+description: PMU Local Control - Private
+register:
+- default: '0x0000000F'
+  description: APU Core 0 Power and Isolation Control. Reset by POR only.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: ISOLATION
+    type: rw
+  - bits: '3:0'
+    name: PWR_GATES
+    type: rw
+  name: ACPU0_PWR_CNTRL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: APU Core 0 Power Status. Reset by POR only.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    name: PWR_GATES
+    type: ro
+  name: ACPU0_PWR_STATUS
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: APU Core 1 Power and Isolation Control. Reset by POR only.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: ISOLATION
+    type: rw
+  - bits: '3:0'
+    name: PWR_GATES
+    type: rw
+  name: ACPU1_PWR_CNTRL
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: APU Core 1 Power Status. Reset by POR only.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    name: PWR_GATES
+    type: ro
+  name: ACPU1_PWR_STATUS
+  offset: '0x00000014'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: APU Core 2 Power and Isolation Control. Reset by POR only.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: ISOLATION
+    type: rw
+  - bits: '3:0'
+    name: PWR_GATES
+    type: rw
+  name: ACPU2_PWR_CNTRL
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: APU Core 2 Power Status. Reset by POR only.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    name: PWR_GATES
+    type: ro
+  name: ACPU2_PWR_STATUS
+  offset: '0x00000024'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: APU Core 3 Power and Isolation Control. Reset by POR only.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: ISOLATION
+    type: rw
+  - bits: '3:0'
+    name: PWR_GATES
+    type: rw
+  name: ACPU3_PWR_CNTRL
+  offset: '0x00000030'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: APU Core 3 Power Status. Reset by POR only.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    name: PWR_GATES
+    type: ro
+  name: ACPU3_PWR_STATUS
+  offset: '0x00000034'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: GPU PP0 Power and Isolation Control. Reset by POR only.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: ISOLATION
+    type: rw
+  - bits: '3:0'
+    name: PWR_GATES
+    type: rw
+  name: PP0_PWR_CNTRL
+  offset: '0x00000040'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: GPU PP0 Power Status. Reset by POR only.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    name: PWR_GATES
+    type: ro
+  name: PP0_PWR_STATUS
+  offset: '0x00000044'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: GPU PP1 Power and Isolation Control. Reset by POR only.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: ISOLATION
+    type: rw
+  - bits: '3:0'
+    name: PWR_GATES
+    type: rw
+  name: PP1_PWR_CNTRL
+  offset: '0x00000048'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: GPU PP1 Power Status. Reset by POR only.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    name: PWR_GATES
+    type: ro
+  name: PP1_PWR_STATUS
+  offset: '0x0000004C'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: USB 0 Power and Isolation Control. Reset by POR only.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: ISOLATION
+    type: rw
+  - bits: '3:0'
+    name: PWR_GATES
+    type: rw
+  name: USB0_PWR_CNTRL
+  offset: '0x00000060'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: USB0 Power Status. Reset by POR only.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    name: PWR_GATES
+    type: ro
+  name: USB0_PWR_STATUS
+  offset: '0x00000064'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: USB 1 Power and Isolation Control. Reset by POR only.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: ISOLATION
+    type: rw
+  - bits: '3:0'
+    name: PWR_GATES
+    type: rw
+  name: USB1_PWR_CNTRL
+  offset: '0x00000070'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: USB1 Power Status. Reset by POR only.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    name: PWR_GATES
+    type: ro
+  name: USB1_PWR_STATUS
+  offset: '0x00000074'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: RPU MPCore Power and Isolation Control. Reset by POR only.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: ISOLATION
+    type: rw
+  - bits: '3:0'
+    name: PWR_GATES
+    type: rw
+  name: RPU_PWR_CNTRL
+  offset: '0x00000080'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: RPU MPCore Power Status. Reset by POR only.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    name: PWR_GATES
+    type: ro
+  name: RPU_PWR_STATUS
+  offset: '0x00000084'
+  type: ro
+  width: 32
+- default: '0x00000001'
+  description: L2 Cache Power Control. Reset by POR only.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: BANK0
+    type: rw
+  name: L2_PWR_CNTRL
+  offset: '0x000000B0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: L2 Cache Memory Retention Controls. Reset only by POR.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: BANK0
+    type: rw
+  name: L2_RET_CNTRL
+  offset: '0x000000B4'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: L2 Cache Memory Chip Enables. Reset only by POR.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: BANK0
+    type: rw
+  name: L2_CE_CNTRL
+  offset: '0x000000B8'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: L2 Cache Memory Power Status.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: BANK0
+    type: ro
+  name: L2_PWR_STATUS
+  offset: '0x000000BC'
+  type: ro
+  width: 32
+- default: '0x01010101'
+  description: OCM Memory Power Control. Reset only by POR.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24'
+    name: BANK3
+    type: rw
+  - bits: '23:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    name: BANK2
+    type: rw
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: BANK1
+    type: rw
+  - bits: '7:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: BANK0
+    type: rw
+  name: OCM_PWR_CNTRL
+  offset: '0x000000C0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: OCM Memory Retention Controls. Reset only by POR.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: BANK3
+    type: rw
+  - bits: '2'
+    name: BANK2
+    type: rw
+  - bits: '1'
+    name: BANK1
+    type: rw
+  - bits: '0'
+    name: BANK0
+    type: rw
+  name: OCM_RET_CNTRL
+  offset: '0x000000C4'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: OCM Memory Chip Enables. Reset only by POR.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: BANK3
+    type: rw
+  - bits: '2'
+    name: BANK2
+    type: rw
+  - bits: '1'
+    name: BANK1
+    type: rw
+  - bits: '0'
+    name: BANK0
+    type: rw
+  name: OCM_CE_CNTRL
+  offset: '0x000000C8'
+  type: mixed
+  width: 32
+- default: '0x01010101'
+  description: OCM Memory Power Status.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24'
+    name: BANK3
+    type: ro
+  - bits: '23:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    name: BANK2
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: BANK1
+    type: ro
+  - bits: '7:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: BANK0
+    type: ro
+  name: OCM_PWR_STATUS
+  offset: '0x000000CC'
+  type: ro
+  width: 32
+- default: '0x01010101'
+  description: RPU TCM Memory Power Control. Reset by POR only.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24'
+    name: TCMB1
+    type: rw
+  - bits: '23:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    name: TCMA1
+    type: rw
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: TCMB0
+    type: rw
+  - bits: '7:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: TCMA0
+    type: rw
+  name: TCM_PWR_CNTRL
+  offset: '0x000000D0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: RPU TCM Retention Controls.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: TCMB1
+    type: rw
+  - bits: '2'
+    name: TCMA1
+    type: rw
+  - bits: '1'
+    name: TCMB0
+    type: rw
+  - bits: '0'
+    name: TCMA0
+    type: rw
+  name: TCM_RET_CNTRL
+  offset: '0x000000D4'
+  type: mixed
+  width: 32
+- default: '0x0000000F'
+  description: RPU TCM Chip Enables.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: TCMB1
+    type: rw
+  - bits: '2'
+    name: TCMA1
+    type: rw
+  - bits: '1'
+    name: TCMB0
+    type: rw
+  - bits: '0'
+    name: TCMA0
+    type: rw
+  name: TCM_CE_CNTRL
+  offset: '0x000000D8'
+  type: mixed
+  width: 32
+- default: '0x01010101'
+  description: RPU TCM Power Switch Status.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24'
+    name: TCMB1
+    type: ro
+  - bits: '23:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    name: TCMA1
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: TCMB0
+    type: ro
+  - bits: '7:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: TCMA0
+    type: ro
+  name: TCM_PWR_STATUS
+  offset: '0x000000DC'
+  type: ro
+  width: 32
+- default: '0x00000028'
+  description: Isolation Wall Enable Control. Reset only by POR.
+  field:
+  - bits: '31'
+    longdesc: Once this bit is set, the FPD-PL remain isolated until POR is asserted.
+    name: LP_FP_LOCKED
+    shortdesc: Isolates the FPD-PL domains by clamping all inputs to each domain.
+    type: rwso
+  - bits: '30:6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: FP_PL
+    type: rw
+  - bits: '4'
+    longdesc: This is used mainly during power-down of the PL.
+    name: LP_PL_PCAP
+    shortdesc: Isolates the LPD-PL domains of the PCAP interface signals by clamping
+      all inputs to each domain to their disabled values.
+    type: rw
+  - bits: '3'
+    longdesc: This is used during Partial Reconfiguration of the PL.
+    name: LP_PL_NON_PCAP
+    shortdesc: Isolates the LPD-PL domains by disabling interface signals except the
+      ones associated with the PCAP subystem by clamping all inputs to each domain
+      to their disabled values.
+    type: rw
+  - bits: '2'
+    name: LP_FP_2
+    type: rw
+  - bits: '1'
+    name: LP_FP_1
+    type: rw
+  - bits: '0'
+    longdesc: Clamps all inputs to the PMU to their disabled values.
+    name: PMU
+    shortdesc: Isolates the PMU from the rest of the LPD.
+    type: rw
+  name: DOMAIN_ISO_CNTRL
+  offset: '0x000000F0'
+  type: mixed
+  width: 32
+- default: '0x003FFCBF'
+  description: Power Island Status.
+  field:
+  - bits: '31:22'
+    name: RESERVED
+    type: ro
+  - bits: '21'
+    name: USB1
+    type: rw
+  - bits: '20'
+    name: USB0
+    type: rw
+  - bits: '19'
+    name: OCM_BANK3
+    type: rw
+  - bits: '18'
+    name: OCM_BANK2
+    type: rw
+  - bits: '17'
+    name: OCM_BANK1
+    type: rw
+  - bits: '16'
+    name: OCM_BANK0
+    type: rw
+  - bits: '15'
+    name: TCM1B
+    type: rw
+  - bits: '14'
+    name: TCM1A
+    type: rw
+  - bits: '13'
+    name: TCM0B
+    type: rw
+  - bits: '12'
+    name: TCM0A
+    type: rw
+  - bits: '11'
+    name: R5_1
+    type: rw
+  - bits: '10'
+    name: R5_0
+    type: rw
+  - bits: '9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: L2
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: GPU_PP1
+    type: rw
+  - bits: '4'
+    name: GPU_PP0
+    type: rw
+  - bits: '3'
+    name: ACPU3
+    type: rw
+  - bits: '2'
+    name: ACPU2
+    type: rw
+  - bits: '1'
+    name: ACPU1
+    type: rw
+  - bits: '0'
+    name: ACPU0
+    type: rw
+  name: LOC_PWR_STATE
+  offset: '0x00000100'
+  type: mixed
+  width: 32
+- default: '0x000FF080'
+  description: RAM Retention and Processor Emulation States.
+  field:
+  - bits: '31'
+    name: ACPU3_EMUL
+    type: rw
+  - bits: '30'
+    name: ACPU2_EMUL
+    type: rw
+  - bits: '29'
+    name: ACPU1_EMUL
+    type: rw
+  - bits: '28'
+    name: ACPU0_EMUL
+    type: rw
+  - bits: '27'
+    name: RPU_EMUL
+    type: rw
+  - bits: '26:20'
+    name: RESERVED
+    type: ro
+  - bits: '19'
+    name: OCM_BANK3
+    type: rw
+  - bits: '18'
+    name: OCM_BANK2
+    type: rw
+  - bits: '17'
+    name: OCM_BANK1
+    type: rw
+  - bits: '16'
+    name: OCM_BANK0
+    type: rw
+  - bits: '15'
+    name: TCM1B
+    type: rw
+  - bits: '14'
+    name: TCM1A
+    type: rw
+  - bits: '13'
+    name: TCM0B
+    type: rw
+  - bits: '12'
+    name: TCM0A
+    type: rw
+  - bits: '11:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: L2
+    type: rw
+  - bits: '6:0'
+    name: RESERVED
+    type: rw
+  name: LOC_AUX_PWR_STATE
+  offset: '0x00000104'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: CSU Reset Control.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: '1: CSU held in reset.'
+    name: CSU_RST
+    shortdesc: 'Controls the Reset for the CSU: 0: run.'
+    type: rw
+  name: LOCAL_RESET
+  offset: '0x00000200'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PMU Controls.
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    longdesc: Should only be set by the MDM.
+    name: ROM_VALID_OVRD
+    shortdesc: Allows for debug of the ROM when the ROM validation fails.
+    type: rw
+  - bits: '0'
+    longdesc: '1: clock disabled.'
+    name: BUS_CLK_DIS
+    shortdesc: 'PMU interconnect and register access Clock disable: 0: clock enabled.'
+    type: rw
+  name: LOCAL_CNTRL
+  offset: '0x00000204'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PMU GPO1 Output Register State.
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:0'
+    name: MIO_GPO
+    type: ro
+  name: GPO1_READ
+  offset: '0x00000214'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PMU GPO2 Output Register State.
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: DAP_RPU_WAKE_ACK
+    type: ro
+  - bits: '8'
+    name: DAP_FP_WAKE_ACK
+    type: ro
+  - bits: '7'
+    name: PS_STATUS
+    type: ro
+  - bits: '6'
+    name: PCAP_ENABLE
+    type: ro
+  - bits: '5:0'
+    name: RESERVED
+    type: ro
+  name: GPO2_READ
+  offset: '0x00000218'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PMU GPO3 Output Register State.
+  field:
+  - bits: '31:0'
+    name: PL_GPO
+    type: ro
+  name: GPO3_READ
+  offset: '0x0000021C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Enable Events on PMU GPI1 Input Register.
+  field:
+  - bits: '31'
+    longdesc: A powered-down block is accessed through APB.
+    name: APB_AIB_ERROR
+    shortdesc: APB AIB isolation access error.
+    type: rw
+  - bits: '30'
+    longdesc: A powered-down block is accessed through AXI.
+    name: AXI_AIB_ERROR
+    shortdesc: AXI AIB isolation access error.
+    type: rw
+  - bits: '29'
+    name: ERROR_REG2_INT
+    type: rw
+  - bits: '28'
+    name: ERROR_REG1_INT
+    type: rw
+  - bits: '27:24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    name: DBG_ACPU3_PWRUP_REQ
+    type: rw
+  - bits: '22'
+    name: DBG_ACPU2_PWRUP_REQ
+    type: rw
+  - bits: '21'
+    name: DBG_ACPU1_PWRUP_REQ
+    type: rw
+  - bits: '20'
+    name: DBG_ACPU0_PWRUP_REQ
+    type: rw
+  - bits: '19:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    name: FPD_WAKE_GIC_PROX
+    type: rw
+  - bits: '15:10'
+    name: MIO_WAKE
+    type: rw
+  - bits: '9'
+    name: DAP_RPU_WAKE
+    type: rw
+  - bits: '8'
+    name: DAP_FP_WAKE
+    type: rw
+  - bits: '7'
+    name: USB1_WAKE
+    type: rw
+  - bits: '6'
+    name: USB0_WAKE
+    type: rw
+  - bits: '5'
+    name: R5_1_WAKE
+    type: rw
+  - bits: '4'
+    name: R5_0_WAKE
+    type: rw
+  - bits: '3'
+    name: ACPU3_WAKE
+    type: rw
+  - bits: '2'
+    name: ACPU2_WAKE
+    type: rw
+  - bits: '1'
+    name: ACPU1_WAKE
+    type: rw
+  - bits: '0'
+    name: ACPU0_WAKE
+    type: rw
+  name: GPI1_ENABLE
+  offset: '0x00000224'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Enable Events on PMU GPI2 Input Register.
+  field:
+  - bits: '31'
+    name: VCC_PSINTFP_ALARM
+    type: rw
+  - bits: '30'
+    name: VCC_PSINT_ALARM
+    type: rw
+  - bits: '29'
+    name: VCC_PSAUX_ALARM
+    type: rw
+  - bits: '28:24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    name: DBG_ACPU3_RST_REQ
+    type: rw
+  - bits: '22'
+    name: DBG_ACPU2_RST_REQ
+    type: rw
+  - bits: '21'
+    name: DBG_ACPU1_RST_REQ
+    type: rw
+  - bits: '20'
+    name: DBG_ACPU0_RST_REQ
+    type: rw
+  - bits: '19'
+    name: CP_ACPU3_RST_REQ
+    type: rw
+  - bits: '18'
+    name: CP_ACPU2_RST_REQ
+    type: rw
+  - bits: '17'
+    name: CP_ACPU1_RST_REQ
+    type: rw
+  - bits: '16'
+    name: CP_ACPU0_RST_REQ
+    type: rw
+  - bits: '15:10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: DBG_RPU1_RST_REQ
+    type: rw
+  - bits: '8'
+    name: DBG_RPU0_RST_REQ
+    type: rw
+  - bits: '7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    name: FP_LP_PWRDWN_ACK
+    type: rw
+  - bits: '5'
+    name: R5_1_PWRDWN_REQ
+    type: rw
+  - bits: '4'
+    name: R5_0_PWRDWN_REQ
+    type: rw
+  - bits: '3'
+    name: ACPU3_PWRDWN_REQ
+    type: rw
+  - bits: '2'
+    name: ACPU2_PWRDWN_REQ
+    type: rw
+  - bits: '1'
+    name: ACPU1_PWRDWN_REQ
+    type: rw
+  - bits: '0'
+    name: ACPU0_PWRDWN_REQ
+    type: rw
+  name: GPI2_ENABLE
+  offset: '0x00000228'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Enable Events on PMU GPI3 Input Register.
+  field:
+  - bits: '31:0'
+    name: PL_GPI
+    type: rw
+  name: GPI3_ENABLE
+  offset: '0x0000022C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Power Supply Status and General Purpose Read-Write.
+  field:
+  - bits: '31:0'
+    name: REG
+    type: rw
+  name: BOOT_PWR_SUPPLY_CACHE
+  offset: '0x00000300'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: PMU Boot Stage and General Purpose Read-Write.
+  field:
+  - bits: '31:0'
+    name: REG
+    type: rw
+  name: BOOT_STAGE
+  offset: '0x00000304'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'PMU ROM code: ID Value of ROM Undefiend Service Request.'
+  field:
+  - bits: '31:0'
+    name: REG
+    type: rw
+  name: LAST_UNDEFINED_SERV
+  offset: '0x00000308'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'PMU ROM code: ID Value of ROM Service Request.'
+  field:
+  - bits: '31:0'
+    name: REG
+    type: rw
+  name: LAST_SERV
+  offset: '0x0000030C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Local General Storage. Reset by POR only.
+  field:
+  - bits: '31:0'
+    name: REG
+    type: rw
+  name: PERS_LOC_GEN_STORAGE0
+  offset: '0x00000310'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Local General Storage. Reset by POR only.
+  field:
+  - bits: '31:0'
+    name: REG
+    type: rw
+  name: PERS_LOC_GEN_STORAGE1
+  offset: '0x00000314'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Local General Storage. Reset by POR only.
+  field:
+  - bits: '31:0'
+    name: REG
+    type: rw
+  name: PERS_LOC_GEN_STORAGE2
+  offset: '0x00000318'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Persistent Local General Storage. Reset by POR only.
+  field:
+  - bits: '31:0'
+    name: REG
+    type: rw
+  name: PERS_LOC_GEN_STORAGE3
+  offset: '0x0000031C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Address Error Decode Interrupt Status.
+  field:
+  - bits: '0'
+    name: STATUS
+    type: wtc
+  name: ADDR_ERROR_STATUS
+  offset: '0x00000320'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Address Error Decode Interrupt Mask.
+  field:
+  - bits: '0'
+    name: MASK
+    type: ro
+  name: ADDR_ERROR_INT_MASK
+  offset: '0x00000324'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Address Error Decode Interrupt Enable.
+  field:
+  - bits: '0'
+    name: EN
+    type: wo
+  name: ADDR_ERROR_INT_EN
+  offset: '0x00000328'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Address Error Decode Interrupt Disable.
+  name: ADDR_ERROR_INT_DIS
+  offset: '0x0000032C'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Controls the MBISR engines in the FPD.
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    longdesc: This needs to be set before Enable bit is set to 1 to start the MBISR
+      operation.
+    name: FPD_GROUP
+    shortdesc: Apply MBISR for the FP domain.
+    type: rw
+  - bits: '4:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: Typically, the BISR chain is reset when this input is low.
+    name: ENABLE
+    shortdesc: This bit is driven by PMU to trigger the repair operation and needs
+      to be 0 and then set to 1 after the FPD_Group is set to 1 in order to initialize
+      MBISR chain on the FPD.
+    type: rw
+  name: MBISR_CNTRL
+  offset: '0x00000330'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Completion Status of MBISR engines.
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    longdesc: '0: failed. 1: passed.'
+    name: PASS
+    shortdesc: When Done is 1, this bit reflects the completion status of the MBISR.
+    type: ro
+  - bits: '3:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: DONE
+    type: ro
+  name: MBISR_STATUS
+  offset: '0x00000334'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Errors Detected During PMU Pre-Boot. Reset by POR only.
+  field:
+  - bits: '31'
+    longdesc: In that case the PS_ERR pin on the device will be asserted to signify
+      an error.
+    name: PBERR_FLAG
+    shortdesc: If there is any error in the PBERR_Data field, this bit must be set
+      to 1.
+    type: rw
+  - bits: '30:0'
+    longdesc: '0x00000001: PMU RAM Init Error 0x00000002: SysMon Init Error 0x00000004:
+      SysMon LP_Supply Check Error 0x00000008: SysMon Aux_Supply Check Error 0x00000010:
+      SysMon IO_Supply Check Error 0x00000020: IOPLL Lock Error 0x00000040: DPLL Lock
+      Error 0x00010000: LPD Scan Zeroization Timeout Error 0x00020000: FPD Scan Zeroization
+      Timeout Error 0x00040000: LPD Scan Zeroization Failure Error 0x00080000: FPD
+      Scan Zeroization Failure Error 0x00400000: FPD BISR Timeout Error 0x00800000:
+      FPD BISR Failure Error 0x01000000: LPD MBIST Zeroization Timeout Error 0x02000000:
+      FPD MBIST Zeroization Timeout Error 0x04000000: LPD MBIST Zeroization Failure
+      Error 0x08000000: FPD MBIST Zeroization Failure Error 0xFFFFFFFF: Unresolved
+      Error'
+    name: PBERR_DATA
+    shortdesc: Bits in this field represent all Pre-boot ROM errors.
+    type: rw
+  name: PMU_PB_ERR
+  offset: '0x00000338'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Errors Detected During PMU ROM Pre-Boot. Reset by POR only.
+  field:
+  - bits: '31:28'
+    name: FWERR
+    type: rw
+  - bits: '27:24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    name: SERVERR_FLAG
+    type: rw
+  - bits: '22:20'
+    name: RESERVED
+    type: ro
+  - bits: '19:0'
+    longdesc: 'For detailed bit assignment of the errors, please refer to the PMU
+      ROM chapter in the Low-Power Design Specification. 0x00000001: LPD Island Failed
+      to ACK Power Up Request 0x00000002: FPD Island Failed to ACK Power Up Request
+      0x00000004: LPD Island Failed to ACK Power Down Request 0x00000008: FPD Island
+      Failed to ACK Power Down Request 0x00000010: FPD Power Supply Failed to Power
+      On 0x00000020: PLD Power Supply Failed to Power On 0x00000100: FPD MBISR Timeout
+      Error 0x00000200: FPD MBISR Chain Error 0x00000400: Undefined Service was Requested
+      0x00000800: PMU Triple Modular Redundent Error 0x00001000: Spirious Hardware
+      Interrupt (Edge triggered failed to hold level) 0x00010000: PMU in Exception
+      State'
+    name: SERVERR_DATA
+    shortdesc: Bits in this field represent all Pre-boot ROM errors.
+    type: rw
+  name: PMU_SERV_ERR
+  offset: '0x0000033C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PRDY Status Error for Power Islands in LPD. Reset only by POR.
+  field:
+  - bits: '31:0'
+    name: ACK_ERROR
+    type: rw
+  name: PWR_ACK_ERR_LPD
+  offset: '0x00000340'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: PRDY Status Error for Power Islands in FPD. Reset only by POR.
+  field:
+  - bits: '31:0'
+    name: ACK_ERROR
+    type: rw
+  name: PWR_ACK_ERR_FPD
+  offset: '0x00000344'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Logic Clear Services Log Error Status. Reset only by POR.
+  field:
+  - bits: '31:0'
+    name: LOGCLR_ERROR
+    type: rw
+  name: SERV_LOGCLR_ERR
+  offset: '0x00000348'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Request to start the Logic Clear Engines.
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: wo
+  - bits: '17'
+    name: FP
+    type: wo
+  - bits: '16'
+    name: LP
+    type: wo
+  - bits: '15:14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: USB1
+    type: wo
+  - bits: '12'
+    name: USB0
+    type: wo
+  - bits: '11'
+    name: RESERVED
+    type: wo
+  - bits: '10'
+    name: RPU
+    type: wo
+  - bits: '9:8'
+    name: RESERVED
+    type: wo
+  - bits: '7'
+    name: PP1
+    type: wo
+  - bits: '6'
+    name: PP0
+    type: wo
+  - bits: '5:4'
+    name: RESERVED
+    type: wo
+  - bits: '3'
+    name: ACPU3
+    type: wo
+  - bits: '2'
+    name: ACPU2
+    type: wo
+  - bits: '1'
+    name: ACPU1
+    type: wo
+  - bits: '0'
+    name: ACPU0
+    type: wo
+  name: LOGCLR_TRIG
+  offset: '0x00000350'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: This register provides the Acknowledge from the Logic Clear engines
+    after they are run. (1 = Zeroization is Completed)
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17'
+    name: FP
+    type: ro
+  - bits: '16'
+    name: LP
+    type: ro
+  - bits: '15:14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: USB1
+    type: ro
+  - bits: '12'
+    name: USB0
+    type: ro
+  - bits: '11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    name: RPU
+    type: ro
+  - bits: '9:8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: PP1
+    type: ro
+  - bits: '6'
+    name: PP0
+    type: ro
+  - bits: '5:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: ACPU3
+    type: ro
+  - bits: '2'
+    name: ACPU2
+    type: ro
+  - bits: '1'
+    name: ACPU1
+    type: ro
+  - bits: '0'
+    name: ACPU0
+    type: ro
+  name: LOGCLR_ACK
+  offset: '0x00000354'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: This register provides the status of the WFI state for the ACPU3-ACPU0
+    and the L2 Cache.
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    name: L2_WFI
+    type: ro
+  - bits: '15:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: ACPU3_WFI
+    type: ro
+  - bits: '2'
+    name: ACPU2_WFI
+    type: ro
+  - bits: '1'
+    name: ACPU1_WFI
+    type: ro
+  - bits: '0'
+    name: ACPU0_WFI
+    type: ro
+  name: APU_WFI_STATUS
+  offset: '0x00000360'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: This register is used to control the Reset to the MBIST Memory Controllers
+    for PMU and CSU
+  field:
+  - bits: '1'
+    name: CSU
+    type: rw
+  - bits: '0'
+    name: PMU
+    type: rw
+  name: MBIST_RST
+  offset: '0x0000036C'
+  type: rw
+  width: 2
+- default: '0x00000000'
+  description: This register is used to control the PG_EN signal to the MBIST Memory
+    Controllers for PMU and CSU
+  field:
+  - bits: '1'
+    name: CSU
+    type: rw
+  - bits: '0'
+    name: PMU
+    type: rw
+  name: MBIST_PG_EN
+  offset: '0x00000370'
+  type: rw
+  width: 2
+- default: '0x00000000'
+  description: This register is used to control the SETUP_1 signal to the MBIST Memory
+    Controllers for PMU and CSU
+  field:
+  - bits: '1'
+    name: CSU
+    type: rw
+  - bits: '0'
+    name: PMU
+    type: rw
+  name: MBIST_SETUP
+  offset: '0x00000374'
+  type: rw
+  width: 2
+- default: '0x00000000'
+  description: This register is used to read the DONE status of the MBIST Memory Controllers
+    for PMU and CSU
+  field:
+  - bits: '1'
+    name: CSU
+    type: ro
+  - bits: '0'
+    name: PMU
+    type: ro
+  name: MBIST_DONE
+  offset: '0x00000378'
+  type: ro
+  width: 2
+- default: '0x00000000'
+  description: This register is used to read the GO status of the MBIST Memory Controllers
+    for PMU and CSU
+  field:
+  - bits: '1'
+    name: CSU
+    type: ro
+  - bits: '0'
+    name: PMU
+    type: ro
+  name: MBIST_GOOD
+  offset: '0x0000037C'
+  type: ro
+  width: 2

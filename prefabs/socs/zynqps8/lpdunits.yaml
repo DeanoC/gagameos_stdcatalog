@@ -1,0 +1,56 @@
+connection:
+- bus_name: lpdunitsswitch_pssysmon
+  connection: LPDUnitsSwitch -> PSSysMon
+  type: bus
+- bus_name: lpdunitsswitch_spi${index}
+  connection: LPDUnitsSwitch -> SPI0
+  silent: true
+  type: bus
+- bus_name: lpdunitsswitch_spi${index}
+  connection: LPDUnitsSwitch -> SPI1
+  silent: true
+  type: bus
+- bus_protocol: internal_ttc
+  connection: LPDUnitsSwitch -> TTC0
+  type: bus
+- bus_protocol: internal_ttc
+  connection: LPDUnitsSwitch -> TTC1
+  type: bus
+- bus_protocol: internal_ttc
+  connection: LPDUnitsSwitch -> TTC2
+  type: bus
+- bus_protocol: internal_ttc
+  connection: LPDUnitsSwitch -> TTC3
+  type: bus
+- bus_protocol: internal_swdt
+  connection: LPDUnitsSwitch -> LPD_SWDT
+  type: bus
+- bus_name: lpdunitsswitch_ipi
+  connection: LPDUnitsSwitch -> IPI
+  type: bus
+- bus_name: lpdunitsswitch_gpio
+  connection: LPDUnitsSwitch -> GPIO
+  type: bus
+instance:
+- name: LPDUnitsSwitch
+  type: switch.internal.lpdunitsswitch.zynqps8
+- name: PSSysMon
+  type: other.sysmon.zynqps8
+- instance: 0
+  name: TTC0
+  type: other.timer.ttc.zynqps8
+- instance: 1
+  name: TTC1
+  type: other.timer.ttc.zynqps8
+- instance: 2
+  name: TTC2
+  type: other.timer.ttc.zynqps8
+- instance: 3
+  name: TTC3
+  type: other.timer.ttc.zynqps8
+- name: LPD_SWDT
+  type: other.timer.watchdog.zynqps8
+- name: GPIO
+  type: io.gpio.zynqps8
+- name: IPI
+  type: other.ipi.zynqps8

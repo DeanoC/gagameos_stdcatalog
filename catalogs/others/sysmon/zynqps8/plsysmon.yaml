@@ -1,0 +1,1468 @@
+description: PL System Monitor
+register:
+- default: '0x00000000'
+  description: PL Temperature measurement.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: TEMPERATURE
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: TEMP_PL
+  offset: '0x00000000'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: PL Internal Voltage Voltage measurement, VCCINT.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCINT
+  offset: '0x00000004'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: PL Auxiliary Voltage measurement, VCCAUX.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCAUX
+  offset: '0x00000008'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Differencial analog input signal Voltage measurment.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VP_VN
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VP_VN
+  offset: '0x0000000C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: ADC Reference P+ Voltage measurement.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VREFP
+  offset: '0x00000010'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: ADC Reference N- Voltage measurement.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VREFN
+  offset: '0x00000014'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: PL Block RAM Voltage measurement, VCCBRAM.
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCBRAM
+  offset: '0x00000018'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: LPD Internal Voltage measurement, VCC_PSINTLP (supply4).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSINTLP
+  offset: '0x00000034'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: FPD Internal Voltage measurement, VCC_PSINTFP (supply5).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSINTFP
+  offset: '0x00000038'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: PS Auxiliary Voltage measurement (supply6).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCC_PSAUX
+  offset: '0x0000003C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 0 Voltage measurement (VAux0).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX00
+  offset: '0x00000040'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 1 Voltage measurement (VAux1).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX01
+  offset: '0x00000044'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 2 Voltage measurement (VAux2).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX02
+  offset: '0x00000048'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 3 Voltage measurement (VAux3).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX03
+  offset: '0x0000004C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 4 Voltage measurement (VAux4).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX04
+  offset: '0x00000050'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 5 Voltage measurement (VAux5).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX05
+  offset: '0x00000054'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 6 Voltage measurement (VAux6).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX06
+  offset: '0x00000058'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 7 Voltage measurement (VAux7).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX07
+  offset: '0x0000005C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 8 Voltage measurement (VAux8).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX08
+  offset: '0x00000060'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 9 Voltage measurement (VAux9).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX09
+  offset: '0x00000064'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 10 Voltage measurement (VAux10).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX0A
+  offset: '0x00000068'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 11 Voltage measurement (VAux11).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX0B
+  offset: '0x0000006C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 12 Voltage measurement (VAux12).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX0C
+  offset: '0x00000070'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 13 Voltage measurement (VAux13).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX0D
+  offset: '0x00000074'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 14 Voltage measurement (VAux14).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX0E
+  offset: '0x00000078'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Auxiliary ch 15 Voltage measurement (VAux15).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: VAUX_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VAUX0F
+  offset: '0x0000007C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max Temperature reached in the PL.
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: TEMPERATURE
+    shortdesc: Maximum value recorded in the temperature measurement register since
+      the last reset.
+    type: ro
+  name: MAX_TEMP_PL
+  offset: '0x00000080'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max PL Internal Voltage, VCCINT (supply1).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCCINT
+  offset: '0x00000084'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max PL Auxiliary Voltage, VCCAUX (supply2).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCCAUX
+  offset: '0x00000088'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max Block RAM Voltage, VCCBRAM (supply3).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCCBRAM
+  offset: '0x0000008C'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min Temperature reached in the PL.
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: TEMPERATURE
+    shortdesc: Minimum value recorded in the temperature measurement register since
+      the last reset.
+    type: ro
+  name: MIN_TEMP_PL
+  offset: '0x00000090'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min PL Internal Voltage, VCCINT (supply1).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCCINT
+  offset: '0x00000094'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min PL Auxiliary Voltage, VCCAUX (supply2).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCCAUX
+  offset: '0x00000098'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min Block RAM Voltage, VCCBRAM (supply3).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCCBRAM
+  offset: '0x0000009C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max PS LPD Voltage measurement, VCC_PSINTLP (supply4).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCC_PSINTLP
+  offset: '0x000000A0'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max PS FPD Voltage measurement, VCC_PSINTFP (supply5).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCC_PSINTFP
+  offset: '0x000000A4'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max PS Auxiliary Voltage measurement, VCC_PSAUX (supply6).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCC_PSAUX
+  offset: '0x000000A8'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min PS LPD Voltage measurement, VCC_PSINTLP (supply4).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCC_PSINTLP
+  offset: '0x000000B0'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min PS FPD Voltage measurement, VCC_PSINTFP (supply5).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCC_PSINTFP
+  offset: '0x000000B4'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min PS Auxiliary Voltage measurement, VCC_PSAUX (supply6).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCC_PSAUX
+  offset: '0x000000B8'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Status Flags, Reg 1.
+  field:
+  - bits: '4'
+    name: ALM_VCCAMS
+    type: ro
+  - bits: '3:0'
+    longdesc: Bit [1] Alarm 9, VUser1 (supply8). Bit [2] Alarm 10, VUser2 (supply9).
+      Bit [3] Alarm 11, VUser3 (supply10).
+    name: ALM_10_7
+    shortdesc: Bit [0] Alarm 8, VUser0 (supply7).
+    type: ro
+  name: STATUS_FLAG_1
+  offset: '0x000000F8'
+  type: ro
+  width: 16
+- default: '0x00000A00'
+  description: Status Flags, Reg 0.
+  field:
+  - bits: '15'
+    name: CLK_OSC_USED
+    type: ro
+  - bits: '14'
+    name: BLOCK_IN_RESET
+    type: ro
+  - bits: '13:12'
+    name: RESERVED
+    type: ro
+  - bits: '11'
+    longdesc: '0: enabled. 1: disabled.'
+    name: JTAG_DISABLED
+    shortdesc: PL JTAG Access Disable indicator.
+    type: ro
+  - bits: '10'
+    longdesc: 'Restricts access to only PL SysMon status registers. 0: All registers.
+      1: Status registers only.'
+    name: JTAG_READ_ONLY
+    shortdesc: PL JTAG Access Limiter.
+    type: ro
+  - bits: '9'
+    longdesc: '0: external reference, VREF{P, N} input pins. 1: Internal reference.'
+    name: INTERNAL_REF
+    shortdesc: ADC VRef Selection.
+    type: ro
+  - bits: '8'
+    longdesc: '0: enabled. 1: disabled.'
+    name: DISABLED
+    shortdesc: PL SysMon Disable indicator.
+    type: ro
+  - bits: '7:4'
+    longdesc: Bit[5] Alarm 4, VCC_PSINTLP (LPD wire from PS). Bit[6] Alarm 5, VCC_PSINTFP
+      (FPD wire from PS). Bit[7] Alarm 6, VCC_PSAUX (wire from PS).
+    name: ALM_6_3
+    shortdesc: Bit[4] Alarm 3, VCCBRAM.
+    type: ro
+  - bits: '3'
+    name: OT
+    type: ro
+  - bits: '2:0'
+    longdesc: Bit[1] Alarm 1, PL Internal VCCINT. Bit[2] Alarm 2, PL Auxiliary VCCAUX.
+    name: ALM_2_0
+    shortdesc: Bit[0] Alarm 0, Temp_PL.
+    type: ro
+  name: STATUS_FLAG
+  offset: '0x000000FC'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Configuration, Reg 0.
+  field:
+  - bits: '15'
+    name: RESERVED
+    type: rw
+  - bits: '14'
+    name: RESERVED
+    type: rw
+  - bits: '13:12'
+    longdesc: 'Applies to sequencer looping. 0: no averaging. 1: 16 samples. 2: 64
+      samples. 3: 256 samples.'
+    name: AVERAGING
+    shortdesc: Averaging Mode enable/set.
+    type: rw
+  - bits: '11'
+    longdesc: '0: disable. 1: enable. Refer to channel_out[4:0] signals in PG185.'
+    name: EXTERNAL_MUX
+    shortdesc: Enable External Multiplexor.
+    type: rw
+  - bits: '10'
+    longdesc: 'Applies to single channel mode (not sequencing) and only external sensor
+      channels. 0: unipolar. 1: bipolar. A circuit diagram is shown in UG580.'
+    name: BU
+    shortdesc: Select uni/bipolar Input Mode.
+    type: rw
+  - bits: '9'
+    longdesc: '0: program driven. 1: event driven.'
+    name: EC
+    shortdesc: Enable Event-Driven Sampling Mode for ADC.
+    type: rw
+  - bits: '8'
+    longdesc: '0: normal. 1: long acquisition time. Applies to continuous sampling
+      mode of single channel.'
+    name: ACQ
+    shortdesc: Enable Long Acquisition Settling Time.
+    type: rw
+  - bits: '7:6'
+    name: RESERVED
+    type: rw
+  - bits: '5:0'
+    longdesc: Select the channel to measure. Bits[5:0] selects an analog channel listed
+      in the PL SysMon Sensor Channel table of UG1085.
+    name: MUX_CHANNEL
+    shortdesc: Single-measurement Mode.
+    type: rw
+  name: CONFIG_REG0
+  offset: '0x00000100'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Configuration, Reg 1.
+  field:
+  - bits: '15:12'
+    longdesc: '0001: Selected channels; Single pass. 0010: Selected channgls; Loop
+      sequence (will include calibration and temperature). 0011: Single channel (sequencer
+      off), select channel in CONFIG_REG0 [mux_channel]. 11xx: Default mode. Others:
+      reserved'
+    name: SEQUENCE_MODE
+    shortdesc: 'Select Sequence Mode: 0000: Default channels; Loop sequence.'
+    type: rw
+  - bits: '11:8'
+    longdesc: Bit[8] Alarm 3, VCCBRAM. Bit[9] Alarm 4, VCCPSINTLP (from PS). Bit[10]
+      Alarm 5, VCCPSINTFP (from PS). Bit[11] Alarm 6, VCC_PSAUX (from PS).
+    name: ALARM_DISABLE6TO3
+    shortdesc: Alarm Disables.
+    type: rw
+  - bits: '7:4'
+    name: RESERVED
+    type: rw
+  - bits: '3:1'
+    longdesc: Bit[1] Alarm 0, PL temperature. Bit[2] Alarm 1, VCCADC Voltage. Bit[3]
+      Alarm 2, VCCAUX_IO Voltage.
+    name: ALARM_DISABLE2TO0
+    shortdesc: Alarm Disables.
+    type: rw
+  - bits: '0'
+    name: OVER_TEMP_DISABLE
+    type: rw
+  name: CONFIG_REG1
+  offset: '0x00000104'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Configuration, Reg 2.
+  field:
+  - bits: '15:8'
+    longdesc: 'The reference clock is divided-down to generate the ADC clock. 00h,
+      01h, 02h: divide by 2. 03h through FFh: divide by 3 through 255. Note: for a
+      value of 00h, this encoding is different than the PS SysMon unit.'
+    name: CLOCK_DIVIDER
+    shortdesc: ADC Clock Divide Ratio.
+    type: rw
+  name: CONFIG_REG2
+  offset: '0x00000108'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Configuration, Reg 4.
+  field:
+  - bits: '15:12'
+    name: RESERVED
+    type: rw
+  - bits: '11:10'
+    longdesc: 'End of sequence to be from: 00: regular rate. 01: low-rate (slow).
+      10: regular and low-rate (slow). 11: regular rate (default).'
+    name: LOW_RATE_EOS
+    shortdesc: Configure the generation of the EOS signal relative to regular and
+      low-rate (slow) sequencer.
+    type: rw
+  - bits: '9:8'
+    longdesc: 'Channels can be either a normal sample rate (SEQ_CHANNEL{0:2}) or a
+      less frequent sample rate (SEQ_LOW_RATE_CHANNEL{0:2}). 00: every sequence. 01:
+      every 4th Sequence. 10: every 16th Sequence 11: every 64th Sequence. When including
+      a channel in the sequence, the user must ensure that each selected channel is
+      either in the normal or low-rate sequence register, but not both. Channels not
+      in the sequence are not selected in either sequence channel type.'
+    name: SEQUENCE_RATE
+    shortdesc: When using the low-rate sample mode, this field determines the divided
+      down conversion rate from normal.
+    type: rw
+  - bits: '7:4'
+    name: RESERVED
+    type: rw
+  - bits: '3:0'
+    longdesc: '0: Range is 0 to 3V. 1: Range is 0 to 6V. Bit[0] VUser0. Bit[1] VUser1.
+      Bit[2] VUser2. Bit[3] VUser3. Note: The Vivado design suite sets this = 1 when
+      SYSMON_VUSER[3:0]_MONITOR is either VCCO_TOP or VCCO_BOT. For all other banks
+      and supplies, leave = 0.'
+    name: VUSER_ENABLE_HRANGE
+    shortdesc: Enable high range measurement (0 to 6V) on the PMBus data formater.
+    type: rw
+  name: CONFIG_REG4
+  offset: '0x00000110'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Analog Bus Control
+  field:
+  - bits: '15:12'
+    name: VUSER3
+    type: rw
+  - bits: '11:8'
+    name: VUSER2
+    type: rw
+  - bits: '7:4'
+    name: VUSER1
+    type: rw
+  - bits: '3:0'
+    name: VUSER0
+    type: rw
+  name: ANALOG_BUS
+  offset: '0x00000114'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Channel Inclusion, Group 2.
+  field:
+  - bits: '4'
+    name: VCCAMS
+    type: rw
+  - bits: '3'
+    name: SUPPLY10
+    type: rw
+  - bits: '2'
+    name: SUPPLY9
+    type: rw
+  - bits: '1'
+    name: SUPPLY8
+    type: rw
+  - bits: '0'
+    name: SUPPLY7
+    type: rw
+  name: SEQ_CHANNEL2
+  offset: '0x00000118'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Average Config, Group 2.
+  field:
+  - bits: '15:0'
+    longdesc: Bit[1] VUser1. Bit[2] VUser2. Bit[3] VUser3. Bit[4] VCC_PL_ADC (VCCADC).
+      Others reserved.
+    name: AVERAGE2
+    shortdesc: Bit[0] VUser0.
+    type: rw
+  name: SEQ_AVERAGE2
+  offset: '0x0000011C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Channel Inclusion, Group 0.
+  field:
+  - bits: '15'
+    name: CURRENT_MON
+    type: rw
+  - bits: '14'
+    longdesc: Full-featured channel (supply3).
+    name: VCCBRAM
+    shortdesc: PL Block RAM Voltage sensor, VCCBRAM.
+    type: rw
+  - bits: '13'
+    longdesc: Basic channel.
+    name: VREFN
+    shortdesc: VRefN.
+    type: rw
+  - bits: '12'
+    longdesc: Basic channel.
+    name: VREFP
+    shortdesc: VRefP.
+    type: rw
+  - bits: '11'
+    longdesc: Basic channel.
+    name: VP_VN
+    shortdesc: VP_VN.
+    type: rw
+  - bits: '10'
+    longdesc: Full-featured channel (supply2).
+    name: VCCAUX
+    shortdesc: PL Auxiliary Voltage sensor, VCCAUX.
+    type: rw
+  - bits: '9'
+    longdesc: Full-featured channel (supply1).
+    name: VCCINT
+    shortdesc: PL Internal Voltage sensor, VCCINT.
+    type: rw
+  - bits: '8'
+    longdesc: Full-featured channel.
+    name: TEMPERATURE
+    shortdesc: PL temperature sensor, Temp_PL.
+    type: rw
+  - bits: '7'
+    longdesc: Full-featured channel.
+    name: VCC_PSAUX
+    shortdesc: VCC_PSAux.
+    type: rw
+  - bits: '6'
+    longdesc: Full-featured channel (supply5).
+    name: VCC_PSINTFP
+    shortdesc: FPD Voltage sensor, VCC_PSINTFP.
+    type: rw
+  - bits: '5'
+    longdesc: Full-featured channel (supply4).
+    name: VCC_PSINTLP
+    shortdesc: LPD Voltage sensor, VCC_PSINTLP.
+    type: rw
+  - bits: '0'
+    name: CALIBRATION
+    type: rw
+  name: SEQ_CHANNEL0
+  offset: '0x00000120'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Channel Inclusion, Group 1.
+  field:
+  - bits: '15'
+    name: VAUX0F
+    type: rw
+  - bits: '14'
+    name: VAUX0E
+    type: rw
+  - bits: '13'
+    name: VAUX0D
+    type: rw
+  - bits: '12'
+    name: VAUX0C
+    type: rw
+  - bits: '11'
+    name: VAUX0B
+    type: rw
+  - bits: '10'
+    name: VAUX0A
+    type: rw
+  - bits: '9'
+    name: VAUX09
+    type: rw
+  - bits: '8'
+    name: VAUX08
+    type: rw
+  - bits: '7'
+    name: VAUX07
+    type: rw
+  - bits: '6'
+    name: VAUX06
+    type: rw
+  - bits: '5'
+    name: VAUX05
+    type: rw
+  - bits: '4'
+    name: VAUX04
+    type: rw
+  - bits: '3'
+    name: VAUX03
+    type: rw
+  - bits: '2'
+    name: VAUX02
+    type: rw
+  - bits: '1'
+    name: VAUX01
+    type: rw
+  - bits: '0'
+    name: VAUX00
+    type: rw
+  name: SEQ_CHANNEL1
+  offset: '0x00000124'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Channel Averaging, Group 0.
+  field:
+  - bits: '15:0'
+    longdesc: Bit[5] is for VCC_PSINTLP. Bit[6] is for VCC_PSINTFP. Bit[7] is for
+      VCC_PSAux. Bit[8] is for Temp_PL. Bit[9] is for PL VCCINT. Bit[10] is for PL
+      VCCAUX. Bit[11] is reserved. Bit[12] is reserved. Bit[13] is reserved. Bit[14]
+      is for PL VCCBRAM. Bit[15] is reserved.
+    name: AVERAGE0
+    shortdesc: Bits[4:0] are reserved.
+    type: rw
+  name: SEQ_AVERAGE0
+  offset: '0x00000128'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Channel Averaging, Group 1.
+  field:
+  - bits: '15:0'
+    longdesc: Bit[0] is for VAux0. Bit[1] is for VAux1. .. Bit[15] is for VAux15.
+    name: AVERAGE1
+    shortdesc: VAux[0:15] channels.
+    type: rw
+  name: SEQ_AVERAGE1
+  offset: '0x0000012C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Bipolar Input Mode, Group 0.
+  field:
+  - bits: '15:0'
+    longdesc: All others are reserved.
+    name: INPUT_MODE0
+    shortdesc: Bit[11] is for VP_VN.
+    type: rw
+  name: SEQ_INPUT_MODE0
+  offset: '0x00000130'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Bipolar Input Mode, Group 1.
+  field:
+  - bits: '15:0'
+    longdesc: Bit[0] is for VAux0. Bit[1] is for VAux1. .. Bit[15] is for VAux15.
+    name: INPUT_MODE1
+    shortdesc: VAux[0:15] channels.
+    type: rw
+  name: SEQ_INPUT_MODE1
+  offset: '0x00000134'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequence Acquisition Time Extension, Group 0.
+  field:
+  - bits: '15:0'
+    longdesc: All others are reserved.
+    name: ACQ0
+    shortdesc: Bit[11] is for VP_VN.
+    type: rw
+  name: SEQ_ACQ0
+  offset: '0x00000138'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequence Acquisition Time Extension, Group 1.
+  field:
+  - bits: '15:0'
+    longdesc: Bit[0] is for VAux0. Bit[1] is for VAux1. .. Bit[15] is for VAux15.
+    name: ACQ1
+    shortdesc: VAux[0:15] channels.
+    type: rw
+  name: SEQ_ACQ1
+  offset: '0x0000013C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: PL Upper temperature Alarm Threshold.
+  field:
+  - bits: '15:0'
+    name: TEMPERATURE_ALARM
+    type: rw
+  name: ALARM_TEMP_PL_UPPER
+  offset: '0x00000140'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: PL Internal Voltage Alarm Threshold. VCCINT (supply1).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCINT_UPPER
+  offset: '0x00000144'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: PL Auxiliary Voltage Alarm Threshold, VCCAUX (supply2).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCAUX_LOWER
+  offset: '0x00000148'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: PL Upper over-temperature Threshold.
+  field:
+  - bits: '15:0'
+    name: TEMPERATURE_ALARM
+    type: rw
+  name: ALARM_OT_UPPER
+  offset: '0x0000014C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: PL Lower temperature Lower Alarm Threshold and config.
+  field:
+  - bits: '15:1'
+    longdesc: Programmed register value is compared to the measurement register. When
+      hysteresis is enabled, the Temp_PL Alarm is cleared when the temperature goes
+      below the Lower [temperature_Alarm] Threshold. Applies only when [threshold_mode]
+      = 0.
+    name: TEMPERATURE_ALARM
+    shortdesc: Alarm temperature Threshold.
+    type: rw
+  - bits: '0'
+    longdesc: '0: enable hysteresis. 1: disable hysteresis.'
+    name: THRESHOLD_MODE
+    shortdesc: Lower Threshold, Hysteresis Disable.
+    type: rw
+  name: ALARM_TEMP_PL_LOWER
+  offset: '0x00000150'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: VCC Internal Voltage Lower Alarm Threshold, VCCINT (supply1).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_LOWER_VCCINT
+  offset: '0x00000154'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: VCC Auxiliary Voltage Lower Alarm Threshold, VCCAUX (supply2).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_LOWER_VCCAUX
+  offset: '0x00000158'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold Setting for Temp_PL Over-Temperature (OT).
+  field:
+  - bits: '15:1'
+    longdesc: Programmed register value is compared to the measurement register. When
+      hysteresis is enabled, the Temp_PL Alarm is cleared when the temperature goes
+      below the Lower [temperature_alarm] Threshold. Applies only when [Threshold_mode]
+      = 0.
+    name: TEMPERATURE_ALARM
+    shortdesc: Alarm Temperature Threshold.
+    type: rw
+  - bits: '0'
+    longdesc: '0: enable hysteresis. 1: disable hysteresis.'
+    name: THRESHOLD_MODE
+    shortdesc: Lower Threshold, Hysteresis Disable.
+    type: rw
+  name: ALARM_OT_LOWER
+  offset: '0x0000015C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold Setting for VCCBRAM (supply3).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCBRAM_UPPER
+  offset: '0x00000160'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold Setting for VCC_PSINTLP (supply4).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSINTLP_UPPER
+  offset: '0x00000164'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold Setting for VCC_PSINTFP (supply5).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSINTFP_UPPER
+  offset: '0x00000168'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold Setting for VCC_PSAUX (supply6).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSAUX_UPPER
+  offset: '0x0000016C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold Setting for VCCBRAM (supply3).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCBRAM_LOWER
+  offset: '0x00000170'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold Setting for VCC_PSINTLP (supply4).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSINTLP_LOWER
+  offset: '0x00000174'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold Setting for VCC_PSINTFP (supply5).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PLINTFP_LOWER
+  offset: '0x00000178'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold Setting for VCC_PSAUX (supply6).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCC_PSAUX_LOWER
+  offset: '0x0000017C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold Setting for VUser0 (supply7).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VUSER0_UPPER
+  offset: '0x00000180'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold Setting for VUser1 (supply8).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VUSER1_UPPER
+  offset: '0x00000184'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold Setting for VUser2 (supply9).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VUSER2_UPPER
+  offset: '0x00000188'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold Setting for VUser3 (supply10).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VUSER3_UPPER
+  offset: '0x0000018C'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Upper Alarm Threshold Setting for PL VCCADC (vccams).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCADC_UPPER
+  offset: '0x00000190'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold Setting for VUser0 (supply7).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VUSER0_LOWER
+  offset: '0x000001A0'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold Setting for VUser1 (supply8).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VUSER1_LOWER
+  offset: '0x000001A4'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold Setting for VUser2 (supply9).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VUSER2_LOWER
+  offset: '0x000001A8'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold Setting for VUser3 (supply10).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VUSER3_LOWER
+  offset: '0x000001AC'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Lower Alarm Threshold Setting for PL VCCADC (vccams).
+  field:
+  - bits: '15:0'
+    name: SUPPLY_ALARM
+    type: rw
+  name: ALARM_VCCADC_LOWER
+  offset: '0x000001B0'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequencer Bipolar Input Mode, Group 2.
+  field:
+  - bits: '15:0'
+    longdesc: Fixed.
+    name: INPUT_MODE2
+    shortdesc: Group 2 nodes use unipolar circuit sampling (unsigned).
+    type: rw
+  name: SEQ_INPUT_MODE2
+  offset: '0x000001E0'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Sequence Acquisition Time Extension, Group 2.
+  field:
+  - bits: '15:0'
+    name: ACQ2
+    type: rw
+  name: SEQ_ACQ2
+  offset: '0x000001E4'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Low-Rate Sequence Channel, Group 0.
+  field:
+  - bits: '15:0'
+    name: CHANNEL0
+    type: rw
+  name: SEQ_LOW_RATE_CHANNEL0
+  offset: '0x000001E8'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Low-Rate Sequence Channel, Group 1.
+  field:
+  - bits: '15:0'
+    name: CHANNEL1
+    type: rw
+  name: SEQ_LOW_RATE_CHANNEL1
+  offset: '0x000001EC'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Low-Rate Sequence Channel, Group 2.
+  field:
+  - bits: '15:0'
+    name: CHANNEL2
+    type: rw
+  name: SEQ_LOW_RATE_CHANNEL2
+  offset: '0x000001F0'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: VUser0 Voltage measurement (supply7).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VUSER0
+  offset: '0x00000200'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: VUser1 Voltage measurement (supply8).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VUSER1
+  offset: '0x00000204'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: VUser2 Voltage measurement (supply9).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VUSER2
+  offset: '0x00000208'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: VUser3 Voltage measurement (supply10).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VUSER3
+  offset: '0x0000020C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: PL VCCADC Voltage measurement (vccams).
+  field:
+  - bits: '15:0'
+    longdesc: Bits [5:0] LSBs. Read-only.
+    name: SUPPLY_VAL
+    shortdesc: Bits [15:6] = 10-bit ADC measurement.
+    type: ro
+  name: VCCADC
+  offset: '0x00000210'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VUser0 (supply7).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VUSER0
+  offset: '0x00000280'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VUser1 (supply8).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VUSER1
+  offset: '0x00000284'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VUser2 (supply9).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VUSER2
+  offset: '0x00000288'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for VUser3 (supply10).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VUSER3
+  offset: '0x0000028C'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Max voltage measured for PL VCCAD (vccams).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Maximum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MAX_VCCADC
+  offset: '0x00000290'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VUser0 (supply7).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VUSER0
+  offset: '0x000002A0'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VUser1 (supply8).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VUSER1
+  offset: '0x000002A4'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VUser2 (supply9).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VUSER2
+  offset: '0x000002A8'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for VUser3 (supply10).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VUSER3
+  offset: '0x000002AC'
+  type: ro
+  width: 16
+- default: '0x0000FFFF'
+  description: Min voltage measured for PL VCCADC (vccams).
+  field:
+  - bits: '15:0'
+    longdesc: Read-only. Cleared by unit reset.
+    name: SUPPLY_VAL
+    shortdesc: Minimum value recorded in the Voltage measurement register since the
+      last reset.
+    type: ro
+  name: MIN_VCCADC
+  offset: '0x000002B0'
+  type: ro
+  width: 16

@@ -1,0 +1,710 @@
+description: A53 EL3 System registers
+register:
+- default: '0x00000000'
+  description: Current Cache Size ID Register.
+  field:
+  - bits: '[2:0]'
+    description: Log2(num bytes in cache line) - 4, 0 = 16 byte cache line
+    name: LINESIZE
+    type: r
+  - bits: '[12:3]'
+    description: Associativity bit of cache - 1, 0 = 1 bit
+    name: ASSOCIATIVITY
+    type: r
+  - bits: '[27:13]'
+    description: Num sets in cache - 1, 0 = 1 set
+    name: NUMSETS
+    type: r
+  name: CCSIDR_EL1
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Cache Size Selection Register.
+  field:
+  - bits: '[3:1]'
+    description: Cache level 0 = L1 upto L7
+    name: LEVEL
+    type: rw
+  - bits: '0'
+    description: Instruction not Data 0 = D Cache, 1 = I Cache
+    name: INOTD
+    type: rw
+  name: CSSELR_EL1
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The SCTLR_EL3 controls cache and other system function.
+  field:
+  - bits: '19'
+    description: Enable XN (Execute-never) for all EL3 translation regions
+    name: WXN
+    type: rw
+  - bits: '12'
+    description: 0 = all EL3 Normal regions are not instruction cachable
+    name: I
+    type: rw
+  - bits: '3'
+    description: SP Alignment check enable
+    name: SA
+    type: rw
+  - bits: '2'
+    description: 0 = all EL3 Normal regions are not data cachable
+    name: C
+    type: rw
+  - bits: '1'
+    description: Alignment fault checking enable
+    name: A
+    type: rw
+  - bits: '0'
+    description: E3 stage 1 MMU enable
+    name: M
+    type: rw
+  name: SCTLR_EL3
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Exception Syndrome Register (EL3)
+  field:
+  - bits: '[31:26]'
+    description: Exception Class
+    enum:
+    - name: UNKNOWN
+      value: '0b000000'
+    - name: WFx
+      value: '0b000001'
+    - name: COP15_AARCH32
+      value: '0b000011'
+    - name: TRAPPED_MCRR_MRRC_AARCH32
+      value: '0b000100'
+    - name: COP14_AARCH32
+      value: '0b000101'
+    - name: LDC_SRC_AARCH32
+      value: '0b000110'
+    - name: SVE_SIMD_FP
+      value: '0b000111'
+    - name: PAUTH
+      value: '0b001001'
+    - name: MRRC_COP14_AARCH32
+      value: '0b001100'
+    - name: BTI
+      value: '0b001101'
+    - name: ILLEGAL_EXECUTION
+      value: '0b001110'
+    - name: SVC
+      value: '0b010101'
+    - name: HVC
+      value: '0b010110'
+    - name: SMC
+      value: '0b010111'
+    - name: MSR_MRS
+      value: '0b011000'
+    - name: SVE
+      value: '0b011001'
+    - name: FPAC
+      value: '0b011100'
+    - name: IMPLEMENTATION_DEFINED
+      value: '0b011111'
+    - name: INSTRUCTION_ABORT_FROM_LOWER_EL
+      value: '0b100000'
+    - name: INSTRUCTION_ABORT
+      value: '0b100001'
+    - name: PC_ALIGNMENT_FAULT
+      value: '0b100010'
+    - name: DATA_ABORT_FROM_LOWER_EL
+      value: '0b100100'
+    - name: DATA_ABORT
+      value: '0b100101'
+    - name: SP_ALIGNMENT_FAULT
+      value: '0b100110'
+    - name: FLOATING_POINT
+      value: '0b101100'
+    - name: SERROR
+      value: '0b101111'
+    - name: BRK
+      value: '0b111100'
+    name: EC
+    type: rw
+  - bits: '25'
+    description: Instruction Length
+    enum:
+    - name: 16_BIT_INSTRUCTION
+      value: '0'
+    - name: 32_BIT_INSTRUCTION
+      value: '1'
+    name: IL
+    type: rw
+  - bits: '[24:0]'
+    description: Instruction Specific Syndrome
+    name: ISS
+    type: rw
+  name: ESR_EL3
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: ISS register for UNKNOWN or ILLEGAL_EXECUTION or IMPLEMENTATION_DEFINED
+    EC state
+  name: ISS_NONE
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for WFx EC state
+  field:
+  - bits: '24'
+    description: Condition Value Aarch32
+    name: CV
+    type: rw
+  - bits: '[23:20]'
+    description: Condition Code Aarch32
+    name: COND
+    type: rw
+  - bits: '0'
+    description: Trapped Instruction
+    enum:
+    - name: WFI_TRAPPED
+      value: '0'
+    - name: WFE_TRAPPED
+      value: '1'
+    name: TI
+    type: rw
+  name: ISS_WFx
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for COP15_AARCH32 EC state
+  field:
+  - bits: '24'
+    description: Condition Value Aarch32
+    name: CV
+    type: rw
+  - bits: '[23:20]'
+    description: Condition Code Aarch32
+    name: COND
+    type: rw
+  - bits: '[19:17]'
+    description: Opc2 value from issued instruction
+    name: OPC2
+    type: rw
+  - bits: '[16:14]'
+    description: Opc1 value from issued instruction
+    name: OPC1
+    type: rw
+  - bits: '[13:10]'
+    description: CRn value from issued instruction
+    name: CRN
+    type: rw
+  - bits: '[9:5]'
+    description: Rt value from issued instruction
+    name: RT
+    type: rw
+  - bits: '[4:1]'
+    description: CRm value from issued instruction
+    name: CRM
+    type: rw
+  - bits: '0'
+    description: Direction of Instruction
+    enum:
+    - name: WRITE
+      value: 0
+    - name: READ
+      value: 1
+    name: DIRECTION
+    type: rw
+  name: ISS_COP15_AARCH32
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for TRAPPED_MCRR_MRRC_AARCH32 EC state
+  field:
+  - bits: '24'
+    description: Condition Value Aarch32
+    name: CV
+    type: rw
+  - bits: '[23:20]'
+    description: Condition Code Aarch32
+    name: COND
+    type: rw
+  - bits: '[19:16]'
+    description: Opc1 value from issued instruction
+    name: OPC1
+    type: rw
+  - bits: '[14:10]'
+    description: Rt2 value from issued instruction
+    name: RT2
+    type: rw
+  - bits: '[9:5]'
+    description: Rt value from issued instruction
+    name: RT
+    type: rw
+  - bits: '[4:1]'
+    description: CRm value from issued instruction
+    name: CRM
+    type: rw
+  - bits: '0'
+    description: Direction of Instruction
+    enum:
+    - name: WRITE
+      value: 0
+    - name: READ
+      value: 1
+    name: DIRECTION
+    type: rw
+  name: ISS_TRAPPED_MCRR_MRRC_AARCH32
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for COP14_AARCH32 EC state
+  field:
+  - bits: '24'
+    description: Condition Value Aarch32
+    name: CV
+    type: rw
+  - bits: '[23:20]'
+    description: Condition Code Aarch32
+    name: COND
+    type: rw
+  - bits: '[19:17]'
+    description: Opc2 value from issued instruction
+    name: OPC2
+    type: rw
+  - bits: '[16:14]'
+    description: Opc1 value from issued instruction
+    name: OPC1
+    type: rw
+  - bits: '[13:10]'
+    description: CRn value from issued instruction
+    name: CRN
+    type: rw
+  - bits: '[9:5]'
+    description: Rt value from issued instruction
+    name: RT
+    type: rw
+  - bits: '[4:1]'
+    description: CRm value from issued instruction
+    name: CRM
+    type: rw
+  - bits: '0'
+    description: Direction of Instruction
+    enum:
+    - name: WRITE
+      value: 0
+    - name: READ
+      value: 1
+    name: DIRECTION
+    type: rw
+  name: ISS_COP14_AARCH32
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for LDC_SRC_AARCH32 EC state
+  field:
+  - bits: '24'
+    description: Condition Value Aarch32
+    name: CV
+    type: rw
+  - bits: '[23:20]'
+    description: Condition Code Aarch32
+    name: COND
+    type: rw
+  - bits: '[19:12]'
+    description: Immediate value from instruction
+    name: IMM8
+    type: rw
+  - bits: '[9:5]'
+    description: Rn value from instruction
+    name: RN
+    type: rw
+  - bits: '[4]'
+    description: Is Offset added or subtracted?
+    enum:
+    - name: SUBTRACT
+      value: 0
+    - name: ADD
+      value: 1
+    name: OFFSET_ADD_OR_SUB
+    type: rw
+  - bits: '[3:1]'
+    description: Addressing Mode
+    enum:
+    - name: IMMEDIATE_UNINDEXED
+      value: '0b000'
+    - name: IMMEDIATE_POSTINDEXED
+      value: '0b001'
+    - name: IMMEDIATE
+      value: '0b010'
+    - name: IMMEDIATE_PREINDEXED
+      value: '0b011'
+    - name: LITERAL
+      value: '0b100'
+    - name: LITERAL_P
+      value: '0b110'
+    name: AM
+    type: rw
+  - bits: '0'
+    description: Direction of Instruction
+    enum:
+    - name: WRITE
+      value: 0
+    - name: READ
+      value: 1
+    name: DIRECTION
+    type: rw
+  name: ISS_LDC_SRC_AARCH32
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for SVE_SIMD_FP EC state
+  field:
+  - bits: '24'
+    description: Condition Value Aarch32
+    name: CV
+    type: rw
+  - bits: '[23:20]'
+    description: Condition Code Aarch32
+    name: COND
+    type: rw
+  name: ISS_SVE_SIMD_FP
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for PAUTH EC state
+  name: ISS_PAUTH
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for MRRC_COP14_AARCH32 EC state
+  name: ISS_MRRC_COP14_AARCH32
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for BTI EC state
+  name: ISS_BTI
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for SMC or SVC or HVC EC state in Aarch64
+  field:
+  - bits: '[15:0]'
+    description: Immediate field of instruction
+    name: IMM16
+    type: rw
+  name: ISS_SMC_SVC_HVC
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for SMC EC state in AArch32
+  field:
+  - bits: '24'
+    description: Condition Value Aarch32
+    name: CV
+    type: rw
+  - bits: '[23:20]'
+    description: Condition Code Aarch32
+    name: COND
+    type: rw
+  - bits: '19'
+    description: Indicates whether it might have failed its condition check
+    enum:
+    - name: UNCONDITIONAL_OR_PASSED
+      value: 0
+    - name: MIGHT_HAVE_FAILED
+      value: 1
+    name: CCKNOWNPASS
+    type: rw
+  name: ISS_SMC32
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for MSR_MRS EC state
+  field:
+  - bits: '[21:20]'
+    description: Op0 value from issued instruction
+    name: OP0
+    type: rw
+  - bits: '[19:17]'
+    description: Op2 value from issued instruction
+    name: OP2
+    type: rw
+  - bits: '[16:14]'
+    description: Op1 value from issued instruction
+    name: OP1
+    type: rw
+  - bits: '[13:10]'
+    description: CRn value from issued instruction
+    name: CRN
+    type: rw
+  - bits: '[9:5]'
+    description: Rt value from issued instruction
+    name: RT
+    type: rw
+  - bits: '[4:1]'
+    description: CRm value from issued instruction
+    name: CRM
+    type: rw
+  - bits: '0'
+    description: Direction of Instruction
+    enum:
+    - name: WRITE
+      value: 0
+    - name: READ
+      value: 1
+    name: DIRECTION
+    type: rw
+  name: ISS_MSR_MRS
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for SVE EC state
+  name: ISS_SVE
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for FPAC EC state
+  name: ISS_FPAC
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for ISS_INSTRUCTION_ABORT or INSTRUCTION_ABORT_FROM_LOWER_EL
+    EC state
+  field:
+  - bits: '[12:11]'
+    description: Synchronous Error Type only valid IFSC==SYNCHRONOUS_EXTERNAL_ABORT
+    enum:
+    - name: RECOVERABLE
+      value: '0b00'
+    - name: UNCONTAINABLE
+      value: '0b10'
+    - name: RESTARTABLE
+      value: '0b11'
+    name: SET
+    type: rw
+  - bits: '10'
+    description: FAR not valid only valid IFSC==SYNCHRONOUS_EXTERNAL_ABORT
+    name: FAR_NOT_VALID
+    type: rw
+  - bits: '9'
+    description: External Abort
+    name: EA
+    type: rw
+  - bits: '10'
+    description: For Stage 2 fault was fault on stage 2?
+    name: S1PTW
+    type: rw
+  - bits: '[5:0]'
+    description: Instruction Fault Status Code
+    enum:
+    - name: ADDRESS_SIZE_FAULT_L0
+      value: '0b000000'
+    - name: ADDRESS_SIZE_FAULT_L1
+      value: '0b000001'
+    - name: ADDRESS_SIZE_FAULT_L2
+      value: '0b000010'
+    - name: ADDRESS_SIZE_FAULT_L3
+      value: '0b000011'
+    - name: TRANSLATION_FAULT_L0
+      value: '0b000100'
+    - name: TRANSLATION_FAULT_L1
+      value: '0b000101'
+    - name: TRANSLATION_FAULT_L2
+      value: '0b000110'
+    - name: TRANSLATION_FAULT_L3
+      value: '0b000111'
+    - name: ACCESS_FLAG_FAULT_L1
+      value: '0b001001'
+    - name: ACCESS_FLAG_FAULT_L2
+      value: '0b001010'
+    - name: ACCESS_FLAG_FAULT_L3
+      value: '0b001011'
+    - name: PERMISSION_FLAG_FAULT_L1
+      value: '0b001101'
+    - name: PERMISSION_FLAG_FAULT_L2
+      value: '0b001110'
+    - name: PERMISSION_FLAG_FAULT_L3
+      value: '0b001111'
+    - name: SYNCHRONOUS_EXTERNAL_ABORT_NOT_TTW
+      value: '0b010000'
+    - name: SYNCHRONOUS_EXTERNAL_ABORT_L0
+      value: '0b010100'
+    - name: SYNCHRONOUS_EXTERNAL_ABORT_L1
+      value: '0b010101'
+    - name: SYNCHRONOUS_EXTERNAL_ABORT_L2
+      value: '0b010110'
+    - name: SYNCHRONOUS_EXTERNAL_ABORT_L3
+      value: '0b010111'
+    - name: ECC_ERROR_ABORT_NOT_TTW
+      value: '0b011000'
+    - name: ECC_ERROR_ABORT_L0
+      value: '0b011100'
+    - name: ECC_ERROR_ABORT_L1
+      value: '0b011101'
+    - name: ECC_ERROR_ABORT_L2
+      value: '0b011110'
+    - name: ECC_ERROR_ABORT_L3
+      value: '0b011111'
+    - name: TLB_CONFLICT
+      value: '0b110000'
+    - name: UNSUPPORTED_ATOMIC_HARDWARE_FAULT
+      value: '0b110001'
+    name: IFSC
+    type: rw
+  name: ISS_INSTRUCTION_ABORT
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for PC_ALIGNMENT_FAULT EC state
+  name: ISS_PC_ALIGNMENT_FAULT
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for DATA_ABORT or ISS_DATA_ABORT_FROM_LOWER_EL EC state
+  field:
+  - bits: '14'
+    description: Instruction had Acquire/Release semantics
+    name: AR
+    type: rw
+  - bits: '13'
+    description: Instruction fault came form use of VNCR_EL2 by EL1 level code
+    name: VNCR
+    type: rw
+  - bits: '[12:11]'
+    description: Synchronous Error Type only valid IFSC==SYNCHRONOUS_EXTERNAL_ABORT
+    enum:
+    - name: RECOVERABLE
+      value: '0b00'
+    - name: UNCONTAINABLE
+      value: '0b10'
+    - name: RESTARTABLE
+      value: '0b11'
+    name: SET
+    type: rw
+  - bits: '10'
+    description: FAR not valid only valid IFSC==SYNCHRONOUS_EXTERNAL_ABORT
+    name: FAR_NOT_VALID
+    type: rw
+  - bits: '9'
+    description: External Abort
+    name: EA
+    type: rw
+  - bits: '8'
+    description: Cache Maintenance
+    name: CM
+    type: rw
+  - bits: '7'
+    description: For Stage 2 fault was fault on stage 2?
+    name: S1PTW
+    type: rw
+  - bits: '8'
+    description: Write not Read
+    name: WnR
+    type: rw
+  - bits: '[5:0]'
+    description: Data Fault Status Code
+    enum:
+    - name: ADDRESS_SIZE_FAULT_L0
+      value: '0b000000'
+    - name: ADDRESS_SIZE_FAULT_L1
+      value: '0b000001'
+    - name: ADDRESS_SIZE_FAULT_L2
+      value: '0b000010'
+    - name: ADDRESS_SIZE_FAULT_L3
+      value: '0b000011'
+    - name: TRANSLATION_FAULT_L0
+      value: '0b000100'
+    - name: TRANSLATION_FAULT_L1
+      value: '0b000101'
+    - name: TRANSLATION_FAULT_L2
+      value: '0b000110'
+    - name: TRANSLATION_FAULT_L3
+      value: '0b000111'
+    - name: ACCESS_FLAG_FAULT_L1
+      value: '0b001001'
+    - name: ACCESS_FLAG_FAULT_L2
+      value: '0b001010'
+    - name: ACCESS_FLAG_FAULT_L3
+      value: '0b001011'
+    - name: PERMISSION_FLAG_FAULT_L1
+      value: '0b001101'
+    - name: PERMISSION_FLAG_FAULT_L2
+      value: '0b001110'
+    - name: PERMISSION_FLAG_FAULT_L3
+      value: '0b001111'
+    - name: SYNCHRONOUS_EXTERNAL_ABORT_NOT_TTW
+      value: '0b010000'
+    - name: SYNCHRONOUS_EXTERNAL_ABORT_L0
+      value: '0b010100'
+    - name: SYNCHRONOUS_EXTERNAL_ABORT_L1
+      value: '0b010101'
+    - name: SYNCHRONOUS_EXTERNAL_ABORT_L2
+      value: '0b010110'
+    - name: SYNCHRONOUS_EXTERNAL_ABORT_L3
+      value: '0b010111'
+    - name: ECC_ERROR_ABORT_NOT_TTW
+      value: '0b011000'
+    - name: ECC_ERROR_ABORT_L0
+      value: '0b011100'
+    - name: ECC_ERROR_ABORT_L1
+      value: '0b011101'
+    - name: ECC_ERROR_ABORT_L2
+      value: '0b011110'
+    - name: ECC_ERROR_ABORT_L3
+      value: '0b011111'
+    - name: ALIGNMENT_FAULT
+      value: '0b100001'
+    - name: TLB_CONFLICT
+      value: '0b110000'
+    - name: UNSUPPORTED_ATOMIC_HARDWARE_FAULT
+      value: '0b110001'
+    - name: LOCKDOWN
+      value: '0b110100'
+    - name: UNSUPPORTED_EXCLUSIVE_OR_ATOMIC
+      value: '0b110101'
+    name: DFSC
+    type: rw
+  name: ISS_DATA_ABORT
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for SP_ALIGNMENT_FAULT EC state
+  name: ISS_SP_ALIGNMENT_FAULT
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for FLOATING_POINT EC state
+  name: ISS_FLOATING_POINT
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for SERROR EC state
+  name: ISS_SERROR
+  offset: '0x00000000'
+  type: rw
+  width: 24
+- default: '0x00000000'
+  description: ISS register for BRK EC state
+  name: ISS_BRK
+  offset: '0x00000000'
+  type: rw
+  width: 24

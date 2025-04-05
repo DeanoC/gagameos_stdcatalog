@@ -1,0 +1,154 @@
+definition:
+- buses:
+  - data_width: 64
+    name: rpuio_iopinbound
+    supplier: false
+  - data_width: 32
+    name: iopinbound_usb${index}
+    supplier: true
+  - data_width: 32
+    name: iopinbound_lpddma
+    supplier: true
+  - data_width: 32
+    name: iopinbound_iopunitsswitch${index}
+    supplier: true
+  - data_width: 32
+    name: iopinbound_lpdunitsswitch
+    supplier: true
+  - data_width: 32
+    name: iopinbound_pmuswitch
+    supplier: true
+  - data_width: 32
+    name: iopinbound_csu
+    supplier: true
+  type: switch.internal.iopinbound.zynqps8
+- buses:
+  - data_width: 32
+    name: pmu_pmuoutbound
+    supplier: false
+  - data_width: 32
+    name: csu_outbound
+    supplier: false
+  - data_width: 32
+    name: dap_outbound
+    supplier: false
+  - data_width: 32
+    name: pmuoutbound_iopoutbound
+    supplier: true
+  type: switch.internal.pmuoutbound.zynqps8
+- buses:
+  - data_width: 32
+    name: quadspi_iopoutbound
+    supplier: false
+  - data_width: 32
+    name: gem${index}_iopoutbound
+    supplier: false
+  - data_width: 32
+    name: nand_iopoutbound
+    supplier: false
+  - data_width: 32
+    name: sdio${index}_iopoutbound
+    supplier: false
+  - data_width: 32
+    name: pmuoutbound_iopoutbound
+    supplier: false
+  - address_width: 32
+    data_width: 64
+    name: iopoutbound_lpd
+    supplier: true
+  type: switch.internal.iopoutbound.zynqps8
+- buses:
+  - address_width: 32
+    data_width: 32
+    name: iopinbound_iopunitsswitch${index}
+    supplier: false
+  - address_width: 32
+    data_width: 32
+    name: iopunitsswitch_uart${index}
+    supplier: true
+  - address_width: 32
+    data_width: 32
+    name: iopunitsswitch_can${index}
+    supplier: true
+  - address_width: 32
+    data_width: 32
+    name: iopunitsswitch_i2c${index}
+    protocol: internal_i2c
+    supplier: true
+  - address_width: 32
+    data_width: 32
+    name: iopunitsswitch_quadspi
+    supplier: true
+  - address_width: 32
+    data_width: 32
+    name: iopunitsswitch_gem${index}
+    supplier: true
+  - address_width: 32
+    data_width: 32
+    name: iopunitsswitch_nand
+    supplier: true
+  - address_width: 32
+    data_width: 32
+    name: iopunitsswitch_sdio${index}
+    supplier: true
+  registers:
+  - base_address: '0x100_0000'
+    name: IOU_GPV
+    resource: registers/iop/iou_gpv.toml
+  - base_address: '0x218_0000'
+    name: IOU_SLCR
+    resource: registers/iop/iou_slcr.toml
+  - base_address: '0x224_0000'
+    name: IOU_SECURE_SLCR
+    resource: registers/iop/iou_secure_slcr.toml
+  type: switch.internal.iopunitsswitch.zynqps8
+- buses:
+  - address_width: 32
+    data_width: 32
+    name: quadspi_iopmasters
+    supplier: false
+  - address_width: 32
+    data_width: 32
+    name: gem${index}_iopmasters
+    supplier: false
+  - address_width: 32
+    data_width: 32
+    name: nand_iopmasters
+    supplier: false
+  - address_width: 32
+    data_width: 32
+    name: sdio${index}_iopmasters
+    supplier: false
+  - address_width: 32
+    data_width: 64
+    name: iopmasters_iopoutbound
+    supplier: true
+  type: switch.internal.iopmasters.zynqps8
+- buses:
+  - data_width: 32
+    name: iopinbound_csu
+    supplier: false
+  - address_width: 18
+    data_width: 32
+    name: csuram
+    supplier: true
+  - data_width: 32
+    name: csu_outbound
+    supplier: true
+  registers:
+  - base_address: '0x2c80000'
+    name: CSUDMA
+    resource: registers/csu/csudma.toml
+  - base_address: '0x2ca_0000'
+    name: CSU
+    resource: registers/csu/csu.toml
+  type: other.internal.csu.zynqps8
+- buses:
+  - data_width: 32
+    name: dap_outbound
+    supplier: true
+  registers:
+  - base_address: '0x80_0000'
+    name: CORESIGHT_SOC_ROM
+    resource: registers/dap/daprom.toml
+  type: other.internal.dap.zynqps8

@@ -1,0 +1,3 @@
+resources:
+- libs.toml
+- programs.toml

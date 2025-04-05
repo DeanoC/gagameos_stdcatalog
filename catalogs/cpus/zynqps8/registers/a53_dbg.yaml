@@ -1,0 +1,2540 @@
+description: Cortex-A53 built-in debug logic, A53 Debug Logic
+register:
+- default: '0x00000000'
+  description: External Debug Event Status Register
+  field:
+  - bits: '2'
+    longdesc: 'Possible values of this field are:'
+    name: SS
+    shortdesc: Halting step debug event pending.
+    type: rw
+  - bits: '1'
+    longdesc: 'Possible values of this field are:'
+    name: RC
+    shortdesc: Reset catch debug event pending.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values of this field are:'
+    name: OSUC
+    shortdesc: OS unlock debug event pending.
+    type: rw
+  name: EDESR
+  offset: '0x00000020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: External Debug Execution Control Register
+  field:
+  - bits: '2'
+    longdesc: Possible values of this field are:If the value of EDECR.SS is changed
+      when the processor is in Non-debug state, the resulting value of EDECR.SS is
+      UNKNOWN.
+    name: SS
+    shortdesc: Halting step enable.
+    type: rw
+  - bits: '1'
+    longdesc: 'Possible values of this field are:'
+    name: RCE
+    shortdesc: Reset catch enable.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values of this field are:'
+    name: OSUCE
+    shortdesc: OS unlock catch enabled.
+    type: rw
+  name: EDECR
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: External Debug Watchpoint Address Register (low word)
+  field:
+  - bits: '31:0'
+    longdesc: The virtual data address being accessed when a watchpoint debug event
+      was triggered and caused entry to Debug state.UNKNOWN if the processor is not
+      in Debug state, or if Debug state was entered other than for a watchpoint debug
+      event.The address must be within a naturally-aligned block of memory of power-of-two
+      size no larger than the DC ZVA block size.
+    name: EDWAR_31TO0
+    shortdesc: Watchpoint address.
+    type: ro
+  name: EDWAR_31TO0
+  offset: '0x00000030'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: External Debug Watchpoint Address Register (high word)
+  field:
+  - bits: '31:0'
+    longdesc: The virtual data address being accessed when a watchpoint debug event
+      was triggered and caused entry to Debug state.UNKNOWN if the processor is not
+      in Debug state, or if Debug state was entered other than for a watchpoint debug
+      event.The address must be within a naturally-aligned block of memory of power-of-two
+      size no larger than the DC ZVA block size.
+    name: EDWAR_63TO32
+    shortdesc: Watchpoint address.
+    type: ro
+  name: EDWAR_63TO32
+  offset: '0x00000034'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Debug Data Transfer Register Receive
+  field:
+  - bits: '31:0'
+    longdesc: Writes to this register update the value in DTRRX and set RXfull to
+      1.Reads of this register return the last value written to DTRRX and do not change
+      RXfull.
+    name: DBGDTRRX_EL0
+    shortdesc: Update DTRRX.
+    type: rw
+  name: DBGDTRRX_EL0
+  offset: '0x00000080'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: External Debug Instruction Transfer Register
+  field:
+  - bits: '31:16'
+    name: T32SECOND
+    type: wo
+  - bits: '31:0'
+    name: EDITR
+    type: wo
+  - bits: '15:0'
+    name: T32FIRST
+    type: wo
+  name: EDITR
+  offset: '0x00000084'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: External Debug Status and Control Register
+  field:
+  - bits: '30'
+    longdesc: This bit is RO.
+    name: RXFULL
+    shortdesc: DTRRX full.
+    type: rw
+  - bits: '29'
+    longdesc: This bit is RO.
+    name: TXFULL
+    shortdesc: DTRTX full.
+    type: rw
+  - bits: '28'
+    longdesc: This bit is RO.If the processor is not in Debug state, this bit is UNKNOWN.
+      ITO is set to 0 on entry to Debug state.
+    name: ITO
+    shortdesc: EDITR overrun.
+    type: rw
+  - bits: '27'
+    longdesc: This bit is RO.
+    name: RXO
+    shortdesc: DTRRX overrun.
+    type: rw
+  - bits: '26'
+    longdesc: This bit is RO.
+    name: TXU
+    shortdesc: DTRTX underrun.
+    type: rw
+  - bits: '25'
+    longdesc: Read-only. Set to 1 every time the processor pipeline retires one or
+      more instructions. Cleared to 0 by a write to EDRCR.CSPA.The architecture does
+      not define precisely when this bit is set to 1. It requires only that this happen
+      periodically in Non-debug state to indicate that software execution is progressing.
+    name: PIPEADV
+    shortdesc: Pipeline advance.
+    type: rw
+  - bits: '24'
+    longdesc: This bit is RO.If the processor is not in Debug state, this bit is UNKNOWN.
+      It is always valid in Debug state.
+    name: ITE
+    shortdesc: ITR empty.
+    type: rw
+  - bits: '23:22'
+    longdesc: Disables taking interrupts (including virtual interrupts and System
+      Error interrupts) in Non-Debug state.If external invasive debug is disabled,
+      the value of this field is ignored.If external invasive debug is enabled, the
+      possible values of this field are:The value of INTdis does not affect whether
+      an interrupt is a WFI wake-up event, but can mask an interrupt as a WFE wake-up
+      event.If EL3 and EL2 are not implemented, INTdis[0] is RO and reads the same
+      value as INTdis[1], meaning only the values 0b00 and 0b11 can be selected.
+    name: INTDIS
+    shortdesc: Interrupt disable.
+    type: rw
+  - bits: '21'
+    name: TDA
+    type: rw
+  - bits: '20'
+    longdesc: 'Controls use of memory-access mode for accessing EDITR and the DCC.
+      This bit is ignored if in Non-debug state and set to zero on entry to Debug
+      state.Possible values of this field are:'
+    name: MA
+    shortdesc: Memory access mode.
+    type: rw
+  - bits: '18'
+    longdesc: Read-only. When in Debug state, gives the current security state:In
+      Non-debug state, this bit is UNKNOWN.
+    name: NS
+    shortdesc: Non-secure status.
+    type: rw
+  - bits: '16'
+    longdesc: This bit is RO.On entry to Debug state:If entering in Secure state,
+      SDD is set to 0.If entering in Non-secure state, SDD is set to the inverse of
+      ExternalSecureInvasiveDebugEnabled().In Debug state, the value of the SDD bit
+      does not change, even if ExternalSecureInvasiveDebugEnabled() changes.In Non-debug
+      state:SDD returns the inverse of ExternalSecureInvasiveDebugEnabled(). If the
+      authentication signals that control ExternalSecureInvasiveDebugEnabled() change,
+      a context synchronization operation is required to guarantee their effect.This
+      bit is unaffected by the Security state of the processor.If EL3 is not implemented
+      and the implementation is Non-secure, this bit is RES1.
+    name: SDD
+    shortdesc: Secure debug disabled.
+    type: rw
+  - bits: '14'
+    longdesc: 'Possible values of this bit are:'
+    name: HDE
+    shortdesc: Halting debug mode enable.
+    type: rw
+  - bits: '13:10'
+    longdesc: 'Read-only. In Debug state, each bit gives the current register width
+      status of each EL:However:If not at EL0: RW[0] == RW[1].If EL2 is not implemented
+      in the current security state: RW[2] == RW[1].If EL3 is not implemented: RW[3]
+      == RW[2].In Non-debug state, this field is RAO.'
+    name: RW
+    shortdesc: Exception level register-width status.
+    type: rw
+  - bits: '9:8'
+    longdesc: Read-only. In Debug state, this gives the current EL of the processor.In
+      Non-debug state, this field is RAZ.
+    name: EL
+    shortdesc: Exception level.
+    type: rw
+  - bits: '7'
+    longdesc: Read-only. In Debug state, indicates whether a SError interrupt is pending:If
+      HCR_EL2.{AMO, TGE} = {1, 0} and in Non-secure EL0 or EL1, a virtual SError interrupt.Otherwise,
+      a physical SError interrupt.A debugger can read EDSCR to check whether a SError
+      interrupt is pending without having to execute further instructions. A pending
+      SError might indicate data from target memory is corrupted.UNKNOWN in Non-debug
+      state.
+    name: A
+    shortdesc: System Error interrupt pending.
+    type: rw
+  - bits: '6'
+    longdesc: This field is RO. It is set to 1 following exceptions in Debug state
+      and on any signaled overrun or underrun on the DTR or EDITR.
+    name: ERR
+    shortdesc: Cumulative error flag.
+    type: rw
+  - bits: '5:0'
+    longdesc: This field is RO.The possible values of this field are:All other values
+      of STATUS are reserved.
+    name: STATUS
+    shortdesc: Debug status flags.
+    type: rw
+  name: EDSCR
+  offset: '0x00000088'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Data Transfer Register Transmit
+  field:
+  - bits: '31:0'
+    longdesc: Reads of this register return the value in DTRTX and clear TXfull to
+      0.Writes of this register update the value in DTRTX and do not change TXfull.
+    name: DBGDTRTX_EL0
+    shortdesc: Return DTRTX.
+    type: rw
+  name: DBGDTRTX_EL0
+  offset: '0x0000008C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: External Debug Reserve Control Register
+  field:
+  - bits: '4'
+    longdesc: The actions on writing to this bit are:Setting this bit to 1 allows
+      a debugger to request imprecise entry to Debug state. An External Debug Request
+      debug event must be pending before the debugger sets this bit to 1.This feature
+      is optional. If this feature is not implemented, writes to this bit are ignored.
+    name: CBRRQ
+    shortdesc: Allow imprecise entry to Debug state.
+    type: wo
+  - bits: '3'
+    longdesc: 'This bit is used to clear the EDSCR.PipeAdv bit to 0. The actions on
+      writing to this bit are:'
+    name: CSPA
+    shortdesc: Clear Sticky Pipeline Advance.
+    type: wo
+  - bits: '2'
+    longdesc: 'Used to clear the EDSCR cumulative error bits to 0. The actions on
+      writing to this bit are:'
+    name: CSE
+    shortdesc: Clear Sticky Error.
+    type: wo
+  name: EDRCR
+  offset: '0x00000090'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: External Debug Exception Catch Control Register
+  field:
+  - bits: '7:4'
+    longdesc: Possible values of this field are:All other values are reserved. Bits
+      [7,4] are reserved, RES0.
+    name: NSE
+    shortdesc: Coarse-grained Non-secure exception catch.
+    type: rw
+  - bits: '3:0'
+    longdesc: Possible values of this field are:All other values are reserved. Bits
+      [2,0] are reserved. RES0. Ignored if ExternalSecureInvasiveDebugEnabled() ==
+      FALSE.
+    name: SE
+    shortdesc: Coarse-grained Secure exception catch.
+    type: rw
+  name: EDECCR
+  offset: '0x00000098'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: External Debug Program Counter Sample Register (low word)
+  field:
+  - bits: '31:0'
+    longdesc: Bits [31:0] of the sampled instruction address value. Reading EDPCSRlo
+      has the side-effect of updating EDCIDSR, EDVIDSR, and EDPCSRhi. However:If the
+      processor is in Debug state, or Sample-based profiling is prohibited, EDPCSRlo
+      reads as 0xFFFFFFFF and EDCIDSR, EDVIDSR, and EDPCSRhi become UNKNOWN.If the
+      processor is in Reset state, the sampled value is unknown and EDCIDSR, EDVIDSR
+      and EDPCSRhi become UNKNOWN.If no instruction has been retired since the processor
+      left Reset state, Debug state, or a state where Non-invasive debug is not permitted,
+      the sampled value is UNKNOWN and EDCIDSR, EDVIDSR, and EDPCSRhi become UNKNOWN.For
+      a read of EDPCSRlo from the memory-mapped interface, if EDLSR.SLK == 1, meaning
+      the Software Lock is locked, then the access has no side-effects. That is, EDCIDSR,
+      EDVIDSR, and EDPCSRhi are unchanged.
+    name: EDPCSR_31TO0
+    shortdesc: PC Sample low word, EDPCSRlo.
+    type: ro
+  name: EDPCSR_31TO0
+  offset: '0x000000A0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: External Debug Context ID Sample Register
+  field:
+  - bits: '31:0'
+    longdesc: If EL3 is implemented and using AArch32 then CONTEXTIDR is a Banked
+      register, and EDCIDSR samples the current Banked copy of CONTEXTIDR.
+    name: CONTEXTIDR
+    shortdesc: The sampled value of CONTEXTIDR_EL1, captured on reading the low half
+      of EDPCSR.
+    type: ro
+  name: EDCIDSR
+  offset: '0x000000A4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: External Debug Virtual Context Sample Register
+  field:
+  - bits: '31'
+    longdesc: Indicates the security state associated with the most recent EDPCSR
+      sample.
+    name: NS
+    shortdesc: Non-secure state sample.
+    type: ro
+  - bits: '30'
+    longdesc: Indicates whether the most recent EDPCSR sample was associated with
+      EL2. If EDVIDSR.NS == 0, this bit is 0.
+    name: E2
+    shortdesc: Exception level 2 status sample.
+    type: ro
+  - bits: '29'
+    longdesc: Indicates whether the most recent EDPCSR sample was associated with
+      AArch64 EL3. If EDVIDSR.NS == 1 or the processor was in AArch32 state when EDPCSR
+      was read, this bit is 0.
+    name: E3
+    shortdesc: Exception level 3 status sample.
+    type: ro
+  - bits: '28'
+    longdesc: Indicates whether bits [63:32] of the most recent EDPCSR sample are
+      valid. If EDVIDSR.HV == 0, the value of EDPCSR[63:32] is RAZ.
+    name: HV
+    shortdesc: EDPCSR high half valid.
+    type: ro
+  - bits: '7:0'
+    longdesc: The value of VTTBR_EL2.VMID associated with the most recent EDPCSR sample.
+      If EDVIDSR.NS == 0 or EDVIDSR.E2 == 1, this field is RAZ.
+    name: VMID
+    shortdesc: VMID sample.
+    type: ro
+  name: EDVIDSR
+  offset: '0x000000A8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: External Debug Program Counter Sample Register (high word)
+  field:
+  - bits: '31:0'
+    longdesc: If EDVIDSR.HV == 0 then this field is RAZ, otherwise bits [63:32] of
+      the sampled PC.
+    name: EDPCSR_63TO32
+    shortdesc: PC Sample high word, EDPCSRhi.
+    type: ro
+  name: EDPCSR_63TO32
+  offset: '0x000000AC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: OS Lock Access Register
+  field:
+  - bits: '0'
+    longdesc: Use EDPRSR.OSLK to check the current status of the lock.
+    name: OSLK
+    shortdesc: On writes to OSLAR_EL1, bit[0] is copied to the OS lock.
+    type: wo
+  name: OSLAR_EL1
+  offset: '0x00000300'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: External Debug Power/Reset Control Register
+  field:
+  - bits: '3'
+    longdesc: Allows a debugger to request that the power controller power up the
+      core, enabling access to the debug register in the Core power domain. The actions
+      on writing to this bit are:In an implementation that includes the recommended
+      external debug interface, this bit drives the DBGPWRUPREQ signal.This bit can
+      be read and written when the Core power domain is powered off.The power controller
+      must not allow the Core power domain to switch off while this bit is one.
+    name: COREPURQ
+    shortdesc: Core powerup request.
+    type: rw
+  - bits: '1'
+    longdesc: Write only bit that reads as zero. The actions on writing to this bit
+      are:The processor ignores writes to this bit if any of the following are the
+      case:ExternalInvasiveDebugEnabled() == FALSE, EL3 is not implemented, and the
+      processor is Non-secure.ExternalSecureInvasiveDebugEnabled() == FALSE and one
+      of the following is true:EL3 is implemented.The processor is Secure.The Core
+      power domain is either completely off or in a low-power state where the Core
+      power domain registers cannot be accessed.DoubleLockStatus() == TRUE (OS Double
+      Lock is set).OSLSR.OSLK == 1 (OS lock is locked).In an implementation that includes
+      the recommended external debug interface, this bit drives the DBGRSTREQ signal.
+    name: CWRR
+    shortdesc: Warm reset request.
+    type: rw
+  - bits: '0'
+    longdesc: 'Requests emulation of powerdown. Possible values of this bit are:'
+    name: CORENPDRQ
+    shortdesc: Core no powerdown request.
+    type: rw
+  name: EDPRCR
+  offset: '0x00000310'
+  type: rw
+  width: 32
+- default: '0x00000002'
+  description: External Debug Processor Status Register
+  field:
+  - bits: '11'
+    longdesc: Set to 1 when the processor exits Debug state and cleared to 0 following
+      reads of EDPRSR.This bit is UNKNOWN on reads if either of EDPRSR.{DLK, R} is
+      1, or EDPRSR.PU is 0.This bit clears to 0 when following a read of EDPRSR.
+    name: SDR
+    shortdesc: Sticky debug restart.
+    type: ro
+  - bits: '10'
+    longdesc: Set to 1 if an access returns an error because AllowExternalPMUAccess()
+      == FALSE.This bit is UNKNOWN on reads if either of EDPRSR.{DLK, R} is 1, or
+      EDPRSR.PU is 0.This bit clears to 0 when following a read of EDPRSR.
+    name: SPMAD
+    shortdesc: Sticky EPMAD error.
+    type: ro
+  - bits: '9'
+    longdesc: If external performance monitors access is not implemented, EPMAD is
+      RAO. This bit is UNKNOWN on reads if either of EDPRSR.{DLK, R} is 1, or EDPRSR.PU
+      is 0.
+    name: EPMAD
+    shortdesc: External performance monitors access disable status.
+    type: ro
+  - bits: '8'
+    longdesc: Set to 1 if an access returns an error because AllowExternalDebugAccess()
+      == FALSE.This bit is UNKNOWN on reads if either of EDPRSR.{DLK, R} is 1, or
+      EDPRSR.PU is 0.This bit clears to 0 following a read of EDPRSR.
+    name: SDAD
+    shortdesc: Sticky EDAD error.
+    type: ro
+  - bits: '7'
+    longdesc: This bit is UNKNOWN on reads if either of EDPRSR.{DLK, R} is 1, or EDPRSR.PU
+      is 0.
+    name: EDAD
+    shortdesc: External debug access disable status.
+    type: ro
+  - bits: '6'
+    longdesc: This bit is UNKNOWN on reads if EDPRSR.PU is 0.
+    name: DLK
+    shortdesc: OS Double Lock status bit.
+    type: ro
+  - bits: '5'
+    longdesc: A read of this bit returns the value of OSLSR_EL1.OSLK.This bit is UNKNOWN
+      on reads if either of EDPRSR.{DLK, R} is 1 or EDPRSR.PU is 0.
+    name: OSLK
+    shortdesc: OS lock status bit.
+    type: ro
+  - bits: '4'
+    longdesc: Possible values are:This bit is UNKNOWN on reads if EDPRSR.PU is 0.
+    name: HALTED
+    shortdesc: Halted status bit.
+    type: ro
+  - bits: '3'
+    longdesc: Possible values are:This bit is UNKNOWN on reads if EDPRSR.DLK is 1
+      or EDPRSR.PU is 0.This bit clears to 0 following a read of EDPRSR if the non-debug
+      logic of the processor is not in reset state.
+    name: SR
+    shortdesc: Sticky core reset status bit.
+    type: ro
+  - bits: '2'
+    longdesc: Possible values are:This bit is UNKNOWN on reads if either EDPRSR.DLK
+      is 1 or EDPRSR.PU is 0.
+    name: R
+    shortdesc: Core reset status bit.
+    type: ro
+  - bits: '1'
+    longdesc: This bit is set to 1 on Cold reset to indicate the state of the debug
+      registers has been lost. Since a Cold reset is required on powering up the processor,
+      this usually indicates the Core power domain has been completely powered off.Possible
+      values are:This bit is UNKNOWN on reads if both EDPRSR.DLK and EDPRSR.PU are
+      1.This bit clears to 0 following a read of EDPRSR if the processor is not in
+      the powered down state. There are two logical power off states for the Core
+      power domain:RetentionThe states of the debug registers, including EDPRSR.SPD,
+      in the Core power domain is preserved, and restored on leaving retention state.Power-downThe
+      states of the debug registers in the Core power domain is lost, and a Cold reset
+      is asserted on leaving power-down state.In these states, it is IMPLEMENTATION
+      DEFINED whether:EDPRSR.SPD shows whether the state of the debug registers in
+      the Core power domain has been lost since the last time EDPRSR was read when
+      the Core power domain was on.EDPRSR.SPD reads-as-zero.EDPRSR.SPD is not cleared
+      following a read of EDPRSR in these states.This means it is IMPLEMENTATION DEFINED
+      whether a processor implements EDPRSR.SPD as:Fixed RAZ when in one or both of
+      the retention and power-down states.Retaining its previous value when in the
+      retention state.Fixed RAO in the power-down state.Note that this definition
+      does not allow EDPRSR.SPD to be fixed RAO in the low-power retention state,
+      as the state of the debug registers in the Core power domain is not lost by
+      entering this state. However, the bit can be read as 1 in this state if the
+      state of the registers was lost before entering this state (i.e. EDPRSR has
+      not been read since the last Cold reset).ARM recommends that an implementation
+      make EDPRSR.SPD fixed RAO when in the power-down state, particularly if it does
+      not support a low-power retention state.
+    name: SPD
+    shortdesc: Sticky core power-down status bit.
+    type: ro
+  - bits: '0'
+    longdesc: 'Indicates whether the Core power domain debug registers can be accessed:'
+    name: PU
+    shortdesc: Core power-up status bit.
+    type: ro
+  name: EDPRSR
+  offset: '0x00000314'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Value Registers. Holds a virtual address or a VMID
+    and/or a context ID for use in breakpoint matching. Forms breakpoint n together
+    with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses of this
+    register refer to ARMv8
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR0_EL1_31TO0
+  offset: '0x00000400'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Extended Value Registers. Holds a virtual address
+    or a VMID and/or a context ID for use in breakpoint matching. Forms breakpoint
+    n together with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses
+    of this register refer to ARMv8
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR0_EL1_63TO32
+  offset: '0x00000404'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Control Registers
+  field:
+  - bits: '23:20'
+    longdesc: 'Possible values are:The field breaks down as follows:BT[3:1]: Base
+      type.000Match address. DBGBVR<n>_EL1 is the address of an instruction.010Mismatch
+      address. Behaves as type 0b000 if in an AArch64 translation, or if halting debug-mode
+      is enabled and halting is allowed. Otherwise, DBGBVR<n>_EL1 is the address of
+      an instruction to be stepped.001Match context ID. DBGBVR<n>_EL1[31:0] is a context
+      ID.100Match VMID. DBGBVR<n>_EL1[39:32] is a VMID.101Match VMID and context ID.
+      DBGBVR<n>_EL1[31:0] is a context ID, and DBGBVR<n>_EL1[39:32] is a VMID.BT[0]:
+      Enable linking.If the breakpoint is not context-aware, BT[3] and BT[1] are RES0.
+      If EL2 is not implemented, BT[3] is RES0. If EL1 using AArch32 is not implemented,
+      BT[2] is RES0.The values 011x and 11xx are reserved, but must behave as if the
+      breakpoint is disabled. Software must not rely on this property as the behavior
+      of reserved values might change in a future revision of the architecture.'
+    name: BT
+    shortdesc: Breakpoint Type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked address matching breakpoints, this specifies the index of
+      the Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a breakpoint debug event
+      for breakpoint n is generated. This field must be interpreted along with the
+      HMC and PMC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and PMC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '8:5'
+    longdesc: Defines which half-words an address-matching breakpoint matches, regardless
+      of the instruction set and execution state. In an AArch64-only implementation,
+      this field is reserved, RES1. Otherwise:BAS[2] and BAS[0] are read/write.BAS[3]
+      and BAS[1] are read-only copies of BAS[2] and BAS[0] respectively.The values
+      0b0011 and 0b1100 are only supported if AArch32 is supported at any exception
+      level.The permitted values depend on the breakpoint type.For Address match breakpoints
+      in either AArch32 or AArch64 state:BASMatch instruction atConstraint for debuggers0b0011DBGBVR<n>_EL1Use
+      for T32 and T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for A64 and A32 instructions.0b0000 is reserved and must behave as if the breakpoint
+      is disabled or map to a permitted value.For Address mismatch breakpoints in
+      an AArch32 stage 1 translation regime:BASStep instruction atConstraint for debuggers0b0000-Use
+      for a match anywhere breakpoint.0b0011DBGBVR<n>_EL1Use for stepping T32 and
+      T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for stepping T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for stepping A64 and A32 instructions.For Context matching breakpoints, this
+      field is RES1 and ignored.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PMC
+    shortdesc: Privilege mode control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable breakpoint DBGBVR<n>_EL1.
+    type: rw
+  name: DBGBCR0_EL1
+  offset: '0x00000408'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Value Registers. Holds a virtual address or a VMID
+    and/or a context ID for use in breakpoint matching. Forms breakpoint n together
+    with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses of this
+    register refer to ARMv8
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR1_EL1_31TO0
+  offset: '0x00000410'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Extended Value Registers. Holds a virtual address
+    or a VMID and/or a context ID for use in breakpoint matching. Forms breakpoint
+    n together with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses
+    of this register refer to ARMv8
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR1_EL1_63TO32
+  offset: '0x00000414'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Control Registers
+  field:
+  - bits: '23:20'
+    longdesc: 'Possible values are:The field breaks down as follows:BT[3:1]: Base
+      type.000Match address. DBGBVR<n>_EL1 is the address of an instruction.010Mismatch
+      address. Behaves as type 0b000 if in an AArch64 translation, or if halting debug-mode
+      is enabled and halting is allowed. Otherwise, DBGBVR<n>_EL1 is the address of
+      an instruction to be stepped.001Match context ID. DBGBVR<n>_EL1[31:0] is a context
+      ID.100Match VMID. DBGBVR<n>_EL1[39:32] is a VMID.101Match VMID and context ID.
+      DBGBVR<n>_EL1[31:0] is a context ID, and DBGBVR<n>_EL1[39:32] is a VMID.BT[0]:
+      Enable linking.If the breakpoint is not context-aware, BT[3] and BT[1] are RES0.
+      If EL2 is not implemented, BT[3] is RES0. If EL1 using AArch32 is not implemented,
+      BT[2] is RES0.The values 011x and 11xx are reserved, but must behave as if the
+      breakpoint is disabled. Software must not rely on this property as the behavior
+      of reserved values might change in a future revision of the architecture.'
+    name: BT
+    shortdesc: Breakpoint Type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked address matching breakpoints, this specifies the index of
+      the Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a breakpoint debug event
+      for breakpoint n is generated. This field must be interpreted along with the
+      HMC and PMC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and PMC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '8:5'
+    longdesc: Defines which half-words an address-matching breakpoint matches, regardless
+      of the instruction set and execution state. In an AArch64-only implementation,
+      this field is reserved, RES1. Otherwise:BAS[2] and BAS[0] are read/write.BAS[3]
+      and BAS[1] are read-only copies of BAS[2] and BAS[0] respectively.The values
+      0b0011 and 0b1100 are only supported if AArch32 is supported at any exception
+      level.The permitted values depend on the breakpoint type.For Address match breakpoints
+      in either AArch32 or AArch64 state:BASMatch instruction atConstraint for debuggers0b0011DBGBVR<n>_EL1Use
+      for T32 and T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for A64 and A32 instructions.0b0000 is reserved and must behave as if the breakpoint
+      is disabled or map to a permitted value.For Address mismatch breakpoints in
+      an AArch32 stage 1 translation regime:BASStep instruction atConstraint for debuggers0b0000-Use
+      for a match anywhere breakpoint.0b0011DBGBVR<n>_EL1Use for stepping T32 and
+      T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for stepping T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for stepping A64 and A32 instructions.For Context matching breakpoints, this
+      field is RES1 and ignored.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PMC
+    shortdesc: Privilege mode control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable breakpoint DBGBVR<n>_EL1.
+    type: rw
+  name: DBGBCR1_EL1
+  offset: '0x00000418'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Value Registers. Holds a virtual address or a VMID
+    and/or a context ID for use in breakpoint matching. Forms breakpoint n together
+    with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses of this
+    register refer to ARMv8
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR2_EL1_31TO0
+  offset: '0x00000420'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Extended Value Registers. Holds a virtual address
+    or a VMID and/or a context ID for use in breakpoint matching. Forms breakpoint
+    n together with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses
+    of this register refer to ARMv8
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR2_EL1_63TO32
+  offset: '0x00000424'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Control Registers
+  field:
+  - bits: '23:20'
+    longdesc: 'Possible values are:The field breaks down as follows:BT[3:1]: Base
+      type.000Match address. DBGBVR<n>_EL1 is the address of an instruction.010Mismatch
+      address. Behaves as type 0b000 if in an AArch64 translation, or if halting debug-mode
+      is enabled and halting is allowed. Otherwise, DBGBVR<n>_EL1 is the address of
+      an instruction to be stepped.001Match context ID. DBGBVR<n>_EL1[31:0] is a context
+      ID.100Match VMID. DBGBVR<n>_EL1[39:32] is a VMID.101Match VMID and context ID.
+      DBGBVR<n>_EL1[31:0] is a context ID, and DBGBVR<n>_EL1[39:32] is a VMID.BT[0]:
+      Enable linking.If the breakpoint is not context-aware, BT[3] and BT[1] are RES0.
+      If EL2 is not implemented, BT[3] is RES0. If EL1 using AArch32 is not implemented,
+      BT[2] is RES0.The values 011x and 11xx are reserved, but must behave as if the
+      breakpoint is disabled. Software must not rely on this property as the behavior
+      of reserved values might change in a future revision of the architecture.'
+    name: BT
+    shortdesc: Breakpoint Type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked address matching breakpoints, this specifies the index of
+      the Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a breakpoint debug event
+      for breakpoint n is generated. This field must be interpreted along with the
+      HMC and PMC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and PMC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '8:5'
+    longdesc: Defines which half-words an address-matching breakpoint matches, regardless
+      of the instruction set and execution state. In an AArch64-only implementation,
+      this field is reserved, RES1. Otherwise:BAS[2] and BAS[0] are read/write.BAS[3]
+      and BAS[1] are read-only copies of BAS[2] and BAS[0] respectively.The values
+      0b0011 and 0b1100 are only supported if AArch32 is supported at any exception
+      level.The permitted values depend on the breakpoint type.For Address match breakpoints
+      in either AArch32 or AArch64 state:BASMatch instruction atConstraint for debuggers0b0011DBGBVR<n>_EL1Use
+      for T32 and T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for A64 and A32 instructions.0b0000 is reserved and must behave as if the breakpoint
+      is disabled or map to a permitted value.For Address mismatch breakpoints in
+      an AArch32 stage 1 translation regime:BASStep instruction atConstraint for debuggers0b0000-Use
+      for a match anywhere breakpoint.0b0011DBGBVR<n>_EL1Use for stepping T32 and
+      T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for stepping T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for stepping A64 and A32 instructions.For Context matching breakpoints, this
+      field is RES1 and ignored.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PMC
+    shortdesc: Privilege mode control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable breakpoint DBGBVR<n>_EL1.
+    type: rw
+  name: DBGBCR2_EL1
+  offset: '0x00000428'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Value Registers. Holds a virtual address or a VMID
+    and/or a context ID for use in breakpoint matching. Forms breakpoint n together
+    with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses of this
+    register refer to ARMv8
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR3_EL1_31TO0
+  offset: '0x00000430'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Extended Value Registers. Holds a virtual address
+    or a VMID and/or a context ID for use in breakpoint matching. Forms breakpoint
+    n together with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses
+    of this register refer to ARMv8
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR3_EL1_63TO32
+  offset: '0x00000434'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Control Registers
+  field:
+  - bits: '23:20'
+    longdesc: 'Possible values are:The field breaks down as follows:BT[3:1]: Base
+      type.000Match address. DBGBVR<n>_EL1 is the address of an instruction.010Mismatch
+      address. Behaves as type 0b000 if in an AArch64 translation, or if halting debug-mode
+      is enabled and halting is allowed. Otherwise, DBGBVR<n>_EL1 is the address of
+      an instruction to be stepped.001Match context ID. DBGBVR<n>_EL1[31:0] is a context
+      ID.100Match VMID. DBGBVR<n>_EL1[39:32] is a VMID.101Match VMID and context ID.
+      DBGBVR<n>_EL1[31:0] is a context ID, and DBGBVR<n>_EL1[39:32] is a VMID.BT[0]:
+      Enable linking.If the breakpoint is not context-aware, BT[3] and BT[1] are RES0.
+      If EL2 is not implemented, BT[3] is RES0. If EL1 using AArch32 is not implemented,
+      BT[2] is RES0.The values 011x and 11xx are reserved, but must behave as if the
+      breakpoint is disabled. Software must not rely on this property as the behavior
+      of reserved values might change in a future revision of the architecture.'
+    name: BT
+    shortdesc: Breakpoint Type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked address matching breakpoints, this specifies the index of
+      the Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a breakpoint debug event
+      for breakpoint n is generated. This field must be interpreted along with the
+      HMC and PMC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and PMC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '8:5'
+    longdesc: Defines which half-words an address-matching breakpoint matches, regardless
+      of the instruction set and execution state. In an AArch64-only implementation,
+      this field is reserved, RES1. Otherwise:BAS[2] and BAS[0] are read/write.BAS[3]
+      and BAS[1] are read-only copies of BAS[2] and BAS[0] respectively.The values
+      0b0011 and 0b1100 are only supported if AArch32 is supported at any exception
+      level.The permitted values depend on the breakpoint type.For Address match breakpoints
+      in either AArch32 or AArch64 state:BASMatch instruction atConstraint for debuggers0b0011DBGBVR<n>_EL1Use
+      for T32 and T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for A64 and A32 instructions.0b0000 is reserved and must behave as if the breakpoint
+      is disabled or map to a permitted value.For Address mismatch breakpoints in
+      an AArch32 stage 1 translation regime:BASStep instruction atConstraint for debuggers0b0000-Use
+      for a match anywhere breakpoint.0b0011DBGBVR<n>_EL1Use for stepping T32 and
+      T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for stepping T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for stepping A64 and A32 instructions.For Context matching breakpoints, this
+      field is RES1 and ignored.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PMC
+    shortdesc: Privilege mode control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable breakpoint DBGBVR<n>_EL1.
+    type: rw
+  name: DBGBCR3_EL1
+  offset: '0x00000438'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Value Registers. Holds a virtual address or a VMID
+    and/or a context ID for use in breakpoint matching. Forms breakpoint n together
+    with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses of this
+    register refer to ARMv8
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR4_EL1_31TO0
+  offset: '0x00000440'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Extended Value Registers. Holds a virtual address
+    or a VMID and/or a context ID for use in breakpoint matching. Forms breakpoint
+    n together with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses
+    of this register refer to ARMv8
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR4_EL1_63TO32
+  offset: '0x00000444'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Control Registers
+  field:
+  - bits: '23:20'
+    longdesc: 'Possible values are:The field breaks down as follows:BT[3:1]: Base
+      type.000Match address. DBGBVR<n>_EL1 is the address of an instruction.010Mismatch
+      address. Behaves as type 0b000 if in an AArch64 translation, or if halting debug-mode
+      is enabled and halting is allowed. Otherwise, DBGBVR<n>_EL1 is the address of
+      an instruction to be stepped.001Match context ID. DBGBVR<n>_EL1[31:0] is a context
+      ID.100Match VMID. DBGBVR<n>_EL1[39:32] is a VMID.101Match VMID and context ID.
+      DBGBVR<n>_EL1[31:0] is a context ID, and DBGBVR<n>_EL1[39:32] is a VMID.BT[0]:
+      Enable linking.If the breakpoint is not context-aware, BT[3] and BT[1] are RES0.
+      If EL2 is not implemented, BT[3] is RES0. If EL1 using AArch32 is not implemented,
+      BT[2] is RES0.The values 011x and 11xx are reserved, but must behave as if the
+      breakpoint is disabled. Software must not rely on this property as the behavior
+      of reserved values might change in a future revision of the architecture.'
+    name: BT
+    shortdesc: Breakpoint Type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked address matching breakpoints, this specifies the index of
+      the Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a breakpoint debug event
+      for breakpoint n is generated. This field must be interpreted along with the
+      HMC and PMC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and PMC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '8:5'
+    longdesc: Defines which half-words an address-matching breakpoint matches, regardless
+      of the instruction set and execution state. In an AArch64-only implementation,
+      this field is reserved, RES1. Otherwise:BAS[2] and BAS[0] are read/write.BAS[3]
+      and BAS[1] are read-only copies of BAS[2] and BAS[0] respectively.The values
+      0b0011 and 0b1100 are only supported if AArch32 is supported at any exception
+      level.The permitted values depend on the breakpoint type.For Address match breakpoints
+      in either AArch32 or AArch64 state:BASMatch instruction atConstraint for debuggers0b0011DBGBVR<n>_EL1Use
+      for T32 and T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for A64 and A32 instructions.0b0000 is reserved and must behave as if the breakpoint
+      is disabled or map to a permitted value.For Address mismatch breakpoints in
+      an AArch32 stage 1 translation regime:BASStep instruction atConstraint for debuggers0b0000-Use
+      for a match anywhere breakpoint.0b0011DBGBVR<n>_EL1Use for stepping T32 and
+      T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for stepping T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for stepping A64 and A32 instructions.For Context matching breakpoints, this
+      field is RES1 and ignored.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PMC
+    shortdesc: Privilege mode control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable breakpoint DBGBVR<n>_EL1.
+    type: rw
+  name: DBGBCR4_EL1
+  offset: '0x00000448'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Value Registers. Holds a virtual address or a VMID
+    and/or a context ID for use in breakpoint matching. Forms breakpoint n together
+    with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses of this
+    register refer to ARMv8
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR5_EL1_31TO0
+  offset: '0x00000450'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Extended Value Registers. Holds a virtual address
+    or a VMID and/or a context ID for use in breakpoint matching. Forms breakpoint
+    n together with control register DBGBCR<n>_EL1 where n is 0 to 15. Multiple uses
+    of this register refer to ARMv8
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGBVR5_EL1_63TO32
+  offset: '0x00000454'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Breakpoint Control Registers
+  field:
+  - bits: '23:20'
+    longdesc: 'Possible values are:The field breaks down as follows:BT[3:1]: Base
+      type.000Match address. DBGBVR<n>_EL1 is the address of an instruction.010Mismatch
+      address. Behaves as type 0b000 if in an AArch64 translation, or if halting debug-mode
+      is enabled and halting is allowed. Otherwise, DBGBVR<n>_EL1 is the address of
+      an instruction to be stepped.001Match context ID. DBGBVR<n>_EL1[31:0] is a context
+      ID.100Match VMID. DBGBVR<n>_EL1[39:32] is a VMID.101Match VMID and context ID.
+      DBGBVR<n>_EL1[31:0] is a context ID, and DBGBVR<n>_EL1[39:32] is a VMID.BT[0]:
+      Enable linking.If the breakpoint is not context-aware, BT[3] and BT[1] are RES0.
+      If EL2 is not implemented, BT[3] is RES0. If EL1 using AArch32 is not implemented,
+      BT[2] is RES0.The values 011x and 11xx are reserved, but must behave as if the
+      breakpoint is disabled. Software must not rely on this property as the behavior
+      of reserved values might change in a future revision of the architecture.'
+    name: BT
+    shortdesc: Breakpoint Type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked address matching breakpoints, this specifies the index of
+      the Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a breakpoint debug event
+      for breakpoint n is generated. This field must be interpreted along with the
+      HMC and PMC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and PMC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '8:5'
+    longdesc: Defines which half-words an address-matching breakpoint matches, regardless
+      of the instruction set and execution state. In an AArch64-only implementation,
+      this field is reserved, RES1. Otherwise:BAS[2] and BAS[0] are read/write.BAS[3]
+      and BAS[1] are read-only copies of BAS[2] and BAS[0] respectively.The values
+      0b0011 and 0b1100 are only supported if AArch32 is supported at any exception
+      level.The permitted values depend on the breakpoint type.For Address match breakpoints
+      in either AArch32 or AArch64 state:BASMatch instruction atConstraint for debuggers0b0011DBGBVR<n>_EL1Use
+      for T32 and T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for A64 and A32 instructions.0b0000 is reserved and must behave as if the breakpoint
+      is disabled or map to a permitted value.For Address mismatch breakpoints in
+      an AArch32 stage 1 translation regime:BASStep instruction atConstraint for debuggers0b0000-Use
+      for a match anywhere breakpoint.0b0011DBGBVR<n>_EL1Use for stepping T32 and
+      T32EE instructions.0b1100DBGBVR<n>_EL1+2Use for stepping T32 and T32EE instructions.0b1111DBGBVR<n>_EL1Use
+      for stepping A64 and A32 instructions.For Context matching breakpoints, this
+      field is RES1 and ignored.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a breakpoint debug
+      event for breakpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PMC
+    shortdesc: Privilege mode control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable breakpoint DBGBVR<n>_EL1.
+    type: rw
+  name: DBGBCR5_EL1
+  offset: '0x00000458'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Value Registers
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR0_EL1_31TO0
+  offset: '0x00000800'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Extended Value Registers
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR0_EL1_63TO32
+  offset: '0x00000804'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Control Registers
+  field:
+  - bits: '28:24'
+    longdesc: Only objects up to 2GB can be watched using a single mask.Other values
+      mask the corresponding number of address bits, from 0b00011 masking 3 address
+      bits (0x00000007 mask for address) to 0b11111 masking 31 address bits (0x7FFFFFFF
+      mask for address).
+    name: MASK
+    shortdesc: Address mask.
+    type: rw
+  - bits: '20'
+    longdesc: 'Possible values are:'
+    name: WT
+    shortdesc: Watchpoint type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked data address watchpoints, this specifies the index of the
+      Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a watchpoint debug event
+      for watchpoint n is generated. This field must be interpreted along with the
+      HMC and PAC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and PAC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '12:5'
+    longdesc: Each bit of this field selects whether a byte from within the word or
+      double-word addressed by DBGWVR<n>_EL1 is being watched.BASDescriptionxxxxxxx1Match
+      byte at DBGWVR<n>_EL1xxxxxx1xMatch byte at DBGWVR<n>_EL1+1xxxxx1xxMatch byte
+      at DBGWVR<n>_EL1+2xxxx1xxxMatch byte at DBGWVR<n>_EL1+3In cases where DBGWVR<n>_EL1
+      addresses a double-word:BASDescription, if DBGWVR<n>_EL1[2] == 0xxx1xxxxMatch
+      byte at DBGWVR<n>_EL1+4xx1xxxxxMatch byte at DBGWVR<n>_EL1+5x1xxxxxxMatch byte
+      at DBGWVR<n>_EL1+61xxxxxxxMatch byte at DBGWVR<n>_EL1+7If DBGWVR<n>_EL1[2] ==
+      1, only BAS[3:0] is used. ARM deprecates setting DBGWVR<n>_EL1 == 1.The valid
+      values for BAS are 0b0000000, or a binary number all of whose set bits are contiguous.
+      All other values are reserved and must not be used by software.If BAS is zero,
+      no bytes are watched by this watchpoint.Ignored if E is 0.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '4:3'
+    longdesc: This field enables watchpoint matching on the type of access being made.
+      Possible values of this field are:All other values are reserved, but must behave
+      as if the watchpoint is disabled. Software must not rely on this property as
+      the behavior of reserved values might change in a future revision of the architecture.Ignored
+      if E is 0.
+    name: LSC
+    shortdesc: Load/store control.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PAC
+    shortdesc: Privilege of access control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable watchpoint n.
+    type: rw
+  name: DBGWCR0_EL1
+  offset: '0x00000808'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Value Registers
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR1_EL1_31TO0
+  offset: '0x00000810'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Extended Value Registers
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR1_EL1_63TO32
+  offset: '0x00000814'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Control Registers
+  field:
+  - bits: '28:24'
+    longdesc: Only objects up to 2GB can be watched using a single mask.Other values
+      mask the corresponding number of address bits, from 0b00011 masking 3 address
+      bits (0x00000007 mask for address) to 0b11111 masking 31 address bits (0x7FFFFFFF
+      mask for address).
+    name: MASK
+    shortdesc: Address mask.
+    type: rw
+  - bits: '20'
+    longdesc: 'Possible values are:'
+    name: WT
+    shortdesc: Watchpoint type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked data address watchpoints, this specifies the index of the
+      Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a watchpoint debug event
+      for watchpoint n is generated. This field must be interpreted along with the
+      HMC and PAC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and PAC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '12:5'
+    longdesc: Each bit of this field selects whether a byte from within the word or
+      double-word addressed by DBGWVR<n>_EL1 is being watched.BASDescriptionxxxxxxx1Match
+      byte at DBGWVR<n>_EL1xxxxxx1xMatch byte at DBGWVR<n>_EL1+1xxxxx1xxMatch byte
+      at DBGWVR<n>_EL1+2xxxx1xxxMatch byte at DBGWVR<n>_EL1+3In cases where DBGWVR<n>_EL1
+      addresses a double-word:BASDescription, if DBGWVR<n>_EL1[2] == 0xxx1xxxxMatch
+      byte at DBGWVR<n>_EL1+4xx1xxxxxMatch byte at DBGWVR<n>_EL1+5x1xxxxxxMatch byte
+      at DBGWVR<n>_EL1+61xxxxxxxMatch byte at DBGWVR<n>_EL1+7If DBGWVR<n>_EL1[2] ==
+      1, only BAS[3:0] is used. ARM deprecates setting DBGWVR<n>_EL1 == 1.The valid
+      values for BAS are 0b0000000, or a binary number all of whose set bits are contiguous.
+      All other values are reserved and must not be used by software.If BAS is zero,
+      no bytes are watched by this watchpoint.Ignored if E is 0.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '4:3'
+    longdesc: This field enables watchpoint matching on the type of access being made.
+      Possible values of this field are:All other values are reserved, but must behave
+      as if the watchpoint is disabled. Software must not rely on this property as
+      the behavior of reserved values might change in a future revision of the architecture.Ignored
+      if E is 0.
+    name: LSC
+    shortdesc: Load/store control.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PAC
+    shortdesc: Privilege of access control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable watchpoint n.
+    type: rw
+  name: DBGWCR1_EL1
+  offset: '0x00000818'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Value Registers
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR2_EL1_31TO0
+  offset: '0x00000820'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Extended Value Registers
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR2_EL1_63TO32
+  offset: '0x00000824'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Control Registers
+  field:
+  - bits: '28:24'
+    longdesc: Only objects up to 2GB can be watched using a single mask.Other values
+      mask the corresponding number of address bits, from 0b00011 masking 3 address
+      bits (0x00000007 mask for address) to 0b11111 masking 31 address bits (0x7FFFFFFF
+      mask for address).
+    name: MASK
+    shortdesc: Address mask.
+    type: rw
+  - bits: '20'
+    longdesc: 'Possible values are:'
+    name: WT
+    shortdesc: Watchpoint type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked data address watchpoints, this specifies the index of the
+      Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a watchpoint debug event
+      for watchpoint n is generated. This field must be interpreted along with the
+      HMC and PAC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and PAC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '12:5'
+    longdesc: Each bit of this field selects whether a byte from within the word or
+      double-word addressed by DBGWVR<n>_EL1 is being watched.BASDescriptionxxxxxxx1Match
+      byte at DBGWVR<n>_EL1xxxxxx1xMatch byte at DBGWVR<n>_EL1+1xxxxx1xxMatch byte
+      at DBGWVR<n>_EL1+2xxxx1xxxMatch byte at DBGWVR<n>_EL1+3In cases where DBGWVR<n>_EL1
+      addresses a double-word:BASDescription, if DBGWVR<n>_EL1[2] == 0xxx1xxxxMatch
+      byte at DBGWVR<n>_EL1+4xx1xxxxxMatch byte at DBGWVR<n>_EL1+5x1xxxxxxMatch byte
+      at DBGWVR<n>_EL1+61xxxxxxxMatch byte at DBGWVR<n>_EL1+7If DBGWVR<n>_EL1[2] ==
+      1, only BAS[3:0] is used. ARM deprecates setting DBGWVR<n>_EL1 == 1.The valid
+      values for BAS are 0b0000000, or a binary number all of whose set bits are contiguous.
+      All other values are reserved and must not be used by software.If BAS is zero,
+      no bytes are watched by this watchpoint.Ignored if E is 0.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '4:3'
+    longdesc: This field enables watchpoint matching on the type of access being made.
+      Possible values of this field are:All other values are reserved, but must behave
+      as if the watchpoint is disabled. Software must not rely on this property as
+      the behavior of reserved values might change in a future revision of the architecture.Ignored
+      if E is 0.
+    name: LSC
+    shortdesc: Load/store control.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PAC
+    shortdesc: Privilege of access control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable watchpoint n.
+    type: rw
+  name: DBGWCR2_EL1
+  offset: '0x00000828'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Value Registers
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR3_EL1_31TO0
+  offset: '0x00000830'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Extended Value Registers
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR3_EL1_63TO32
+  offset: '0x00000834'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Control Registers
+  field:
+  - bits: '28:24'
+    longdesc: Only objects up to 2GB can be watched using a single mask.Other values
+      mask the corresponding number of address bits, from 0b00011 masking 3 address
+      bits (0x00000007 mask for address) to 0b11111 masking 31 address bits (0x7FFFFFFF
+      mask for address).
+    name: MASK
+    shortdesc: Address mask.
+    type: rw
+  - bits: '20'
+    longdesc: 'Possible values are:'
+    name: WT
+    shortdesc: Watchpoint type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked data address watchpoints, this specifies the index of the
+      Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a watchpoint debug event
+      for watchpoint n is generated. This field must be interpreted along with the
+      HMC and PAC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and PAC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '12:5'
+    longdesc: Each bit of this field selects whether a byte from within the word or
+      double-word addressed by DBGWVR<n>_EL1 is being watched.BASDescriptionxxxxxxx1Match
+      byte at DBGWVR<n>_EL1xxxxxx1xMatch byte at DBGWVR<n>_EL1+1xxxxx1xxMatch byte
+      at DBGWVR<n>_EL1+2xxxx1xxxMatch byte at DBGWVR<n>_EL1+3In cases where DBGWVR<n>_EL1
+      addresses a double-word:BASDescription, if DBGWVR<n>_EL1[2] == 0xxx1xxxxMatch
+      byte at DBGWVR<n>_EL1+4xx1xxxxxMatch byte at DBGWVR<n>_EL1+5x1xxxxxxMatch byte
+      at DBGWVR<n>_EL1+61xxxxxxxMatch byte at DBGWVR<n>_EL1+7If DBGWVR<n>_EL1[2] ==
+      1, only BAS[3:0] is used. ARM deprecates setting DBGWVR<n>_EL1 == 1.The valid
+      values for BAS are 0b0000000, or a binary number all of whose set bits are contiguous.
+      All other values are reserved and must not be used by software.If BAS is zero,
+      no bytes are watched by this watchpoint.Ignored if E is 0.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '4:3'
+    longdesc: This field enables watchpoint matching on the type of access being made.
+      Possible values of this field are:All other values are reserved, but must behave
+      as if the watchpoint is disabled. Software must not rely on this property as
+      the behavior of reserved values might change in a future revision of the architecture.Ignored
+      if E is 0.
+    name: LSC
+    shortdesc: Load/store control.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PAC
+    shortdesc: Privilege of access control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable watchpoint n.
+    type: rw
+  name: DBGWCR3_EL1
+  offset: '0x00000838'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Value Registers
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR4_EL1_31TO0
+  offset: '0x00000840'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Extended Value Registers
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR4_EL1_63TO32
+  offset: '0x00000844'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Control Registers
+  field:
+  - bits: '28:24'
+    longdesc: Only objects up to 2GB can be watched using a single mask.Other values
+      mask the corresponding number of address bits, from 0b00011 masking 3 address
+      bits (0x00000007 mask for address) to 0b11111 masking 31 address bits (0x7FFFFFFF
+      mask for address).
+    name: MASK
+    shortdesc: Address mask.
+    type: rw
+  - bits: '20'
+    longdesc: 'Possible values are:'
+    name: WT
+    shortdesc: Watchpoint type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked data address watchpoints, this specifies the index of the
+      Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a watchpoint debug event
+      for watchpoint n is generated. This field must be interpreted along with the
+      HMC and PAC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and PAC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '12:5'
+    longdesc: Each bit of this field selects whether a byte from within the word or
+      double-word addressed by DBGWVR<n>_EL1 is being watched.BASDescriptionxxxxxxx1Match
+      byte at DBGWVR<n>_EL1xxxxxx1xMatch byte at DBGWVR<n>_EL1+1xxxxx1xxMatch byte
+      at DBGWVR<n>_EL1+2xxxx1xxxMatch byte at DBGWVR<n>_EL1+3In cases where DBGWVR<n>_EL1
+      addresses a double-word:BASDescription, if DBGWVR<n>_EL1[2] == 0xxx1xxxxMatch
+      byte at DBGWVR<n>_EL1+4xx1xxxxxMatch byte at DBGWVR<n>_EL1+5x1xxxxxxMatch byte
+      at DBGWVR<n>_EL1+61xxxxxxxMatch byte at DBGWVR<n>_EL1+7If DBGWVR<n>_EL1[2] ==
+      1, only BAS[3:0] is used. ARM deprecates setting DBGWVR<n>_EL1 == 1.The valid
+      values for BAS are 0b0000000, or a binary number all of whose set bits are contiguous.
+      All other values are reserved and must not be used by software.If BAS is zero,
+      no bytes are watched by this watchpoint.Ignored if E is 0.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '4:3'
+    longdesc: This field enables watchpoint matching on the type of access being made.
+      Possible values of this field are:All other values are reserved, but must behave
+      as if the watchpoint is disabled. Software must not rely on this property as
+      the behavior of reserved values might change in a future revision of the architecture.Ignored
+      if E is 0.
+    name: LSC
+    shortdesc: Load/store control.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PAC
+    shortdesc: Privilege of access control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable watchpoint n.
+    type: rw
+  name: DBGWCR4_EL1
+  offset: '0x00000848'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Value Registers
+  field:
+  - bits: '31:2'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR5_EL1_31TO0
+  offset: '0x00000850'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Extended Value Registers
+  field:
+  - bits: '31:17'
+    longdesc: Hardwired to the value of the sign bit, bit [48]. Hardware and software
+      must treat this field as RES0 if bit[48] is 0, and as RES1 if bit[48] is 1.
+    name: RESS
+    shortdesc: Reserved, Sign extended.
+    type: rw
+  - bits: '16:0'
+    longdesc: ARM deprecates setting DBGWVR<n>_EL1[2] == 1.
+    name: VA
+    shortdesc: Bits[48:2] of the address value for comparison.
+    type: rw
+  name: DBGWVR5_EL1_63TO32
+  offset: '0x00000854'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Watchpoint Control Registers
+  field:
+  - bits: '28:24'
+    longdesc: Only objects up to 2GB can be watched using a single mask.Other values
+      mask the corresponding number of address bits, from 0b00011 masking 3 address
+      bits (0x00000007 mask for address) to 0b11111 masking 31 address bits (0x7FFFFFFF
+      mask for address).
+    name: MASK
+    shortdesc: Address mask.
+    type: rw
+  - bits: '20'
+    longdesc: 'Possible values are:'
+    name: WT
+    shortdesc: Watchpoint type.
+    type: rw
+  - bits: '19:16'
+    longdesc: For Linked data address watchpoints, this specifies the index of the
+      Context-matching breakpoint linked to.
+    name: LBN
+    shortdesc: Linked breakpoint number.
+    type: rw
+  - bits: '15:14'
+    longdesc: Determines the security states under which a watchpoint debug event
+      for watchpoint n is generated. This field must be interpreted along with the
+      HMC and PAC fields.
+    name: SSC
+    shortdesc: Security state control.
+    type: rw
+  - bits: '13'
+    longdesc: Determines the debug perspective for deciding when a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and PAC fields.
+    name: HMC
+    shortdesc: Higher mode control.
+    type: rw
+  - bits: '12:5'
+    longdesc: Each bit of this field selects whether a byte from within the word or
+      double-word addressed by DBGWVR<n>_EL1 is being watched.BASDescriptionxxxxxxx1Match
+      byte at DBGWVR<n>_EL1xxxxxx1xMatch byte at DBGWVR<n>_EL1+1xxxxx1xxMatch byte
+      at DBGWVR<n>_EL1+2xxxx1xxxMatch byte at DBGWVR<n>_EL1+3In cases where DBGWVR<n>_EL1
+      addresses a double-word:BASDescription, if DBGWVR<n>_EL1[2] == 0xxx1xxxxMatch
+      byte at DBGWVR<n>_EL1+4xx1xxxxxMatch byte at DBGWVR<n>_EL1+5x1xxxxxxMatch byte
+      at DBGWVR<n>_EL1+61xxxxxxxMatch byte at DBGWVR<n>_EL1+7If DBGWVR<n>_EL1[2] ==
+      1, only BAS[3:0] is used. ARM deprecates setting DBGWVR<n>_EL1 == 1.The valid
+      values for BAS are 0b0000000, or a binary number all of whose set bits are contiguous.
+      All other values are reserved and must not be used by software.If BAS is zero,
+      no bytes are watched by this watchpoint.Ignored if E is 0.
+    name: BAS
+    shortdesc: Byte address select.
+    type: rw
+  - bits: '4:3'
+    longdesc: This field enables watchpoint matching on the type of access being made.
+      Possible values of this field are:All other values are reserved, but must behave
+      as if the watchpoint is disabled. Software must not rely on this property as
+      the behavior of reserved values might change in a future revision of the architecture.Ignored
+      if E is 0.
+    name: LSC
+    shortdesc: Load/store control.
+    type: rw
+  - bits: '2:1'
+    longdesc: Determines the exception level or levels at which a watchpoint debug
+      event for watchpoint n is generated. This field must be interpreted along with
+      the SSC and HMC fields.
+    name: PAC
+    shortdesc: Privilege of access control.
+    type: rw
+  - bits: '0'
+    longdesc: 'Possible values are:'
+    name: E
+    shortdesc: Enable watchpoint n.
+    type: rw
+  name: DBGWCR5_EL1
+  offset: '0x00000858'
+  type: rw
+  width: 32
+- default: '0x410FD032'
+  description: Main ID Register
+  field:
+  - bits: '31:24'
+    longdesc: This field must hold an implementer code that has been assigned by ARM.
+      Assigned codes include the following:Hex representationASCII representationImplementer0x41AARM
+      Limited0x42BBroadcom Corporation0x43CCavium Inc.0x44DDigital Equipment Corporation0x49IInfineon
+      Technologies AG0x4DMMotorola or Freescale Semiconductor Inc.0x4ENNVIDIA Corporation0x50PApplied
+      Micro Circuits Corporation0x51QQualcomm Inc.0x56VMarvell International Ltd.0x69iIntel
+      CorporationARM can assign codes that are not published in this manual. All values
+      not assigned by ARM are reserved and must not be used.
+    name: IMPLEMENTER
+    shortdesc: The Implementer code.
+    type: ro
+  - bits: '23:20'
+    longdesc: Typically, this field is used to distinguish between different product
+      variants, or major revisions of a product.
+    name: VARIANT
+    shortdesc: An IMPLEMENTATION DEFINED variant number.
+    type: ro
+  - bits: '19:16'
+    name: ARCHITECTURE
+    type: ro
+  - bits: '15:4'
+    longdesc: On processors implemented by ARM, if the top four bits of the primary
+      part number are 0x0 or 0x7, the variant and architecture are encoded differently.
+    name: PARTNUM
+    shortdesc: An IMPLEMENTATION DEFINED primary part number for the device.
+    type: ro
+  - bits: '3:0'
+    name: REVISION
+    type: ro
+  name: MIDR_EL1
+  offset: '0x00000D00'
+  type: ro
+  width: 32
+- default: '0x00002222'
+  description: Processor Feature Register 0 (low word)
+  field:
+  - bits: '27:24'
+    longdesc: Permitted values are:All other values are reserved.
+    name: GIC
+    shortdesc: GIC system register interface.
+    type: ro
+  - bits: '23:20'
+    longdesc: Permitted values are:All other values are reserved.
+    name: ADVSIMD
+    shortdesc: Advanced SIMD.
+    type: ro
+  - bits: '19:16'
+    longdesc: Permitted values are:All other values are reserved.
+    name: FP
+    shortdesc: Floating-point.
+    type: ro
+  - bits: '15:12'
+    longdesc: Permitted values are:All other values are reserved.
+    name: EL3
+    shortdesc: EL3 exception level handling.
+    type: ro
+  - bits: '11:8'
+    longdesc: Permitted values are:All other values are reserved.
+    name: EL2
+    shortdesc: EL2 exception level handling.
+    type: ro
+  - bits: '7:4'
+    longdesc: Permitted values are:All other values are reserved.
+    name: EL1
+    shortdesc: EL1 exception level handling.
+    type: ro
+  - bits: '3:0'
+    longdesc: Permitted values are:All other values are reserved.
+    name: EL0
+    shortdesc: EL0 exception level handling.
+    type: ro
+  name: ID_AA64PFR0_EL1_31TO0
+  offset: '0x00000D20'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Processor Feature Register 0 (high word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64PFR0_EL1_63TO32
+  offset: '0x00000D24'
+  type: ro
+  width: 32
+- default: '0x10305106'
+  description: Debug Feature Register 0 (low word)
+  field:
+  - bits: '31:28'
+    longdesc: These are the highest numbered breakpoints.
+    name: CTX_CMPS
+    shortdesc: Number of breakpoints that are context-aware, minus 1.
+    type: ro
+  - bits: '23:20'
+    longdesc: The value of 0b0000 is reserved.
+    name: WRPS
+    shortdesc: Number of watchpoints, minus 1.
+    type: ro
+  - bits: '15:12'
+    longdesc: The value of 0b0000 is reserved.
+    name: BRPS
+    shortdesc: Number of breakpoints, minus 1.
+    type: ro
+  - bits: '11:8'
+    longdesc: Indicates whether system register interface to Performance Monitors
+      extension is implemented. Permitted values are:All other values are reserved.
+    name: PMUVER
+    shortdesc: Performance Monitors extension version.
+    type: ro
+  - bits: '7:4'
+    longdesc: Indicates whether system register interface to Trace extension is implemented.
+      Permitted values are:All other values are reserved.A value of 0b0000 only indicates
+      that no system register interface to the trace extension is implemented. A trace
+      extension may nevertheless be implemented without a system register interface.
+    name: TRACEVER
+    shortdesc: Trace extension.
+    type: ro
+  - bits: '3:0'
+    longdesc: Indicates presence of v8-A debug architecture.All other values are reserved.
+    name: DEBUGVER
+    shortdesc: Debug architecture version.
+    type: ro
+  name: ID_AA64DFR0_EL1_31TO0
+  offset: '0x00000D28'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Debug Feature Register 0 (high word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64DFR0_EL1_63TO32
+  offset: '0x00000D2C'
+  type: ro
+  width: 32
+- default: '0x00011120'
+  description: Instruction Set Attribute Register 0 (low word)
+  field:
+  - bits: '19:16'
+    longdesc: Possible values of this field are:All other values are reserved.This
+      field must have the same value as ID_ISAR5.CRC32. The architecture requires
+      that if CRC32 is supported in one Execution state, it must be supported in both
+      Execution states.
+    name: CRC32
+    shortdesc: CRC32 instructions in AArch64.
+    type: ro
+  - bits: '15:12'
+    longdesc: Possible values of this field are:All other values are reserved.
+    name: SHA2
+    shortdesc: SHA2 instructions in AArch64.
+    type: ro
+  - bits: '11:8'
+    longdesc: Possible values of this field are:All other values are reserved.
+    name: SHA1
+    shortdesc: SHA1 instructions in AArch64.
+    type: ro
+  - bits: '7:4'
+    longdesc: 'Possible values of this field are:'
+    name: AES
+    shortdesc: AES instructions in AArch64.
+    type: ro
+  name: ID_AA64ISAR0_EL1_31TO0
+  offset: '0x00000D30'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Instruction Set Attribute Register 0 (high word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64ISAR0_EL1_63TO32
+  offset: '0x00000D34'
+  type: ro
+  width: 32
+- default: '0x00001122'
+  description: Memory Model Feature Register 0 (low word)
+  field:
+  - bits: '31:28'
+    longdesc: Permitted values are:All other values are reserved.
+    name: TGRAN4
+    shortdesc: Support for 4 Kbyte memory translation granule size.
+    type: ro
+  - bits: '27:24'
+    longdesc: Permitted values are:All other values are reserved.
+    name: TGRAN64
+    shortdesc: Support for 64 Kbyte memory translation granule size.
+    type: ro
+  - bits: '23:20'
+    longdesc: Permitted values are:All other values are reserved.
+    name: TGRAN16
+    shortdesc: Support for 16 Kbyte memory translation granule size.
+    type: ro
+  - bits: '19:16'
+    longdesc: Permitted values are:All other values are reserved.This field is invalid
+      and is RES0 if the BigEnd field, bits [11:8], is not 0b0000.
+    name: BIGENDEL0
+    shortdesc: Mixed-endian support at EL0 only.
+    type: ro
+  - bits: '15:12'
+    longdesc: Permitted values are:All other values are reserved.
+    name: SNSMEM
+    shortdesc: Secure versus Non-secure Memory distinction.
+    type: ro
+  - bits: '11:8'
+    longdesc: Permitted values are:All other values are reserved.
+    name: BIGEND
+    shortdesc: Mixed-endian configuration support.
+    type: ro
+  - bits: '7:4'
+    longdesc: Permitted values are:All other values are reserved.
+    name: ASIDBITS
+    shortdesc: Number of ASID bits.
+    type: ro
+  - bits: '3:0'
+    longdesc: Permitted values are:All other values are reserved.
+    name: PARANGE
+    shortdesc: Physical Address range supported.
+    type: ro
+  name: ID_AA64MMFR0_EL1_31TO0
+  offset: '0x00000D38'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Memory Model Feature Register 0 (high word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64MMFR0_EL1_63TO32
+  offset: '0x00000D3C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Processor Feature Register 1 (low word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64PFR1_EL1_31TO0
+  offset: '0x00000D40'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Processor Feature Register 1 (high word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64PFR1_EL1_63TO32
+  offset: '0x00000D44'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Auxiliary Feature Register 1 (low word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64DFR1_EL1_31TO0
+  offset: '0x00000D48'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Auxiliary Feature Register 1 (high word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64DFR1_EL1_63TO32
+  offset: '0x00000D4C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Instruction Set Attribute Register 1 (low word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64ISAR1_EL1_31TO0
+  offset: '0x00000D50'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Instruction Set Attribute Register 1 (high word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64ISAR1_EL1_63TO32
+  offset: '0x00000D54'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Memory Model Feature Register 1 (low word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64MMFR1_EL1_31TO0
+  offset: '0x00000D58'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Memory Model Feature Register 1 (high word)
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: ID_AA64MMFR1_EL1_63TO32
+  offset: '0x00000D5C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: External Debug Integration mode Control Register
+  field:
+  - bits: '0'
+    longdesc: When IME == 1, the device reverts to an integration mode to enable integration
+      testing or topology detection. The integration mode behavior is IMPLEMENTATION
+      DEFINED.
+    name: IME
+    shortdesc: Integration mode enable.
+    type: rw
+  name: ITCTRL
+  offset: '0x00000F00'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Claim Tag Set Register
+  field:
+  - bits: '7:0'
+    longdesc: RAO.Writing a 1 to one of these bits sets the corresponding CLAIM bit
+      to 1. This is an indirect write to the CLAIM bits.A single write operation can
+      set multiple bits to 1. Writing 0 to one of these bits has no effect.
+    name: CLAIM
+    shortdesc: Claim set bits.
+    type: rw
+  name: CLAIMSET
+  offset: '0x00000FA0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Debug Claim Tag Clear Register
+  field:
+  - bits: '7:0'
+    longdesc: Reading this field returns the current value of the CLAIM bits.Writing
+      a 1 to one of these bits clears the corresponding CLAIM bit to 0. This is an
+      indirect write to the CLAIM bits.A single write operation can clear multiple
+      bits to 0. Writing 0 to one of these bits has no effect.
+    name: CLAIM
+    shortdesc: Claim clear bits.
+    type: rw
+  name: CLAIMCLR
+  offset: '0x00000FA4'
+  type: rw
+  width: 32
+- default: '0x80000000'
+  description: External Debug Device Affinity Register 0
+  field:
+  - bits: '31:0'
+    longdesc: Read-only copy of the low half of MPIDR_EL1, as seen from the highest
+      implemented exception level.
+    name: EDDEVAFF0
+    shortdesc: MPIDR_EL1 low half.
+    type: ro
+  name: DEVAFF0
+  offset: '0x00000FA8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: External Debug Device Affinity Register 1
+  field:
+  - bits: '31:0'
+    longdesc: Read-only copy of the high half of MPIDR_EL1, as seen from the highest
+      implemented exception level.
+    name: EDDEVAFF1
+    shortdesc: MPIDR_EL1 high half.
+    type: ro
+  name: DEVAFF1
+  offset: '0x00000FAC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: External Debug Lock Access Register
+  field:
+  - bits: '31:0'
+    longdesc: Writing the key value 0xC5ACCE55 to this field unlocks the lock, enabling
+      write accesses to this component's registers through a memory-mapped interface.Writing
+      any other value to this register locks the lock, disabling write accesses to
+      this component's registers through a memory mapped interface.
+    name: KEY
+    shortdesc: Lock Access control.
+    type: wo
+  name: LAR
+  offset: '0x00000FB0'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: External Debug Lock Status Register
+  field:
+  - bits: '2'
+    longdesc: RAZ.
+    name: NTT
+    shortdesc: Not thirty-two bit access required.
+    type: ro
+  - bits: '1'
+    longdesc: 'For an access to LSR that is not a memory-mapped access, or when the
+      software lock is not implemented, this field is RES0.For memory-mapped accesses
+      when the software lock is implemented, possible values of this field are:'
+    name: SLK
+    shortdesc: Software lock status for this component.
+    type: ro
+  - bits: '0'
+    longdesc: 'For an access to LSR that is not a memory-mapped access, this field
+      is RAZ. For memory-mapped accesses, the value of this field is IMPLEMENTATION
+      DEFINED. Permitted values are:'
+    name: SLI
+    shortdesc: Software lock implemented.
+    type: ro
+  name: LSR
+  offset: '0x00000FB4'
+  type: ro
+  width: 32
+- default: '0x000000AA'
+  description: Debug Authentication Status register
+  field:
+  - bits: '7:6'
+    longdesc: Possible values of this field are:Other values are reserved.
+    name: SNID
+    shortdesc: Secure non-invasive debug.
+    type: ro
+  - bits: '5:4'
+    longdesc: Possible values of this field are:Other values are reserved.
+    name: SID
+    shortdesc: Secure invasive debug.
+    type: ro
+  - bits: '3:2'
+    longdesc: Possible values of this field are:Other values are reserved.
+    name: NSNID
+    shortdesc: Non-secure non-invasive debug.
+    type: ro
+  - bits: '1:0'
+    longdesc: Possible values of this field are:Other values are reserved.
+    name: NSID
+    shortdesc: Non-secure invasive debug.
+    type: ro
+  name: AUTHSTATUS
+  offset: '0x00000FB8'
+  type: ro
+  width: 32
+- default: '0x47706A15'
+  description: External Debug Device Architecture Register
+  field:
+  - bits: '31:21'
+    longdesc: For debug, this is ARM Limited.Bits [31:28] are the JEP 106 continuation
+      code, 0x4.Bits [27:21] are the JEP 106 ID code, 0x3B.
+    name: ARCHITECT
+    shortdesc: Defines the architecture of the component.
+    type: ro
+  - bits: '20'
+    longdesc: This field is 1 in v8-A.
+    name: PRESENT
+    shortdesc: When set to 1, indicates that the DEVARCH is present.
+    type: ro
+  - bits: '19:16'
+    longdesc: For architectures defined by ARM this is the minor revision.For debug,
+      the revision defined by v8-A is 0x0.All other values are reserved.
+    name: REVISION
+    shortdesc: Defines the architecture revision.
+    type: ro
+  - bits: '15:0'
+    longdesc: For architectures defined by ARM this is further subdivided.For debug:Bits
+      [15:12] are the architecture version, 0x6.Bits [11:0] are the architecture part
+      number, 0xA15.This corresponds to debug architecture version v8-A.
+    name: ARCHID
+    shortdesc: Defines this part to be a v8-A debug component.
+    type: ro
+  name: DEVARCH
+  offset: '0x00000FBC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: External Debug Device ID Register 2
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: DEVID2
+  offset: '0x00000FC0'
+  type: ro
+  width: 32
+- default: '0x00000002'
+  description: External Debug Device ID Register 1
+  field:
+  - bits: '3:0'
+    longdesc: 'Permitted values of this field in v8-A are:'
+    name: PCSROFFSET
+    shortdesc: This field indicates the offset applied to PC samples returned by reads
+      of EDPCSR.
+    type: ro
+  name: DEVID1
+  offset: '0x00000FC4'
+  type: ro
+  width: 32
+- default: '0x00000003'
+  description: External Debug Device ID Register 0
+  field:
+  - bits: '27:24'
+    longdesc: Permitted values for this field are:All other values are reserved.
+    name: AUXREGS
+    shortdesc: Indicates support for Auxiliary registers.
+    type: ro
+  - bits: '3:0'
+    longdesc: Permitted values of this field in v8-A are:All other values are reserved.
+    name: PCSAMPLE
+    shortdesc: Indicates the level of Sample-based profiling support using external
+      debug registers 40 through 43.
+    type: ro
+  name: DEVID
+  offset: '0x00000FC8'
+  type: ro
+  width: 32
+- default: '0x00000015'
+  description: External Debug Device Type Register
+  field:
+  - bits: '7:4'
+    longdesc: Must read as 0x1 to indicate this is a processor component.
+    name: SUB
+    shortdesc: Subtype.
+    type: ro
+  - bits: '3:0'
+    longdesc: Must read as 0x5 to indicate this is a debug logic component.
+    name: MAJOR
+    shortdesc: Major type.
+    type: ro
+  name: DEVTYPE
+  offset: '0x00000FCC'
+  type: ro
+  width: 32
+- default: '0x00000004'
+  description: External Debug Peripheral Identification Register 4
+  field:
+  - bits: '7:4'
+    longdesc: RAZ. Log2 of the number of 4KB pages from the start of the component
+      to the end of the component ID registers.
+    name: SIZE
+    shortdesc: Size of the component.
+    type: ro
+  - bits: '3:0'
+    longdesc: For ARM Limited, this field is 0b0100.
+    name: DES_2
+    shortdesc: Designer, JEP106 continuation code, least significant nibble.
+    type: ro
+  name: PIDR4
+  offset: '0x00000FD0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: CTI Peripheral Identification Register 5
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: PIDR5
+  offset: '0x00000FD4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: CTI Peripheral Identification Register 6
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: PIDR6
+  offset: '0x00000FD8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: CTI Peripheral Identification Register 7
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: PIDR7
+  offset: '0x00000FDC'
+  type: ro
+  width: 32
+- default: '0x00000003'
+  description: External Debug Peripheral Identification Register 0
+  field:
+  - bits: '7:0'
+    name: PART_0
+    type: ro
+  name: PIDR0
+  offset: '0x00000FE0'
+  type: ro
+  width: 32
+- default: '0x000000BD'
+  description: External Debug Peripheral Identification Register 1
+  field:
+  - bits: '7:4'
+    longdesc: For ARM Limited, this field is 0b1011.
+    name: DES_0
+    shortdesc: Designer, least significant nibble of JEP106 ID code.
+    type: ro
+  - bits: '3:0'
+    name: PART_1
+    type: ro
+  name: PIDR1
+  offset: '0x00000FE4'
+  type: ro
+  width: 32
+- default: '0x0000004B'
+  description: External Debug Peripheral Identification Register 2
+  field:
+  - bits: '7:4'
+    longdesc: Parts can also use this field to extend Part number to 16-bits.
+    name: REVISION
+    shortdesc: Part major revision.
+    type: ro
+  - bits: '3'
+    longdesc: Indicates a JEP106 identity code is used.
+    name: JEDEC
+    shortdesc: RAO.
+    type: ro
+  - bits: '2:0'
+    longdesc: For ARM Limited, this field is 0b011.
+    name: DES_1
+    shortdesc: Designer, most significant bits of JEP106 ID code.
+    type: ro
+  name: PIDR2
+  offset: '0x00000FE8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: External Debug Peripheral Identification Register 3
+  field:
+  - bits: '7:4'
+    longdesc: Parts using EDPIDR2.REVISION as an extension to the Part number must
+      use this field as a major revision number.
+    name: REVAND
+    shortdesc: Part minor revision.
+    type: ro
+  - bits: '3:0'
+    longdesc: Indicates someone other than the Designer has modified the component.
+    name: CMOD
+    shortdesc: Customer modified.
+    type: ro
+  name: PIDR3
+  offset: '0x00000FEC'
+  type: ro
+  width: 32
+- default: '0x0000000D'
+  description: External Debug Component Identification Register 0
+  field:
+  - bits: '7:0'
+    longdesc: Must read as 0x0D.
+    name: PRMBL_0
+    shortdesc: Preamble.
+    type: ro
+  name: CIDR0
+  offset: '0x00000FF0'
+  type: ro
+  width: 32
+- default: '0x00000090'
+  description: External Debug Component Identification Register 1
+  field:
+  - bits: '7:4'
+    longdesc: Reads as 0x9, debug component.
+    name: CLASS
+    shortdesc: Component class.
+    type: ro
+  - bits: '3:0'
+    longdesc: RAZ.
+    name: PRMBL_1
+    shortdesc: Preamble.
+    type: ro
+  name: CIDR1
+  offset: '0x00000FF4'
+  type: ro
+  width: 32
+- default: '0x00000005'
+  description: External Debug Component Identification Register 2
+  field:
+  - bits: '7:0'
+    longdesc: Must read as 0x05.
+    name: PRMBL_2
+    shortdesc: Preamble.
+    type: ro
+  name: CIDR2
+  offset: '0x00000FF8'
+  type: ro
+  width: 32
+- default: '0x000000B1'
+  description: External Debug Component Identification Register 3
+  field:
+  - bits: '7:0'
+    longdesc: Must read as 0xB1.
+    name: PRMBL_3
+    shortdesc: Preamble.
+    type: ro
+  name: CIDR3
+  offset: '0x00000FFC'
+  type: ro
+  width: 32

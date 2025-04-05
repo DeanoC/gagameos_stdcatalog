@@ -1,0 +1,42 @@
+connection:
+- bus_name: fpd_ocm
+  connection: FPDMainSwitch -> OCMSwitch
+  type: bus
+- connection: FPDMainSwitch -> LPDInboundSwitch
+  type: logical
+- connection: LPDMainSwitch -> FPDMainSwitch
+  type: logical
+- bus_name: lpd_cci
+  connection: LPDMainSwitch -> CCI
+  type: bus
+- bus_name: lpd_ddrc
+  connection: LPDMainSwitch -> DDRController
+  type: bus
+- bus_name: cci0_ddrc
+  connection: CCI -> DDRController
+  type: bus
+- bus_name: cci1_ddrc
+  connection: CCI -> DDRController
+  type: bus
+- bus_name: out1
+  connection: FPD_DDR_SPLITTER0 -> DDRController
+  consumer_bus_name: splitter0_ddrc
+  type: bus
+- bus_name: out1
+  connection: FPD_DDR_SPLITTER1 -> DDRController
+  consumer_bus_name: splitter1_ddrc
+  type: bus
+- bus_name: out1
+  connection: FPD_DDR_SPLITTER2 -> DDRController
+  consumer_bus_name: splitter2_ddrc
+  type: bus
+include:
+- resource: lpd.toml
+- resource: fpd.toml
+- resource: iop.toml
+- resource: lpdunits.toml
+instance:
+- name: DDRController
+  type: switch.ddrc.zynqps8
+- name: PS8Soc
+  type: soc.zynqps8.ps8soc

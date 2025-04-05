@@ -1,0 +1,157 @@
+definition:
+- buses:
+  - address_width: 40
+    base_address: '0x8000_0000'
+    data_width: 128
+    fixed_base_address: true
+    name: lpd
+    prefix: psToPlAxiLpd0_
+    protocol: axi4
+    supplier: true
+  - address_width: 40
+    base_address: '0xA400_0000'
+    data_width: 128
+    fixed_base_address: true
+    name: hpm0
+    prefix: psToPlAxiHpm0_
+    protocol: axi4
+    supplier: true
+  - address_width: 40
+    base_address: '0xB000_0000'
+    data_width: 128
+    fixed_base_address: true
+    name: hpm1
+    prefix: psToPlAxiHpm1_
+    protocol: axi4
+    supplier: true
+  - address_width: 40
+    data_width: 128
+    name: hpc0
+    prefix: plToPsAxiHpc0_
+    protocol: axi4
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: hpc1
+    prefix: plToPsAxiHpc1_
+    protocol: axi4
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: hp0
+    prefix: plToPsAxiHp0_
+    protocol: axi4
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: hp1
+    prefix: plToPsAxiHp1_
+    protocol: axi4
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: hp2
+    prefix: plToPsAxiHp2_
+    protocol: axi4
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: hp3
+    prefix: plToPsAxiHp3_
+    protocol: axi4
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: lpd
+    prefix: plToPsAxiLpd0_
+    protocol: axi4
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: acp
+    prefix: plToPsAxiAcp0_
+    protocol: axi4
+    supplier: false
+  gateware: ps8soc/ps8soc.toml
+  registers:
+  - base_address: '0x36_0000'
+    name: S_AXI_HPC0_FPD
+    resource: registers/afifm.toml
+  - base_address: '0x37_0000'
+    name: S_AXI_HPC1_FPD
+    resource: registers/afifm.toml
+  - base_address: '0x38_0000'
+    name: S_AXI_HP0_FPD
+    resource: registers/afifm.toml
+  - base_address: '0x39_0000'
+    name: S_AXI_HP1_FPD
+    resource: registers/afifm.toml
+  - base_address: '0x3a_0000'
+    name: S_AXI_HP2_FPD
+    resource: registers/afifm.toml
+  - base_address: '0x3b_0000'
+    name: S_AXI_HP3_FPD
+    resource: registers/afifm.toml
+  - base_address: '0x29b_0000'
+    name: S_AXI_LPD
+    resource: registers/afifm.toml
+  - base_address: '0x5c_0000'
+    name: APU
+    resource: registers/apu.toml
+  - base_address: '0x29a_0000'
+    name: RPU
+    resource: registers/rpu.toml
+  type: soc.zynqps8.ps8soc
+- gateware: gateware/ps8.toml
+  registersX:
+  - resource: registers/ams
+  - resource: registers/axipcie_dma
+  - resource: registers/axipcie_egress
+  - resource: registers/axipcie_ingress
+  - resource: registers/axipcie_main
+  - resource: registers/bbram
+  - resource: registers/crl_apb
+  - resource: registers/csu
+  - resource: registers/csudma
+  - resource: registers/efuse
+  - resource: registers/etf4k
+  - resource: registers/etf8k
+  - resource: registers/etr
+  - resource: registers/ftm
+  - resource: registers/funnel3p
+  - resource: registers/funnel4p
+  - resource: registers/gic400
+  - resource: registers/gic400_cpu
+  - resource: registers/gic400_dist
+  - resource: registers/gpio
+  - resource: registers/iou_gpv
+  - resource: registers/iou_scntr
+  - resource: registers/iou_scntrs
+  - resource: registers/iou_secure_slcr
+  - resource: registers/iou_slcr
+  - resource: registers/lpd_gpv
+  - resource: registers/lpd_slcr_secure
+  - resource: registers/lpd_slcr
+  - resource: registers/mbistjtag
+  - resource: registers/pcie_attrib
+  - resource: registers/pl390
+  - resource: registers/replic
+  - resource: registers/rsa
+  - resource: registers/rsa_core
+  - resource: registers/rtc
+  - resource: registers/smmu500
+  - resource: registers/smmu_reg
+  - resource: registers/stm
+  - resource: registers/tpiu
+  - resource: registers/tsgen
+  - resource: registers/xmpu_ddr
+  - resource: registers/xmpu_fpd
+  - resource: registers/xmpu_ocm
+  - resource: registers/xmpu_sink
+  - resource: registers/xppu
+  - resource: registers/xppu_sink
+  - resource: registers/pmu_global
+  type: other.zynqps8.rawps8
+include:
+- resource: software/software.toml
+- resource: fabric.toml

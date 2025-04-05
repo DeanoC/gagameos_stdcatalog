@@ -1,0 +1,1044 @@
+description: Clock and Reset control registers for FPD.
+register:
+- default: '0x00000000'
+  description: SLVERR Error Signal Enable.
+  field:
+  - bits: '0'
+    longdesc: '0: disable. 1: enable. Regardless of the setting of the [slverr_enable]
+      bit setting: * The [addr_decode_err] interrupt bit is set in the IR_STATUS register.
+      * APB writes are ignored and reads returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: Accesses to an unimplemented register asserts the SLVERR error signal
+      on the APB bus interface and generates an interrupt.
+    type: rw
+  name: ERR_CTRL
+  offset: '0x00000000'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: APB Register Address Decode Error Interrupt Status and Clear.
+  field:
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: wtc
+  name: IR_STATUS
+  offset: '0x00000004'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Interrupt Mask.
+  field:
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: ro
+  name: IR_MASK
+  offset: '0x00000008'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Mask.
+  field:
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: wo
+  name: IR_ENABLE
+  offset: '0x0000000C'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Disable.
+  field:
+  - bits: '0'
+    name: ADDR_DECODE_ERR
+    type: wo
+  name: IR_DISABLE
+  offset: '0x00000010'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: CRF_APB SLCR Write Protection.
+  field:
+  - bits: '0'
+    longdesc: '0: writes enabled. 1: writes disabled.'
+    name: ACTIVE
+    shortdesc: CRF_APB register set write enable.
+    type: rw
+  name: CRF_WPROT
+  offset: '0x0000001C'
+  type: rw
+  width: 1
+- default: '0x00012C09'
+  description: APLL Clock Unit Control
+  field:
+  - bits: '26:24'
+    enum:
+    - name: PS_REF_CLK
+      value: 0
+    - name: VIDEO_REF_CLK
+      value: 4
+    - name: ALT_REF_CLK
+      value: 5
+    - name: AUX_REF_CLK
+      value: 6
+    - name: GT_REF_CLK
+      value: 7
+    longdesc: '0xx: PS_REF_CLK 100: VIDEO_REF_CLK 101: ALT_REF_CLK 110: AUX_REF_CLK
+      111: GT_REF_CLK'
+    name: POST_SRC
+    shortdesc: Select the pass-thru clock source for PLL Bypass mode.
+    type: rw
+  - bits: '22:20'
+    enum:
+    - name: PS_REF_CLK
+      value: 0
+    - name: VIDEO_REF_CLK
+      value: 4
+    - name: ALT_REF_CLK
+      value: 5
+    - name: AUX_REF_CLK
+      value: 6
+    - name: GT_REF_CLK
+      value: 7
+    longdesc: '0xx: PS_REF_CLK 100: VIDEO_REF_CLK 101: ALT_REF_CLK 110: AUX_REF_CLK
+      111: GT_REF_CLK'
+    name: PRE_SRC
+    shortdesc: Select the clock source for PLL input.
+    type: rw
+  - bits: '16'
+    longdesc: '0: no effect. 1: divide clock by 2. Note: this does not change the
+      VCO frequency, just the output frequency.'
+    name: DIV2
+    shortdesc: Enable the divide by 2 function inside of the PLL.
+    type: rw
+  - bits: '14:8'
+    name: FBDIV
+    type: rw
+  - bits: '3'
+    longdesc: '0: normal PLL mode; the source clock is selected using [PRE_SRC]. 1:
+      bypass the PLL; the source clock is selected using [POST_SRC].'
+    name: BYPASS
+    shortdesc: PLL Clock Bypass Mode.
+    type: rw
+  - bits: '0'
+    longdesc: '0: active. 1: reset. Note: Program the PLL into bypass mode before
+      resetting the PLL.'
+    name: RESET
+    shortdesc: PLL reset.
+    type: rw
+  name: APLL_CTRL
+  offset: '0x00000020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: APLL Integer Helper Data Configuration.
+  field:
+  - bits: '31:25'
+    name: LOCK_DLY
+    type: rw
+  - bits: '22:13'
+    name: LOCK_CNT
+    type: rw
+  - bits: '11:10'
+    name: LFHF
+    type: rw
+  - bits: '8:5'
+    name: CP
+    type: rw
+  - bits: '3:0'
+    name: RES
+    type: rw
+  name: APLL_CFG
+  offset: '0x00000024'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Fractional control for the PLL
+  field:
+  - bits: '31'
+    longdesc: '0: PLL is in integer mode and it ignores all fractional data. 1: PLL
+      is in fractional mode and uses [DATA] bitfield for the fractional portion of
+      the feedback divider.'
+    name: ENABLED
+    shortdesc: Fractional SDM bypass control.
+    type: rw
+  - bits: '15:0'
+    name: DATA
+    type: rw
+  name: APLL_FRAC_CFG
+  offset: '0x00000028'
+  type: rw
+  width: 32
+- default: '0x00002C09'
+  description: DPLL Clock Unit Control
+  field:
+  - bits: '26:24'
+    enum:
+    - name: PS_REF_CLK
+      value: 0
+    - name: VIDEO_REF_CLK
+      value: 4
+    - name: ALT_REF_CLK
+      value: 5
+    - name: AUX_REF_CLK
+      value: 6
+    - name: GT_REF_CLK
+      value: 7
+    longdesc: '0xx: PS_REF_CLK 100: VIDEO_REF_CLK 101: ALT_REF_CLK 110: AUX_REF_CLK
+      111: GT_REF_CLK'
+    name: POST_SRC
+    shortdesc: Select the pass-thru clock source for PLL Bypass mode.
+    type: rw
+  - bits: '22:20'
+    enum:
+    - name: PS_REF_CLK
+      value: 0
+    - name: VIDEO_REF_CLK
+      value: 4
+    - name: ALT_REF_CLK
+      value: 5
+    - name: AUX_REF_CLK
+      value: 6
+    - name: GT_REF_CLK
+      value: 7
+    longdesc: '0xx: PS_REF_CLK 100: VIDEO_REF_CLK 101: ALT_REF_CLK 110: AUX_REF_CLK
+      111: GT_REF_CLK'
+    name: PRE_SRC
+    shortdesc: Select the clock source for PLL input.
+    type: rw
+  - bits: '16'
+    longdesc: '0: no effect. 1: divide clock by 2. Note: this does not change the
+      VCO frequency, just the output frequency.'
+    name: DIV2
+    shortdesc: Enable the divide by 2 function inside of the PLL.
+    type: rw
+  - bits: '14:8'
+    name: FBDIV
+    type: rw
+  - bits: '3'
+    longdesc: '0: normal PLL mode; the source clock is selected using [PRE_SRC]. 1:
+      bypass the PLL; the source clock is selected using [POST_SRC].'
+    name: BYPASS
+    shortdesc: PLL Clock Bypass Mode.
+    type: rw
+  - bits: '0'
+    longdesc: '0: active. 1: reset. Note: Program the PLL into bypass mode before
+      resetting the PLL.'
+    name: RESET
+    shortdesc: PLL reset.
+    type: rw
+  name: DPLL_CTRL
+  offset: '0x0000002C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: DPLL Integer Helper Data Configuration.
+  field:
+  - bits: '31:25'
+    name: LOCK_DLY
+    type: rw
+  - bits: '22:13'
+    name: LOCK_CNT
+    type: rw
+  - bits: '11:10'
+    name: LFHF
+    type: rw
+  - bits: '8:5'
+    name: CP
+    type: rw
+  - bits: '3:0'
+    name: RES
+    type: rw
+  name: DPLL_CFG
+  offset: '0x00000030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Fractional control for the PLL
+  field:
+  - bits: '31'
+    longdesc: '0: PLL is in integer mode and it ignores all fractional data. 1: PLL
+      is in fractional mode and uses [DATA] bitfield for the fractional portion of
+      the feedback divider.'
+    name: ENABLED
+    shortdesc: Fractional SDM bypass control.
+    type: rw
+  - bits: '15:0'
+    name: DATA
+    type: rw
+  name: DPLL_FRAC_CFG
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0x00012809'
+  description: VPLL Clock Unit Control.
+  field:
+  - bits: '26:24'
+    enum:
+    - name: PS_REF_CLK
+      value: 0
+    - name: VIDEO_REF_CLK
+      value: 4
+    - name: ALT_REF_CLK
+      value: 5
+    - name: AUX_REF_CLK
+      value: 6
+    - name: GT_REF_CLK
+      value: 7
+    longdesc: '0xx: PS_REF_CLK 100: VIDEO_REF_CLK 101: ALT_REF_CLK 110: AUX_REF_CLK
+      111: GT_REF_CLK'
+    name: POST_SRC
+    shortdesc: Select the pass-thru clock source for PLL Bypass mode.
+    type: rw
+  - bits: '22:20'
+    enum:
+    - name: PS_REF_CLK
+      value: 0
+    - name: VIDEO_REF_CLK
+      value: 4
+    - name: ALT_REF_CLK
+      value: 5
+    - name: AUX_REF_CLK
+      value: 6
+    - name: GT_REF_CLK
+      value: 7
+    longdesc: '0xx: PS_REF_CLK 100: VIDEO_REF_CLK 101: ALT_REF_CLK 110: AUX_REF_CLK
+      111: GT_REF_CLK'
+    name: PRE_SRC
+    shortdesc: Select the clock source for PLL input.
+    type: rw
+  - bits: '17'
+    longdesc: Used to change the output divider of the PLL. This is for test only.
+    name: CLKOUTDIV
+    shortdesc: test field.
+    type: rw
+  - bits: '16'
+    longdesc: '0: no effect. 1: divide clock by 2. Note: this does not change the
+      VCO frequency, just the output frequency.'
+    name: DIV2
+    shortdesc: Enable the divide by 2 function inside of the PLL.
+    type: rw
+  - bits: '14:8'
+    name: FBDIV
+    type: rw
+  - bits: '3'
+    longdesc: '0: normal PLL mode; the source clock is selected using [PRE_SRC]. 1:
+      bypass the PLL; the source clock is selected using [POST_SRC].'
+    name: BYPASS
+    shortdesc: PLL Clock Bypass Mode.
+    type: rw
+  - bits: '0'
+    longdesc: '0: active. 1: reset. Note: Program the PLL into bypass mode before
+      resetting the PLL.'
+    name: RESET
+    shortdesc: PLL reset.
+    type: rw
+  name: VPLL_CTRL
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: VPLL Integer Helper Data Configuration.
+  field:
+  - bits: '31:25'
+    name: LOCK_DLY
+    type: rw
+  - bits: '22:13'
+    name: LOCK_CNT
+    type: rw
+  - bits: '11:10'
+    name: LFHF
+    type: rw
+  - bits: '8:5'
+    name: CP
+    type: rw
+  - bits: '3:0'
+    name: RES
+    type: rw
+  name: VPLL_CFG
+  offset: '0x0000003C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Fractional control for the PLL.
+  field:
+  - bits: '31'
+    longdesc: '0: PLL is in integer mode and it ignores all fractional data. 1: PLL
+      is in fractional mode and uses [DATA] bitfield for the fractional portion of
+      the feedback divider.'
+    name: ENABLED
+    shortdesc: Fractional SDM bypass control.
+    type: rw
+  - bits: '15:0'
+    name: DATA
+    type: rw
+  name: VPLL_FRAC_CFG
+  offset: '0x00000040'
+  type: rw
+  width: 32
+- default: '0x00000038'
+  description: FPD PLL Clocking Status.
+  field:
+  - bits: '5'
+    longdesc: '0: not locked or bypassed. 1: locked or bypassed.'
+    name: VPLL_STABLE
+    shortdesc: VPLL stability status.
+    type: ro
+  - bits: '4'
+    longdesc: '0: not locked or bypassed. 1: locked or bypassed.'
+    name: DPLL_STABLE
+    shortdesc: DPLL stability status.
+    type: ro
+  - bits: '3'
+    longdesc: '0: not locked or bypassed. 1: locked or bypassed.'
+    name: APLL_STABLE
+    shortdesc: APLL stability status.
+    type: ro
+  - bits: '2'
+    longdesc: '0: not locked. 1: locked.'
+    name: VPLL_LOCK
+    shortdesc: VPLL lock status.
+    type: ro
+  - bits: '1'
+    longdesc: '0: not locked. 1: locked.'
+    name: DPLL_LOCK
+    shortdesc: DPLL lock status.
+    type: ro
+  - bits: '0'
+    longdesc: '0: not locked. 1: locked.'
+    name: APLL_LOCK
+    shortdesc: APLL lock status.
+    type: ro
+  name: PLL_STATUS
+  offset: '0x00000044'
+  type: mixed
+  width: 8
+- default: '0x00000400'
+  description: APLL to LPD Clock Divisor.
+  field:
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  name: APLL_TO_LPD_CTRL
+  offset: '0x00000048'
+  type: rw
+  width: 16
+- default: '0x00000400'
+  description: DPLL to LPD Clock Divisor.
+  field:
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  name: DPLL_TO_LPD_CTRL
+  offset: '0x0000004C'
+  type: rw
+  width: 16
+- default: '0x00000400'
+  description: VPLL to LPD Clock Divisor.
+  field:
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  name: VPLL_TO_LPD_CTRL
+  offset: '0x00000050'
+  type: rw
+  width: 16
+- default: '0x03000400'
+  description: APU MPCore Clock Generator Control.
+  field:
+  - bits: '25'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT_HALF
+    shortdesc: Clock active control for half-speed APU Clock.
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT_FULL
+    shortdesc: Clock active control for full-speed APU Clock.
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: APLL
+      value: 0
+    - name: DPLL
+      value: 2
+    - name: VPLL
+      value: 3
+    longdesc: '000: APLL 010: DPLL 011: VPLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: ACPU_CTRL
+  offset: '0x00000060'
+  type: rw
+  width: 32
+- default: '0x00002500'
+  description: Debug Trace Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL_TO_FPD
+      value: 0
+    - name: DPLL
+      value: 2
+    - name: APLL
+      value: 3
+    longdesc: '000: IOPLL_TO_FPD 010: DPLL 011: APLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: DBG_TRACE_CTRL
+  offset: '0x00000064'
+  type: rw
+  width: 32
+- default: '0x01002500'
+  description: Debug in FPD Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control for FPD clocking and Time Stamp (see DBG_TSTMP_CTRL
+      register).
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL_TO_FPD
+      value: 0
+    - name: DPLL
+      value: 2
+    - name: APLL
+      value: 3
+    longdesc: '000: IOPLL_TO_FPD 010: DPLL 011: APLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: DBG_FPD_CTRL
+  offset: '0x00000068'
+  type: rw
+  width: 32
+- default: '0x01002300'
+  description: DisplayPort Video Clock Generator Control.
+  field:
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: VPLL
+      value: 0
+    - name: DPLL
+      value: 2
+    - name: RPLL_TO_FPD
+      value: 3
+    longdesc: '000: VPLL 010: DPLL 011: RPLL_TO_FPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: DP_VIDEO_REF_CTRL
+  offset: '0x00000070'
+  type: rw
+  width: 32
+- default: '0x01032300'
+  description: DisplayPort Audio Clock Generator Control.
+  field:
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: VPLL
+      value: 0
+    - name: DPLL
+      value: 2
+    - name: RPLL_TO_FPD
+      value: 3
+    longdesc: '000: VPLL 010: DPLL 011: RPLL_TO_FPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: DP_AUDIO_REF_CTRL
+  offset: '0x00000074'
+  type: rw
+  width: 32
+- default: '0x01203200'
+  description: DisplayPort System Time Clock Generator Control.
+  field:
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '21:16'
+    name: DIVISOR1
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: VPLL
+      value: 0
+    - name: DPLL
+      value: 2
+    - name: RPLL_TO_FPD
+      value: 3
+    longdesc: '000: VPLL 010: DPLL 011: RPLL_TO_FPD'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: DP_STC_REF_CTRL
+  offset: '0x0000007C'
+  type: rw
+  width: 32
+- default: '0x01000500'
+  description: DDR Memory Controller Clock Generator Control.
+  field:
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: DPLL
+      value: 0
+    - name: VPLL
+      value: 1
+    longdesc: '000: DPLL 001: VPLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: DDR_CTRL
+  offset: '0x00000080'
+  type: rw
+  width: 32
+- default: '0x00001500'
+  description: GPU Clock Generator Control.
+  field:
+  - bits: '26'
+    longdesc: '0: disable. 1: enable.'
+    name: PP1_CLKACT
+    shortdesc: Clock active control for Pixel Processor 1.
+    type: rw
+  - bits: '25'
+    longdesc: '0: disable. 1: enable.'
+    name: PP0_CLKACT
+    shortdesc: Clock active control for Pixel Processor 0.
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control for GPU and both Pixel Processors.
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL_TO_FPD
+      value: 0
+    - name: VPLL
+      value: 2
+    - name: DPLL
+      value: 3
+    longdesc: '000: IOPLL_TO_FPD 010: VPLL 011: DPLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: GPU_REF_CTRL
+  offset: '0x00000084'
+  type: rw
+  width: 32
+- default: '0x01001600'
+  description: SATA Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL_TO_FPD
+      value: 0
+    - name: APLL
+      value: 2
+    - name: DPLL
+      value: 3
+    longdesc: '000: IOPLL_TO_FPD 010: APLL 011: DPLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: SATA_REF_CTRL
+  offset: '0x000000A0'
+  type: rw
+  width: 32
+- default: '0x00001500'
+  description: PCIe Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL_TO_FPD
+      value: 0
+    - name: RPLL_TO_FPD
+      value: 2
+    - name: DPLL
+      value: 3
+    longdesc: '000: IOPLL_TO_FPD 010: RPLL_TO_FPD 011: DPLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: PCIE_REF_CTRL
+  offset: '0x000000B4'
+  type: rw
+  width: 32
+- default: '0x01000500'
+  description: FPD DMA Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: APLL
+      value: 0
+    - name: VPLL
+      value: 2
+    - name: DPLL
+      value: 3
+    longdesc: '000: APLL 010: VPLL 011: DPLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: FPD_DMA_REF_CTRL
+  offset: '0x000000B8'
+  type: rw
+  width: 32
+- default: '0x01000500'
+  description: DisplayPort DMA Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: APLL
+      value: 0
+    - name: VPLL
+      value: 2
+    - name: DPLL
+      value: 3
+    longdesc: '000: APLL 010: VPLL 011: DPLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: DPDMA_REF_CTRL
+  offset: '0x000000BC'
+  type: rw
+  width: 32
+- default: '0x01000400'
+  description: FPD AXI Interconnect Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: APLL
+      value: 0
+    - name: VPLL
+      value: 2
+    - name: DPLL
+      value: 3
+    longdesc: '000: APLL 010: VPLL 011: DPLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: TOPSW_MAIN_CTRL
+  offset: '0x000000C0'
+  type: rw
+  width: 32
+- default: '0x01000800'
+  description: FPD APB Clock Generator Control.
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    longdesc: '0: disable. Clock stop. 1: enable.'
+    name: CLKACT
+    shortdesc: Clock active control.
+    type: rw
+  - bits: '23:14'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '7:3'
+    name: RESERVED
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: APLL
+      value: 0
+    - name: IOPLL_TO_FPD
+      value: 2
+    - name: DPLL
+      value: 3
+    longdesc: '000: APLL 010: IOPLL_TO_FPD 011: DPLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: TOPSW_LSBUS_CTRL
+  offset: '0x000000C4'
+  type: rw
+  width: 32
+- default: '0x00000A00'
+  description: Debug Time Stamp Clock Generator Control in FPD.
+  field:
+  - bits: '24'
+    name: RESERVED
+    type: rw
+  - bits: '13:8'
+    name: DIVISOR0
+    type: rw
+  - bits: '2:0'
+    enum:
+    - name: IOPLL_TO_FPD
+      value: 0
+    - name: DPLL
+      value: 2
+    - name: APLL
+      value: 3
+    longdesc: '000: IOPLL_TO_FPD 010: DPLL 011: APLL'
+    name: SRCSEL
+    shortdesc: Clock generator input source.
+    type: rw
+  name: DBG_TSTMP_CTRL
+  offset: '0x000000F8'
+  type: rw
+  width: 32
+- default: '0x000F9FFE'
+  description: Software Controlled FPD Resets.
+  field:
+  - bits: '19'
+    name: PCIE_CFG_RESET
+    type: rw
+  - bits: '18'
+    name: PCIE_BRIDGE_RESET
+    type: rw
+  - bits: '17'
+    name: PCIE_CTRL_RESET
+    type: rw
+  - bits: '16'
+    name: DP_RESET
+    type: rw
+  - bits: '15'
+    name: SWDT_RESET
+    type: rw
+  - bits: '12'
+    name: S_AXI_HPC_3_FPD_RESET
+    type: rw
+  - bits: '11'
+    name: S_AXI_HPC_2_FPD_RESET
+    type: rw
+  - bits: '10'
+    name: S_AXI_HP_1_FPD_RESET
+    type: rw
+  - bits: '9'
+    name: S_AXI_HP_0_FPD_RESET
+    type: rw
+  - bits: '8'
+    name: S_AXI_HPC_1_FPD_RESET
+    type: rw
+  - bits: '7'
+    name: S_AXI_HPC_0_FPD_RESET
+    type: rw
+  - bits: '6'
+    longdesc: (gdma)
+    name: FPD_DMA_RESET
+    shortdesc: FPD_DMA reset.
+    type: rw
+  - bits: '5'
+    name: GPU_PP1_RESET
+    type: rw
+  - bits: '4'
+    name: GPU_PP0_RESET
+    type: rw
+  - bits: '3'
+    name: GPU_RESET
+    type: rw
+  - bits: '2'
+    name: GT_RESET
+    type: rw
+  - bits: '1'
+    name: SATA_RESET
+    type: rw
+  name: RST_FPD_TOP
+  offset: '0x00000100'
+  type: rw
+  width: 24
+- default: '0x00003D0F'
+  description: Software Controlled APU MPCore Resets.
+  field:
+  - bits: '13'
+    name: ACPU3_PWRON_RESET
+    type: rw
+  - bits: '12'
+    name: ACPU2_PWRON_RESET
+    type: rw
+  - bits: '11'
+    name: ACPU1_PWRON_RESET
+    type: rw
+  - bits: '10'
+    name: ACPU0_PWRON_RESET
+    type: rw
+  - bits: '9'
+    name: RESERVED
+    type: rw
+  - bits: '8'
+    name: APU_L2_RESET
+    type: rw
+  - bits: '3'
+    name: ACPU3_RESET
+    type: rw
+  - bits: '2'
+    name: ACPU2_RESET
+    type: rw
+  - bits: '1'
+    name: ACPU1_RESET
+    type: rw
+  - bits: '0'
+    name: ACPU0_RESET
+    type: rw
+  name: RST_FPD_APU
+  offset: '0x00000104'
+  type: rw
+  width: 24
+- default: '0x0000000F'
+  description: Software Controlled DDR Memory Controller Resets.
+  field:
+  - bits: '2'
+    name: APM_RESET
+    type: rw
+  name: RST_DDR_SS
+  offset: '0x00000108'
+  type: rw
+  width: 8

@@ -1,0 +1,227 @@
+bank:
+- address: '0xfd5f0000'
+  name: SMMU_REG
+description: SMMU Configuration and Event Control
+register:
+- default: '0x00000000'
+  description: Controls for the register block.
+  field:
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: MISC_CTRL
+  offset: '0x00000000'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Status Register. This is a sticky register that holds the
+    value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: wtc
+  - bits: '30:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: GBL_FLT_IRPT_NS
+    type: wtc
+  - bits: '3'
+    name: GBL_FLT_IRPT_S
+    type: wtc
+  - bits: '2'
+    name: COMB_PERF_IRPT_TBU
+    type: wtc
+  - bits: '1'
+    name: COMB_IRPT_S
+    type: wtc
+  - bits: '0'
+    name: COMB_IRPT_NS
+    type: wtc
+  name: ISR_0
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x8000001F'
+  description: Interrupt Mask Register. This is a read-only location and can be atomically
+    altered by either the IDR or the IER.
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: wtc
+  - bits: '30:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: GBL_FLT_IRPT_NS
+    type: ro
+  - bits: '3'
+    name: GBL_FLT_IRPT_S
+    type: ro
+  - bits: '2'
+    name: COMB_PERF_IRPT_TBU
+    type: ro
+  - bits: '1'
+    name: COMB_IRPT_S
+    type: ro
+  - bits: '0'
+    name: COMB_IRPT_NS
+    type: ro
+  name: IMR_0
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable Register. A write of 1 to this location will unmask
+    the interrupt
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: wtc
+  - bits: '30:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: GBL_FLT_IRPT_NS
+    type: wo
+  - bits: '3'
+    name: GBL_FLT_IRPT_S
+    type: wo
+  - bits: '2'
+    name: COMB_PERF_IRPT_TBU
+    type: wo
+  - bits: '1'
+    name: COMB_IRPT_S
+    type: wo
+  - bits: '0'
+    name: COMB_IRPT_NS
+    type: wo
+  name: IER_0
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable Register. A write of 1 to this location will mask
+    the interrupt
+  field:
+  - bits: '31'
+    name: ADDR_DECODE_ERR
+    type: wtc
+  - bits: '30:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: GBL_FLT_IRPT_NS
+    type: wo
+  - bits: '3'
+    name: GBL_FLT_IRPT_S
+    type: wo
+  - bits: '2'
+    name: COMB_PERF_IRPT_TBU
+    type: wo
+  - bits: '1'
+    name: COMB_IRPT_S
+    type: wo
+  - bits: '0'
+    name: COMB_IRPT_NS
+    type: wo
+  name: IDR_0
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00007FFF'
+  description: Low Power Signals for TBU
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: rw
+  - bits: '14'
+    name: TBU_TBU5_5_CG
+    type: rw
+  - bits: '13'
+    name: TBU_TBU5_5_PD
+    type: rw
+  - bits: '12'
+    name: TBU_TBU4_4_CG
+    type: rw
+  - bits: '11'
+    name: TBU_TBU4_4_PD
+    type: rw
+  - bits: '10'
+    name: TBU_TBU3_3_CG
+    type: rw
+  - bits: '9'
+    name: TBU_TBU3_3_PD
+    type: rw
+  - bits: '8'
+    name: PD_MST_BR_TBU2_2
+    type: rw
+  - bits: '7'
+    name: PD_SLV_BR_TBU2_2
+    type: rw
+  - bits: '6'
+    name: TBU_TBU2_2_CG
+    type: rw
+  - bits: '5'
+    name: TBU_TBU2_2_PD
+    type: rw
+  - bits: '4'
+    name: TBU_TBU1_1_CG
+    type: rw
+  - bits: '3'
+    name: TBU_TBU1_1_PD
+    type: rw
+  - bits: '2'
+    name: TBU_TBU0_0_CG
+    type: rw
+  - bits: '1'
+    name: TBU_TBU0_0_PD
+    type: rw
+  - bits: '0'
+    name: TCU
+    type: rw
+  name: QREQN
+  offset: '0x00000040'
+  type: rw
+  width: 32
+- default: '0x00000016'
+  description: Miscellaneous signals
+  field:
+  - bits: '31:13'
+    name: RESERVED
+    type: rw
+  - bits: '12'
+    name: SPNIDEN
+    type: rw
+  - bits: '7'
+    name: AWAKEUP_PROG
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: MISC
+  offset: '0x00000054'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Miscellaneous signals
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: CFG_NORMALIZE
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: rw
+  name: CONFIG_SIGNALS
+  offset: '0x00000058'
+  type: rw
+  width: 32

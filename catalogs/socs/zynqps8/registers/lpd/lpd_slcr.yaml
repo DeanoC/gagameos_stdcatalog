@@ -1,0 +1,4387 @@
+description: Low-power Domain System-level Control Registers
+register:
+- default: '0x00000001'
+  description: LP Domain SLCR Write protection register
+  field:
+  - bits: '0'
+    name: ACTIVE
+    type: rw
+  name: WPROT0
+  offset: '0x00000000'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: General control register for the LP SLCR
+  field:
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: CTRL
+  offset: '0x00000004'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Status Register
+  field:
+  - bits: '0'
+    longdesc: '0: No Event 1: Event Occurred'
+    name: ADDR_DECODE_ERR
+    shortdesc: Status for an address decode error.
+    type: wtc
+  name: ISR
+  offset: '0x00000008'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Interrupt Mask Register
+  field:
+  - bits: '0'
+    longdesc: '0: Interrupt Enabled 1: Interrupt Disabled'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error.
+    type: ro
+  name: IMR
+  offset: '0x0000000C'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Enable Register
+  field:
+  - bits: '0'
+    longdesc: '0: Ignored 1: lpd_slcr_imr -> 0'
+    name: ADDR_DECODE_ERR
+    shortdesc: Enable for an address decode error.
+    type: wo
+  name: IER
+  offset: '0x00000010'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Disable Register
+  field:
+  - bits: '0'
+    longdesc: '0: Ignored 1: lpd_slcr_imr -> 1'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error.
+    type: wo
+  name: IDR
+  offset: '0x00000014'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Trigger Register
+  field:
+  - bits: '0'
+    longdesc: '0: Ignored 1: lpd_slcr_isr -> 1'
+    name: ADDR_DECODE_ERR
+    shortdesc: Trigger an address decode error interrupt.
+    type: wo
+  name: ITR
+  offset: '0x00000018'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Safety endpoint connectivity check Register
+  field:
+  - bits: '31:0'
+    name: CHK_VAL
+    type: rw
+  name: SAFETY_CHK0
+  offset: '0x00000040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Safety endpoint connectivity check Register
+  field:
+  - bits: '31:0'
+    name: CHK_VAL
+    type: rw
+  name: SAFETY_CHK1
+  offset: '0x00000044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Safety endpoint connectivity check Register
+  field:
+  - bits: '31:0'
+    name: CHK_VAL
+    type: rw
+  name: SAFETY_CHK2
+  offset: '0x00000048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Safety endpoint connectivity check Register
+  field:
+  - bits: '31:0'
+    name: CHK_VAL
+    type: rw
+  name: SAFETY_CHK3
+  offset: '0x0000004C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SWDT clock source select
+  field:
+  - bits: '31:1'
+    longdesc: Writes are ignored, read data is zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: raz
+  - bits: '0'
+    enum:
+    - name: APB_CLOCK
+      value: 0
+    - name: PSS_REF_CLK
+      value: 1
+    name: SELECT
+    type: rw
+  name: CSUPMU_WDT_CLK_SEL
+  offset: '0x00000050'
+  type: mixed
+  width: 32
+- default: '0x00000028'
+  description: GDMA RF2 Configuation
+  field:
+  - bits: '6:5'
+    name: BUS_WIDTH
+    type: ro
+  - bits: '4:0'
+    name: NUM_CH
+    type: ro
+  name: ADMA_CFG
+  offset: '0x0000200C'
+  type: ro
+  width: 7
+- default: '0x00003B3B'
+  description: RAM control register
+  field:
+  - bits: '15'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '7'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: rw
+  name: ADMA_RAM
+  offset: '0x00002010'
+  type: mixed
+  width: 16
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: wtc
+  - bits: '30'
+    name: RESERVED
+    type: wtc
+  - bits: '29'
+    name: RESERVED
+    type: wtc
+  - bits: '28'
+    name: AFIFS2
+    type: wtc
+  - bits: '27'
+    name: LPD_DDR
+    type: wtc
+  - bits: '26'
+    name: OCMS
+    type: wtc
+  - bits: '25'
+    name: RESERVED
+    type: wtc
+  - bits: '24'
+    name: FPD_MAIN
+    type: wtc
+  - bits: '23'
+    name: USB1S
+    type: wtc
+  - bits: '22'
+    name: USB0S
+    type: wtc
+  - bits: '21'
+    name: RESERVED
+    type: wtc
+  - bits: '20'
+    name: RESERVED
+    type: wtc
+  - bits: '19'
+    name: RPUS1
+    type: wtc
+  - bits: '18'
+    name: RPUS0
+    type: wtc
+  - bits: '17'
+    name: RPUM1
+    type: wtc
+  - bits: '16'
+    name: RPUM0
+    type: wtc
+  - bits: '15'
+    name: RESERVED
+    type: wtc
+  - bits: '14'
+    name: RESERVED
+    type: wtc
+  - bits: '13'
+    name: RESERVED
+    type: wtc
+  - bits: '12'
+    name: RESERVED
+    type: wtc
+  - bits: '11'
+    name: RESERVED
+    type: wtc
+  - bits: '10'
+    name: RESERVED
+    type: wtc
+  - bits: '9'
+    name: RESERVED
+    type: wtc
+  - bits: '8'
+    name: RESERVED
+    type: wtc
+  - bits: '7'
+    name: RESERVED
+    type: wtc
+  - bits: '6'
+    name: RESERVED
+    type: wtc
+  - bits: '5'
+    name: RESERVED
+    type: wtc
+  - bits: '4'
+    name: RESERVED
+    type: wtc
+  - bits: '3'
+    name: FPD_OCM
+    type: wtc
+  - bits: '2'
+    name: FPD_LPDIBS
+    type: wtc
+  - bits: '1'
+    name: AFIFS1
+    type: wtc
+  - bits: '0'
+    name: AFIFS0
+    type: wtc
+  name: ERR_AIBAXI_ISR
+  offset: '0x00003000'
+  type: wtc
+  width: 32
+- default: '0x1DCF000F'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    name: RESERVED
+    type: ro
+  - bits: '28'
+    name: AFIFS2
+    type: ro
+  - bits: '27'
+    name: LPD_DDR
+    type: ro
+  - bits: '26'
+    name: OCMS
+    type: ro
+  - bits: '25'
+    name: RESERVED
+    type: ro
+  - bits: '24'
+    name: FPD_MAIN
+    type: ro
+  - bits: '23'
+    name: USB1S
+    type: ro
+  - bits: '22'
+    name: USB0S
+    type: ro
+  - bits: '21'
+    name: RESERVED
+    type: ro
+  - bits: '20'
+    name: RESERVED
+    type: ro
+  - bits: '19'
+    name: RPUS1
+    type: ro
+  - bits: '18'
+    name: RPUS0
+    type: ro
+  - bits: '17'
+    name: RPUM1
+    type: ro
+  - bits: '16'
+    name: RPUM0
+    type: ro
+  - bits: '15'
+    name: RESERVED
+    type: ro
+  - bits: '14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: RESERVED
+    type: ro
+  - bits: '12'
+    name: RESERVED
+    type: ro
+  - bits: '11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: FPD_OCM
+    type: ro
+  - bits: '2'
+    name: FPD_LPDIBS
+    type: ro
+  - bits: '1'
+    name: AFIFS1
+    type: ro
+  - bits: '0'
+    name: AFIFS0
+    type: ro
+  name: ERR_AIBAXI_IMR
+  offset: '0x00003008'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: wo
+  - bits: '30'
+    name: RESERVED
+    type: wo
+  - bits: '29'
+    name: RESERVED
+    type: wo
+  - bits: '28'
+    name: AFIFS2
+    type: wo
+  - bits: '27'
+    name: LPD_DDR
+    type: wo
+  - bits: '26'
+    name: OCMS
+    type: wo
+  - bits: '25'
+    name: RESERVED
+    type: wo
+  - bits: '24'
+    name: FPD_MAIN
+    type: wo
+  - bits: '23'
+    name: USB1S
+    type: wo
+  - bits: '22'
+    name: USB0S
+    type: wo
+  - bits: '21'
+    name: RESERVED
+    type: wo
+  - bits: '20'
+    name: RESERVED
+    type: wo
+  - bits: '19'
+    name: RPUS1
+    type: wo
+  - bits: '18'
+    name: RPUS0
+    type: wo
+  - bits: '17'
+    name: RPUM1
+    type: wo
+  - bits: '16'
+    name: RPUM0
+    type: wo
+  - bits: '15'
+    name: RESERVED
+    type: wo
+  - bits: '14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: RESERVED
+    type: wo
+  - bits: '12'
+    name: RESERVED
+    type: wo
+  - bits: '11'
+    name: RESERVED
+    type: wo
+  - bits: '10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: RESERVED
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: wo
+  - bits: '7'
+    name: RESERVED
+    type: wo
+  - bits: '6'
+    name: RESERVED
+    type: wo
+  - bits: '5'
+    name: RESERVED
+    type: wo
+  - bits: '4'
+    name: RESERVED
+    type: wo
+  - bits: '3'
+    name: FPD_OCM
+    type: wo
+  - bits: '2'
+    name: FPD_LPDIBS
+    type: wo
+  - bits: '1'
+    name: AFIFS1
+    type: wo
+  - bits: '0'
+    name: AFIFS0
+    type: wo
+  name: ERR_AIBAXI_IER
+  offset: '0x00003010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: wo
+  - bits: '30'
+    name: RESERVED
+    type: wo
+  - bits: '29'
+    name: RESERVED
+    type: wo
+  - bits: '28'
+    name: AFIFS2
+    type: wo
+  - bits: '27'
+    name: LPD_DDR
+    type: wo
+  - bits: '26'
+    name: OCMS
+    type: wo
+  - bits: '25'
+    name: RESERVED
+    type: wo
+  - bits: '24'
+    name: FPD_MAIN
+    type: wo
+  - bits: '23'
+    name: USB1S
+    type: wo
+  - bits: '22'
+    name: USB0S
+    type: wo
+  - bits: '21'
+    name: RESERVED
+    type: wo
+  - bits: '20'
+    name: RESERVED
+    type: wo
+  - bits: '19'
+    name: RPUS1
+    type: wo
+  - bits: '18'
+    name: RPUS0
+    type: wo
+  - bits: '17'
+    name: RPUM1
+    type: wo
+  - bits: '16'
+    name: RPUM0
+    type: wo
+  - bits: '15'
+    name: RESERVED
+    type: wo
+  - bits: '14'
+    name: RESERVED
+    type: wo
+  - bits: '13'
+    name: RESERVED
+    type: wo
+  - bits: '12'
+    name: RESERVED
+    type: wo
+  - bits: '11'
+    name: RESERVED
+    type: wo
+  - bits: '10'
+    name: RESERVED
+    type: wo
+  - bits: '9'
+    name: RESERVED
+    type: wo
+  - bits: '8'
+    name: RESERVED
+    type: wo
+  - bits: '7'
+    name: RESERVED
+    type: wo
+  - bits: '6'
+    name: RESERVED
+    type: wo
+  - bits: '5'
+    name: RESERVED
+    type: wo
+  - bits: '4'
+    name: RESERVED
+    type: wo
+  - bits: '3'
+    name: FPD_OCM
+    type: wo
+  - bits: '2'
+    name: FPD_LPDIBS
+    type: wo
+  - bits: '1'
+    name: AFIFS1
+    type: wo
+  - bits: '0'
+    name: AFIFS0
+    type: wo
+  name: ERR_AIBAXI_IDR
+  offset: '0x00003018'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: wtc
+  - bits: '3'
+    name: RESERVED
+    type: wtc
+  - bits: '2'
+    name: RESERVED
+    type: wtc
+  - bits: '1'
+    name: RESERVED
+    type: wtc
+  - bits: '0'
+    name: GPU
+    type: wtc
+  name: ERR_AIBAPB_ISR
+  offset: '0x00003020'
+  type: wtc
+  width: 32
+- default: '0x00000001'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: GPU
+    type: ro
+  name: ERR_AIBAPB_IMR
+  offset: '0x00003024'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: wo
+  - bits: '3'
+    name: RESERVED
+    type: wo
+  - bits: '2'
+    name: RESERVED
+    type: wo
+  - bits: '1'
+    name: RESERVED
+    type: wo
+  - bits: '0'
+    name: GPU
+    type: wo
+  name: ERR_AIBAPB_IER
+  offset: '0x00003028'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: wo
+  - bits: '3'
+    name: RESERVED
+    type: wo
+  - bits: '2'
+    name: RESERVED
+    type: wo
+  - bits: '1'
+    name: RESERVED
+    type: wo
+  - bits: '0'
+    name: GPU
+    type: wo
+  name: ERR_AIBAPB_IDR
+  offset: '0x0000302C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Request to AIB to start Isolation. '1' Isolate. '0' No Isolation
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: rw
+  - bits: '30'
+    name: RESERVED
+    type: rw
+  - bits: '29'
+    name: RESERVED
+    type: rw
+  - bits: '28'
+    name: AFIFS2
+    type: rw
+  - bits: '27'
+    name: LPD_DDR
+    type: rw
+  - bits: '26'
+    name: OCMS
+    type: rw
+  - bits: '25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    name: FPD_MAIN
+    type: rw
+  - bits: '23'
+    name: USB1S
+    type: rw
+  - bits: '22'
+    name: USB0S
+    type: rw
+  - bits: '21'
+    name: RESERVED
+    type: rw
+  - bits: '20'
+    name: RESERVED
+    type: rw
+  - bits: '19'
+    name: RPUS1
+    type: rw
+  - bits: '18'
+    name: RPUS0
+    type: rw
+  - bits: '17'
+    name: RPUM1
+    type: rw
+  - bits: '16'
+    name: RPUM0
+    type: rw
+  - bits: '15'
+    name: RESERVED
+    type: rw
+  - bits: '14'
+    name: RESERVED
+    type: rw
+  - bits: '13'
+    name: RESERVED
+    type: rw
+  - bits: '12'
+    name: RESERVED
+    type: rw
+  - bits: '11'
+    name: RESERVED
+    type: rw
+  - bits: '10'
+    name: RESERVED
+    type: rw
+  - bits: '9'
+    name: RESERVED
+    type: rw
+  - bits: '8'
+    name: RESERVED
+    type: rw
+  - bits: '7'
+    name: RESERVED
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: RESERVED
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: rw
+  - bits: '3'
+    name: FPD_OCM
+    type: rw
+  - bits: '2'
+    name: FPD_LPDIBS
+    type: rw
+  - bits: '1'
+    name: AFIFS1
+    type: rw
+  - bits: '0'
+    name: AFIFS0
+    type: rw
+  name: ISO_AIBAXI_REQ
+  offset: '0x00003030'
+  type: rw
+  width: 32
+- default: '0x19CF000F'
+  description: If '1' AIB sends SLVERR. If '0' AIB does not respond
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: rw
+  - bits: '30'
+    name: RESERVED
+    type: rw
+  - bits: '29'
+    name: RESERVED
+    type: rw
+  - bits: '28'
+    name: AFIFS2
+    type: rw
+  - bits: '27'
+    name: LPD_DDR
+    type: rw
+  - bits: '26'
+    name: OCMS
+    type: rw
+  - bits: '25'
+    name: RESERVED
+    type: rw
+  - bits: '24'
+    name: FPD_MAIN
+    type: rw
+  - bits: '23'
+    name: USB1S
+    type: rw
+  - bits: '22'
+    name: USB0S
+    type: rw
+  - bits: '21'
+    name: RESERVED
+    type: rw
+  - bits: '20'
+    name: RESERVED
+    type: rw
+  - bits: '19'
+    name: RPUS1
+    type: rw
+  - bits: '18'
+    name: RPUS0
+    type: rw
+  - bits: '17'
+    name: RPUM1
+    type: rw
+  - bits: '16'
+    name: RPUM0
+    type: rw
+  - bits: '15'
+    name: RESERVED
+    type: rw
+  - bits: '14'
+    name: RESERVED
+    type: rw
+  - bits: '13'
+    name: RESERVED
+    type: rw
+  - bits: '12'
+    name: RESERVED
+    type: rw
+  - bits: '11'
+    name: RESERVED
+    type: rw
+  - bits: '10'
+    name: RESERVED
+    type: rw
+  - bits: '9'
+    name: RESERVED
+    type: rw
+  - bits: '8'
+    name: RESERVED
+    type: rw
+  - bits: '7'
+    name: RESERVED
+    type: rw
+  - bits: '6'
+    name: RESERVED
+    type: rw
+  - bits: '5'
+    name: RESERVED
+    type: rw
+  - bits: '4'
+    name: RESERVED
+    type: rw
+  - bits: '3'
+    name: FPD_OCM
+    type: rw
+  - bits: '2'
+    name: FPD_LPDIBS
+    type: rw
+  - bits: '1'
+    name: AFIFS1
+    type: rw
+  - bits: '0'
+    name: AFIFS0
+    type: rw
+  name: ISO_AIBAXI_TYPE
+  offset: '0x00003038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: If '1' AIB has Functionally Isolated Master and Slave
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    name: RESERVED
+    type: ro
+  - bits: '28'
+    name: AFIFS2
+    type: ro
+  - bits: '27'
+    name: LPD_DDR
+    type: ro
+  - bits: '26'
+    name: OCMS
+    type: ro
+  - bits: '25'
+    name: RESERVED
+    type: ro
+  - bits: '24'
+    name: FPD_MAIN
+    type: ro
+  - bits: '23'
+    name: USB1S
+    type: ro
+  - bits: '22'
+    name: USB0S
+    type: ro
+  - bits: '21'
+    name: RESERVED
+    type: ro
+  - bits: '20'
+    name: RESERVED
+    type: ro
+  - bits: '19'
+    name: RPUS1
+    type: ro
+  - bits: '18'
+    name: RPUS0
+    type: ro
+  - bits: '17'
+    name: RPUM1
+    type: ro
+  - bits: '16'
+    name: RPUM0
+    type: ro
+  - bits: '15'
+    name: RESERVED
+    type: ro
+  - bits: '14'
+    name: RESERVED
+    type: ro
+  - bits: '13'
+    name: RESERVED
+    type: ro
+  - bits: '12'
+    name: RESERVED
+    type: ro
+  - bits: '11'
+    name: RESERVED
+    type: ro
+  - bits: '10'
+    name: RESERVED
+    type: ro
+  - bits: '9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    name: RESERVED
+    type: ro
+  - bits: '5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: FPD_OCM
+    type: ro
+  - bits: '2'
+    name: FPD_LPDIBS
+    type: ro
+  - bits: '1'
+    name: AFIFS1
+    type: ro
+  - bits: '0'
+    name: AFIFS0
+    type: ro
+  name: ISO_AIBAXI_ACK
+  offset: '0x00003040'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Request to AIB to start Isolation. '1' Isolate. '0' No Isolation
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: rw
+  - bits: '3'
+    name: RESERVED
+    type: rw
+  - bits: '2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: GPU
+    type: rw
+  name: ISO_AIBAPB_REQ
+  offset: '0x00003048'
+  type: rw
+  width: 32
+- default: '0x00000001'
+  description: If '1' AIB sends SLVERR. If '0' AIB does not respond
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: rw
+  - bits: '3'
+    name: RESERVED
+    type: rw
+  - bits: '2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    name: GPU
+    type: rw
+  name: ISO_AIBAPB_TYPE
+  offset: '0x0000304C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: If '1' AIB has Functionally Isolated Master and Slave
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: GPU
+    type: ro
+  name: ISO_AIBAPB_ACK
+  offset: '0x00003050'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: AFIFS2
+    type: wtc
+  - bits: '0'
+    longdesc: going to Slave in LPD including IOU)
+    name: LPDM
+    shortdesc: ISR for ATB placed between lpd inbound switch and lpd main switch (trans.
+    type: wtc
+  name: ERR_ATB_ISR
+  offset: '0x00006000'
+  type: mixed
+  width: 32
+- default: '0x00000003'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: AFIFS2
+    type: ro
+  - bits: '0'
+    longdesc: going to Slave in LPD including IOU)
+    name: LPDM
+    shortdesc: IMR for ATB placed between lpd inbound switch and lpd main switch (trans.
+    type: ro
+  name: ERR_ATB_IMR
+  offset: '0x00006004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: AFIFS2
+    type: wo
+  - bits: '0'
+    longdesc: going to Slave in LPD including IOU)
+    name: LPDM
+    shortdesc: IER for ATB placed between lpd inbound switch and lpd main switch (trans.
+    type: wo
+  name: ERR_ATB_IER
+  offset: '0x00006008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    name: AFIFS2
+    type: wo
+  - bits: '0'
+    longdesc: going to Slave in LPD including IOU)
+    name: LPDM
+    shortdesc: IDR for ATB placed between lpd inbound switch and lpd main switch (trans.
+    type: wo
+  name: ERR_ATB_IDR
+  offset: '0x0000600C'
+  type: mixed
+  width: 32
+- default: '0x00000003'
+  description: ATB Sideband Signals
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    longdesc: If '0' ATB does not keep track of any transaction
+    name: AFIFS2
+    shortdesc: When '1', ATB keeps track of Read and Write transactions.
+    type: rw
+  - bits: '0'
+    longdesc: If '0' ATB does not keep track of any transaction
+    name: LPDM
+    shortdesc: When '1', ATB keeps track of Read and Write transactions.
+    type: rw
+  name: ATB_CMD_STORE_EN
+  offset: '0x00006010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: ATB Sideband Signals
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    longdesc: If '0' ATB will not send any response
+    name: AFIFS2
+    shortdesc: When '1', ATB will send response if it sees timeout.
+    type: rw
+  - bits: '0'
+    longdesc: If '0' ATB will not send any response
+    name: LPDM
+    shortdesc: When '1', ATB will send response if it sees timeout.
+    type: rw
+  name: ATB_RESP_EN
+  offset: '0x00006014'
+  type: mixed
+  width: 32
+- default: '0x00000003'
+  description: ATB Sideband Signals
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: raz
+  - bits: '1'
+    longdesc: If '0' ATB will send OKAY when it sees timeout
+    name: AFIFS2
+    shortdesc: When '1', ATB will send SLVERR if it sees timeout.
+    type: rw
+  - bits: '0'
+    longdesc: If '0' ATB will send OKAY when it sees timeout
+    name: LPDM
+    shortdesc: When '1', ATB will send SLVERR if it sees timeout.
+    type: rw
+  name: ATB_RESP_TYPE
+  offset: '0x00006018'
+  type: mixed
+  width: 32
+- default: '0x0000FFFF'
+  description: ATB Sideband Signals
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: raz
+  - bits: '16'
+    longdesc: When set to 1, timer will start running and timeouts may be reported.
+      When set to 0, timeouts will not be detected.
+    name: ENABLE
+    shortdesc: Counter Enable.
+    type: rw
+  - bits: '15:0'
+    longdesc: The timeout will be set to 32000 * 10ns * this register.
+    name: VALUE
+    shortdesc: 16 bit prescale value based on 100 MHz clock.
+    type: rw
+  name: ATB_PRESCALE
+  offset: '0x00006020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: LP Domain SLCR Mutex 0 register
+  field:
+  - bits: '31:0'
+    longdesc: 'Mutex Status: Availibility: When this register is zero means mutex
+      is available for any master. After reset, this mutex is available to any master.
+      Activation: When this mutex is available then any master can occupied by writing
+      non-zero value to this register. Further non-zero writes to this register will
+      be ignored. Deactivation/Release: Mater has to write zero to this register to
+      release this Mutex.'
+    name: ID
+    shortdesc: SW mutex can be activated by any master by writing it's non-zero ID
+      value.
+    type: rw
+  name: MUTEX0
+  offset: '0x00007000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: LP Domain SLCR Mutex 1 register
+  field:
+  - bits: '31:0'
+    longdesc: 'Mutex Status: Availibility: When this register is zero means mutex
+      is available for any master. After reset, this mutex is available to any master.
+      Activation: When this mutex is available then any master can occupied by writing
+      non-zero value to this register. Further non-zero writes to this register will
+      be ignored. Deactivation/Release: Mater has to write zero to this register to
+      release this Mutex.'
+    name: ID
+    shortdesc: SW mutex can be activated by any master by writing it's non-zero ID
+      value.
+    type: rw
+  name: MUTEX1
+  offset: '0x00007004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: LP Domain SLCR Mutex 2 register
+  field:
+  - bits: '31:0'
+    longdesc: 'Mutex Status: Availibility: When this register is zero means mutex
+      is available for any master. After reset, this mutex is available to any master.
+      Activation: When this mutex is available then any master can occupied by writing
+      non-zero value to this register. Further non-zero writes to this register will
+      be ignored. Deactivation/Release: Mater has to write zero to this register to
+      release this Mutex.'
+    name: ID
+    shortdesc: SW mutex can be activated by any master by writing it's non-zero ID
+      value.
+    type: rw
+  name: MUTEX2
+  offset: '0x00007008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: LP Domain SLCR Mutex 3 register
+  field:
+  - bits: '31:0'
+    longdesc: 'Mutex Status: Availibility: When this register is zero means mutex
+      is available for any master. After reset, this mutex is available to any master.
+      Activation: When this mutex is available then any master can occupied by writing
+      non-zero value to this register. Further non-zero writes to this register will
+      be ignored. Deactivation/Release: Mater has to write zero to this register to
+      release this Mutex.'
+    name: ID
+    shortdesc: SW mutex can be activated by any master by writing it's non-zero ID
+      value.
+    type: rw
+  name: MUTEX3
+  offset: '0x0000700C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: GIC Proxy Interrupt Status (1/2)
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wtc
+  - bits: '30'
+    name: SRC30
+    type: wtc
+  - bits: '29'
+    name: SRC29
+    type: wtc
+  - bits: '28'
+    name: SRC28
+    type: wtc
+  - bits: '27'
+    name: SRC27
+    type: wtc
+  - bits: '26'
+    name: SRC26
+    type: wtc
+  - bits: '25'
+    name: SRC25
+    type: wtc
+  - bits: '24'
+    name: SRC24
+    type: wtc
+  - bits: '23'
+    name: SRC23
+    type: wtc
+  - bits: '22'
+    name: SRC22
+    type: wtc
+  - bits: '21'
+    name: SRC21
+    type: wtc
+  - bits: '20'
+    name: SRC20
+    type: wtc
+  - bits: '19'
+    name: SRC19
+    type: wtc
+  - bits: '18'
+    name: SRC18
+    type: wtc
+  - bits: '17'
+    name: SRC17
+    type: wtc
+  - bits: '16'
+    name: SRC16
+    type: wtc
+  - bits: '15'
+    name: SRC15
+    type: wtc
+  - bits: '14'
+    name: SRC14
+    type: wtc
+  - bits: '13'
+    longdesc: All ECC interrupt of CPU1 are combined into this interrup
+    name: SRC13
+    shortdesc: RPU CPU1 ECC errors interrupt.
+    type: wtc
+  - bits: '12'
+    longdesc: All ECC interrupt of CPU0 are combined into this interrupt
+    name: SRC12
+    shortdesc: RPU CPU0 ECC errors interrupt.
+    type: wtc
+  - bits: '11'
+    name: SRC11
+    type: wtc
+  - bits: '10'
+    name: SRC10
+    type: wtc
+  - bits: '9'
+    name: SRC9
+    type: wtc
+  - bits: '8'
+    name: SRC8
+    type: wtc
+  name: GICP0_IRQ_STATUS
+  offset: '0x00008000'
+  type: wtc
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31'
+    name: SRC31
+    type: ro
+  - bits: '30'
+    name: SRC30
+    type: ro
+  - bits: '29'
+    name: SRC29
+    type: ro
+  - bits: '28'
+    name: SRC28
+    type: ro
+  - bits: '27'
+    name: SRC27
+    type: ro
+  - bits: '26'
+    name: SRC26
+    type: ro
+  - bits: '25'
+    name: SRC25
+    type: ro
+  - bits: '24'
+    name: SRC24
+    type: ro
+  - bits: '23'
+    name: SRC23
+    type: ro
+  - bits: '22'
+    name: SRC22
+    type: ro
+  - bits: '21'
+    name: SRC21
+    type: ro
+  - bits: '20'
+    name: SRC20
+    type: ro
+  - bits: '19'
+    name: SRC19
+    type: ro
+  - bits: '18'
+    name: SRC18
+    type: ro
+  - bits: '17'
+    name: SRC17
+    type: ro
+  - bits: '16'
+    name: SRC16
+    type: ro
+  - bits: '15'
+    name: SRC15
+    type: ro
+  - bits: '14'
+    name: SRC14
+    type: ro
+  - bits: '13'
+    longdesc: All ECC interrupt of CPU1 are combined into this interrup
+    name: SRC13
+    shortdesc: RPU CPU1 ECC errors interrupt.
+    type: ro
+  - bits: '12'
+    longdesc: All ECC interrupt of CPU0 are combined into this interrupt
+    name: SRC12
+    shortdesc: RPU CPU0 ECC errors interrupt.
+    type: ro
+  - bits: '11'
+    name: SRC11
+    type: ro
+  - bits: '10'
+    name: SRC10
+    type: ro
+  - bits: '9'
+    name: SRC9
+    type: ro
+  - bits: '8'
+    name: SRC8
+    type: ro
+  name: GICP0_IRQ_MASK
+  offset: '0x00008004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wo
+  - bits: '30'
+    name: SRC30
+    type: wo
+  - bits: '29'
+    name: SRC29
+    type: wo
+  - bits: '28'
+    name: SRC28
+    type: wo
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    longdesc: All ECC interrupt of CPU1 are combined into this interrup
+    name: SRC13
+    shortdesc: RPU CPU1 ECC errors interrupt.
+    type: wo
+  - bits: '12'
+    longdesc: All ECC interrupt of CPU0 are combined into this interrupt
+    name: SRC12
+    shortdesc: RPU CPU0 ECC errors interrupt.
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    name: SRC9
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  name: GICP0_IRQ_ENABLE
+  offset: '0x00008008'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wo
+  - bits: '30'
+    name: SRC30
+    type: wo
+  - bits: '29'
+    name: SRC29
+    type: wo
+  - bits: '28'
+    name: SRC28
+    type: wo
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    longdesc: All ECC interrupt of CPU1 are combined into this interrup
+    name: SRC13
+    shortdesc: RPU CPU1 ECC errors interrupt.
+    type: wo
+  - bits: '12'
+    longdesc: All ECC interrupt of CPU0 are combined into this interrupt
+    name: SRC12
+    shortdesc: RPU CPU0 ECC errors interrupt.
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    name: SRC9
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  name: GICP0_IRQ_DISABLE
+  offset: '0x0000800C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Trigger Register. A write of one to this location will set
+    the interrupt status register related to this interrupt.
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wo
+  - bits: '30'
+    name: SRC30
+    type: wo
+  - bits: '29'
+    name: SRC29
+    type: wo
+  - bits: '28'
+    name: SRC28
+    type: wo
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    longdesc: All ECC interrupt of CPU1 are combined into this interrup
+    name: SRC13
+    shortdesc: RPU CPU1 ECC errors interrupt.
+    type: wo
+  - bits: '12'
+    longdesc: All ECC interrupt of CPU0 are combined into this interrupt
+    name: SRC12
+    shortdesc: RPU CPU0 ECC errors interrupt.
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    name: SRC9
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  name: GICP0_IRQ_TRIGGER
+  offset: '0x00008010'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wtc
+  - bits: '30'
+    name: SRC30
+    type: wtc
+  - bits: '29'
+    name: SRC29
+    type: wtc
+  - bits: '28'
+    name: SRC28
+    type: wtc
+  - bits: '27'
+    name: SRC27
+    type: wtc
+  - bits: '26'
+    name: SRC26
+    type: wtc
+  - bits: '25'
+    name: SRC25
+    type: wtc
+  - bits: '24'
+    name: SRC24
+    type: wtc
+  - bits: '23'
+    name: SRC23
+    type: wtc
+  - bits: '22'
+    name: SRC22
+    type: wtc
+  - bits: '21'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC21
+    shortdesc: 'WDT in the CSUPMU: This is Edge trigger interrupt and Interrupt pulse
+      width case be prograbble window from 40ns to 320ns.'
+    type: wtc
+  - bits: '20'
+    longdesc: This is Edge trigger interrupt and Interrupt pulse width case be prograbble
+      window from 40ns to 320ns. This signal synchronized using double-flops; due
+      to this method of synchronization, the duration of the narrowest 'pulse' must
+      be accounted for.
+    name: SRC20
+    shortdesc: WDT in the LPD (IOU).
+    type: wtc
+  - bits: '19'
+    name: SRC19
+    type: wtc
+  - bits: '18'
+    name: SRC18
+    type: wtc
+  - bits: '17'
+    name: SRC17
+    type: wtc
+  - bits: '16'
+    name: SRC16
+    type: wtc
+  - bits: '15'
+    name: SRC15
+    type: wtc
+  - bits: '14'
+    name: SRC14
+    type: wtc
+  - bits: '13'
+    name: SRC13
+    type: wtc
+  - bits: '12'
+    name: SRC12
+    type: wtc
+  - bits: '11'
+    name: SRC11
+    type: wtc
+  - bits: '10'
+    name: SRC10
+    type: wtc
+  - bits: '9'
+    name: SRC9
+    type: wtc
+  - bits: '8'
+    name: SRC8
+    type: wtc
+  - bits: '7'
+    name: SRC7
+    type: wtc
+  - bits: '6'
+    name: SRC6
+    type: wtc
+  - bits: '5'
+    name: SRC5
+    type: wtc
+  - bits: '4'
+    name: SRC4
+    type: wtc
+  - bits: '3'
+    name: SRC3
+    type: wtc
+  - bits: '2'
+    name: SRC2
+    type: wtc
+  - bits: '1'
+    name: SRC1
+    type: wtc
+  - bits: '0'
+    name: SRC0
+    type: wtc
+  name: GICP1_IRQ_STATUS
+  offset: '0x00008014'
+  type: wtc
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31'
+    name: SRC31
+    type: ro
+  - bits: '30'
+    name: SRC30
+    type: ro
+  - bits: '29'
+    name: SRC29
+    type: ro
+  - bits: '28'
+    name: SRC28
+    type: ro
+  - bits: '27'
+    name: SRC27
+    type: ro
+  - bits: '26'
+    name: SRC26
+    type: ro
+  - bits: '25'
+    name: SRC25
+    type: ro
+  - bits: '24'
+    name: SRC24
+    type: ro
+  - bits: '23'
+    name: SRC23
+    type: ro
+  - bits: '22'
+    name: SRC22
+    type: ro
+  - bits: '21'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC21
+    shortdesc: 'WDT in the CSUPMU: This is Edge trigger interrupt and Interrupt pulse
+      width case be prograbble window from 40ns to 320ns.'
+    type: ro
+  - bits: '20'
+    longdesc: This is Edge trigger interrupt and Interrupt pulse width case be prograbble
+      window from 40ns to 320ns. This signal synchronized using double-flops; due
+      to this method of synchronization, the duration of the narrowest 'pulse' must
+      be accounted for.
+    name: SRC20
+    shortdesc: WDT in the LPD (IOU).
+    type: ro
+  - bits: '19'
+    name: SRC19
+    type: ro
+  - bits: '18'
+    name: SRC18
+    type: ro
+  - bits: '17'
+    name: SRC17
+    type: ro
+  - bits: '16'
+    name: SRC16
+    type: ro
+  - bits: '15'
+    name: SRC15
+    type: ro
+  - bits: '14'
+    name: SRC14
+    type: ro
+  - bits: '13'
+    name: SRC13
+    type: ro
+  - bits: '12'
+    name: SRC12
+    type: ro
+  - bits: '11'
+    name: SRC11
+    type: ro
+  - bits: '10'
+    name: SRC10
+    type: ro
+  - bits: '9'
+    name: SRC9
+    type: ro
+  - bits: '8'
+    name: SRC8
+    type: ro
+  - bits: '7'
+    name: SRC7
+    type: ro
+  - bits: '6'
+    name: SRC6
+    type: ro
+  - bits: '5'
+    name: SRC5
+    type: ro
+  - bits: '4'
+    name: SRC4
+    type: ro
+  - bits: '3'
+    name: SRC3
+    type: ro
+  - bits: '2'
+    name: SRC2
+    type: ro
+  - bits: '1'
+    name: SRC1
+    type: ro
+  - bits: '0'
+    name: SRC0
+    type: ro
+  name: GICP1_IRQ_MASK
+  offset: '0x00008018'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wo
+  - bits: '30'
+    name: SRC30
+    type: wo
+  - bits: '29'
+    name: SRC29
+    type: wo
+  - bits: '28'
+    name: SRC28
+    type: wo
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC21
+    shortdesc: 'WDT in the CSUPMU: This is Edge trigger interrupt and Interrupt pulse
+      width case be prograbble window from 40ns to 320ns.'
+    type: wo
+  - bits: '20'
+    longdesc: This is Edge trigger interrupt and Interrupt pulse width case be prograbble
+      window from 40ns to 320ns. This signal synchronized using double-flops; due
+      to this method of synchronization, the duration of the narrowest 'pulse' must
+      be accounted for.
+    name: SRC20
+    shortdesc: WDT in the LPD (IOU).
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    name: SRC13
+    type: wo
+  - bits: '12'
+    name: SRC12
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    name: SRC9
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  - bits: '7'
+    name: SRC7
+    type: wo
+  - bits: '6'
+    name: SRC6
+    type: wo
+  - bits: '5'
+    name: SRC5
+    type: wo
+  - bits: '4'
+    name: SRC4
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    name: SRC2
+    type: wo
+  - bits: '1'
+    name: SRC1
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP1_IRQ_ENABLE
+  offset: '0x0000801C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wo
+  - bits: '30'
+    name: SRC30
+    type: wo
+  - bits: '29'
+    name: SRC29
+    type: wo
+  - bits: '28'
+    name: SRC28
+    type: wo
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC21
+    shortdesc: 'WDT in the CSUPMU: This is Edge trigger interrupt and Interrupt pulse
+      width case be prograbble window from 40ns to 320ns.'
+    type: wo
+  - bits: '20'
+    longdesc: This is Edge trigger interrupt and Interrupt pulse width case be prograbble
+      window from 40ns to 320ns. This signal synchronized using double-flops; due
+      to this method of synchronization, the duration of the narrowest 'pulse' must
+      be accounted for.
+    name: SRC20
+    shortdesc: WDT in the LPD (IOU).
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    name: SRC13
+    type: wo
+  - bits: '12'
+    name: SRC12
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    name: SRC9
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  - bits: '7'
+    name: SRC7
+    type: wo
+  - bits: '6'
+    name: SRC6
+    type: wo
+  - bits: '5'
+    name: SRC5
+    type: wo
+  - bits: '4'
+    name: SRC4
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    name: SRC2
+    type: wo
+  - bits: '1'
+    name: SRC1
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP1_IRQ_DISABLE
+  offset: '0x00008020'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Trigger Register. A write of one to this location will set
+    the interrupt status register related to this interrupt.
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wo
+  - bits: '30'
+    name: SRC30
+    type: wo
+  - bits: '29'
+    name: SRC29
+    type: wo
+  - bits: '28'
+    name: SRC28
+    type: wo
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC21
+    shortdesc: 'WDT in the CSUPMU: This is Edge trigger interrupt and Interrupt pulse
+      width case be prograbble window from 40ns to 320ns.'
+    type: wo
+  - bits: '20'
+    longdesc: This is Edge trigger interrupt and Interrupt pulse width case be prograbble
+      window from 40ns to 320ns. This signal synchronized using double-flops; due
+      to this method of synchronization, the duration of the narrowest 'pulse' must
+      be accounted for.
+    name: SRC20
+    shortdesc: WDT in the LPD (IOU).
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    name: SRC13
+    type: wo
+  - bits: '12'
+    name: SRC12
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    name: SRC9
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  - bits: '7'
+    name: SRC7
+    type: wo
+  - bits: '6'
+    name: SRC6
+    type: wo
+  - bits: '5'
+    name: SRC5
+    type: wo
+  - bits: '4'
+    name: SRC4
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    name: SRC2
+    type: wo
+  - bits: '1'
+    name: SRC1
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP1_IRQ_TRIGGER
+  offset: '0x00008024'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC31
+    shortdesc: Bit 6 of PL_PS IRQ0.
+    type: wtc
+  - bits: '30'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC30
+    shortdesc: Bit 5 of PL_PS IRQ0.
+    type: wtc
+  - bits: '29'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC29
+    shortdesc: Bit 4 of PL_PS IRQ0.
+    type: wtc
+  - bits: '28'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC28
+    shortdesc: Bit 3 of PL_PS IRQ0.
+    type: wtc
+  - bits: '27'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC27
+    shortdesc: Bit 2 of PL_PS IRQ0.
+    type: wtc
+  - bits: '26'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC26
+    shortdesc: Bit 1 of PL_PS IRQ0.
+    type: wtc
+  - bits: '25'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC25
+    shortdesc: Bit 0 of PL_PS IRQ0.
+    type: wtc
+  - bits: '24'
+    name: SRC24
+    type: wtc
+  - bits: '23'
+    name: SRC23
+    type: wtc
+  - bits: '22'
+    name: SRC22
+    type: wtc
+  - bits: '21'
+    name: SRC21
+    type: wtc
+  - bits: '20'
+    name: SRC20
+    type: wtc
+  - bits: '19'
+    name: SRC19
+    type: wtc
+  - bits: '18'
+    name: SRC18
+    type: wtc
+  - bits: '17'
+    name: SRC17
+    type: wtc
+  - bits: '16'
+    name: SRC16
+    type: wtc
+  - bits: '15'
+    name: SRC15
+    type: wtc
+  - bits: '14'
+    name: SRC14
+    type: wtc
+  - bits: '13'
+    name: SRC13
+    type: wtc
+  - bits: '12'
+    name: SRC12
+    type: wtc
+  - bits: '11'
+    name: SRC11
+    type: wtc
+  - bits: '10'
+    name: SRC10
+    type: wtc
+  - bits: '9'
+    longdesc: Interrupt for Control type
+    name: SRC9
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wtc
+  - bits: '8'
+    name: SRC8
+    type: wtc
+  - bits: '7'
+    longdesc: Interrupt for Isochronous
+    name: SRC7
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wtc
+  - bits: '6'
+    longdesc: Interrupt for Bulk
+    name: SRC6
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wtc
+  - bits: '5'
+    name: SRC5
+    type: wtc
+  - bits: '4'
+    longdesc: Interrupt for Control type
+    name: SRC4
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wtc
+  - bits: '3'
+    name: SRC3
+    type: wtc
+  - bits: '2'
+    longdesc: Interrupt for Isochronous
+    name: SRC2
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wtc
+  - bits: '1'
+    longdesc: Interrupt for Bulk
+    name: SRC1
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wtc
+  - bits: '0'
+    name: SRC0
+    type: wtc
+  name: GICP2_IRQ_STATUS
+  offset: '0x00008028'
+  type: wtc
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC31
+    shortdesc: Bit 6 of PL_PS IRQ0.
+    type: ro
+  - bits: '30'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC30
+    shortdesc: Bit 5 of PL_PS IRQ0.
+    type: ro
+  - bits: '29'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC29
+    shortdesc: Bit 4 of PL_PS IRQ0.
+    type: ro
+  - bits: '28'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC28
+    shortdesc: Bit 3 of PL_PS IRQ0.
+    type: ro
+  - bits: '27'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC27
+    shortdesc: Bit 2 of PL_PS IRQ0.
+    type: ro
+  - bits: '26'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC26
+    shortdesc: Bit 1 of PL_PS IRQ0.
+    type: ro
+  - bits: '25'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC25
+    shortdesc: Bit 0 of PL_PS IRQ0.
+    type: ro
+  - bits: '24'
+    name: SRC24
+    type: ro
+  - bits: '23'
+    name: SRC23
+    type: ro
+  - bits: '22'
+    name: SRC22
+    type: ro
+  - bits: '21'
+    name: SRC21
+    type: ro
+  - bits: '20'
+    name: SRC20
+    type: ro
+  - bits: '19'
+    name: SRC19
+    type: ro
+  - bits: '18'
+    name: SRC18
+    type: ro
+  - bits: '17'
+    name: SRC17
+    type: ro
+  - bits: '16'
+    name: SRC16
+    type: ro
+  - bits: '15'
+    name: SRC15
+    type: ro
+  - bits: '14'
+    name: SRC14
+    type: ro
+  - bits: '13'
+    name: SRC13
+    type: ro
+  - bits: '12'
+    name: SRC12
+    type: ro
+  - bits: '11'
+    name: SRC11
+    type: ro
+  - bits: '10'
+    name: SRC10
+    type: ro
+  - bits: '9'
+    longdesc: Interrupt for Control type
+    name: SRC9
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: ro
+  - bits: '8'
+    name: SRC8
+    type: ro
+  - bits: '7'
+    longdesc: Interrupt for Isochronous
+    name: SRC7
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: ro
+  - bits: '6'
+    longdesc: Interrupt for Bulk
+    name: SRC6
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: ro
+  - bits: '5'
+    name: SRC5
+    type: ro
+  - bits: '4'
+    longdesc: Interrupt for Control type
+    name: SRC4
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: ro
+  - bits: '3'
+    name: SRC3
+    type: ro
+  - bits: '2'
+    longdesc: Interrupt for Isochronous
+    name: SRC2
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: ro
+  - bits: '1'
+    longdesc: Interrupt for Bulk
+    name: SRC1
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: ro
+  - bits: '0'
+    name: SRC0
+    type: ro
+  name: GICP2_IRQ_MASK
+  offset: '0x0000802C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC31
+    shortdesc: Bit 6 of PL_PS IRQ0.
+    type: wo
+  - bits: '30'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC30
+    shortdesc: Bit 5 of PL_PS IRQ0.
+    type: wo
+  - bits: '29'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC29
+    shortdesc: Bit 4 of PL_PS IRQ0.
+    type: wo
+  - bits: '28'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC28
+    shortdesc: Bit 3 of PL_PS IRQ0.
+    type: wo
+  - bits: '27'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC27
+    shortdesc: Bit 2 of PL_PS IRQ0.
+    type: wo
+  - bits: '26'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC26
+    shortdesc: Bit 1 of PL_PS IRQ0.
+    type: wo
+  - bits: '25'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC25
+    shortdesc: Bit 0 of PL_PS IRQ0.
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    name: SRC13
+    type: wo
+  - bits: '12'
+    name: SRC12
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    longdesc: Interrupt for Control type
+    name: SRC9
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  - bits: '7'
+    longdesc: Interrupt for Isochronous
+    name: SRC7
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wo
+  - bits: '6'
+    longdesc: Interrupt for Bulk
+    name: SRC6
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wo
+  - bits: '5'
+    name: SRC5
+    type: wo
+  - bits: '4'
+    longdesc: Interrupt for Control type
+    name: SRC4
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    longdesc: Interrupt for Isochronous
+    name: SRC2
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wo
+  - bits: '1'
+    longdesc: Interrupt for Bulk
+    name: SRC1
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP2_IRQ_ENABLE
+  offset: '0x00008030'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC31
+    shortdesc: Bit 6 of PL_PS IRQ0.
+    type: wo
+  - bits: '30'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC30
+    shortdesc: Bit 5 of PL_PS IRQ0.
+    type: wo
+  - bits: '29'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC29
+    shortdesc: Bit 4 of PL_PS IRQ0.
+    type: wo
+  - bits: '28'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC28
+    shortdesc: Bit 3 of PL_PS IRQ0.
+    type: wo
+  - bits: '27'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC27
+    shortdesc: Bit 2 of PL_PS IRQ0.
+    type: wo
+  - bits: '26'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC26
+    shortdesc: Bit 1 of PL_PS IRQ0.
+    type: wo
+  - bits: '25'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC25
+    shortdesc: Bit 0 of PL_PS IRQ0.
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    name: SRC13
+    type: wo
+  - bits: '12'
+    name: SRC12
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    longdesc: Interrupt for Control type
+    name: SRC9
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  - bits: '7'
+    longdesc: Interrupt for Isochronous
+    name: SRC7
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wo
+  - bits: '6'
+    longdesc: Interrupt for Bulk
+    name: SRC6
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wo
+  - bits: '5'
+    name: SRC5
+    type: wo
+  - bits: '4'
+    longdesc: Interrupt for Control type
+    name: SRC4
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    longdesc: Interrupt for Isochronous
+    name: SRC2
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wo
+  - bits: '1'
+    longdesc: Interrupt for Bulk
+    name: SRC1
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP2_IRQ_DISABLE
+  offset: '0x00008034'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Trigger Register. A write of one to this location will set
+    the interrupt status register related to this interrupt.
+  field:
+  - bits: '31'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC31
+    shortdesc: Bit 6 of PL_PS IRQ0.
+    type: wo
+  - bits: '30'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC30
+    shortdesc: Bit 5 of PL_PS IRQ0.
+    type: wo
+  - bits: '29'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC29
+    shortdesc: Bit 4 of PL_PS IRQ0.
+    type: wo
+  - bits: '28'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC28
+    shortdesc: Bit 3 of PL_PS IRQ0.
+    type: wo
+  - bits: '27'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC27
+    shortdesc: Bit 2 of PL_PS IRQ0.
+    type: wo
+  - bits: '26'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC26
+    shortdesc: Bit 1 of PL_PS IRQ0.
+    type: wo
+  - bits: '25'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC25
+    shortdesc: Bit 0 of PL_PS IRQ0.
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    name: SRC13
+    type: wo
+  - bits: '12'
+    name: SRC12
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    longdesc: Interrupt for Control type
+    name: SRC9
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  - bits: '7'
+    longdesc: Interrupt for Isochronous
+    name: SRC7
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wo
+  - bits: '6'
+    longdesc: Interrupt for Bulk
+    name: SRC6
+    shortdesc: USB3_1 Endpoint related interrupts.
+    type: wo
+  - bits: '5'
+    name: SRC5
+    type: wo
+  - bits: '4'
+    longdesc: Interrupt for Control type
+    name: SRC4
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    longdesc: Interrupt for Isochronous
+    name: SRC2
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wo
+  - bits: '1'
+    longdesc: Interrupt for Bulk
+    name: SRC1
+    shortdesc: USB3_0 Endpoint related interrupts.
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP2_IRQ_TRIGGER
+  offset: '0x00008038'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wtc
+  - bits: '30'
+    name: SRC30
+    type: wtc
+  - bits: '29'
+    name: SRC29
+    type: wtc
+  - bits: '28'
+    name: SRC28
+    type: wtc
+  - bits: '27'
+    name: SRC27
+    type: wtc
+  - bits: '26'
+    name: SRC26
+    type: wtc
+  - bits: '25'
+    name: SRC25
+    type: wtc
+  - bits: '24'
+    name: SRC24
+    type: wtc
+  - bits: '23'
+    name: SRC23
+    type: wtc
+  - bits: '22'
+    name: SRC22
+    type: wtc
+  - bits: '21'
+    name: SRC21
+    type: wtc
+  - bits: '20'
+    name: SRC20
+    type: wtc
+  - bits: '19'
+    name: SRC19
+    type: wtc
+  - bits: '18'
+    name: SRC18
+    type: wtc
+  - bits: '17'
+    longdesc: This is Edge trigger interrupt and Interrupt pulse width case be prograbble
+      window from 40ns to 320ns. This signal synchronized using double-flops; due
+      to this method of synchronization, the duration of the narrowest 'pulse' must
+      be accounted for.
+    name: SRC17
+    shortdesc: FPD Top Level Watch Dog Timer Interrupt.
+    type: wtc
+  - bits: '16'
+    name: SRC16
+    type: wtc
+  - bits: '15'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC15
+    shortdesc: Bit 7 of PL_PS IRQ1.
+    type: wtc
+  - bits: '14'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC14
+    shortdesc: Bit 6 of PL_PS IRQ1.
+    type: wtc
+  - bits: '13'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC13
+    shortdesc: Bit 5 of PL_PS IRQ1.
+    type: wtc
+  - bits: '12'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC12
+    shortdesc: Bit 4 of PL_PS IRQ1.
+    type: wtc
+  - bits: '11'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC11
+    shortdesc: Bit 3 of PL_PS IRQ1.
+    type: wtc
+  - bits: '10'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC10
+    shortdesc: Bit 2 of PL_PS IRQ1.
+    type: wtc
+  - bits: '9'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC9
+    shortdesc: Bit 1 of PL_PS IRQ1.
+    type: wtc
+  - bits: '8'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC8
+    shortdesc: Bit 0 of PL_PS IRQ1.
+    type: wtc
+  - bits: '0'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC0
+    shortdesc: Bit 7 of PL_PS IRQ0.
+    type: wtc
+  name: GICP3_IRQ_STATUS
+  offset: '0x0000803C'
+  type: wtc
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31'
+    name: SRC31
+    type: ro
+  - bits: '30'
+    name: SRC30
+    type: ro
+  - bits: '29'
+    name: SRC29
+    type: ro
+  - bits: '28'
+    name: SRC28
+    type: ro
+  - bits: '27'
+    name: SRC27
+    type: ro
+  - bits: '26'
+    name: SRC26
+    type: ro
+  - bits: '25'
+    name: SRC25
+    type: ro
+  - bits: '24'
+    name: SRC24
+    type: ro
+  - bits: '23'
+    name: SRC23
+    type: ro
+  - bits: '22'
+    name: SRC22
+    type: ro
+  - bits: '21'
+    name: SRC21
+    type: ro
+  - bits: '20'
+    name: SRC20
+    type: ro
+  - bits: '19'
+    name: SRC19
+    type: ro
+  - bits: '18'
+    name: SRC18
+    type: ro
+  - bits: '17'
+    longdesc: This is Edge trigger interrupt and Interrupt pulse width case be prograbble
+      window from 40ns to 320ns. This signal synchronized using double-flops; due
+      to this method of synchronization, the duration of the narrowest 'pulse' must
+      be accounted for.
+    name: SRC17
+    shortdesc: FPD Top Level Watch Dog Timer Interrupt.
+    type: ro
+  - bits: '16'
+    name: SRC16
+    type: ro
+  - bits: '15'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC15
+    shortdesc: Bit 7 of PL_PS IRQ1.
+    type: ro
+  - bits: '14'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC14
+    shortdesc: Bit 6 of PL_PS IRQ1.
+    type: ro
+  - bits: '13'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC13
+    shortdesc: Bit 5 of PL_PS IRQ1.
+    type: ro
+  - bits: '12'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC12
+    shortdesc: Bit 4 of PL_PS IRQ1.
+    type: ro
+  - bits: '11'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC11
+    shortdesc: Bit 3 of PL_PS IRQ1.
+    type: ro
+  - bits: '10'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC10
+    shortdesc: Bit 2 of PL_PS IRQ1.
+    type: ro
+  - bits: '9'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC9
+    shortdesc: Bit 1 of PL_PS IRQ1.
+    type: ro
+  - bits: '8'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC8
+    shortdesc: Bit 0 of PL_PS IRQ1.
+    type: ro
+  - bits: '0'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC0
+    shortdesc: Bit 7 of PL_PS IRQ0.
+    type: ro
+  name: GICP3_IRQ_MASK
+  offset: '0x00008040'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wo
+  - bits: '30'
+    name: SRC30
+    type: wo
+  - bits: '29'
+    name: SRC29
+    type: wo
+  - bits: '28'
+    name: SRC28
+    type: wo
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    longdesc: This is Edge trigger interrupt and Interrupt pulse width case be prograbble
+      window from 40ns to 320ns. This signal synchronized using double-flops; due
+      to this method of synchronization, the duration of the narrowest 'pulse' must
+      be accounted for.
+    name: SRC17
+    shortdesc: FPD Top Level Watch Dog Timer Interrupt.
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC15
+    shortdesc: Bit 7 of PL_PS IRQ1.
+    type: wo
+  - bits: '14'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC14
+    shortdesc: Bit 6 of PL_PS IRQ1.
+    type: wo
+  - bits: '13'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC13
+    shortdesc: Bit 5 of PL_PS IRQ1.
+    type: wo
+  - bits: '12'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC12
+    shortdesc: Bit 4 of PL_PS IRQ1.
+    type: wo
+  - bits: '11'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC11
+    shortdesc: Bit 3 of PL_PS IRQ1.
+    type: wo
+  - bits: '10'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC10
+    shortdesc: Bit 2 of PL_PS IRQ1.
+    type: wo
+  - bits: '9'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC9
+    shortdesc: Bit 1 of PL_PS IRQ1.
+    type: wo
+  - bits: '8'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC8
+    shortdesc: Bit 0 of PL_PS IRQ1.
+    type: wo
+  - bits: '0'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC0
+    shortdesc: Bit 7 of PL_PS IRQ0.
+    type: wo
+  name: GICP3_IRQ_ENABLE
+  offset: '0x00008044'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wo
+  - bits: '30'
+    name: SRC30
+    type: wo
+  - bits: '29'
+    name: SRC29
+    type: wo
+  - bits: '28'
+    name: SRC28
+    type: wo
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    longdesc: This is Edge trigger interrupt and Interrupt pulse width case be prograbble
+      window from 40ns to 320ns. This signal synchronized using double-flops; due
+      to this method of synchronization, the duration of the narrowest 'pulse' must
+      be accounted for.
+    name: SRC17
+    shortdesc: FPD Top Level Watch Dog Timer Interrupt.
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC15
+    shortdesc: Bit 7 of PL_PS IRQ1.
+    type: wo
+  - bits: '14'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC14
+    shortdesc: Bit 6 of PL_PS IRQ1.
+    type: wo
+  - bits: '13'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC13
+    shortdesc: Bit 5 of PL_PS IRQ1.
+    type: wo
+  - bits: '12'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC12
+    shortdesc: Bit 4 of PL_PS IRQ1.
+    type: wo
+  - bits: '11'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC11
+    shortdesc: Bit 3 of PL_PS IRQ1.
+    type: wo
+  - bits: '10'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC10
+    shortdesc: Bit 2 of PL_PS IRQ1.
+    type: wo
+  - bits: '9'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC9
+    shortdesc: Bit 1 of PL_PS IRQ1.
+    type: wo
+  - bits: '8'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC8
+    shortdesc: Bit 0 of PL_PS IRQ1.
+    type: wo
+  - bits: '0'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC0
+    shortdesc: Bit 7 of PL_PS IRQ0.
+    type: wo
+  name: GICP3_IRQ_DISABLE
+  offset: '0x00008048'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Trigger Register. A write of one to this location will set
+    the interrupt status register related to this interrupt.
+  field:
+  - bits: '31'
+    name: SRC31
+    type: wo
+  - bits: '30'
+    name: SRC30
+    type: wo
+  - bits: '29'
+    name: SRC29
+    type: wo
+  - bits: '28'
+    name: SRC28
+    type: wo
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    longdesc: This is Edge trigger interrupt and Interrupt pulse width case be prograbble
+      window from 40ns to 320ns. This signal synchronized using double-flops; due
+      to this method of synchronization, the duration of the narrowest 'pulse' must
+      be accounted for.
+    name: SRC17
+    shortdesc: FPD Top Level Watch Dog Timer Interrupt.
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC15
+    shortdesc: Bit 7 of PL_PS IRQ1.
+    type: wo
+  - bits: '14'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC14
+    shortdesc: Bit 6 of PL_PS IRQ1.
+    type: wo
+  - bits: '13'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC13
+    shortdesc: Bit 5 of PL_PS IRQ1.
+    type: wo
+  - bits: '12'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC12
+    shortdesc: Bit 4 of PL_PS IRQ1.
+    type: wo
+  - bits: '11'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC11
+    shortdesc: Bit 3 of PL_PS IRQ1.
+    type: wo
+  - bits: '10'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC10
+    shortdesc: Bit 2 of PL_PS IRQ1.
+    type: wo
+  - bits: '9'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC9
+    shortdesc: Bit 1 of PL_PS IRQ1.
+    type: wo
+  - bits: '8'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC8
+    shortdesc: Bit 0 of PL_PS IRQ1.
+    type: wo
+  - bits: '0'
+    longdesc: This signal synchronized using double-flops; due to this method of synchronization,
+      the duration of the narrowest 'pulse' must be accounted for.
+    name: SRC0
+    shortdesc: Bit 7 of PL_PS IRQ0.
+    type: wo
+  name: GICP3_IRQ_TRIGGER
+  offset: '0x0000804C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '27'
+    name: SRC27
+    type: wtc
+  - bits: '26'
+    name: SRC26
+    type: wtc
+  - bits: '25'
+    name: SRC25
+    type: wtc
+  - bits: '24'
+    name: SRC24
+    type: wtc
+  - bits: '23'
+    name: SRC23
+    type: wtc
+  - bits: '22'
+    name: SRC22
+    type: wtc
+  - bits: '21'
+    name: SRC21
+    type: wtc
+  - bits: '20'
+    name: SRC20
+    type: wtc
+  - bits: '19'
+    name: SRC19
+    type: wtc
+  - bits: '18'
+    name: SRC18
+    type: wtc
+  - bits: '17'
+    name: SRC17
+    type: wtc
+  - bits: '16'
+    name: SRC16
+    type: wtc
+  - bits: '15'
+    name: SRC15
+    type: wtc
+  - bits: '14'
+    name: SRC14
+    type: wtc
+  - bits: '13'
+    name: SRC13
+    type: wtc
+  - bits: '12'
+    name: SRC12
+    type: wtc
+  - bits: '11'
+    name: SRC11
+    type: wtc
+  - bits: '10'
+    name: SRC10
+    type: wtc
+  - bits: '9'
+    name: SRC9
+    type: wtc
+  - bits: '8'
+    name: SRC8
+    type: wtc
+  - bits: '7'
+    name: SRC7
+    type: wtc
+  - bits: '6'
+    name: SRC6
+    type: wtc
+  - bits: '5'
+    name: SRC5
+    type: wtc
+  - bits: '4'
+    name: SRC4
+    type: wtc
+  - bits: '3'
+    name: SRC3
+    type: wtc
+  - bits: '2'
+    name: SRC2
+    type: wtc
+  - bits: '1'
+    name: SRC1
+    type: wtc
+  - bits: '0'
+    name: SRC0
+    type: wtc
+  name: GICP4_IRQ_STATUS
+  offset: '0x00008050'
+  type: wtc
+  width: 32
+- default: '0xFFFFFFFF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '27'
+    name: SRC27
+    type: ro
+  - bits: '26'
+    name: SRC26
+    type: ro
+  - bits: '25'
+    name: SRC25
+    type: ro
+  - bits: '24'
+    name: SRC24
+    type: ro
+  - bits: '23'
+    name: SRC23
+    type: ro
+  - bits: '22'
+    name: SRC22
+    type: ro
+  - bits: '21'
+    name: SRC21
+    type: ro
+  - bits: '20'
+    name: SRC20
+    type: ro
+  - bits: '19'
+    name: SRC19
+    type: ro
+  - bits: '18'
+    name: SRC18
+    type: ro
+  - bits: '17'
+    name: SRC17
+    type: ro
+  - bits: '16'
+    name: SRC16
+    type: ro
+  - bits: '15'
+    name: SRC15
+    type: ro
+  - bits: '14'
+    name: SRC14
+    type: ro
+  - bits: '13'
+    name: SRC13
+    type: ro
+  - bits: '12'
+    name: SRC12
+    type: ro
+  - bits: '11'
+    name: SRC11
+    type: ro
+  - bits: '10'
+    name: SRC10
+    type: ro
+  - bits: '9'
+    name: SRC9
+    type: ro
+  - bits: '8'
+    name: SRC8
+    type: ro
+  - bits: '7'
+    name: SRC7
+    type: ro
+  - bits: '6'
+    name: SRC6
+    type: ro
+  - bits: '5'
+    name: SRC5
+    type: ro
+  - bits: '4'
+    name: SRC4
+    type: ro
+  - bits: '3'
+    name: SRC3
+    type: ro
+  - bits: '2'
+    name: SRC2
+    type: ro
+  - bits: '1'
+    name: SRC1
+    type: ro
+  - bits: '0'
+    name: SRC0
+    type: ro
+  name: GICP4_IRQ_MASK
+  offset: '0x00008054'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    name: SRC13
+    type: wo
+  - bits: '12'
+    name: SRC12
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    name: SRC9
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  - bits: '7'
+    name: SRC7
+    type: wo
+  - bits: '6'
+    name: SRC6
+    type: wo
+  - bits: '5'
+    name: SRC5
+    type: wo
+  - bits: '4'
+    name: SRC4
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    name: SRC2
+    type: wo
+  - bits: '1'
+    name: SRC1
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP4_IRQ_ENABLE
+  offset: '0x00008058'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    name: SRC13
+    type: wo
+  - bits: '12'
+    name: SRC12
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    name: SRC9
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  - bits: '7'
+    name: SRC7
+    type: wo
+  - bits: '6'
+    name: SRC6
+    type: wo
+  - bits: '5'
+    name: SRC5
+    type: wo
+  - bits: '4'
+    name: SRC4
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    name: SRC2
+    type: wo
+  - bits: '1'
+    name: SRC1
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP4_IRQ_DISABLE
+  offset: '0x0000805C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Trigger Register. A write of one to this location will set
+    the interrupt status register related to this interrupt.
+  field:
+  - bits: '27'
+    name: SRC27
+    type: wo
+  - bits: '26'
+    name: SRC26
+    type: wo
+  - bits: '25'
+    name: SRC25
+    type: wo
+  - bits: '24'
+    name: SRC24
+    type: wo
+  - bits: '23'
+    name: SRC23
+    type: wo
+  - bits: '22'
+    name: SRC22
+    type: wo
+  - bits: '21'
+    name: SRC21
+    type: wo
+  - bits: '20'
+    name: SRC20
+    type: wo
+  - bits: '19'
+    name: SRC19
+    type: wo
+  - bits: '18'
+    name: SRC18
+    type: wo
+  - bits: '17'
+    name: SRC17
+    type: wo
+  - bits: '16'
+    name: SRC16
+    type: wo
+  - bits: '15'
+    name: SRC15
+    type: wo
+  - bits: '14'
+    name: SRC14
+    type: wo
+  - bits: '13'
+    name: SRC13
+    type: wo
+  - bits: '12'
+    name: SRC12
+    type: wo
+  - bits: '11'
+    name: SRC11
+    type: wo
+  - bits: '10'
+    name: SRC10
+    type: wo
+  - bits: '9'
+    name: SRC9
+    type: wo
+  - bits: '8'
+    name: SRC8
+    type: wo
+  - bits: '7'
+    name: SRC7
+    type: wo
+  - bits: '6'
+    name: SRC6
+    type: wo
+  - bits: '5'
+    name: SRC5
+    type: wo
+  - bits: '4'
+    name: SRC4
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    name: SRC2
+    type: wo
+  - bits: '1'
+    name: SRC1
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP4_IRQ_TRIGGER
+  offset: '0x00008060'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register for intrN. This is a sticky register that
+    holds the value of the interrupt until cleared by a value of 1.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '4'
+    name: SRC4
+    type: wtc
+  - bits: '3'
+    name: SRC3
+    type: wtc
+  - bits: '2'
+    name: SRC2
+    type: wtc
+  - bits: '1'
+    name: SRC1
+    type: wtc
+  - bits: '0'
+    name: SRC0
+    type: wtc
+  name: GICP_PMU_IRQ_STATUS
+  offset: '0x000080A0'
+  type: mixed
+  width: 32
+- default: '0x000000FF'
+  description: Interrupt Mask Register for intrN. This is a read-only location and
+    can be atomically altered by either the IDR or the IER.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '4'
+    name: SRC4
+    type: ro
+  - bits: '3'
+    name: SRC3
+    type: ro
+  - bits: '2'
+    name: SRC2
+    type: ro
+  - bits: '1'
+    name: SRC1
+    type: ro
+  - bits: '0'
+    name: SRC0
+    type: ro
+  name: GICP_PMU_IRQ_MASK
+  offset: '0x000080A4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Enable Register. A write of to this location will unmask
+    the interrupt. (IMR: 0)'
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '4'
+    name: SRC4
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    name: SRC2
+    type: wo
+  - bits: '1'
+    name: SRC1
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP_PMU_IRQ_ENABLE
+  offset: '0x000080A8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Interrupt Disable Register. A write of one to this location will mask
+    the interrupt. (IMR: 1)'
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '4'
+    name: SRC4
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    name: SRC2
+    type: wo
+  - bits: '1'
+    name: SRC1
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP_PMU_IRQ_DISABLE
+  offset: '0x000080AC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Trigger Register. A write of one to this location will set
+    the interrupt status register related to this interrupt.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '4'
+    name: SRC4
+    type: wo
+  - bits: '3'
+    name: SRC3
+    type: wo
+  - bits: '2'
+    name: SRC2
+    type: wo
+  - bits: '1'
+    name: SRC1
+    type: wo
+  - bits: '0'
+    name: SRC0
+    type: wo
+  name: GICP_PMU_IRQ_TRIGGER
+  offset: '0x000080B0'
+  type: mixed
+  width: 32
+- default: '0x00000200'
+  description: afi fs SLCR control register. Do not change the bits durin
+  field:
+  - bits: '15:10'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  - bits: '9:8'
+    name: DW_SS2_SEL
+    type: rw
+  - bits: '7:0'
+    longdesc: Return 0 when read. Writes ignored.
+    name: RESERVED
+    shortdesc: RESERVED.
+    type: raz
+  name: AFI_FS
+  offset: '0x00009000'
+  type: mixed
+  width: 16
+- default: '0x03801C07'
+  description: CCI Configuration. This register may be written to only when FPD Interconnect
+    is in reset.
+  field:
+  - bits: '27'
+    name: QVNVNETS4
+    type: rw
+  - bits: '26'
+    name: QVNVNETS3
+    type: rw
+  - bits: '25'
+    name: QVNVNETS2
+    type: rw
+  - bits: '24'
+    name: QVNVNETS1
+    type: rw
+  - bits: '23'
+    name: QVNVNETS0
+    type: rw
+  - bits: '22:18'
+    name: QOSOVERRIDE
+    type: rw
+  - bits: '17'
+    name: QVNENABLE_M2
+    type: rw
+  - bits: '16'
+    name: QVNENABLE_M1
+    type: rw
+  - bits: '15:13'
+    longdesc: 'Use onf of the following settings: 3''b000=4KB; 3''b001=128Byte; 3''b010=256Byte;
+      3''b011=512Byte; 3''b100=1KB; 3''b101=2KB; 3''b110=Reserved; 3''b111=Reserved'
+    name: STRIPING_GRANULE
+    shortdesc: Sets the stripe granule size for regions devined as striping between
+      interfaces M1 and M2.
+    type: rw
+  - bits: '12'
+    name: ACCHANNELEN4
+    type: rw
+  - bits: '11'
+    name: ACCHANNELEN3
+    type: rw
+  - bits: '10'
+    name: ACCHANNELEN0
+    type: rw
+  - bits: '9:6'
+    name: ECOREVNUM
+    type: rw
+  - bits: '5'
+    name: ASA2
+    type: rw
+  - bits: '4'
+    name: ASA1
+    type: rw
+  - bits: '3'
+    name: ASA0
+    type: rw
+  - bits: '2'
+    name: OWO2
+    type: rw
+  - bits: '1'
+    name: OWO1
+    type: rw
+  - bits: '0'
+    name: OWO0
+    type: rw
+  name: LPD_CCI
+  offset: '0x0000A000'
+  type: rw
+  width: 32
+- default: '0x00C000FF'
+  description: Address Decode for each reguion of the address map of CCI. This register
+    may be written to only when FPD Interconnect is in reset.
+  field:
+  - bits: '31:30'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '15'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '29:28'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '14'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '27:26'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '13'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '25:24'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '12'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '23:22'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '11'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '21:20'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '10'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '19:18'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '9'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '17:16'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '8'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '15:14'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '7'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '13:12'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '6'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '11:10'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '5'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '9:8'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '4'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '7:6'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '3'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '5:4'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '2'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '3:2'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '1'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  - bits: '1:0'
+    longdesc: The stripe size is configured using the striping_granule register
+    name: '0'
+    shortdesc: 2'b00=M0; 2'b01=M1; 2'b10=M2; 2'b11=M1 and M2 striped accoss the region.
+    type: rw
+  name: LPD_CCI_ADDRMAP
+  offset: '0x0000A004'
+  type: rw
+  width: 32
+- default: '0x00330330'
+  description: QVN Preallocation Configuration
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: raz
+  - bits: '23:20'
+    name: WM2
+    type: rw
+  - bits: '19:16'
+    name: WM1
+    type: rw
+  - bits: '15:12'
+    name: RESERVED
+    type: ro
+  - bits: '11:8'
+    name: RM2
+    type: rw
+  - bits: '7:4'
+    name: RM1
+    type: rw
+  - bits: '3:0'
+    name: RESERVED
+    type: ro
+  name: LPD_CCI_QVNPREALLOC
+  offset: '0x0000A008'
+  type: mixed
+  width: 32
+- default: '0x0000003F'
+  description: SMMU Configuration. This register may be written to only when FPD Interconnect
+    is in reset.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7'
+    name: INTEG_SEC_OVERRIDE
+    type: rw
+  - bits: '6'
+    name: CTTW
+    type: rw
+  - bits: '5'
+    name: SYSBARDISABLE_TBU5
+    type: rw
+  - bits: '4'
+    name: SYSBARDISABLE_TBU4
+    type: rw
+  - bits: '3'
+    name: SYSBARDISABLE_TBU3
+    type: rw
+  - bits: '2'
+    name: SYSBARDISABLE_TBU2
+    type: rw
+  - bits: '1'
+    name: SYSBARDISABLE_TBU1
+    type: rw
+  - bits: '0'
+    name: SYSBARDISABLE_TBU0
+    type: rw
+  name: LPD_SMMU
+  offset: '0x0000A020'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: APU Configuration. This register may be written to only when APU is
+    in reset
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3'
+    name: BRDC_BARRIER
+    type: rw
+  - bits: '2'
+    name: BRDC_CMNT
+    type: rw
+  - bits: '1'
+    name: BRDC_INNER
+    type: rw
+  - bits: '0'
+    name: BRDC_OUTER
+    type: rw
+  name: LPD_APU
+  offset: '0x0000A040'
+  type: mixed
+  width: 32

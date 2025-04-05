@@ -1,0 +1,1231 @@
+description: CAN Controller
+register:
+- default: '0x00000000'
+  description: Software Reset and Enable
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: rw
+  - bits: '1'
+    longdesc: '1: The CAN controller is in loopback, Sleep or Normal mode depending
+      on the LBACK and SLEEP bits in the MSR. 0: The CAN controller is in the Configuration
+      mode. If the CEN bit is changed during core operation, it is recommended to
+      reset the core so that operations start afresh.'
+    name: CEN
+    shortdesc: CAN Enable The Enable bit for the CAN controller.
+    type: rw
+  - bits: '0'
+    longdesc: '1: CAN controller is reset. If a 1 is written to this bit, all the
+      CAN controller configuration registers (including the SRR) are reset. Reads
+      to this bit always return a 0.'
+    name: SRST
+    shortdesc: Reset The Software reset bit for the CAN controller.
+    type: rw
+  name: SRR
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Mode Select
+  field:
+  - bits: '31:3'
+    name: RESERVED
+    type: rw
+  - bits: '2'
+    longdesc: '1: CAN controller is in Snoop mode. 0: CAN controller is in Normal,
+      Loopback, Configuration, or Sleep mode. This bit can be written to only when
+      CEN bit in SRR is 0.'
+    name: SNOOP
+    shortdesc: Snoop Mode Select The Snoop Mode Select bit.
+    type: rw
+  - bits: '1'
+    longdesc: '1: CAN controller is in Loopback mode. 0: CAN controller is in Normal,
+      Snoop, Configuration, or Sleep mode. This bit can be written to only when CEN
+      bit in SRR is 0.'
+    name: LBACK
+    shortdesc: Loopback Mode Select The Loopback Mode Select bit.
+    type: rw
+  - bits: '0'
+    longdesc: '1: CAN controller is in Sleep mode. 0: CAN controller is in Normal,
+      Snoop, Configuration or Loopback mode. This bit is cleared when the CAN controller
+      wakes up from the Sleep mode.'
+    name: SLEEP
+    shortdesc: Sleep Mode Select The Sleep Mode select bit.
+    type: rw
+  name: MSR
+  offset: '0x00000004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Baud Rate Prescaler
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: rw
+  - bits: '7:0'
+    longdesc: The actual value ranges from 1 to 256.
+    name: BRP
+    shortdesc: Baud Rate Prescaler These bits indicate the prescaler value.
+    type: rw
+  name: BRPR
+  offset: '0x00000008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Bit Timing and Synchronization
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: rw
+  - bits: '8:7'
+    longdesc: 0A and CAN 2.0B standard. The actual value is one more than the value
+      written to the register.
+    name: SJW
+    shortdesc: Synchronization Jump Width Indicates the Synchronization Jump Width
+      as specified in the CAN 2.
+    type: rw
+  - bits: '6:4'
+    longdesc: 0A and CAN 2.0B standard. The actual value is one more than the value
+      written to the register.
+    name: TS2
+    shortdesc: Time Segment 2 Indicates Phase Segment 2 as specified in the CAN 2.
+    type: rw
+  - bits: '3:0'
+    longdesc: 0A and CAN 2.0B standard. The actual value is one more than the value
+      written to the register.
+    name: TS1
+    shortdesc: Time Segment 1 Indicates the Sum of Propagation Segment and Phase Segment
+      1 as specified in the CAN 2.
+    type: rw
+  name: BTR
+  offset: '0x0000000C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Rx and Tx Error Counters
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:8'
+    name: REC
+    type: ro
+  - bits: '7:0'
+    name: TEC
+    type: ro
+  name: ECR
+  offset: '0x00000010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Error Status
+  field:
+  - bits: '31:5'
+    name: RESERVED
+    type: rw
+  - bits: '4'
+    longdesc: '1: Indicates an acknowledgment error has occurred. 0: Indicates an
+      acknowledgment error has not occurred on the bus since the last write to this
+      register. If this bit is set, writing a 1 clears it.'
+    name: ACKER
+    shortdesc: ACK Error Indicates an acknowledgment error.
+    type: wtc
+  - bits: '3'
+    longdesc: '1: Indicates a bit error has occurred. 0: Indicates a bit error has
+      not occurred on the bus since the last write to this register. If this bit is
+      set, writing a 1 clears it.'
+    name: BERR
+    shortdesc: Bit Error Indicates the received bit is not the same as the transmitted
+      bit during bus communication.
+    type: wtc
+  - bits: '2'
+    longdesc: '1: Indicates a stuff error has occurred. 0: Indicates a stuff error
+      has not occurred on the bus since the last write to this register. If this bit
+      is set, writing a 1 clears it.'
+    name: STER
+    shortdesc: Stuff Error Indicates an error if there is a stuffing violation.
+    type: wtc
+  - bits: '1'
+    longdesc: '1: Indicates a form error has occurred. 0: Indicates a form error has
+      not occurred on the bus since the last write to this register. If this bit is
+      set, writing a 1 clears it.'
+    name: FMER
+    shortdesc: Form Error Indicates an error in one of the fixed form fields in the
+      message frame.
+    type: wtc
+  - bits: '0'
+    longdesc: '1: Indicates a CRC error has occurred. 0: Indicates a CRC error has
+      not occurred on the bus since the last write to this register. If this bit is
+      set, writing a 1 clears it. In case of a CRC Error and a CRC delimiter corruption,
+      only the FMER bit is set.'
+    name: CRCER
+    shortdesc: CRC Error Indicates a CRC error has occurred.
+    type: wtc
+  name: ESR
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: Controller Status
+  field:
+  - bits: '31:13'
+    name: RESERVED
+    type: rw
+  - bits: '12'
+    longdesc: '1: Indicates the CAN controller is in Snoop Mode. 0: Indicates the
+      CAN controller is not in Snoop mode.'
+    name: SNOOP
+    shortdesc: Snoop Mode Indicates the CAN controller is in Snoop Mode.
+    type: ro
+  - bits: '11'
+    longdesc: 'Indicates write-ablity of the Mask and ID registers, read-only: 0:
+      writable 1: not writable. This bit reads 1 when a 0 is written to any of the
+      valid UAF bits in an Acceptance Filter Register.'
+    name: ACFBSY
+    shortdesc: Acceptance Filter Busy indicator.
+    type: ro
+  - bits: '10'
+    longdesc: '1: Indicates the TX FIFO is full. 0: Indicates the TX FIFO is not full.'
+    name: TXFLL
+    shortdesc: Transmit FIFO Full Indicates that the TX FIFO is full.
+    type: ro
+  - bits: '9'
+    longdesc: '1: Indicates the High Priority Transmit Buffer is full. 0: Indicates
+      the High Priority Transmit Buffer is not full.'
+    name: TXBFLL
+    shortdesc: High Priority Transmit Buffer Full Indicates the High Priority Transmit
+      Buffer is full.
+    type: ro
+  - bits: '8:7'
+    longdesc: '00: Indicates Configuration Mode (CONFIG = 1). Error State is undefined.
+      01: Indicates Error Active State. 11: Indicates Error Passive State. 10: Indicates
+      Bus Off State.'
+    name: ESTAT
+    shortdesc: Error Status Indicates the error status of the CAN controller.
+    type: ro
+  - bits: '6'
+    longdesc: '1: One or more error counters have a value greater than or equal to
+      96. 0: Neither of the error counters has a value greater than or equal to 96.'
+    name: ERRWRN
+    shortdesc: Error Warning Indicates that either the Transmit Error counter or the
+      Receive Error counter has exceeded a value of 96.
+    type: ro
+  - bits: '5'
+    longdesc: '1: Indicates that the CAN controller is either receiving a message
+      or transmitting a message. 0: Indicates that the CAN controller is either in
+      Configuration mode or the bus is idle.'
+    name: BBSY
+    shortdesc: Bus Busy Indicates the CAN bus status.
+    type: ro
+  - bits: '4'
+    longdesc: '1: Indicates no bus communication is taking place. 0: Indicates the
+      CAN controller is either in Configuration mode or the bus is busy.'
+    name: BIDLE
+    shortdesc: Bus Idle Indicates the CAN bus status.
+    type: ro
+  - bits: '3'
+    longdesc: '1: Indicates the CAN controller is in Normal Mode. 0: Indicates the
+      CAN controller is not in Normal mode.'
+    name: NORMAL
+    shortdesc: Normal Mode Indicates the CAN controller is in Normal Mode.
+    type: ro
+  - bits: '2'
+    longdesc: '1: Indicates the CAN controller is in Sleep mode. 0: Indicates the
+      CAN controller is not in Sleep mode.'
+    name: SLEEP
+    shortdesc: Sleep Mode Indicates the CAN controller is in Sleep mode.
+    type: ro
+  - bits: '1'
+    longdesc: '1: Indicates the CAN controller is in Loopback mode. 0: Indicates the
+      CAN controller is not in Loopback mode.'
+    name: LBACK
+    shortdesc: Loopback Mode Indicates the CAN controller is in Loopback mode.
+    type: ro
+  - bits: '0'
+    longdesc: '1: Indicates the CAN controller is in Configuration mode. 0: Indicates
+      the CAN controller is not in Configuration mode.'
+    name: CONFIG
+    shortdesc: Configuration Mode Indicator Indicates the CAN controller is in Configuration
+      mode.
+    type: ro
+  name: SR
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00006000'
+  description: Interrupt Status
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: rw
+  - bits: '14'
+    longdesc: The interrupt continues to assert as long as the TX FIFO is empty. This
+      bit can be cleared only by writing to the ICR.
+    name: TXFEMP
+    shortdesc: Transmit FIFO EmptyInterrupt A 1 indicates that the Transmit FIFO is
+      empty.
+    type: ro
+  - bits: '13'
+    longdesc: The interrupt continues to assert as long as the number of empty spaces
+      in the TX FIFO is greater than TX FIFO empty watermark. This bit can be cleared
+      only by writing to the Interrupt Clear Register.
+    name: TXFWMEMP
+    shortdesc: Transmit FIFO Watermark Empty Interrupt A 1 indicates that the TX FIFO
+      is empty based on watermark programming.
+    type: ro
+  - bits: '12'
+    longdesc: The interrupt continues to assert as long as the RX FIFO count is above
+      RX FIFO Full watermark. This bit can be cleared only by writing to the Interrupt
+      Clear Register.
+    name: RXFWMFLL
+    shortdesc: Receive FIFO Watermark Full Interrupt A 1 indicates that the RX FIFO
+      is full based on watermark programming.
+    type: ro
+  - bits: '11'
+    longdesc: This bit can be cleared by writing to the ICR. This bit is also cleared
+      when a 0 is written to the CEN bit in the SRR.
+    name: WKUP
+    shortdesc: Wake up Interrupt A 1 indicates that the CAN controller entered Normal
+      mode from Sleep Mode.
+    type: ro
+  - bits: '10'
+    longdesc: This bit can be cleared by writing to the ICR. This bit is also cleared
+      when a 0 is written to the CEN bit in the SRR.
+    name: SLP
+    shortdesc: Sleep Interrupt A 1 indicates that the CAN controller entered Sleep
+      mode.
+    type: ro
+  - bits: '9'
+    longdesc: This bit can be cleared by writing to the ICR. This bit is also cleared
+      when a 0 is written to the CEN bit in the SRR.
+    name: BSOFF
+    shortdesc: Bus Off Interrupt A 1 indicates that the CAN controller entered the
+      Bus Off state.
+    type: ro
+  - bits: '8'
+    longdesc: This bit can be cleared by writing to the ICR. This bit is also cleared
+      when a 0 is written to the CEN bit in the SRR.
+    name: ERROR
+    shortdesc: Error Interrupt A 1 indicates that an error occurred during message
+      transmission or reception.
+    type: ro
+  - bits: '7'
+    longdesc: This bit can be cleared only by writing to the ICR.
+    name: RXNEMP
+    shortdesc: Receive FIFO Not Empty Interrupt A 1 indicates that the Receive FIFO
+      is not empty.
+    type: ro
+  - bits: '6'
+    longdesc: This condition occurs when a new message is being received and the Receive
+      FIFO is Full. This bit can be cleared by writing to the ICR. This bit is also
+      cleared when a 0 is written to the CEN bit in the SRR.
+    name: RXOFLW
+    shortdesc: RX FIFO Overflow Interrupt A 1 indicates that a message has been lost.
+    type: ro
+  - bits: '5'
+    longdesc: This bit can be cleared only by writing to the ICR.
+    name: RXUFLW
+    shortdesc: RX FIFO Underflow Interrupt A 1 indicates that a read operation was
+      attempted on an empty RX FIFO.
+    type: ro
+  - bits: '4'
+    longdesc: This bit can be cleared by writing to the ICR. This bit is also cleared
+      when a 0 is written to the CEN bit in the SRR.
+    name: RXOK
+    shortdesc: New Message Received Interrupt A 1 indicates that a message was received
+      successfully and stored into the RX FIFO.
+    type: ro
+  - bits: '3'
+    longdesc: The status of the bit is unaffected if write transactions occur on the
+      High Priority Transmit Buffer when it is already full. This bit can be cleared
+      only by writing to the ICR.
+    name: TXBFLL
+    shortdesc: High Priority Transmit Buffer Full Interrupt A 1 indicates that the
+      High Priority Transmit Buffer is full.
+    type: ro
+  - bits: '2'
+    longdesc: The status of the bit is unaffected if write transactions occur on the
+      Transmit FIFO when it is already full. This bit can be cleared only by writing
+      to the Interrupt Clear Register.
+    name: TXFLL
+    shortdesc: Transmit FIFO Full Interrupt A 1 indicates that the TX FIFO is full.
+    type: ro
+  - bits: '1'
+    longdesc: This bit can be cleared by writing to the ICR. This bit is also cleared
+      when a 0 is written to the CEN bit in the SRR. In Loopback mode, both TXOK and
+      RXOK bits are set. The RXOK bit is set before the TXOK bit.
+    name: TXOK
+    shortdesc: Transmission Successful Interrupt A 1 indicates that a message was
+      transmitted successfully.
+    type: ro
+  - bits: '0'
+    longdesc: This bit can be cleared by writing to the ICR. This bit is also cleared
+      when a 0 is written to the CEN bit in the SRR.
+    name: ARBLST
+    shortdesc: Arbitration Lost Interrupt A 1 indicates that arbitration was lost
+      during message transmission.
+    type: ro
+  name: ISR
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: rw
+  - bits: '14'
+    longdesc: '1: Enable interrupt generation if TXFEMP bit in ISR is set. 0: Disable
+      interrupt generation if TXFEMP bit in ISR is set.'
+    name: ETXFEMP
+    shortdesc: Enable TXFIFO Empty Interrupt Writes to this bit enable or disable
+      interrupts when the TXFEMP bit in the ISR is set.
+    type: rw
+  - bits: '13'
+    longdesc: '1: Enable interrupt generation if TXFWMEMP bit in ISR is set. 0: Disable
+      interrupt generation if TXFWMEMP bit in ISR is set.'
+    name: ETXFWMEMP
+    shortdesc: Enable TXFIFO watermark Empty Interrupt Writes to this bit enable or
+      disable interrupts when the TXFWMEMP bit in the ISR is set.
+    type: rw
+  - bits: '12'
+    longdesc: '1: Enable interrupt generation if RXFWMFLL bit in ISR is set. 0: Disable
+      interrupt generation if RXFWMFLL bit in ISR is set.'
+    name: ERXFWMFLL
+    shortdesc: Enable RXFIFO watermark Full Interrupt Writes to this bit enable or
+      disable interrupts when the RXFLL bit in the ISR is set.
+    type: rw
+  - bits: '11'
+    longdesc: '1: Enable interrupt generation if WKUP bit in ISR is set. 0: Disable
+      interrupt generation if WKUP bit in ISR is set.'
+    name: EWKUP
+    shortdesc: Enable Wake up Interrupt Writes to this bit enable or disable interrupts
+      when the WKUP bit in the ISR is set.
+    type: rw
+  - bits: '10'
+    longdesc: '1: Enable interrupt generation if SLP bit in ISR is set. 0: Disable
+      interrupt generation if SLP bit in ISR is set.'
+    name: ESLP
+    shortdesc: Enable Sleep Interrupt Writes to this bit enable or disable interrupts
+      when the SLP bit in the ISR is set.
+    type: rw
+  - bits: '9'
+    longdesc: '1: Enable interrupt generation if BSOFF bit in ISR is set. 0: Disable
+      interrupt generation if BSOFF bit in ISR is set.'
+    name: EBSOFF
+    shortdesc: Enable Bus OFF Interrupt Writes to this bit enable or disable interrupts
+      when the BSOFF bit in the ISR is set.
+    type: rw
+  - bits: '8'
+    longdesc: '1: Enable interrupt generation if ERROR bit in ISR is set. 0: Disable
+      interrupt generation if ERROR bit in ISR is set.'
+    name: EERROR
+    shortdesc: Enable Error Interrupt Writes to this bit enable or disable interrupts
+      when the ERROR bit in the ISR is set.
+    type: rw
+  - bits: '7'
+    longdesc: '1: Enable interrupt generation if RXNEMP bit in ISR is set. 0: Disable
+      interrupt generation if RXNEMP bit in ISR is set.'
+    name: ERXNEMP
+    shortdesc: Enable Receive FIFO Not Empty Interrupt Writes to this bit enable or
+      disable interrupts when the RXNEMP bit in the ISR is set.
+    type: rw
+  - bits: '6'
+    longdesc: '1: Enable interrupt generation if RXOFLW bit in ISR is set. 0: Disable
+      interrupt generation if RXOFLW bit in ISR is set.'
+    name: ERXOFLW
+    shortdesc: Enable RX FIFO Overflow Interrupt Writes to this bit enable or disable
+      interrupts when the RXOFLW bit in the ISR is set.
+    type: rw
+  - bits: '5'
+    longdesc: '1: Enable interrupt generation if RXUFLW bit in ISR is set. 0: Disable
+      interrupt generation if RXUFLW bit in ISR is set.'
+    name: ERXUFLW
+    shortdesc: Enable RX FIFO Underflow Interrupt Writes to this bit enable or disable
+      interrupts when the RXUFLW bit in the ISR is set.
+    type: rw
+  - bits: '4'
+    longdesc: '1: Enable interrupt generation if RXOK bit in ISR is set. 0: Disable
+      interrupt generation if RXOK bit in ISR is set.'
+    name: ERXOK
+    shortdesc: Enable New Message Received Interrupt Writes to this bit enable or
+      disable interrupts when the RXOK bit in the ISR is set.
+    type: rw
+  - bits: '3'
+    longdesc: '1: Enable interrupt generation if TXBFLL bit in ISR is set. 0: Disable
+      interrupt generation if TXBFLL bit in ISR is set.'
+    name: ETXBFLL
+    shortdesc: Enable High Priority Transmit Buffer Full Interrupt Writes to this
+      bit enable or disable interrupts when the TXBFLL bit in the ISR is set.
+    type: rw
+  - bits: '2'
+    longdesc: '1: Enable interrupt generation if TXFLL bit in ISR is set. 0: Disable
+      interrupt generation if TXFLL bit in ISR is set.'
+    name: ETXFLL
+    shortdesc: Enable Transmit FIFO Full Interrupt Writes to this bit enable or disable
+      interrupts when TXFLL bit in the ISR is set.
+    type: rw
+  - bits: '1'
+    longdesc: '1: Enable interrupt generation if TXOK bit in ISR is set. 0: Disable
+      interrupt generation if TXOK bit in ISR is set.'
+    name: ETXOK
+    shortdesc: Enable Transmission Successful Interrupt Writes to this bit enable
+      or disable interrupts when the TXOK bit in the ISR is set.
+    type: rw
+  - bits: '0'
+    longdesc: '1: Enable interrupt generation if ARBLST bit in ISR is set. 0: Disable
+      interrupt generation if ARBLST bit in ISR is set.'
+    name: EARBLST
+    shortdesc: Enable Arbitration Lost Interrupt Writes to this bit enable or disable
+      interrupts when the ARBLST bit in the ISR is set.
+    type: rw
+  name: IER
+  offset: '0x00000020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear
+  field:
+  - bits: '31:15'
+    name: RESERVED
+    type: rw
+  - bits: '14'
+    name: CTXFEMP
+    type: wo
+  - bits: '13'
+    name: CTXFWMEMP
+    type: wo
+  - bits: '12'
+    name: CRXFWMFLL
+    type: wo
+  - bits: '11'
+    name: CWKUP
+    type: wo
+  - bits: '10'
+    name: CSLP
+    type: wo
+  - bits: '9'
+    name: CBSOFF
+    type: wo
+  - bits: '8'
+    name: CERROR
+    type: wo
+  - bits: '7'
+    name: CRXNEMP
+    type: wo
+  - bits: '6'
+    name: CRXOFLW
+    type: wo
+  - bits: '5'
+    name: CRXUFLW
+    type: wo
+  - bits: '4'
+    name: CRXOK
+    type: wo
+  - bits: '3'
+    name: CTXBFLL
+    type: wo
+  - bits: '2'
+    name: CTXFLL
+    type: wo
+  - bits: '1'
+    name: CTXOK
+    type: wo
+  - bits: '0'
+    name: CARBLST
+    type: wo
+  name: ICR
+  offset: '0x00000024'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Timestamp Clear.
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    longdesc: This bit only needs to be written once with a 1 to clear the counter.
+      The bit will automatically return to 0.
+    name: CTS
+    shortdesc: Clear Timestamp Internal free running counter is cleared to 0 when
+      CTS=1.
+    type: wo
+  name: TCR
+  offset: '0x00000028'
+  type: mixed
+  width: 32
+- default: '0x00003F3F'
+  description: Rx and Tx Watermark Settings.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: rw
+  - bits: '15:8'
+    longdesc: The valid range is (1-63). No protection is given for illegal programming
+      in this field. This field can be written to only when CEN bit in SRR is 0.
+    name: EW
+    shortdesc: TXFIFO Empty watermark TXFIFO generates an EMPTY interrupt based on
+      the value programmed in this field.
+    type: rw
+  - bits: '7:0'
+    longdesc: The valid range is (1-63). No protection is given for illegal programming
+      in this field. This field can be written to only when CEN bit in SRR is 0.
+    name: FW
+    shortdesc: RXFIFO Full watermark RXFIFO generates FULL interrupt based on the
+      value programmed in this field.
+    type: rw
+  name: WIR
+  offset: '0x0000002C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Tx Message FIFO, Identifier, Request.
+  field:
+  - bits: '31:21'
+    longdesc: These bits indicate the Standard Frame ID. This field is valid for both
+      Standard and Extended Frames.
+    name: IDH
+    shortdesc: Standard Message ID The Identifier portion for a Standard Frame is
+      11 bits.
+    type: wo
+  - bits: '20'
+    longdesc: 'Valid only for Standard Frames. For Extended frames this bit is 1.
+      1: Indicates that the message frame is a Remote Frame. 0: Indicates that the
+      message frame is a Data Frame.'
+    name: SRRRTR
+    shortdesc: Substitute Remote Transmission Request This bit differentiates between
+      data frames and remote frames.
+    type: wo
+  - bits: '19'
+    longdesc: 'Valid for both Standard and Extended Frames. 1: Indicates the use of
+      an Extended Message Identifier. 0: Indicates the use of a Standard Message Identifier.'
+    name: IDE
+    shortdesc: Identifier Extension This bit differentiates between frames using the
+      Standard Identifier and those using the Extended Identifier.
+    type: wo
+  - bits: '18:1'
+    longdesc: Valid only for Extended Frames. For Standard Frames, reads from this
+      field return 0s. For Standard Frames, writes to this field should be 0s.
+    name: IDL
+    shortdesc: Extended Message ID This field indicates the Extended Identifier.
+    type: wo
+  - bits: '0'
+    longdesc: 'Valid only for Extended Frames. 1: Indicates the message object is
+      a Remote Frame 0: Indicates the message object is a Data Frame For Standard
+      Frames, reads from this bit returns 0 For Standard Frames, writes to this bit
+      should be 0'
+    name: RTR
+    shortdesc: Remote Transmission Request This bit differentiates between data frames
+      and remote frames.
+    type: wo
+  name: TXFIFO_ID
+  offset: '0x00000030'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Tx Message FIFO Data Length Code.
+  field:
+  - bits: '31:28'
+    longdesc: This indicates the number valid data bytes in Data Word 1 and Data Word
+      2 registers.
+    name: DLC
+    shortdesc: Data Length Code This is the data length portion of the control field
+      of the CAN frame.
+    type: rw
+  - bits: '27:0'
+    name: RESERVED
+    type: rw
+  name: TXFIFO_DLC
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Tx Message FIFO, data word 1.
+  field:
+  - bits: '31:24'
+    name: DB0
+    type: rw
+  - bits: '23:16'
+    name: DB1
+    type: rw
+  - bits: '15:8'
+    name: DB2
+    type: rw
+  - bits: '7:0'
+    name: DB3
+    type: rw
+  name: TXFIFO_DATA1
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Tx Message FIFO, data word 2.
+  field:
+  - bits: '31:24'
+    name: DB4
+    type: rw
+  - bits: '23:16'
+    name: DB5
+    type: rw
+  - bits: '15:8'
+    name: DB6
+    type: rw
+  - bits: '7:0'
+    name: DB7
+    type: rw
+  name: TXFIFO_DATA2
+  offset: '0x0000003C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: High Priority Tx Message FIFO, Identifier, Request.
+  field:
+  - bits: '31:21'
+    longdesc: These bits indicate the Standard Frame ID. This field is valid for both
+      Standard and Extended Frames.
+    name: IDH
+    shortdesc: Standard Message ID The Identifier portion for a Standard Frame is
+      11 bits.
+    type: wo
+  - bits: '20'
+    longdesc: 'Valid only for Standard Frames. For Extended frames this bit is 1.
+      1: Indicates that the message frame is a Remote Frame. 0: Indicates that the
+      message frame is a Data Frame.'
+    name: SRRRTR
+    shortdesc: Substitute Remote Transmission Request This bit differentiates between
+      data frames and remote frames.
+    type: wo
+  - bits: '19'
+    longdesc: 'Valid for both Standard and Extended Frames. 1: Indicates the use of
+      an Extended Message Identifier. 0: Indicates the use of a Standard Message Identifier.'
+    name: IDE
+    shortdesc: Identifier Extension This bit differentiates between frames using the
+      Standard Identifier and those using the Extended Identifier.
+    type: wo
+  - bits: '18:1'
+    longdesc: Valid only for Extended Frames. For Standard Frames, reads from this
+      field return 0s. For Standard Frames, writes to this field should be 0s.
+    name: IDL
+    shortdesc: Extended Message ID This field indicates the Extended Identifier.
+    type: wo
+  - bits: '0'
+    longdesc: 'Valid only for Extended Frames. 1: Indicates the message object is
+      a Remote Frame 0: Indicates the message object is a Data Frame For Standard
+      Frames, reads from this bit returns 0 For Standard Frames, writes to this bit
+      should be 0'
+    name: RTR
+    shortdesc: Remote Transmission Request This bit differentiates between data frames
+      and remote frames.
+    type: wo
+  name: TXHPB_ID
+  offset: '0x00000040'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: High Priority Tx Message FIFO Data Length Code.
+  field:
+  - bits: '31:28'
+    longdesc: This indicates the number valid data bytes in Data Word 1 and Data Word
+      2 registers.
+    name: DLC
+    shortdesc: Data Length Code This is the data length portion of the control field
+      of the CAN frame.
+    type: rw
+  - bits: '27:0'
+    name: RESERVED
+    type: rw
+  name: TXHPB_DLC
+  offset: '0x00000044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: High Priority Tx Message FIFO, data word 1.
+  field:
+  - bits: '31:24'
+    name: DB0
+    type: rw
+  - bits: '23:16'
+    name: DB1
+    type: rw
+  - bits: '15:8'
+    name: DB2
+    type: rw
+  - bits: '7:0'
+    name: DB3
+    type: rw
+  name: TXHPB_DATA1
+  offset: '0x00000048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: High Priority Tx Message FIFO, data word 0.
+  field:
+  - bits: '31:24'
+    name: DB4
+    type: rw
+  - bits: '23:16'
+    name: DB5
+    type: rw
+  - bits: '15:8'
+    name: DB6
+    type: rw
+  - bits: '7:0'
+    name: DB7
+    type: rw
+  name: TXHPB_DATA2
+  offset: '0x0000004C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Rx Message FIFO, Identifier, Request.
+  field:
+  - bits: '31:21'
+    longdesc: These bits indicate the Standard Frame ID. This field is valid for both
+      Standard and Extended Frames.
+    name: IDH
+    shortdesc: Standard Message ID The Identifier portion for a Standard Frame is
+      11 bits.
+    type: ro
+  - bits: '20'
+    longdesc: 'Valid only for Standard Frames. For Extended frames this bit is 1.
+      1: Indicates that the message frame is a Remote Frame. 0: Indicates that the
+      message frame is a Data Frame.'
+    name: SRRRTR
+    shortdesc: Substitute Remote Transmission Request This bit differentiates between
+      data frames and remote frames.
+    type: ro
+  - bits: '19'
+    longdesc: 'Valid for both Standard and Extended Frames. 1: Indicates the use of
+      an Extended Message Identifier. 0: Indicates the use of a Standard Message Identifier.'
+    name: IDE
+    shortdesc: Identifier Extension This bit differentiates between frames using the
+      Standard Identifier and those using the Extended Identifier.
+    type: ro
+  - bits: '18:1'
+    longdesc: Valid only for Extended Frames. For Standard Frames, reads from this
+      field return 0s For Standard Frames, writes to this field should be 0s
+    name: IDL
+    shortdesc: Extended Message ID This field indicates the Extended Identifier.
+    type: ro
+  - bits: '0'
+    longdesc: 'Valid only for Extended Frames. 1: Indicates the message object is
+      a Remote Frame 0: Indicates the message object is a Data Frame For Standard
+      Frames, reads from this bit returns 0 For Standard Frames, writes to this bit
+      should be 0'
+    name: RTR
+    shortdesc: Remote Transmission Request This bit differentiates between data frames
+      and remote frames.
+    type: ro
+  name: RXFIFO_ID
+  offset: '0x00000050'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Rx Message FIFO Data Length Code.
+  field:
+  - bits: '31:28'
+    longdesc: This indicates the number valid data bytes in Data Word 1 and Data Word
+      2 registers.
+    name: DLC
+    shortdesc: Data Length Code This is the data length portion of the control field
+      of the CAN frame.
+    type: rw
+  - bits: '27:16'
+    name: RESERVED
+    type: rw
+  - bits: '15:0'
+    name: RXT
+    type: rw
+  name: RXFIFO_DLC
+  offset: '0x00000054'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Rx Message FIFO, data word 1.
+  field:
+  - bits: '31:24'
+    name: DB0
+    type: rw
+  - bits: '23:16'
+    name: DB1
+    type: rw
+  - bits: '15:8'
+    name: DB2
+    type: rw
+  - bits: '7:0'
+    name: DB3
+    type: rw
+  name: RXFIFO_DATA1
+  offset: '0x00000058'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Rx Message FIFO, data word 2.
+  field:
+  - bits: '31:24'
+    name: DB4
+    type: rw
+  - bits: '23:16'
+    name: DB5
+    type: rw
+  - bits: '15:8'
+    name: DB6
+    type: rw
+  - bits: '7:0'
+    name: DB7
+    type: rw
+  name: RXFIFO_DATA2
+  offset: '0x0000005C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Acceptance Filter Enables.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: rw
+  - bits: '3'
+    longdesc: '1: Indicates Acceptance Filter Mask Register 4 and Acceptance Filter
+      ID Register 4 are used for acceptance filtering. 0: Indicates Acceptance Filter
+      Mask Register 4 and Acceptance Filter ID Register 4 are not used for acceptance
+      filtering.'
+    name: UAF4
+    shortdesc: Use Acceptance Filter Number 4 Enables the use of acceptance filter
+      pair 4.
+    type: rw
+  - bits: '2'
+    longdesc: '1: Indicates Acceptance Filter Mask Register 3 and Acceptance Filter
+      ID Register 3 are used for acceptance filtering. 0: Indicates Acceptance Filter
+      Mask Register 3 and Acceptance Filter ID Register 3 are not used for acceptance
+      filtering.'
+    name: UAF3
+    shortdesc: Use Acceptance Filter Number 3 Enables the use of acceptance filter
+      pair 3.
+    type: rw
+  - bits: '1'
+    longdesc: '1: Indicates Acceptance Filter Mask Register 2 and Acceptance Filter
+      ID Register 2 are used for acceptance filtering. 0: Indicates Acceptance Filter
+      Mask Register 2 and Acceptance Filter ID Register 2 are not used for acceptance
+      filtering.'
+    name: UAF2
+    shortdesc: Use Acceptance Filter Number 2 Enables the use of acceptance filter
+      pair 2.
+    type: rw
+  - bits: '0'
+    longdesc: 'Enables the use of acceptance filter pair 1. 1: Indicates Acceptance
+      Filter Mask Register 1 and Acceptance Filter ID Register 1 are used for acceptance
+      filtering. 0: Indicates Acceptance Filter Mask Register 1 and Acceptance Filter
+      ID Register 1 are not used for acceptance filtering.'
+    name: UAF1
+    shortdesc: Use Acceptance Filter Number 1.
+    type: rw
+  name: AFR
+  offset: '0x00000060'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Acceptance Filter 1 Mask.
+  field:
+  - bits: '31:21'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMIDH
+    shortdesc: Standard Message ID Mask These bits are used for masking the Identifier
+      in a Standard Frame.
+    type: rw
+  - bits: '20'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMSRR
+    shortdesc: Substitute Remote Transmission Request Mask This bit is used for masking
+      the RTR bit in a Standard Frame.
+    type: rw
+  - bits: '19'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier. If AMIDE = 1 and the AIIDE bit in the corresponding Acceptance ID
+      register is 0, this mask is applicable to only Standard frames. If AMIDE = 1
+      and the AIIDE bit in the corresponding Acceptance ID register is 1, this mask
+      is applicable to only extended frames. If AMIDE = 0 this mask is applicable
+      to Standard frame.'
+    name: AMIDE
+    shortdesc: Identifier Extension Mask Used for masking the IDE bit in CAN frames.
+    type: rw
+  - bits: '18:1'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMIDL
+    shortdesc: Extended Message ID Mask These bits are used for masking the Identifier
+      in an Extended Frame.
+    type: rw
+  - bits: '0'
+    longdesc: 'This bit is used for masking the RTR bit in an Extended Frame. 1: Indicates
+      the corresponding bit in Acceptance Mask ID Register is used when comparing
+      the incoming message identifier. 0: Indicates the corresponding bit in Acceptance
+      Mask ID Register is not used when comparing the incoming message identifier.'
+    name: AMRTR
+    shortdesc: Remote Transmission Request Mask.
+    type: rw
+  name: AFMR1
+  offset: '0x00000064'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Acceptance Filter 1 ID.
+  field:
+  - bits: '31:21'
+    name: AIIDH
+    type: rw
+  - bits: '20'
+    name: AISRR
+    type: rw
+  - bits: '19'
+    name: AIIDE
+    type: rw
+  - bits: '18:1'
+    name: AIIDL
+    type: rw
+  - bits: '0'
+    name: AIRTR
+    type: rw
+  name: AFIR1
+  offset: '0x00000068'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Acceptance Filter 2 Mask.
+  field:
+  - bits: '31:21'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMIDH
+    shortdesc: Standard Message ID Mask These bits are used for masking the Identifier
+      in a Standard Frame.
+    type: rw
+  - bits: '20'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMSRR
+    shortdesc: Substitute Remote Transmission Request Mask This bit is used for masking
+      the RTR bit in a Standard Frame.
+    type: rw
+  - bits: '19'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier. If AMIDE = 1 and the AIIDE bit in the corresponding Acceptance ID
+      register is 0, this mask is applicable to only Standard frames. If AMIDE = 1
+      and the AIIDE bit in the corresponding Acceptance ID register is 1, this mask
+      is applicable to only extended frames. If AMIDE = 0 this mask is applicable
+      to Standard frame.'
+    name: AMIDE
+    shortdesc: Identifier Extension Mask Used for masking the IDE bit in CAN frames.
+    type: rw
+  - bits: '18:1'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMIDL
+    shortdesc: Extended Message ID Mask These bits are used for masking the Identifier
+      in an Extended Frame.
+    type: rw
+  - bits: '0'
+    longdesc: 'This bit is used for masking the RTR bit in an Extended Frame. 1: Indicates
+      the corresponding bit in Acceptance Mask ID Register is used when comparing
+      the incoming message identifier. 0: Indicates the corresponding bit in Acceptance
+      Mask ID Register is not used when comparing the incoming message identifier.'
+    name: AMRTR
+    shortdesc: Remote Transmission Request Mask.
+    type: rw
+  name: AFMR2
+  offset: '0x0000006C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Acceptance Filter 2 ID.
+  field:
+  - bits: '31:21'
+    name: AIIDH
+    type: rw
+  - bits: '20'
+    name: AISRR
+    type: rw
+  - bits: '19'
+    name: AIIDE
+    type: rw
+  - bits: '18:1'
+    name: AIIDL
+    type: rw
+  - bits: '0'
+    name: AIRTR
+    type: rw
+  name: AFIR2
+  offset: '0x00000070'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Acceptance Filter 3 Mask.
+  field:
+  - bits: '31:21'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMIDH
+    shortdesc: Standard Message ID Mask These bits are used for masking the Identifier
+      in a Standard Frame.
+    type: rw
+  - bits: '20'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMSRR
+    shortdesc: Substitute Remote Transmission Request Mask This bit is used for masking
+      the RTR bit in a Standard Frame.
+    type: rw
+  - bits: '19'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier. If AMIDE = 1 and the AIIDE bit in the corresponding Acceptance ID
+      register is 0, this mask is applicable to only Standard frames. If AMIDE = 1
+      and the AIIDE bit in the corresponding Acceptance ID register is 1, this mask
+      is applicable to only extended frames. If AMIDE = 0 this mask is applicable
+      to Standard frame.'
+    name: AMIDE
+    shortdesc: Identifier Extension Mask Used for masking the IDE bit in CAN frames.
+    type: rw
+  - bits: '18:1'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMIDL
+    shortdesc: Extended Message ID Mask These bits are used for masking the Identifier
+      in an Extended Frame.
+    type: rw
+  - bits: '0'
+    longdesc: 'This bit is used for masking the RTR bit in an Extended Frame. 1: Indicates
+      the corresponding bit in Acceptance Mask ID Register is used when comparing
+      the incoming message identifier. 0: Indicates the corresponding bit in Acceptance
+      Mask ID Register is not used when comparing the incoming message identifier.'
+    name: AMRTR
+    shortdesc: Remote Transmission Request Mask.
+    type: rw
+  name: AFMR3
+  offset: '0x00000074'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Acceptance Filter 3 ID.
+  field:
+  - bits: '31:21'
+    name: AIIDH
+    type: rw
+  - bits: '20'
+    name: AISRR
+    type: rw
+  - bits: '19'
+    name: AIIDE
+    type: rw
+  - bits: '18:1'
+    name: AIIDL
+    type: rw
+  - bits: '0'
+    name: AIRTR
+    type: rw
+  name: AFIR3
+  offset: '0x00000078'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Acceptance Filter 4 Mask.
+  field:
+  - bits: '31:21'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMIDH
+    shortdesc: Standard Message ID Mask These bits are used for masking the Identifier
+      in a Standard Frame.
+    type: rw
+  - bits: '20'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMSRR
+    shortdesc: Substitute Remote Transmission Request Mask This bit is used for masking
+      the RTR bit in a Standard Frame.
+    type: rw
+  - bits: '19'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier. If AMIDE = 1 and the AIIDE bit in the corresponding Acceptance ID
+      register is 0, this mask is applicable to only Standard frames. If AMIDE = 1
+      and the AIIDE bit in the corresponding Acceptance ID register is 1, this mask
+      is applicable to only extended frames. If AMIDE = 0 this mask is applicable
+      to Standard frame.'
+    name: AMIDE
+    shortdesc: Identifier Extension Mask Used for masking the IDE bit in CAN frames.
+    type: rw
+  - bits: '18:1'
+    longdesc: '1: Indicates the corresponding bit in Acceptance Mask ID Register is
+      used when comparing the incoming message identifier. 0: Indicates the corresponding
+      bit in Acceptance Mask ID Register is not used when comparing the incoming message
+      identifier.'
+    name: AMIDL
+    shortdesc: Extended Message ID Mask These bits are used for masking the Identifier
+      in an Extended Frame.
+    type: rw
+  - bits: '0'
+    longdesc: 'This bit is used for masking the RTR bit in an Extended Frame. 1: Indicates
+      the corresponding bit in Acceptance Mask ID Register is used when comparing
+      the incoming message identifier. 0: Indicates the corresponding bit in Acceptance
+      Mask ID Register is not used when comparing the incoming message identifier.'
+    name: AMRTR
+    shortdesc: Remote Transmission Request Mask.
+    type: rw
+  name: AFMR4
+  offset: '0x0000007C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Acceptance Filter 4 ID.
+  field:
+  - bits: '31:21'
+    name: AIIDH
+    type: rw
+  - bits: '20'
+    name: AISRR
+    type: rw
+  - bits: '19'
+    name: AIIDE
+    type: rw
+  - bits: '18:1'
+    name: AIIDL
+    type: rw
+  - bits: '0'
+    name: AIRTR
+    type: rw
+  name: AFIR4
+  offset: '0x00000080'
+  type: rw
+  width: 32

@@ -1,0 +1,10 @@
+include:
+- resource: fabric.toml
+instance:
+- type: program.zynqps8.ikuy_boot
+- type: program.zynqps8.pmu_monitor
+path: prefabs/socs/zynqps8
+prefab:
+- name: socs.zynqps8.a53
+- name: socs.zynqps8.r5f
+- name: socs.zynqps8.pmu

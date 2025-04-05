@@ -1,0 +1,91 @@
+bank:
+- address: '0xfd4f0000'
+  name: FPD_XMPU_SINK
+description: XMPU Sink Configuration
+register:
+- default: '0x00000000'
+  description: Access Violation Error Status.
+  field:
+  - bits: '31'
+    longdesc: '0: read. 1: write.'
+    name: RDWR
+    shortdesc: R/W type of access violation.
+    type: rw
+  - bits: '11:0'
+    longdesc: Bits[11:0] correspond to APB address bits [11:0].
+    name: ADDR
+    shortdesc: Offset Address of access violation.
+    type: rw
+  name: ERR_STATUS
+  offset: '0x0000FF00'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status and Clear.
+  field:
+  - bits: '0'
+    longdesc: 'READ: 0: no interrupt. 1: interrupt asserted. WRITE: 0: no effect.
+      1: clear bit to 0. If a Status bit is 1 and its Mask is 0, then the interrupt
+      signal is active to the interrupt controllers. The ERR_CTRL [PSLVERR] can enable
+      a violation event to cause the XMPU_Sink to assert the PSLVERR signal back to
+      the APB interconnect.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Access violation (poisoned AXI transaction or register access error).
+    type: wtc
+  name: ISR
+  offset: '0x0000FF10'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Interrupt Mask.
+  field:
+  - bits: '0'
+    longdesc: 'Read-only. 0: enabled. 1: masked (disabled). If the ISR bit = 1 (asserted
+      interrupt) and the IMR bit = 0 (not masked), then the IRQ to the interrupt controllers
+      is asserted. Software checks the ISR to determine the cause of the interrupt.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Access violation (poisoned AXI transaction or register access error).
+    type: ro
+  name: IMR
+  offset: '0x0000FF14'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Enable.
+  field:
+  - bits: '0'
+    longdesc: '0: no effect. 1: enable interrupt (sets mask = 0). Write-only.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Access violation (poisoned AXI transaction or register access error).
+    type: wo
+  name: IER
+  offset: '0x0000FF18'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Disable.
+  field:
+  - bits: '0'
+    longdesc: '0: no effect. 1: disable interrupt (sets mask = 1). Write-only.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Access violation (poisoned AXI transaction or register access error).
+    type: wo
+  name: IDR
+  offset: '0x0000FF1C'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Error Signal Control. APB slave error signal.
+  field:
+  - bits: '0'
+    longdesc: '0: disable error signal. 1: assert error signal for access violations.
+      Note: The [addr_decode_err] interrupt bit is set in the ISR regardless of the
+      setting of this bit.'
+    name: PSLVERR
+    shortdesc: Enable the PSLVERR signal back to APB interconnect when an access violation
+      occurs.
+    type: rw
+  name: ERR_CTRL
+  offset: '0x0000FFEC'
+  type: rw
+  width: 32

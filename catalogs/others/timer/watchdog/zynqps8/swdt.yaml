@@ -1,0 +1,76 @@
+bank:
+- address: '0xffcb0000'
+  name: CSU_WDT
+- address: '0xff150000'
+  name: SWDT
+- address: '0xfd4d0000'
+  name: WDT
+description: CSU System Watchdog Timer
+register:
+- default: '0x000001C2'
+  description: WD zero mode register
+  field:
+  - bits: '23:12'
+    name: ZKEY
+    type: wo
+  - bits: '11:9'
+    name: RESERVED
+    type: waz
+  - bits: '8:7'
+    name: IRQLN
+    type: rw
+  - bits: '6:4'
+    name: RSTLN
+    type: rw
+  - bits: '3'
+    name: RESERVED
+    type: waz
+  - bits: '2'
+    name: IRQEN
+    type: rw
+  - bits: '1'
+    name: RSTEN
+    type: rw
+  - bits: '0'
+    name: WDEN
+    type: rw
+  name: MODE
+  offset: '0x00000000'
+  type: mixed
+  width: 24
+- default: '0x00003FFC'
+  description: Counter Control Register
+  field:
+  - bits: '25:14'
+    name: CKEY
+    type: wo
+  - bits: '13:2'
+    name: CRV
+    type: rw
+  - bits: '1:0'
+    name: CLKSEL
+    type: rw
+  name: CONTROL
+  offset: '0x00000004'
+  type: mixed
+  width: 26
+- default: '0x00000000'
+  description: Restart key register - this not a real register as no data is stored
+  field:
+  - bits: '15:0'
+    name: RSTKEY
+    type: wo
+  name: RESTART
+  offset: '0x00000008'
+  type: wo
+  width: 16
+- default: '0x00000000'
+  description: Status Register
+  field:
+  - bits: '0'
+    name: WDZ
+    type: ro
+  name: STATUS
+  offset: '0x0000000C'
+  type: ro
+  width: 1

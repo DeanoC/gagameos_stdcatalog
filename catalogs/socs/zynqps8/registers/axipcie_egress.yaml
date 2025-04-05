@@ -1,0 +1,183 @@
+bank:
+- address: '0xfd0e0c00'
+  name: AXIPCIE_EGRESS0
+- address: '0xfd0e0c20'
+  name: AXIPCIE_EGRESS1
+- address: '0xfd0e0c40'
+  name: AXIPCIE_EGRESS2
+- address: '0xfd0e0c60'
+  name: AXIPCIE_EGRESS3
+- address: '0xfd0e0c80'
+  name: AXIPCIE_EGRESS4
+- address: '0xfd0e0ca0'
+  name: AXIPCIE_EGRESS5
+- address: '0xfd0e0cc0'
+  name: AXIPCIE_EGRESS6
+- address: '0xfd0e0ce0'
+  name: AXIPCIE_EGRESS7
+description: PCIe Bridge - Egress Addr Translation 0
+register:
+- default: '0x1F0C0001'
+  description: Egress AXI Translation - Capabilities
+  field:
+  - bits: '31:24'
+    longdesc: '* Maximum translation size is 2^(egress_size_offset+egress_size_max).'
+    name: EGRESS_SIZE_MAX
+    shortdesc: '* egress_size supports values between 0 and egress_size_max.'
+    type: ro
+  - bits: '23:16'
+    name: EGRESS_SIZE_OFFSET
+    type: ro
+  - bits: '15:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: EGRESS_PRESENT
+    type: ro
+  name: TRAN_EGRESS_CAPABILITIES
+  offset: '0x00000000'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress AXI Translation - Status
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24:16'
+    longdesc: There cannot be more translations outstanding than the number of simultaneously
+      outstanding transactions supported by the Expresso DMA Core (which is always
+      <512 transactions), so the Expresso DMA Core does not need to flow control requests
+      due to this field.
+    name: WR_PENDING_CTR
+    shortdesc: Number of write transactions outstanding for this translation.
+    type: ro
+  - bits: '15:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:0'
+    longdesc: There cannot be more translations outstanding than the number of simultaneously
+      outstanding transactions supported by the Expresso DMA Core (which is always
+      <512 transactions), so the Expresso DMA Core does not need to flow control requests
+      due to this field.
+    name: RD_PENDING_CTR
+    shortdesc: Number of read transactions outstanding for this translation.
+    type: ro
+  name: TRAN_EGRESS_STATUS
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Egress AXI Translation - Control
+  field:
+  - bits: '31:28'
+    longdesc: When egress_attr_enable == 1, the PCIe attributes {ID Based Ordering,
+      Relaxed Ordering, No Snoop} are set to egress_attr_w[2:0] when forwarding write
+      transactions hitting this translation to PCIe. When egress_attr_enable == 0,
+      PCIe attributes are all set to 0 when forwarding write transactions hitting
+      this translation to PCIe. Attributes which are not allowed to be set due to
+      PCI Express Configuration Register enable functionality will be cleared before
+      the transaction is forwarded to PCIe.
+    name: EGRESS_ATTR_W
+    shortdesc: Egress Write Attribute Override.
+    type: rw
+  - bits: '27:24'
+    longdesc: When egress_attr_enable == 1, the PCIe attributes {ID Based Ordering,
+      Relaxed Ordering, No Snoop} are set to egress_attr_r[2:0] when forwarding read
+      transactions hitting this translation to PCIe. When egress_attr_enable == 0,
+      PCIe attributes are all set to 0 when forwarding read transactions hitting this
+      translation to PCIe. Attributes which are not allowed to be set due to PCI Express
+      Configuration Register enable functionality will be cleared before the transaction
+      is forwarded to PCIe.
+    name: EGRESS_ATTR_R
+    shortdesc: Egress Read Attribute Override.
+    type: rw
+  - bits: '23'
+    name: EGRESS_ATTR_ENABLE
+    type: rw
+  - bits: '22:21'
+    name: RESERVED
+    type: ro
+  - bits: '20:16'
+    longdesc: The translation window size in bytes is configured to be 2^(egress_size_offset+egress_size).
+      egress_size must be <= egress_size_max.
+    name: EGRESS_SIZE
+    shortdesc: Translation Size.
+    type: rw
+  - bits: '15:14'
+    name: RESERVED
+    type: ro
+  - bits: '13:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:5'
+    name: RESERVED
+    type: ro
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    name: EGRESS_INVALID
+    type: rw
+  - bits: '2'
+    name: EGRESS_SECURITY_ENABLE
+    type: rw
+  - bits: '1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: 'The translation is hit when both of the following are true: * egress_enable
+      == 1 * egress_src_base[63:(12+egress_size)] == AXI Address[63:(12+egress_size)]'
+    name: EGRESS_ENABLE
+    shortdesc: Translation Enable.
+    type: rw
+  name: TRAN_EGRESS_CONTROL
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress AXI Translation - Source Address Low
+  field:
+  - bits: '31:12'
+    name: EGRESS_SRC_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: TRAN_EGRESS_SRC_BASE_LO
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress AXI Translation - Source Address High
+  field:
+  - bits: '31:0'
+    name: EGRESS_SRC_BASE_HI
+    type: rw
+  name: TRAN_EGRESS_SRC_BASE_HI
+  offset: '0x00000014'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Egress AXI Translation - Destination Address Low
+  field:
+  - bits: '31:12'
+    name: EGRESS_DST_BASE_LO
+    type: rw
+  - bits: '11:0'
+    name: RESERVED
+    type: ro
+  name: TRAN_EGRESS_DST_BASE_LO
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Egress AXI Translation - Destination Address High
+  field:
+  - bits: '31:0'
+    name: EGRESS_DST_BASE_HI
+    type: rw
+  name: TRAN_EGRESS_DST_BASE_HI
+  offset: '0x0000001C'
+  type: rw
+  width: 32

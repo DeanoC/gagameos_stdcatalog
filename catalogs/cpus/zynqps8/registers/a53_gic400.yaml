@@ -1,0 +1,681 @@
+description: APU GIC Interrupt Controller; GICv2
+name: ACPU_GIC
+register:
+- default: '0x00000000'
+  description: Hypervisor Control Register
+  name: H_HCR
+  offset: '0x00040000'
+  type: rw
+  width: 32
+- default: '0x90000003'
+  description: VGIC Type Register
+  name: H_VTR
+  offset: '0x00040004'
+  type: ro
+  width: 32
+- default: '0x004C0000'
+  description: Virtual Machine Control Register
+  name: H_VMCR
+  offset: '0x00040008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Maintenance Interrupt Status Register
+  name: H_MISR
+  offset: '0x00040010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: End of Interrupt Status Register
+  name: H_EISR0
+  offset: '0x00040020'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: Empty List register Status Register
+  name: H_ELSR0
+  offset: '0x00040030'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Priority Register
+  name: H_APR0
+  offset: '0x000400F0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 0
+  name: H_LR0
+  offset: '0x00040100'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 1
+  name: H_LR1
+  offset: '0x00040104'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 2
+  name: H_LR2
+  offset: '0x00040108'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 3
+  name: H_LR3
+  offset: '0x0004010C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Hypervisor Control Register
+  name: H_HCR_ALIAS0
+  offset: '0x00050000'
+  type: rw
+  width: 32
+- default: '0x90000003'
+  description: VGIC Type Register
+  name: H_VTR_ALIAS0
+  offset: '0x00050004'
+  type: ro
+  width: 32
+- default: '0x004C0000'
+  description: Virtual Machine Control Register
+  name: H_VMCR_ALIAS0
+  offset: '0x00050008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Maintenance Interrupt Status Register
+  name: H_MISR_ALIAS0
+  offset: '0x00050010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: End of Interrupt Status Register
+  name: H_EISR0_ALIAS0
+  offset: '0x00050020'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: Empty List register Status Register
+  name: H_ELSR0_ALIAS0
+  offset: '0x00050030'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Priority Register
+  name: H_APR0_ALIAS0
+  offset: '0x000500F0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 0
+  name: H_LR0_ALIAS0
+  offset: '0x00050100'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 1
+  name: H_LR1_ALIAS0
+  offset: '0x00050104'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 2
+  name: H_LR2_ALIAS0
+  offset: '0x00050108'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 3
+  name: H_LR3_ALIAS0
+  offset: '0x0005010C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Hypervisor Control Register
+  name: H_HCR_ALIAS1
+  offset: '0x00050200'
+  type: rw
+  width: 32
+- default: '0x90000003'
+  description: VGIC Type Register
+  name: H_VTR_ALIAS1
+  offset: '0x00050204'
+  type: ro
+  width: 32
+- default: '0x004C0000'
+  description: Virtual Machine Control Register
+  name: H_VMCR_ALIAS1
+  offset: '0x00050208'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Maintenance Interrupt Status Register
+  name: H_MISR_ALIAS1
+  offset: '0x00050210'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: End of Interrupt Status Register
+  name: H_EISR0_ALIAS1
+  offset: '0x00050220'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: Empty List register Status Register
+  name: H_ELSR0_ALIAS1
+  offset: '0x00050230'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Priority Register
+  name: H_APR0_ALIAS1
+  offset: '0x000502F0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 0
+  name: H_LR0_ALIAS1
+  offset: '0x00050300'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 1
+  name: H_LR1_ALIAS1
+  offset: '0x00050304'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 2
+  name: H_LR2_ALIAS1
+  offset: '0x00050308'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 3
+  name: H_LR3_ALIAS1
+  offset: '0x0005030C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Hypervisor Control Register
+  name: H_HCR_ALIAS2
+  offset: '0x00050400'
+  type: rw
+  width: 32
+- default: '0x90000003'
+  description: VGIC Type Register
+  name: H_VTR_ALIAS2
+  offset: '0x00050404'
+  type: ro
+  width: 32
+- default: '0x004C0000'
+  description: Virtual Machine Control Register
+  name: H_VMCR_ALIAS2
+  offset: '0x00050408'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Maintenance Interrupt Status Register
+  name: H_MISR_ALIAS2
+  offset: '0x00050410'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: End of Interrupt Status Register
+  name: H_EISR0_ALIAS2
+  offset: '0x00050420'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: Empty List register Status Register
+  name: H_ELSR0_ALIAS2
+  offset: '0x00050430'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Priority Register
+  name: H_APR0_ALIAS2
+  offset: '0x000504F0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 0
+  name: H_LR0_ALIAS2
+  offset: '0x00050500'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 1
+  name: H_LR1_ALIAS2
+  offset: '0x00050504'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 2
+  name: H_LR2_ALIAS2
+  offset: '0x00050508'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 3
+  name: H_LR3_ALIAS2
+  offset: '0x0005050C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Hypervisor Control Register
+  name: H_HCR_ALIAS3
+  offset: '0x00050600'
+  type: rw
+  width: 32
+- default: '0x90000003'
+  description: VGIC Type Register
+  name: H_VTR_ALIAS3
+  offset: '0x00050604'
+  type: ro
+  width: 32
+- default: '0x004C0000'
+  description: Virtual Machine Control Register
+  name: H_VMCR_ALIAS3
+  offset: '0x00050608'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Maintenance Interrupt Status Register
+  name: H_MISR_ALIAS3
+  offset: '0x00050610'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: End of Interrupt Status Register
+  name: H_EISR0_ALIAS3
+  offset: '0x00050620'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: Empty List register Status Register
+  name: H_ELSR0_ALIAS3
+  offset: '0x00050630'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Priority Register
+  name: H_APR0_ALIAS3
+  offset: '0x000506F0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 0
+  name: H_LR0_ALIAS3
+  offset: '0x00050700'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 1
+  name: H_LR1_ALIAS3
+  offset: '0x00050704'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 2
+  name: H_LR2_ALIAS3
+  offset: '0x00050708'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 3
+  name: H_LR3_ALIAS3
+  offset: '0x0005070C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Hypervisor Control Register
+  name: H_HCR_ALIAS4
+  offset: '0x00050800'
+  type: rw
+  width: 32
+- default: '0x90000003'
+  description: VGIC Type Register
+  name: H_VTR_ALIAS4
+  offset: '0x00050804'
+  type: ro
+  width: 32
+- default: '0x004C0000'
+  description: Virtual Machine Control Register
+  name: H_VMCR_ALIAS4
+  offset: '0x00050808'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Maintenance Interrupt Status Register
+  name: H_MISR_ALIAS4
+  offset: '0x00050810'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: End of Interrupt Status Register
+  name: H_EISR0_ALIAS4
+  offset: '0x00050820'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: Empty List register Status Register
+  name: H_ELSR0_ALIAS4
+  offset: '0x00050830'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Priority Register
+  name: H_APR0_ALIAS4
+  offset: '0x000508F0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 0
+  name: H_LR0_ALIAS4
+  offset: '0x00050900'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 1
+  name: H_LR1_ALIAS4
+  offset: '0x00050904'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 2
+  name: H_LR2_ALIAS4
+  offset: '0x00050908'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 3
+  name: H_LR3_ALIAS4
+  offset: '0x0005090C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Hypervisor Control Register
+  name: H_HCR_ALIAS5
+  offset: '0x00050A00'
+  type: rw
+  width: 32
+- default: '0x90000003'
+  description: VGIC Type Register
+  name: H_VTR_ALIAS5
+  offset: '0x00050A04'
+  type: ro
+  width: 32
+- default: '0x004C0000'
+  description: Virtual Machine Control Register
+  name: H_VMCR_ALIAS5
+  offset: '0x00050A08'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Maintenance Interrupt Status Register
+  name: H_MISR_ALIAS5
+  offset: '0x00050A10'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: End of Interrupt Status Register
+  name: H_EISR0_ALIAS5
+  offset: '0x00050A20'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: Empty List register Status Register
+  name: H_ELSR0_ALIAS5
+  offset: '0x00050A30'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Priority Register
+  name: H_APR0_ALIAS5
+  offset: '0x00050AF0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 0
+  name: H_LR0_ALIAS5
+  offset: '0x00050B00'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 1
+  name: H_LR1_ALIAS5
+  offset: '0x00050B04'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 2
+  name: H_LR2_ALIAS5
+  offset: '0x00050B08'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 3
+  name: H_LR3_ALIAS5
+  offset: '0x00050B0C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Hypervisor Control Register
+  name: H_HCR_ALIAS6
+  offset: '0x00050C00'
+  type: rw
+  width: 32
+- default: '0x90000003'
+  description: VGIC Type Register
+  name: H_VTR_ALIAS6
+  offset: '0x00050C04'
+  type: ro
+  width: 32
+- default: '0x004C0000'
+  description: Virtual Machine Control Register
+  name: H_VMCR_ALIAS6
+  offset: '0x00050C08'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Maintenance Interrupt Status Register
+  name: H_MISR_ALIAS6
+  offset: '0x00050C10'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: End of Interrupt Status Register
+  name: H_EISR0_ALIAS6
+  offset: '0x00050C20'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: Empty List register Status Register
+  name: H_ELSR0_ALIAS6
+  offset: '0x00050C30'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Priority Register
+  name: H_APR0_ALIAS6
+  offset: '0x00050CF0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 0
+  name: H_LR0_ALIAS6
+  offset: '0x00050D00'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 1
+  name: H_LR1_ALIAS6
+  offset: '0x00050D04'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 2
+  name: H_LR2_ALIAS6
+  offset: '0x00050D08'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 3
+  name: H_LR3_ALIAS6
+  offset: '0x00050D0C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Hypervisor Control Register
+  name: H_HCR_ALIAS7
+  offset: '0x00050E00'
+  type: rw
+  width: 32
+- default: '0x90000003'
+  description: VGIC Type Register
+  name: H_VTR_ALIAS7
+  offset: '0x00050E04'
+  type: ro
+  width: 32
+- default: '0x004C0000'
+  description: Virtual Machine Control Register
+  name: H_VMCR_ALIAS7
+  offset: '0x00050E08'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Maintenance Interrupt Status Register
+  name: H_MISR_ALIAS7
+  offset: '0x00050E10'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: End of Interrupt Status Register
+  name: H_EISR0_ALIAS7
+  offset: '0x00050E20'
+  type: ro
+  width: 32
+- default: '0x0000000F'
+  description: Empty List register Status Register
+  name: H_ELSR0_ALIAS7
+  offset: '0x00050E30'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Priority Register
+  name: H_APR0_ALIAS7
+  offset: '0x00050EF0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 0
+  name: H_LR0_ALIAS7
+  offset: '0x00050F00'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 1
+  name: H_LR1_ALIAS7
+  offset: '0x00050F04'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 2
+  name: H_LR2_ALIAS7
+  offset: '0x00050F08'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: List Register 3
+  name: H_LR3_ALIAS7
+  offset: '0x00050F0C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Virtual Machine Control Register
+  name: V_CTLR
+  offset: '0x00060000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: VM Priority Mask Register
+  name: V_PMR
+  offset: '0x00060004'
+  type: rw
+  width: 32
+- default: '0x00000002'
+  description: VM Binary Point Register
+  name: V_BPR
+  offset: '0x00060008'
+  type: rw
+  width: 32
+- default: '0x000003FF'
+  description: VM Interrupt Acknowledge Register
+  name: V_IAR
+  offset: '0x0006000C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: VM End of Interrupt Register
+  name: V_EOIR
+  offset: '0x00060010'
+  type: wo
+  width: 32
+- default: '0x000000FF'
+  description: VM Running Priority Register
+  name: V_RPR
+  offset: '0x00060014'
+  type: ro
+  width: 32
+- default: '0x000003FF'
+  description: VM Highest Priority Pending Interrupt Register
+  name: V_HPPIR
+  offset: '0x00060018'
+  type: ro
+  width: 32
+- default: '0x00000003'
+  description: VM Aliased Binary Point Register
+  name: V_ABPR
+  offset: '0x0006001C'
+  type: rw
+  width: 32
+- default: '0x000003FF'
+  description: VM Aliased Interrupt Acknowledge Register
+  name: V_AIAR
+  offset: '0x00060020'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: VM Aliased End of Interrupt Register
+  name: V_AEOIR
+  offset: '0x00060024'
+  type: wo
+  width: 32
+- default: '0x000003FF'
+  description: VM Aliased Highest Priority Pending Interrupt Register
+  name: V_AHPPIR
+  offset: '0x00060028'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: VM Active Priority Register
+  name: V_APR0
+  offset: '0x000600D0'
+  type: rw
+  width: 32
+- default: '0x0202143B'
+  description: VM CPU Interface Identification Register
+  name: V_IIDR
+  offset: '0x000600FC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: VM Deactivate Interrupt Register
+  name: V_DIR
+  offset: '0x00070000'
+  type: wo
+  width: 32

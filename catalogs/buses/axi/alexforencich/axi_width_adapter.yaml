@@ -1,0 +1,34 @@
+actions:
+- src
+- read_verilog_top
+parameters:
+  ADDR_WIDTH: 32
+  ARUSER_ENABLE: 0
+  ARUSER_WIDTH: 1
+  AWUSER_ENABLE: 0
+  AWUSER_WIDTH: 1
+  BUSER_ENABLE: 0
+  BUSER_WIDTH: 1
+  CONVERT_BURST: 1
+  CONVERT_NARROW_BURST: 0
+  FORWARD_ID: 0
+  ID_WIDTH: 8
+  M_DATA_WIDTH: 32
+  RUSER_ENABLE: 0
+  RUSER_WIDTH: 1
+  S_DATA_WIDTH: 32
+  WUSER_ENABLE: 0
+  WUSER_WIDTH: 1
+process:
+- name: src
+  processor: sources
+  sources:
+  - file: rtl/axi_adapter.v
+    language: verilog
+  - file: rtl/axi_adapter_rd.v
+    language: verilog
+  - file: rtl/axi_adapter_wr.v
+    language: verilog
+- name: read_verilog_top
+  processor: read_verilog_top
+  source: rtl/axi_adapter.v

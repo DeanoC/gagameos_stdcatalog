@@ -1,0 +1,5 @@
+definition:
+- type: ram.ddr.ddr4.MT40A256M16LY
+- type: ram.ddr.ddr3.MT41K512M16HA
+resources:
+- ram/ram.toml

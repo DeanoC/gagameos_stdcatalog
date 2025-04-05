@@ -1,0 +1,20 @@
+connection:
+- bus_name: pmu_pmuswitch
+  connection: PMU -> PMUSwitch
+  type: bus
+- bus_name: pmu_pmuoutbound
+  connection: PMUSwitch -> PMUOutSwitch
+  type: bus
+- bus_name: pmuram
+  connection: PMUSwitch -> PMURAM
+  type: bus
+- bus_name: pmuoutbound_iopoutbound
+  connection: PMUOutSwitch -> IOPOutboundSwitch
+  type: bus
+instance:
+- name: PMU
+  type: cpu.pmu.zynqps8
+- name: PMUSwitch
+  type: switch.internal.pmuswitch
+- name: PMURAM
+  type: ram.sram.pmuram

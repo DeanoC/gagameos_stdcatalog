@@ -1,0 +1,159 @@
+definition:
+- buses:
+  - address_width: 40
+    data_width: 128
+    name: apu_cci
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: hpcmulti_cci
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: siou_cci
+    supplier: false
+  - address_width: 40
+    data_width: 128
+    name: cci0_ddrc
+    supplier: true
+  - address_width: 40
+    data_width: 128
+    name: cci1_ddrc
+    supplier: true
+  - address_width: 40
+    data_width: 128
+    name: cci_fpd
+    supplier: true
+  registers:
+  - base_address: '0x006e_0000'
+    name: CCI_GPV
+    resource: registers/cci400.toml
+  - base_address: '0x005e_0000'
+    name: CCI_REG
+    resource: registers/cci_reg.toml
+  type: switch.internal.cci.zynqps8
+- buses:
+  - address_width: 40
+    data_width: 128
+    name: cci_fpd
+    supplier: false
+  - name: splitter0_fpd
+    supplier: false
+  - name: splitter1_fpd
+    supplier: false
+  - name: splitter2_fpd
+    supplier: false
+  - address_width: 40
+    data_width: 64
+    name: fpd_siou
+    supplier: true
+  - address_width: 18
+    base_address: '0x200_0000'
+    data_width: 128
+    name: fpd_ocm
+    supplier: true
+  - address_width: 18
+    data_width: 128
+    name: fpd_hpm{$index}
+    supplier: true
+  - address_width: 40
+    data_width: 64
+    name: fpd_lpdinbound
+    supplier: true
+  registers:
+  - base_address: '0x1a_0000'
+    name: CRF_APB
+    resource: registers/fpd/crf_apb.toml
+  - base_address: '0x70_0000'
+    name: FPD_GPV
+    resource: registers/fpd/fpd_gpv.toml
+  type: switch.internal.fpd.zynqps8
+- buses:
+  - address_width: 32
+    data_width: 64
+    name: fpd_siou
+    supplier: false
+  - data_width: 128
+    name: siou_gpu
+    supplier: true
+  - data_width: 32
+    name: siou_sata
+    supplier: true
+  - data_width: 32
+    name: siou_pcie
+    supplier: true
+  - data_width: 32
+    name: siou_dp
+    supplier: true
+  - data_width: 32
+    name: siou_fpddma
+    supplier: true
+  - data_width: 32
+    name: siou_fpd_config
+    supplier: true
+  - data_width: 32
+    name: siou_fpd_slcr
+    supplier: true
+  registers:
+  - base_address: '0x3d_0000'
+    name: SIOU
+    resource: registers/siou.toml
+  - base_address: '0x40_0000'
+    name: SERDES
+    resource: registers/serdes.toml
+  type: switch.internal.siouswitch.zynqps8
+- buses:
+  - address_width: 32
+    data_width: 64
+    name: gpu_siououtbound
+    supplier: false
+  - address_width: 32
+    data_width: 64
+    name: sata_siououtbound
+    supplier: false
+  - address_width: 32
+    data_width: 64
+    name: pcie_siououtbound
+    supplier: false
+  - address_width: 18
+    data_width: 128
+    name: siou_cci
+    supplier: true
+  type: switch.internal.siououtbound.zynqps8
+- buses:
+  - name: siou_fpd_slcr
+    supplier: false
+  registers:
+  - base_address: '0x61_0000'
+    name: FPD_SLCR
+    resource: registers/fpd/fpd_slcr.toml
+  - base_address: '0x69_0000'
+    name: FPD_SLCR_SECURE
+    resource: registers/fpd/fpd_slcr_secure.toml
+  type: other.internal.fpd_slcr.zynqps8
+- buses:
+  - name: in0
+    supplier: false
+  - name: in1
+    supplier: false
+  - name: in2
+    supplier: false
+  - name: out
+    supplier: true
+  type: switch.internal.three_to_one_multiplexer.zynqps8
+- buses:
+  - name: in0
+    supplier: false
+  - name: in1
+    supplier: false
+  - name: out
+    supplier: true
+  type: switch.internal.two_to_one_multiplexer.zynqps8
+- buses:
+  - name: in
+    supplier: false
+  - name: out0
+    supplier: true
+  - name: out1
+    supplier: true
+  type: switch.internal.one_to_two_splitter.zynqps8

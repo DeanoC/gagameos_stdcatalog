@@ -1,0 +1,581 @@
+description: CoreSight top level ROM in DAP, DAP ROM
+register:
+- default: '0x00100003'
+  description: ROM entry 0
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY00
+  offset: '0x00000000'
+  type: ro
+  width: 32
+- default: '0x00110003'
+  description: ROM entry 1
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY01
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x00120003'
+  description: ROM entry 2
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY02
+  offset: '0x00000008'
+  type: ro
+  width: 32
+- default: '0x00130003'
+  description: ROM entry 3
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY03
+  offset: '0x0000000C'
+  type: ro
+  width: 32
+- default: '0x00140003'
+  description: ROM entry 4
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY04
+  offset: '0x00000010'
+  type: ro
+  width: 32
+- default: '0x00150003'
+  description: ROM entry 5
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY05
+  offset: '0x00000014'
+  type: ro
+  width: 32
+- default: '0x00160003'
+  description: ROM entry 6
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY06
+  offset: '0x00000018'
+  type: ro
+  width: 32
+- default: '0x00170003'
+  description: ROM entry 7
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY07
+  offset: '0x0000001C'
+  type: ro
+  width: 32
+- default: '0x00180003'
+  description: ROM entry 8
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY08
+  offset: '0x00000020'
+  type: ro
+  width: 32
+- default: '0x00190003'
+  description: ROM entry 9
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY09
+  offset: '0x00000024'
+  type: ro
+  width: 32
+- default: '0x001A0003'
+  description: ROM entry 10
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY10
+  offset: '0x00000028'
+  type: ro
+  width: 32
+- default: '0x001B0003'
+  description: ROM entry 11
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY11
+  offset: '0x0000002C'
+  type: ro
+  width: 32
+- default: '0x001C0003'
+  description: ROM entry 12
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY12
+  offset: '0x00000030'
+  type: ro
+  width: 32
+- default: '0x001D0003'
+  description: ROM entry 13
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY13
+  offset: '0x00000034'
+  type: ro
+  width: 32
+- default: '0x001E0003'
+  description: ROM entry 14
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY14
+  offset: '0x00000038'
+  type: ro
+  width: 32
+- default: '0x001F0003'
+  description: ROM entry 15
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY15
+  offset: '0x0000003C'
+  type: ro
+  width: 32
+- default: '0x003E0003'
+  description: ROM entry 16
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY16
+  offset: '0x00000040'
+  type: ro
+  width: 32
+- default: '0x00400003'
+  description: ROM entry 17
+  field:
+  - bits: '30:12'
+    name: BASE_ADDR
+    type: ro
+  - bits: '1'
+    name: FORMAT
+    type: ro
+  - bits: '0'
+    name: ENTRY_PRESENT
+    type: ro
+  name: ENTRY17
+  offset: '0x00000044'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY18
+  offset: '0x00000048'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY19
+  offset: '0x0000004C'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY20
+  offset: '0x00000050'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY21
+  offset: '0x00000054'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY22
+  offset: '0x00000058'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY23
+  offset: '0x0000005C'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY24
+  offset: '0x00000060'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY25
+  offset: '0x00000064'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY26
+  offset: '0x00000068'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY27
+  offset: '0x0000006C'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY28
+  offset: '0x00000070'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY29
+  offset: '0x00000074'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY30
+  offset: '0x00000078'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Non-zero filler
+  field:
+  - bits: '4'
+    name: RESERVED
+    type: ro
+  name: ENTRY31
+  offset: '0x0000007C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: This register indicates the capabilities.
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: DEVID
+  offset: '0x00000FC8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: It provides a debugger with information about the component.
+  field:
+  - bits: '7:4'
+    name: SUB_TYPE
+    type: ro
+  - bits: '3:0'
+    name: MAJOR_TYPE
+    type: ro
+  name: DEVTYPE
+  offset: '0x00000FCC'
+  type: ro
+  width: 32
+- default: '0x00000001'
+  description: Peripheral Identification register 4
+  field:
+  - bits: '7:4'
+    name: SIZE
+    type: ro
+  - bits: '3:0'
+    name: DES_2
+    type: ro
+  name: PIDR4
+  offset: '0x00000FD0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Peripheral Identification register 5
+  name: PIDR5
+  offset: '0x00000FD4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Peripheral Identification register 6
+  name: PIDR6
+  offset: '0x00000FD8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Peripheral Identification register 7
+  name: PIDR7
+  offset: '0x00000FDC'
+  type: rw
+  width: 32
+- default: '0x00000038'
+  description: Peripheral Identification register 0
+  field:
+  - bits: '7:0'
+    name: PART_0
+    type: ro
+  name: PIDR0
+  offset: '0x00000FE0'
+  type: ro
+  width: 32
+- default: '0x00000037'
+  description: Peripheral Identification register 1
+  field:
+  - bits: '7:4'
+    name: DES_0
+    type: ro
+  - bits: '3:0'
+    name: PART_1
+    type: ro
+  name: PIDR1
+  offset: '0x00000FE4'
+  type: ro
+  width: 32
+- default: '0x00000009'
+  description: Peripheral Identification register 2
+  field:
+  - bits: '7:4'
+    name: REVISION
+    type: ro
+  - bits: '3'
+    name: JEDEC
+    type: ro
+  - bits: '2:0'
+    name: DES_1
+    type: ro
+  name: PIDR2
+  offset: '0x00000FE8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Peripheral Identification register 3
+  field:
+  - bits: '7:4'
+    name: REVAND
+    type: ro
+  - bits: '3:0'
+    name: CMOD
+    type: ro
+  name: PIDR3
+  offset: '0x00000FEC'
+  type: ro
+  width: 32
+- default: '0x0000000D'
+  description: Component Identification Register 0
+  field:
+  - bits: '7:0'
+    name: PRMBL_0
+    type: ro
+  name: CIDR0
+  offset: '0x00000FF0'
+  type: ro
+  width: 32
+- default: '0x00000010'
+  description: Component Identification Register 1
+  field:
+  - bits: '7:4'
+    longdesc: Constitutes bits [15:12] of the component identification.
+    name: CLASS
+    shortdesc: Class of the component.
+    type: ro
+  - bits: '3:0'
+    name: PRMBL_1
+    type: ro
+  name: CIDR1
+  offset: '0x00000FF4'
+  type: ro
+  width: 32
+- default: '0x00000005'
+  description: Component Identification Register 2
+  field:
+  - bits: '7:0'
+    name: PRMBL_2
+    type: ro
+  name: CIDR2
+  offset: '0x00000FF8'
+  type: ro
+  width: 32
+- default: '0x000000B1'
+  description: Component Identification Register 3
+  field:
+  - bits: '7:0'
+    name: PRMBL_3
+    type: ro
+  name: CIDR3
+  offset: '0x00000FFC'
+  type: ro
+  width: 32

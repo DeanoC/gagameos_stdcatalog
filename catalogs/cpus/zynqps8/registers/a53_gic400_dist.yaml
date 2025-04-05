@@ -1,0 +1,1320 @@
+description: APU GIC Interrupt Controller; GICv2 distributor registers
+name: ACPU_GICD
+register:
+- default: '0x00000000'
+  description: Distributor Control Register
+  field:
+  - bits: '0'
+    description: Enables Group 0 interrupts in this GIC
+    name: ENABLE_GRP0
+    type: rw
+  - bits: '1'
+    description: Enables Group 1 interrupts in this GIC
+    name: ENABLE_GRP1
+    type: rw
+  name: CTLR
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Controller Type Register
+  field:
+  - bits: '[4:0]'
+    description: 32 * (N+1) maximum interrupt lines supported
+    name: ITLINE_NUMBER
+    type: ro
+  - bits: '[7:5]'
+    description: N+1 cpus supported by this GIC
+    name: CPU_NUMBER
+    type: ro
+  - bits: '10'
+    description: Are the Security extensions supported?
+    name: SECURITY_EXT
+    type: ro
+  - bits: '[15:11]'
+    description: If Security extension supported how many SPI are lockable?
+    name: LSPI
+    type: ro
+  name: TYPER
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x0200143B'
+  description: Distributor Implementer Identification Register
+  field:
+  - bits: '[11:0]'
+    description: JEP106 code of HW maker, for ARM = 0x43B
+    name: IMPLEMENTER
+    type: ro
+  - bits: '[15:12]'
+    description: Implementation defined minor revision code
+    name: REVISION
+    type: ro
+  - bits: '[19:16]'
+    description: Implementation defined variant code
+    name: VARIANT
+    type: ro
+  - bits: '[31:24]'
+    description: Implementation defined product ID
+    name: PRODUCT_ID
+    type: ro
+  name: IIDR
+  offset: '0x00000008'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Group Registers
+  field:
+  - bits: '[31:0]'
+    description: each bit is an interrupt 0 = interrupt is Group 0, 1 is Group 1
+    name: GROUP_STATUS
+    type: rw
+  name: IGROUPR0
+  offset: '0x00000080'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Group Registers
+  name: IGROUPR1
+  offset: '0x00000084'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Group Registers
+  name: IGROUPR2
+  offset: '0x00000088'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Group Registers
+  name: IGROUPR3
+  offset: '0x0000008C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Group Registers
+  name: IGROUPR4
+  offset: '0x00000090'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Group Registers
+  name: IGROUPR5
+  offset: '0x00000094'
+  type: rw
+  width: 32
+- default: '0x0000FFFF'
+  description: Interrupt Set-Enable Registers
+  field:
+  - bits: '[31:0]'
+    description: each bit is an interrupt Write 1 = forward to CPU
+    name: SET_ENABLE
+    type: rw
+  name: ISENABLER0
+  offset: '0x00000100'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Enable Registers
+  name: ISENABLER1
+  offset: '0x00000104'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Enable Registers
+  name: ISENABLER2
+  offset: '0x00000108'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Enable Registers
+  name: ISENABLER3
+  offset: '0x0000010C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Enable Registers
+  name: ISENABLER4
+  offset: '0x00000110'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Enable Registers
+  name: ISENABLER5
+  offset: '0x00000114'
+  type: rw
+  width: 32
+- default: '0x0000FFFF'
+  description: Interrupt Clear-Enable Registers
+  field:
+  - bits: '[31:0]'
+    description: each bit is an interrupt 1 = does not forward
+    name: CLR_ENABLE
+    type: rw
+  name: ICENABLER0
+  offset: '0x00000180'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Enable Registers
+  name: ICENABLER1
+  offset: '0x00000184'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Enable Registers
+  name: ICENABLER2
+  offset: '0x00000188'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Enable Registers
+  name: ICENABLER3
+  offset: '0x0000018C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Enable Registers
+  name: ICENABLER4
+  offset: '0x00000190'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Enable Registers
+  name: ICENABLER5
+  offset: '0x00000194'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers
+  field:
+  - bits: '[31:0]'
+    description: each bit is an interrupt, read is pending write 1 = making pending
+    name: SET_PENDING
+    type: rw
+  name: ISPENDR0
+  offset: '0x00000200'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers
+  name: ISPENDR1
+  offset: '0x00000204'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers
+  name: ISPENDR2
+  offset: '0x00000208'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers
+  name: ISPENDR3
+  offset: '0x0000020C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers
+  name: ISPENDR4
+  offset: '0x00000210'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers
+  name: ISPENDR5
+  offset: '0x00000214'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Pending Registers
+  field:
+  - bits: '[31:0]'
+    description: each bit is an interrupt, read is pending write 1 = clear pending
+    name: CLR_PENDING
+    type: rw
+  name: ICPENDR0
+  offset: '0x00000280'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Pending Registers
+  name: ICPENDR1
+  offset: '0x00000284'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Pending Registers
+  name: ICPENDR2
+  offset: '0x00000288'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Pending Registers
+  name: ICPENDR3
+  offset: '0x0000028C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Pending Registers
+  name: ICPENDR4
+  offset: '0x00000290'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Pending Registers
+  name: ICPENDR5
+  offset: '0x00000294'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Active Registers
+  field:
+  - bits: '[31:0]'
+    description: each bit is an interrupt, read is active write 1 = making active
+    name: SET_ACTIVE
+    type: rw
+  name: ISACTIVER0
+  offset: '0x00000300'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Active Registers
+  name: ISACTIVER1
+  offset: '0x00000304'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Active Registers
+  name: ISACTIVER2
+  offset: '0x00000308'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Active Registers
+  name: ISACTIVER3
+  offset: '0x0000030C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Active Registers
+  name: ISACTIVER4
+  offset: '0x00000310'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Active Registers
+  name: ISACTIVER5
+  offset: '0x00000314'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Active Registers
+  field:
+  - bits: '[31:0]'
+    description: each bit is an interrupt, read is active write 1 = clear active
+    name: CLR_ACTIVE
+    type: rw
+  name: ICACTIVER0
+  offset: '0x00000380'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Active Registers
+  name: ICACTIVER1
+  offset: '0x00000384'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Active Registers
+  name: ICACTIVER2
+  offset: '0x00000388'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Active Registers
+  name: ICACTIVER3
+  offset: '0x0000038C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Active Registers
+  name: ICACTIVER4
+  offset: '0x00000390'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Active Registers
+  name: ICACTIVER5
+  offset: '0x00000394'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  field:
+  - bits: '[31:24]'
+    description: byte priority of interupt number/4
+    name: PRIORITY_4
+    type: rw
+  - bits: '[23:16]'
+    description: byte priority of interupt number/4
+    name: PRIORITY_2
+    type: rw
+  - bits: '[15:8]'
+    description: byte priority of interupt number/4
+    name: PRIORITY_1
+    type: rw
+  - bits: '[7:0]'
+    description: byte priority of interupt number/4
+    name: PRIORITY_0
+    type: rw
+  name: IPRIORITYR0
+  offset: '0x00000400'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR1
+  offset: '0x00000404'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR2
+  offset: '0x00000408'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR3
+  offset: '0x0000040C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR4
+  offset: '0x00000410'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR5
+  offset: '0x00000414'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR6
+  offset: '0x00000418'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR7
+  offset: '0x0000041C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR8
+  offset: '0x00000420'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR9
+  offset: '0x00000424'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR10
+  offset: '0x00000428'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR11
+  offset: '0x0000042C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR12
+  offset: '0x00000430'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR13
+  offset: '0x00000434'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR14
+  offset: '0x00000438'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR15
+  offset: '0x0000043C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR16
+  offset: '0x00000440'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR17
+  offset: '0x00000444'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR18
+  offset: '0x00000448'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR19
+  offset: '0x0000044C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR20
+  offset: '0x00000450'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR21
+  offset: '0x00000454'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR22
+  offset: '0x00000458'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR23
+  offset: '0x0000045C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR24
+  offset: '0x00000460'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR25
+  offset: '0x00000464'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR26
+  offset: '0x00000468'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR27
+  offset: '0x0000046C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR28
+  offset: '0x00000470'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR29
+  offset: '0x00000474'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR30
+  offset: '0x00000478'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR31
+  offset: '0x0000047C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR32
+  offset: '0x00000480'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR33
+  offset: '0x00000484'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR34
+  offset: '0x00000488'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR35
+  offset: '0x0000048C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR36
+  offset: '0x00000490'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR37
+  offset: '0x00000494'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR38
+  offset: '0x00000498'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR39
+  offset: '0x0000049C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR40
+  offset: '0x000004A0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR41
+  offset: '0x000004A4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR42
+  offset: '0x000004A8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR43
+  offset: '0x000004AC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR44
+  offset: '0x000004B0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR45
+  offset: '0x000004B4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR46
+  offset: '0x000004B8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers
+  name: IPRIORITYR47
+  offset: '0x000004BC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  field:
+  - bits: '[31:24]'
+    description: (1 << cpu_target) per interrupt
+    name: CPU_TARGET_4
+    type: rw
+  - bits: '[23:16]'
+    description: (1 << cpu_target) per interrupt
+    name: CPU_TARGET_2
+    type: rw
+  - bits: '[15:8]'
+    description: (1 << cpu_target) per interrupt
+    name: CPU_TARGET_1
+    type: rw
+  - bits: '[7:0]'
+    description: (1 << cpu_target) per interrupt
+    name: CPU_TARGET_0
+    type: rw
+  name: ITARGETSR0
+  offset: '0x00000800'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR1
+  offset: '0x00000804'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR2
+  offset: '0x00000808'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR3
+  offset: '0x0000080C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR4
+  offset: '0x00000810'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR5
+  offset: '0x00000814'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR6
+  offset: '0x00000818'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR7
+  offset: '0x0000081C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR8
+  offset: '0x00000820'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR9
+  offset: '0x00000824'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR10
+  offset: '0x00000828'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR11
+  offset: '0x0000082C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR12
+  offset: '0x00000830'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR13
+  offset: '0x00000834'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR14
+  offset: '0x00000838'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR15
+  offset: '0x0000083C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR16
+  offset: '0x00000840'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR17
+  offset: '0x00000844'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR18
+  offset: '0x00000848'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR19
+  offset: '0x0000084C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR20
+  offset: '0x00000850'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR21
+  offset: '0x00000854'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR22
+  offset: '0x00000858'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR23
+  offset: '0x0000085C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR24
+  offset: '0x00000860'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR25
+  offset: '0x00000864'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR26
+  offset: '0x00000868'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR27
+  offset: '0x0000086C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR28
+  offset: '0x00000870'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR29
+  offset: '0x00000874'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR30
+  offset: '0x00000878'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR31
+  offset: '0x0000087C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR32
+  offset: '0x00000880'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR33
+  offset: '0x00000884'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR34
+  offset: '0x00000888'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR35
+  offset: '0x0000088C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR36
+  offset: '0x00000890'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR37
+  offset: '0x00000894'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR38
+  offset: '0x00000898'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR39
+  offset: '0x0000089C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR40
+  offset: '0x000008A0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR41
+  offset: '0x000008A4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR42
+  offset: '0x000008A8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR43
+  offset: '0x000008AC'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR44
+  offset: '0x000008B0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR45
+  offset: '0x000008B4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR46
+  offset: '0x000008B8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers
+  name: ITARGETSR47
+  offset: '0x000008BC'
+  type: rw
+  width: 32
+- default: '0xAAAAAAAA'
+  description: Interrupt Configuration Registers
+  field:
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_0
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_1
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_2
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_3
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_4
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_5
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_6
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_7
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_8
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_9
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_10
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_11
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_12
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_13
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_14
+    type: rw
+  - bits: '[2:0]'
+    description: 0x00 = level sensitive, 0x10 = edge triggered
+    name: CONFIG_FIELD_15
+    type: rw
+  name: ICFGR0
+  offset: '0x00000C00'
+  type: ro
+  width: 32
+- default: '0x55540000'
+  description: Interrupt Configuration Registers
+  name: ICFGR1
+  offset: '0x00000C04'
+  type: ro
+  width: 32
+- default: '0x55555555'
+  description: Interrupt Configuration Registers
+  name: ICFGR2
+  offset: '0x00000C08'
+  type: rw
+  width: 32
+- default: '0x55555555'
+  description: Interrupt Configuration Registers
+  name: ICFGR3
+  offset: '0x00000C0C'
+  type: rw
+  width: 32
+- default: '0x55555555'
+  description: Interrupt Configuration Registers
+  name: ICFGR4
+  offset: '0x00000C10'
+  type: rw
+  width: 32
+- default: '0x55555555'
+  description: Interrupt Configuration Registers
+  name: ICFGR5
+  offset: '0x00000C14'
+  type: rw
+  width: 32
+- default: '0x55555555'
+  description: Interrupt Configuration Registers
+  name: ICFGR6
+  offset: '0x00000C18'
+  type: rw
+  width: 32
+- default: '0x55555555'
+  description: Interrupt Configuration Registers
+  name: ICFGR7
+  offset: '0x00000C1C'
+  type: rw
+  width: 32
+- default: '0x55555555'
+  description: Interrupt Configuration Registers
+  name: ICFGR8
+  offset: '0x00000C20'
+  type: rw
+  width: 32
+- default: '0x55555555'
+  description: Interrupt Configuration Registers
+  name: ICFGR9
+  offset: '0x00000C24'
+  type: rw
+  width: 32
+- default: '0x55555555'
+  description: Interrupt Configuration Registers
+  name: ICFGR10
+  offset: '0x00000C28'
+  type: rw
+  width: 32
+- default: '0x55555555'
+  description: Interrupt Configuration Registers
+  name: ICFGR11
+  offset: '0x00000C2C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Private Peripheral Interrupt Status Register
+  name: PPISR
+  offset: '0x00000D00'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Shared Peripheral Interrupt Status Registers
+  name: SPISR0
+  offset: '0x00000D04'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Shared Peripheral Interrupt Status Registers
+  name: SPISR1
+  offset: '0x00000D08'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Shared Peripheral Interrupt Status Registers
+  name: SPISR2
+  offset: '0x00000D0C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Shared Peripheral Interrupt Status Registers
+  name: SPISR3
+  offset: '0x00000D10'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Shared Peripheral Interrupt Status Registers
+  name: SPISR4
+  offset: '0x00000D14'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Software Generated Interrupt Register
+  field:
+  - bits: '[3:0]'
+    description: Sofware Generated Interrupt ID field 0-15
+    name: SGIINTID
+    type: rw
+  - bits: '15'
+    description: 0 = Group 0 or 1 = Group 1
+    name: NSATT
+    type: rw
+  - bits: '[23:16]'
+    description: Each bit refers to a cpu to forward this interrupt to
+    name: CPU_TARGET_LIST
+    type: rw
+  - bits: '[23:16]'
+    description: 0b00 = Forward to all CPUs, 0b01 Forward to all except issuer, 0b10
+      Forward to issuer only
+    name: TARGET_LIST_FILTER
+    type: rw
+  name: SGIR
+  offset: '0x00000F00'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: SGI Clear-Pending Registers
+  field:
+  - bits: '[7:0]'
+    description: Each bit clears the pending flag for corresponding CPU for appropiate
+      interrupt
+    name: CLR_PENDING_0
+    type: rw
+  - bits: '[15:8]'
+    description: Each bit clears the pending flag for corresponding CPU for appropiate
+      interrupt
+    name: CLR_PENDING_1
+    type: rw
+  - bits: '[23:16]'
+    description: Each bit clears the pending flag for corresponding CPU for appropiate
+      interrupt
+    name: CLR_PENDING_2
+    type: rw
+  - bits: '[31:24]'
+    description: Each bit clears the pending flag for corresponding CPU for appropiate
+      interrupt
+    name: CLR_PENDING_3
+    type: rw
+  name: CPENDSGIR0
+  offset: '0x00000F10'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SGI Clear-Pending Registers
+  name: CPENDSGIR1
+  offset: '0x00000F14'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SGI Clear-Pending Registers
+  name: CPENDSGIR2
+  offset: '0x00000F18'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SGI Clear-Pending Registers
+  name: CPENDSGIR3
+  offset: '0x00000F1C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SGI Set-Pending Registers
+  field:
+  - bits: '[7:0]'
+    description: Each bit sets the pending flag for corresponding CPU for appropiate
+      interrupt
+    name: SET_PENDING_0
+    type: rw
+  - bits: '[15:8]'
+    description: Each bit sets the pending flag for corresponding CPU for appropiate
+      interrupt
+    name: SET_PENDING_1
+    type: rw
+  - bits: '[23:16]'
+    description: Each bit sets the pending flag for corresponding CPU for appropiate
+      interrupt
+    name: SET_PENDING_2
+    type: rw
+  - bits: '[31:24]'
+    description: Each bit sets the pending flag for corresponding CPU for appropiate
+      interrupt
+    name: SET_PENDING_3
+    type: rw
+  name: SPENDSGIR0
+  offset: '0x00000F20'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SGI Set-Pending Registers
+  name: SPENDSGIR1
+  offset: '0x00000F24'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SGI Set-Pending Registers
+  name: SPENDSGIR2
+  offset: '0x00000F28'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: SGI Set-Pending Registers
+  name: SPENDSGIR3
+  offset: '0x00000F2C'
+  type: rw
+  width: 32
+- default: '0x00000090'
+  description: Peripheral ID0 Register
+  name: PIDR0
+  offset: '0x00000FE0'
+  type: ro
+  width: 32
+- default: '0x000000B4'
+  description: Peripheral ID1 Register
+  name: PIDR1
+  offset: '0x00000FE4'
+  type: ro
+  width: 32
+- default: '0x0000002B'
+  description: Peripheral ID2 Register
+  name: PIDR2
+  offset: '0x00000FE8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Peripheral ID3 Register
+  name: PIDR3
+  offset: '0x00000FEC'
+  type: ro
+  width: 32
+- default: '0x00000004'
+  description: Peripheral ID4 Register
+  name: PIDR4
+  offset: '0x00000FD0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Peripheral ID5 Register
+  name: PIDR5
+  offset: '0x00000FD4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Peripheral ID6 Register
+  name: PIDR6
+  offset: '0x00000FD8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Peripheral ID7 Register
+  name: PIDR7
+  offset: '0x00000FDC'
+  type: ro
+  width: 32
+- default: '0x0000000D'
+  description: Component ID0 Register
+  name: CIDR0
+  offset: '0x00000FF0'
+  type: ro
+  width: 32
+- default: '0x000000F0'
+  description: Component ID1 Register
+  name: CIDR1
+  offset: '0x00000FF4'
+  type: ro
+  width: 32
+- default: '0x00000005'
+  description: Component ID2 Register
+  name: CIDR2
+  offset: '0x00000FF8'
+  type: ro
+  width: 32
+- default: '0x000000B1'
+  description: Component ID3 Register
+  name: CIDR3
+  offset: '0x00000FFC'
+  type: ro
+  width: 32

@@ -1,0 +1,246 @@
+bank:
+- address: '0xfe900000'
+  name: CORESIGHT_SOC_TSGEN
+description: Master Timestamp generator
+register:
+- default: '0x00000000'
+  description: Controls counter operation by enabling or disabling or halting the
+    counter
+  field:
+  - bits: '1'
+    longdesc: Halt on Debug
+    name: CNTCR_HDBG
+    shortdesc: Halt the counter based on state of primary input.
+    type: rw
+  - bits: '0'
+    name: CNTCR_EN
+    type: rw
+  name: CNTCR
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Counter status register
+  field:
+  - bits: '1'
+    name: CNTSR_DBGH
+    type: ro
+  name: CNTSR
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Current value of Counter. Lower 32-bits.
+  field:
+  - bits: '31:0'
+    longdesc: Lower 32-bits
+    name: CNTCVL_L_32
+    shortdesc: Current value of Counter.
+    type: rw
+  name: CNTCVL
+  offset: '0x00000008'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Current value of Counter. Upper 32-bits.
+  field:
+  - bits: '31:0'
+    longdesc: Upper 32-bits
+    name: CNTCVU_U_32
+    shortdesc: Current value of Counter.
+    type: rw
+  name: CNTCVU
+  offset: '0x0000000C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Base Frequency ID
+  field:
+  - bits: '31:0'
+    name: CNTFID0
+    type: rw
+  name: CNTFID0
+  offset: '0x00000020'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: This register indicates the capabilities.
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: DEVID
+  offset: '0x00000FC8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: It provides a debugger with information about the component.
+  field:
+  - bits: '7:4'
+    name: SUB_TYPE
+    type: ro
+  - bits: '3:0'
+    name: MAJOR_TYPE
+    type: ro
+  name: DEVTYPE
+  offset: '0x00000FCC'
+  type: ro
+  width: 32
+- default: '0x00000004'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer identity and the memory footprint indicator.
+  field:
+  - bits: '7:4'
+    longdesc: If a component only requires the standard 4KB, this must read as 0x0,
+      4KB only. For 8KB set to 0x1, for 16KB set to 0x2, for 32KB set to 0x3, and
+      so on.
+    name: SIZE
+    shortdesc: This is a 4-bit value that indicates the total contiguous size of the
+      memory window used by this component in powers of 2 from the standard 4KB.
+    type: ro
+  - bits: '3:0'
+    name: DES_2
+    type: ro
+  name: PIDR4
+  offset: '0x00000FD0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  name: PIDR5
+  offset: '0x00000FD4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  name: PIDR6
+  offset: '0x00000FD8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Reserved
+  name: PIDR7
+  offset: '0x00000FDC'
+  type: rw
+  width: 32
+- default: '0x00000001'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer specific part number.
+  field:
+  - bits: '7:0'
+    longdesc: This is selected by the designer of the component.
+    name: PART_0
+    shortdesc: Bits [7:0] of the component part number.
+    type: ro
+  name: PIDR0
+  offset: '0x00000FE0'
+  type: ro
+  width: 32
+- default: '0x000000B1'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer specific part number and part of the designer identity.
+  field:
+  - bits: '7:4'
+    name: DES_0
+    type: ro
+  - bits: '3:0'
+    longdesc: This is selected by the designer of the component.
+    name: PART_1
+    shortdesc: Bits [11:8] of the component part number.
+    type: ro
+  name: PIDR1
+  offset: '0x00000FE4'
+  type: ro
+  width: 32
+- default: '0x0000001B'
+  description: Part of the set of Peripheral Identification registers. Contains part
+    of the designer identity and the product revision.
+  field:
+  - bits: '7:4'
+    longdesc: This only increases by 1 for both major and minor revisions and is used
+      as a look-up to establish the exact major and minor revision.
+    name: REVISION
+    shortdesc: The Revision field is an incremental value starting at 0x0 for the
+      first design of this component.
+    type: ro
+  - bits: '3'
+    longdesc: Indicates that a JEDEC assigned value is used.
+    name: JEDEC
+    shortdesc: Always set.
+    type: ro
+  - bits: '2:0'
+    name: DES_1
+    type: ro
+  name: PIDR2
+  offset: '0x00000FE8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Part of the set of Peripheral Identification registers. Contains the
+    RevAnd and Customer Modified fields.
+  field:
+  - bits: '7:4'
+    longdesc: In most cases this field is zero. It is recommended that component designers
+      ensure this field can be changed by a metal fix if required, for example by
+      driving it from registers that reset to zero.
+    name: REVAND
+    shortdesc: This field indicates minor errata fixes specific to this design, for
+      example metal fixes after implementation.
+    type: ro
+  - bits: '3:0'
+    longdesc: In most cases this field is zero.
+    name: CMOD
+    shortdesc: Where the component is reusable IP, this value indicates if the customer
+      has modified the behavior of the component.
+    type: ro
+  name: PIDR3
+  offset: '0x00000FEC'
+  type: ro
+  width: 32
+- default: '0x0000000D'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_0
+    type: ro
+  name: CIDR0
+  offset: '0x00000FF0'
+  type: ro
+  width: 32
+- default: '0x000000F0'
+  description: A component identification register, that indicates that the identification
+    registers are present. This register also indicates the component class.
+  field:
+  - bits: '7:4'
+    name: CLASS
+    type: ro
+  - bits: '3:0'
+    name: PRMBL_1
+    type: ro
+  name: CIDR1
+  offset: '0x00000FF4'
+  type: ro
+  width: 32
+- default: '0x00000005'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_2
+    type: ro
+  name: CIDR2
+  offset: '0x00000FF8'
+  type: ro
+  width: 32
+- default: '0x000000B1'
+  description: A component identification register, that indicates that the identification
+    registers are present.
+  field:
+  - bits: '7:0'
+    name: PRMBL_3
+    type: ro
+  name: CIDR3
+  offset: '0x00000FFC'
+  type: ro
+  width: 32

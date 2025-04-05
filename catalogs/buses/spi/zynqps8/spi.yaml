@@ -1,0 +1,316 @@
+description: SPI Controller
+register:
+- default: '0x00020000'
+  description: SPI configuration
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17'
+    name: MODEFAIL_GEN_EN
+    type: rw
+  - bits: '16'
+    name: MAN_START_COM
+    type: wo
+  - bits: '15'
+    name: MAN_START_EN
+    type: rw
+  - bits: '14'
+    name: MANUAL_CS
+    type: rw
+  - bits: '13:10'
+    longdesc: 'xxx0: slave 0 selected xx01: slave 1 selected x011: slave 2 selected
+      0111: reserved 1111: No slave selected Change only when controller is not actively
+      transmitting or receiving data.'
+    name: CS
+    shortdesc: Peripheral chip select lines; valid only if [Manual_CS] = 1.
+    type: rw
+  - bits: '9'
+    name: PERI_SEL
+    type: rw
+  - bits: '8'
+    name: REF_CLK
+    type: rw
+  - bits: '7:6'
+    name: RESERVED
+    type: rw
+  - bits: '5:3'
+    longdesc: '000: reserved 001: divide by 4 010: divide by 8 011: divide by 16 100:
+      divide by 32 101: divide by 64 110: divide by 128 111: divide by 256 Change
+      only when controller is not actively transmitting or receiving data.'
+    name: BAUD_RATE_DIV
+    shortdesc: Master mode baud rate divisor controls the amount the SPI_REF_CLK is
+      divided for the controller.
+    type: rw
+  - bits: '2'
+    name: CLK_PH
+    type: rw
+  - bits: '1'
+    name: CLK_POL
+    type: rw
+  - bits: '0'
+    name: MODE_SEL
+    type: rw
+  name: CONFIG
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000004'
+  description: SPI interrupt status
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    longdesc: '1: underflow is detected 0: no underflow has been detected'
+    name: TX_FIFO_UNDERFLOW
+    shortdesc: TX FIFO underflow, write one to this bit location to clear.
+    type: wtc
+  - bits: '5'
+    name: RX_FIFO_FULL
+    type: wtc
+  - bits: '4'
+    name: RX_FIFO_NOT_EMPTY
+    type: wtc
+  - bits: '3'
+    name: TX_FIFO_FULL
+    type: wtc
+  - bits: '2'
+    name: TX_FIFO_NOT_FULL
+    type: wtc
+  - bits: '1'
+    longdesc: '1: Use if n_ss_in is low in master mode (multi-master contention) or
+      n_ss_in goes high during a transmission in slave mode. These conditions will
+      clear the spi_enable bit and disable the SPI. This bit is reset only by a system
+      reset and cleared only when this register is read. ModeFail interrupt, write
+      one to this bit location to clear. 1: a mode fault has occurred 0: no mode fault
+      has been detected'
+    name: MODE_FAIL
+    shortdesc: Logic level on n_ss_in pin is inconsistent with the SPI mode.
+    type: wtc
+  - bits: '0'
+    longdesc: '1: overflow occured 0: no overflow occurred'
+    name: RX_OVERFLOW
+    shortdesc: Receive Overflow interrupt, write one to this bit location to clear.
+    type: wtc
+  name: ISR
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    name: TX_FIFO_UNDERFLOW
+    type: wo
+  - bits: '5'
+    name: RX_FIFO_FULL
+    type: wo
+  - bits: '4'
+    name: RX_FIFO_NOT_EMPTY
+    type: wo
+  - bits: '3'
+    name: TX_FIFO_FULL
+    type: wo
+  - bits: '2'
+    name: TX_FIFO_NOT_FULL
+    type: wo
+  - bits: '1'
+    name: MODE_FAIL
+    type: wo
+  - bits: '0'
+    name: RX_OVERFLOW
+    type: wo
+  name: IER
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt disable
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    name: TX_FIFO_UNDERFLOW
+    type: wo
+  - bits: '5'
+    name: RX_FIFO_FULL
+    type: wo
+  - bits: '4'
+    name: RX_FIFO_NOT_EMPTY
+    type: wo
+  - bits: '3'
+    name: TX_FIFO_FULL
+    type: wo
+  - bits: '2'
+    name: TX_FIFO_NOT_FULL
+    type: wo
+  - bits: '1'
+    name: MODE_FAIL
+    type: wo
+  - bits: '0'
+    name: RX_OVERFLOW
+    type: wo
+  name: IDR
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt mask
+  field:
+  - bits: '31:7'
+    name: RESERVED
+    type: ro
+  - bits: '6'
+    name: TX_FIFO_UNDERFLOW
+    type: ro
+  - bits: '5'
+    name: RX_FIFO_FULL
+    type: ro
+  - bits: '4'
+    name: RX_FIFO_NOT_EMPTY
+    type: ro
+  - bits: '3'
+    name: TX_FIFO_FULL
+    type: ro
+  - bits: '2'
+    name: TX_FIFO_NOT_FULL
+    type: ro
+  - bits: '1'
+    name: MODE_FAIL
+    type: ro
+  - bits: '0'
+    name: RX_OVERFLOW
+    type: ro
+  name: IMR
+  offset: '0x00000010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: SPI_Enable
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: SPI_EN
+    type: rw
+  name: ENABLE
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Clock Delay
+  field:
+  - bits: '31:24'
+    longdesc: Change only when controller is not actively transmitting or receiving
+      data.
+    name: D_NSS
+    shortdesc: Delay in SPI REFERENCE CLOCK or ext_clk cycles for the length that
+      the master mode chip select outputs are de-asserted between words when Config_reg0
+      [CLK_PHA], cpha = 0.
+    type: rw
+  - bits: '23:16'
+    longdesc: Change only when controller is not actively transmitting or receiving
+      data.
+    name: D_BTWN
+    shortdesc: Delay in SPI REFERENCE CLOCK or ext_clk cycles between one chip select
+      de-assertion and the assertion of the next chip select.
+    type: rw
+  - bits: '15:8'
+    longdesc: Change only when controller is not actively transmitting or receiving
+      data.
+    name: D_AFTER
+    shortdesc: Delay in SPI REFERENCE CLOCK or ext_clk cycles between last bit of
+      current word and the first bit of the next word.
+    type: rw
+  - bits: '7:0'
+    longdesc: Change only when controller is not actively transmitting or receiving
+      data.
+    name: D_INT
+    shortdesc: Added delay in SPI REFERENCE CLOCK or ext_clk cycles between n_ss_out
+      going low and first bit transfer.
+    type: rw
+  name: DELAY
+  offset: '0x00000018'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Transmit Data.
+  field:
+  - bits: '31:0'
+    longdesc: Valid data bits are [7:0].
+    name: TX_FIFO_DATA
+    shortdesc: Data written to TX FIFO.
+    type: wo
+  name: TX_DATA
+  offset: '0x0000001C'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Receive Data
+  field:
+  - bits: '31:0'
+    longdesc: Valid data bits are [7:0].
+    name: RX_FIFO_DATA
+    shortdesc: Data read from RX FIFO.
+    type: ro
+  name: RX_DATA
+  offset: '0x00000020'
+  type: ro
+  width: 32
+- default: '0x000000FF'
+  description: Slave Idle Count
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    longdesc: Change only when controller is not actively transmitting or receiving
+      data.
+    name: SLAVE_IDLE_COUN
+    shortdesc: SPI in slave mode detects a start only when the external SPI master
+      serial clock (sclk_in) is stable (quiescent state) for SPI REFERENCE CLOCK cycles
+      specified by slave idle count register or when the SPI is deselected.
+    type: rw
+  name: SLAVE_IDLE_COUNT
+  offset: '0x00000024'
+  type: mixed
+  width: 32
+- default: '0x00000001'
+  description: TX FIFO Threshold
+  field:
+  - bits: '31:0'
+    name: THRESHOLD_OF_TX_FIFO
+    type: rw
+  name: TX_THRES
+  offset: '0x00000028'
+  type: rw
+  width: 32
+- default: '0x00000001'
+  description: RX FIFO Threshold
+  field:
+  - bits: '31:0'
+    name: THRESHOLD_OF_RX_FIFO
+    type: rw
+  name: RX_THRES
+  offset: '0x0000002C'
+  type: rw
+  width: 32
+- default: '0x00090108'
+  description: Module ID
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: ro
+  - bits: '24:0'
+    name: MODULE_ID
+    type: ro
+  name: MOD_ID
+  offset: '0x000000FC'
+  type: ro
+  width: 32

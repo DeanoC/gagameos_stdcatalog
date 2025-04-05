@@ -1,0 +1,1230 @@
+description: Realtime Processing Unit, Real time Processing Unit
+register:
+- default: '0x00000050'
+  description: Global Control Regiter for RPU
+  field:
+  - bits: '31:11'
+    name: RESERVED
+    type: raz
+  - bits: '10'
+    longdesc: R5 does not toggle TZ bit. This bit will be used instead of AxPROT[1]
+      of LLPP AXI bus 0 = All R5 transactions to GIC are secure 1 = All R5 transactions
+      to GIC are nonsecure
+    name: GIC_AXPROT
+    shortdesc: GIC implements security extesion.
+    type: rw
+  - bits: '9'
+    name: RESERVED
+    type: raz
+  - bits: '8'
+    name: TCM_CLK_CNTL
+    type: rw
+  - bits: '7'
+    name: TCM_WAIT
+    type: rw
+  - bits: '6'
+    name: TCM_COMB
+    type: rw
+  - bits: '5'
+    name: TEINIT
+    type: rw
+  - bits: '4'
+    name: SLCLAMP
+    type: rw
+  - bits: '3'
+    name: SLSPLIT
+    type: rw
+  - bits: '2'
+    name: DBGNOCLKSTOP
+    type: rw
+  - bits: '1'
+    name: CFGIE
+    type: rw
+  - bits: '0'
+    name: CFGEE
+    type: rw
+  name: RPU_GLBL_CNTL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Miscellaneous status information for RPU
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: DBGNOPWRDWN
+    type: ro
+  name: RPU_GLBL_STATUS
+  offset: '0x00000004'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Error Response Enable/Disable Register
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: APB_ERR_RES
+    type: rw
+  name: RPU_ERR_CNTL
+  offset: '0x00000008'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Control for extra features of RAMs
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:8'
+    name: RAMCONTROL1
+    type: rw
+  - bits: '7:0'
+    name: RAMCONTROL0
+    type: rw
+  name: RPU_RAM
+  offset: '0x0000000C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Reserved for future use
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: raz
+  - bits: '15:8'
+    name: DCCMINP2
+    type: rw
+  - bits: '7:0'
+    name: DCCMINP
+    type: rw
+  name: RPU_ERR_INJ
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Common Cause Signal Mask Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7'
+    name: TEST_MBIST_MODE
+    type: rw
+  - bits: '6'
+    name: TEST_SCAN_MODE_LP
+    type: rw
+  - bits: '5'
+    name: TEST_SCAN_MODE
+    type: rw
+  - bits: '4'
+    name: ISO
+    type: rw
+  - bits: '3'
+    name: PGE
+    type: rw
+  - bits: '2'
+    name: R50_DBG_RST
+    type: rw
+  - bits: '1'
+    name: R50_RST
+    type: rw
+  - bits: '0'
+    name: PGE_RST
+    type: rw
+  name: RPU_CCF_MASK
+  offset: '0x00000024'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: RPU Interrupt Injection register
+  field:
+  - bits: '31:0'
+    name: SPI
+    type: rw
+  name: RPU_INTR_0
+  offset: '0x00000028'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RPU Interrupt Injection register
+  field:
+  - bits: '31:0'
+    name: SPI
+    type: rw
+  name: RPU_INTR_1
+  offset: '0x0000002C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RPU Interrupt Injection register
+  field:
+  - bits: '31:0'
+    name: SPI
+    type: rw
+  name: RPU_INTR_2
+  offset: '0x00000030'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RPU Interrupt Injection register
+  field:
+  - bits: '31:0'
+    name: SPI
+    type: rw
+  name: RPU_INTR_3
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RPU Interrupt Injection register
+  field:
+  - bits: '31:0'
+    name: SPI
+    type: rw
+  name: RPU_INTR_4
+  offset: '0x00000038'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RPU Interrupt Injection Mask register
+  field:
+  - bits: '31:0'
+    name: SPI
+    type: rw
+  name: RPU_INTR_MASK_0
+  offset: '0x00000040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RPU Interrupt Injection Mask register
+  field:
+  - bits: '31:0'
+    name: SPI
+    type: rw
+  name: RPU_INTR_MASK_1
+  offset: '0x00000044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RPU Interrupt Injection Mask register
+  field:
+  - bits: '31:0'
+    name: SPI
+    type: rw
+  name: RPU_INTR_MASK_2
+  offset: '0x00000048'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RPU Interrupt Injection Mask register
+  field:
+  - bits: '31:0'
+    name: SPI
+    type: rw
+  name: RPU_INTR_MASK_3
+  offset: '0x0000004C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: RPU Interrupt Injection Mask register
+  field:
+  - bits: '31:0'
+    name: SPI
+    type: rw
+  name: RPU_INTR_MASK_4
+  offset: '0x00000050'
+  type: rw
+  width: 32
+- default: '0x00000007'
+  description: Common Cause Signal Value Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7'
+    longdesc: CCF monitor generates an interrupt if programmed value matches the current
+      signal value and CCF checking is enabled
+    name: TEST_MBIST_MODE
+    shortdesc: Bit field indicates the error value(faulty) of the signal.
+    type: rw
+  - bits: '6'
+    longdesc: CCF monitor generates an interrupt if programmed value matches the current
+      signal value and CCF checking is enabled
+    name: TEST_SCAN_MODE_LP
+    shortdesc: Bit field indicates the error value(faulty) of the signal.
+    type: rw
+  - bits: '5'
+    longdesc: CCF monitor generates an interrupt if programmed value matches the current
+      signal value and CCF checking is enabled
+    name: TEST_SCAN_MODE
+    shortdesc: Bit field indicates the error value(faulty) of the signal.
+    type: rw
+  - bits: '4'
+    longdesc: CCF monitor generates an interrupt if programmed value matches the current
+      signal value and CCF checking is enabled
+    name: ISO
+    shortdesc: Bit field indicates the error value(faulty) of the signal.
+    type: rw
+  - bits: '3'
+    longdesc: CCF monitor generates an interrupt if programmed value matches the current
+      signal value and CCF checking is enabled
+    name: PGE
+    shortdesc: Bit field indicates the error value(faulty) of the signal.
+    type: rw
+  - bits: '2'
+    longdesc: CCF monitor generates an interrupt if programmed value matches the current
+      signal value and CCF checking is enabled
+    name: R50_DBG_RST
+    shortdesc: Bit field indicates the error value(faulty) of the signal.
+    type: rw
+  - bits: '1'
+    longdesc: CCF monitor generates an interrupt if programmed value matches the current
+      signal value and CCF checking is enabled
+    name: R50_RST
+    shortdesc: Bit field indicates the error value(faulty) of the signal.
+    type: rw
+  - bits: '0'
+    longdesc: CCF monitor generates an interrupt if programmed value matches the current
+      signal value and CCF checking is enabled
+    name: PGE_RST
+    shortdesc: Bit field indicates the error value(faulty) of the signal.
+    type: rw
+  name: RPU_CCF_VAL
+  offset: '0x00000054'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: RPU Safety Check Register
+  field:
+  - bits: '31:0'
+    name: VAL
+    type: rw
+  name: RPU_SAFETY_CHK
+  offset: '0x000000F0'
+  type: rw
+  width: 32
+- default: '0x00000005'
+  description: Configuration Parameters specific to RPU0
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3'
+    name: CFGNMFI0
+    type: rw
+  - bits: '2'
+    longdesc: Low = Start executing from 0x00000000 (ATCM) out of reset.
+    name: VINITHI
+    shortdesc: High = Start executing form 0xFFFF0000 (OCM) out of reset.
+    type: rw
+  - bits: '1'
+    longdesc: Low = All accesses to peripherals will be direct and without any Cache
+      Choerency with APU.
+    name: COHERENT
+    shortdesc: High = All accesses to peripherals will be through APU Cache Controller.
+    type: rw
+  - bits: '0'
+    longdesc: When nCPUHALT has been deasserted to start the processor fetching, nCPUHALT
+      must not be asserted again except when the processor is under processor or power-on
+      reset, that is, nRESET asserted. The processor does not halt if the nCPUHALT
+      pin is asserted while the processor is running low = stops CPU from fetching
+      instructions out of reset, processor is halted High = Processor is running
+    name: NCPUHALT
+    shortdesc: nCPUHALT bit can be asserted while the processor is in reset to stop
+      the processor from fetching and executing instructions after coming out of reset.
+    type: rw
+  name: RPU0_CFG
+  offset: '0x00000100'
+  type: mixed
+  width: 32
+- default: '0x0000003F'
+  description: R5_0 Status Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: raz
+  - bits: '5'
+    name: NVALRESET
+    type: ro
+  - bits: '4'
+    name: NVALIRQ
+    type: ro
+  - bits: '3'
+    name: NVALFIQ
+    type: ro
+  - bits: '2'
+    longdesc: The CPU pipeline is inactive
+    name: NWFIPIPESTOPPED
+    shortdesc: When LOW, this indicates the CPU is in standby mode because of a WFI
+      instruction.
+    type: ro
+  - bits: '1'
+    longdesc: The CPU pipeline is inactive
+    name: NWFEPIPESTOPPED
+    shortdesc: When LOW, this indicates that the CPU is in standby mode because of
+      a WFE instruction.
+    type: ro
+  - bits: '0'
+    longdesc: It is never asserted without one of WFIPIPESTOPPEDm or WFEPIPESTOPPEDm.
+    name: NCLKSTOPPED
+    shortdesc: When LOW, this indicates clock has been stopped because processor is
+      in Standby Mode.
+    type: ro
+  name: RPU0_STATUS
+  offset: '0x00000104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Power down request from R5s
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: EN
+    type: rw
+  name: RPU0_PWRDWN
+  offset: '0x00000108'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24'
+    name: FPUFC
+    type: wtc
+  - bits: '23'
+    name: FPOFC
+    type: wtc
+  - bits: '22'
+    name: FPIXC
+    type: wtc
+  - bits: '21'
+    name: FPIOC
+    type: wtc
+  - bits: '20'
+    name: FPIDC
+    type: wtc
+  - bits: '19'
+    name: FPDZC
+    type: wtc
+  - bits: '18'
+    name: TCM_ASLV_CE
+    type: wtc
+  - bits: '17'
+    name: TCM_ASLV_FAT
+    type: wtc
+  - bits: '16'
+    name: TCM_LST_CE
+    type: wtc
+  - bits: '15'
+    name: TCM_PREFETCH_CE
+    type: wtc
+  - bits: '14'
+    name: B1TCM_CE
+    type: wtc
+  - bits: '13'
+    name: B0TCM_CE
+    type: wtc
+  - bits: '12'
+    name: ATCM_CE
+    type: wtc
+  - bits: '11'
+    name: B1TCM_UE
+    type: wtc
+  - bits: '10'
+    name: B0TCM_UE
+    type: wtc
+  - bits: '9'
+    name: ATCM_UE
+    type: wtc
+  - bits: '8'
+    name: DTAG_DIRTY_FAT
+    type: wtc
+  - bits: '7'
+    name: DDATA_FAT
+    type: wtc
+  - bits: '6'
+    name: TCM_LST_FAT
+    type: wtc
+  - bits: '5'
+    name: TCM_PREFETCH_FAT
+    type: wtc
+  - bits: '4'
+    name: DDATA_CE
+    type: wtc
+  - bits: '3'
+    name: DTAG_DIRTY_CE
+    type: wtc
+  - bits: '2'
+    name: IDATA_CE
+    type: wtc
+  - bits: '1'
+    name: ITAG_CE
+    type: wtc
+  - bits: '0'
+    name: APB_ERR
+    type: wtc
+  name: RPU0_ISR
+  offset: '0x00000114'
+  type: mixed
+  width: 32
+- default: '0x01FFFFFF'
+  description: Interrupt Mask Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24'
+    name: FPUFC
+    type: ro
+  - bits: '23'
+    name: FPOFC
+    type: ro
+  - bits: '22'
+    name: FPIXC
+    type: ro
+  - bits: '21'
+    name: FPIOC
+    type: ro
+  - bits: '20'
+    name: FPIDC
+    type: ro
+  - bits: '19'
+    name: FPDZC
+    type: ro
+  - bits: '18'
+    name: TCM_ASLV_CE
+    type: ro
+  - bits: '17'
+    name: TCM_ASLV_FAT
+    type: ro
+  - bits: '16'
+    name: TCM_LST_CE
+    type: ro
+  - bits: '15'
+    name: TCM_PREFETCH_CE
+    type: ro
+  - bits: '14'
+    name: B1TCM_CE
+    type: ro
+  - bits: '13'
+    name: B0TCM_CE
+    type: ro
+  - bits: '12'
+    name: ATCM_CE
+    type: ro
+  - bits: '11'
+    name: B1TCM_UE
+    type: ro
+  - bits: '10'
+    name: B0TCM_UE
+    type: ro
+  - bits: '9'
+    name: ATCM_UE
+    type: ro
+  - bits: '8'
+    name: DTAG_DIRTY_FAT
+    type: ro
+  - bits: '7'
+    name: DDATA_FAT
+    type: ro
+  - bits: '6'
+    name: TCM_LST_FAT
+    type: ro
+  - bits: '5'
+    name: TCM_PREFETCH_FAT
+    type: ro
+  - bits: '4'
+    name: DDATA_CE
+    type: ro
+  - bits: '3'
+    name: DTAG_DIRTY_CE
+    type: ro
+  - bits: '2'
+    name: IDATA_CE
+    type: ro
+  - bits: '1'
+    name: ITAG_CE
+    type: ro
+  - bits: '0'
+    name: APB_ERR
+    type: ro
+  name: RPU0_IMR
+  offset: '0x00000118'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24'
+    name: FPUFC
+    type: wo
+  - bits: '23'
+    name: FPOFC
+    type: wo
+  - bits: '22'
+    name: FPIXC
+    type: wo
+  - bits: '21'
+    name: FPIOC
+    type: wo
+  - bits: '20'
+    name: FPIDC
+    type: wo
+  - bits: '19'
+    name: FPDZC
+    type: wo
+  - bits: '18'
+    name: TCM_ASLV_CE
+    type: wo
+  - bits: '17'
+    name: TCM_ASLV_FAT
+    type: wo
+  - bits: '16'
+    name: TCM_LST_CE
+    type: wo
+  - bits: '15'
+    name: TCM_PREFETCH_CE
+    type: wo
+  - bits: '14'
+    name: B1TCM_CE
+    type: wo
+  - bits: '13'
+    name: B0TCM_CE
+    type: wo
+  - bits: '12'
+    name: ATCM_CE
+    type: wo
+  - bits: '11'
+    name: B1TCM_UE
+    type: wo
+  - bits: '10'
+    name: B0TCM_UE
+    type: wo
+  - bits: '9'
+    name: ATCM_UE
+    type: wo
+  - bits: '8'
+    name: DTAG_DIRTY_FAT
+    type: wo
+  - bits: '7'
+    name: DDATA_FAT
+    type: wo
+  - bits: '6'
+    name: TCM_LST_FAT
+    type: wo
+  - bits: '5'
+    name: TCM_PREFETCH_FAT
+    type: wo
+  - bits: '4'
+    name: DDATA_CE
+    type: wo
+  - bits: '3'
+    name: DTAG_DIRTY_CE
+    type: wo
+  - bits: '2'
+    name: IDATA_CE
+    type: wo
+  - bits: '1'
+    name: ITAG_CE
+    type: wo
+  - bits: '0'
+    name: APB_ERR
+    type: wo
+  name: RPU0_IEN
+  offset: '0x0000011C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24'
+    name: FPUFC
+    type: wo
+  - bits: '23'
+    name: FPOFC
+    type: wo
+  - bits: '22'
+    name: FPIXC
+    type: wo
+  - bits: '21'
+    name: FPIOC
+    type: wo
+  - bits: '20'
+    name: FPIDC
+    type: wo
+  - bits: '19'
+    name: FPDZC
+    type: wo
+  - bits: '18'
+    name: TCM_ASLV_CE
+    type: wo
+  - bits: '17'
+    name: TCM_ASLV_FAT
+    type: wo
+  - bits: '16'
+    name: TCM_LST_CE
+    type: wo
+  - bits: '15'
+    name: TCM_PREFETCH_CE
+    type: wo
+  - bits: '14'
+    name: B1TCM_CE
+    type: wo
+  - bits: '13'
+    name: B0TCM_CE
+    type: wo
+  - bits: '12'
+    name: ATCM_CE
+    type: wo
+  - bits: '11'
+    name: B1TCM_UE
+    type: wo
+  - bits: '10'
+    name: B0TCM_UE
+    type: wo
+  - bits: '9'
+    name: ATCM_UE
+    type: wo
+  - bits: '8'
+    name: DTAG_DIRTY_FAT
+    type: wo
+  - bits: '7'
+    name: DDATA_FAT
+    type: wo
+  - bits: '6'
+    name: TCM_LST_FAT
+    type: wo
+  - bits: '5'
+    name: TCM_PREFETCH_FAT
+    type: wo
+  - bits: '4'
+    name: DDATA_CE
+    type: wo
+  - bits: '3'
+    name: DTAG_DIRTY_CE
+    type: wo
+  - bits: '2'
+    name: IDATA_CE
+    type: wo
+  - bits: '1'
+    name: ITAG_CE
+    type: wo
+  - bits: '0'
+    name: APB_ERR
+    type: wo
+  name: RPU0_IDS
+  offset: '0x00000120'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Slave Base Address Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    longdesc: If incomign access is going to caches, RPU use this register to generate
+      final address passed to R5 {RPU_0_SLV_BASE_ADDR[7:0], ARADDR[14:0]}
+    name: ADDR
+    shortdesc: Slave address is appended wih 8 bits to generate 23 bit address.
+    type: rw
+  name: RPU0_SLV_BASE
+  offset: '0x00000124'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: RPU 0 AXI Override Register
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:6'
+    name: AWCACHE
+    type: rw
+  - bits: '5:2'
+    name: ARCACHE
+    type: rw
+  - bits: '1'
+    name: AWCACHE_EN
+    type: rw
+  - bits: '0'
+    name: ARCACHE_EN
+    type: rw
+  name: RPU0_AXI_OVER
+  offset: '0x00000128'
+  type: mixed
+  width: 32
+- default: '0x00000005'
+  description: Configuration Parameters specific to RPU1
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: raz
+  - bits: '3'
+    name: CFGNMFI1
+    type: rw
+  - bits: '2'
+    longdesc: Low = Start executing from 0x00000000 (ATCM) out of reset.
+    name: VINITHI
+    shortdesc: High = Start executing form 0xFFFF0000 (OCM) out of reset.
+    type: rw
+  - bits: '1'
+    longdesc: Low = All accesses to peripherals will be direct and without any Cache
+      Choerency with APU.
+    name: COHERENT
+    shortdesc: High = All accesses to peripherals will be through APU Cache Controller.
+    type: rw
+  - bits: '0'
+    longdesc: When nCPUHALT has been deasserted to start the processor fetching, nCPUHALT
+      must not be asserted again except when the processor is under processor or power-on
+      reset, that is, nRESET asserted. The processor does not halt if the nCPUHALT
+      pin is asserted while the processor is running low = stops CPU from fetching
+      instructions out of reset, processor is halted High = Processor is running
+    name: NCPUHALT
+    shortdesc: nCPUHALT bit can be asserted while the processor is in reset to stop
+      the processor from fetching and executing instructions after coming out of reset.
+    type: rw
+  name: RPU1_CFG
+  offset: '0x00000200'
+  type: mixed
+  width: 32
+- default: '0x0000003F'
+  description: R5_1 Status Register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: raz
+  - bits: '5'
+    name: NVALRESET
+    type: ro
+  - bits: '4'
+    name: NVALIRQ
+    type: ro
+  - bits: '3'
+    name: NVALFIQ
+    type: ro
+  - bits: '2'
+    longdesc: The CPU pipeline is inactive
+    name: NWFIPIPESTOPPED
+    shortdesc: When LOW, this indicates the CPU is in standby mode because of a WFI
+      instruction.
+    type: ro
+  - bits: '1'
+    longdesc: The CPU pipeline is inactive
+    name: NWFEPIPESTOPPED
+    shortdesc: When LOW, this indicates that the CPU is in standby mode because of
+      a WFE instruction.
+    type: ro
+  - bits: '0'
+    name: NCLKSTOPPED
+    type: ro
+  name: RPU1_STATUS
+  offset: '0x00000204'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Power down request from R5s
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: raz
+  - bits: '0'
+    name: EN
+    type: rw
+  name: RPU1_PWRDWN
+  offset: '0x00000208'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24'
+    name: FPUFC
+    type: wtc
+  - bits: '23'
+    name: FPOFC
+    type: wtc
+  - bits: '22'
+    name: FPIXC
+    type: wtc
+  - bits: '21'
+    name: FPIOC
+    type: wtc
+  - bits: '20'
+    name: FPIDC
+    type: wtc
+  - bits: '19'
+    name: FPDZC
+    type: wtc
+  - bits: '18'
+    name: TCM_ASLV_CE
+    type: wtc
+  - bits: '17'
+    name: TCM_ASLV_FAT
+    type: wtc
+  - bits: '16'
+    name: TCM_LST_CE
+    type: wtc
+  - bits: '15'
+    name: TCM_PREFETCH_CE
+    type: wtc
+  - bits: '14'
+    name: B1TCM_CE
+    type: wtc
+  - bits: '13'
+    name: B0TCM_CE
+    type: wtc
+  - bits: '12'
+    name: ATCM_CE
+    type: wtc
+  - bits: '11'
+    name: B1TCM_UE
+    type: wtc
+  - bits: '10'
+    name: B0TCM_UE
+    type: wtc
+  - bits: '9'
+    name: ATCM_UE
+    type: wtc
+  - bits: '8'
+    name: DTAG_DIRTY_FAT
+    type: wtc
+  - bits: '7'
+    name: DDATA_FAT
+    type: wtc
+  - bits: '6'
+    name: TCM_LST_FAT
+    type: wtc
+  - bits: '5'
+    name: TCM_PREFETCH_FAT
+    type: wtc
+  - bits: '4'
+    name: DDATA_CE
+    type: wtc
+  - bits: '3'
+    name: DTAG_DIRTY_CE
+    type: wtc
+  - bits: '2'
+    name: IDATA_CE
+    type: wtc
+  - bits: '1'
+    name: ITAG_CE
+    type: wtc
+  - bits: '0'
+    name: APB_ERR
+    type: wtc
+  name: RPU1_ISR
+  offset: '0x00000214'
+  type: mixed
+  width: 32
+- default: '0x01FFFFFF'
+  description: Interrupt Mask Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24'
+    name: FPUFC
+    type: ro
+  - bits: '23'
+    name: FPOFC
+    type: ro
+  - bits: '22'
+    name: FPIXC
+    type: ro
+  - bits: '21'
+    name: FPIOC
+    type: ro
+  - bits: '20'
+    name: FPIDC
+    type: ro
+  - bits: '19'
+    name: FPDZC
+    type: ro
+  - bits: '18'
+    name: TCM_ASLV_CE
+    type: ro
+  - bits: '17'
+    name: TCM_ASLV_FAT
+    type: ro
+  - bits: '16'
+    name: TCM_LST_CE
+    type: ro
+  - bits: '15'
+    name: TCM_PREFETCH_CE
+    type: ro
+  - bits: '14'
+    name: B1TCM_CE
+    type: ro
+  - bits: '13'
+    name: B0TCM_CE
+    type: ro
+  - bits: '12'
+    name: ATCM_CE
+    type: ro
+  - bits: '11'
+    name: B1TCM_UE
+    type: ro
+  - bits: '10'
+    name: B0TCM_UE
+    type: ro
+  - bits: '9'
+    name: ATCM_UE
+    type: ro
+  - bits: '8'
+    name: DTAG_DIRTY_FAT
+    type: ro
+  - bits: '7'
+    name: DDATA_FAT
+    type: ro
+  - bits: '6'
+    name: TCM_LST_FAT
+    type: ro
+  - bits: '5'
+    name: TCM_PREFETCH_FAT
+    type: ro
+  - bits: '4'
+    name: DDATA_CE
+    type: ro
+  - bits: '3'
+    name: DTAG_DIRTY_CE
+    type: ro
+  - bits: '2'
+    name: IDATA_CE
+    type: ro
+  - bits: '1'
+    name: ITAG_CE
+    type: ro
+  - bits: '0'
+    name: APB_ERR
+    type: ro
+  name: RPU1_IMR
+  offset: '0x00000218'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Enable Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24'
+    name: FPUFC
+    type: wo
+  - bits: '23'
+    name: FPOFC
+    type: wo
+  - bits: '22'
+    name: FPIXC
+    type: wo
+  - bits: '21'
+    name: FPIOC
+    type: wo
+  - bits: '20'
+    name: FPIDC
+    type: wo
+  - bits: '19'
+    name: FPDZC
+    type: wo
+  - bits: '18'
+    name: TCM_ASLV_CE
+    type: wo
+  - bits: '17'
+    name: TCM_ASLV_FAT
+    type: wo
+  - bits: '16'
+    name: TCM_LST_CE
+    type: wo
+  - bits: '15'
+    name: TCM_PREFETCH_CE
+    type: wo
+  - bits: '14'
+    name: B1TCM_CE
+    type: wo
+  - bits: '13'
+    name: B0TCM_CE
+    type: wo
+  - bits: '12'
+    name: ATCM_CE
+    type: wo
+  - bits: '11'
+    name: B1TCM_UE
+    type: wo
+  - bits: '10'
+    name: B0TCM_UE
+    type: wo
+  - bits: '9'
+    name: ATCM_UE
+    type: wo
+  - bits: '8'
+    name: DTAG_DIRTY_FAT
+    type: wo
+  - bits: '7'
+    name: DDATA_FAT
+    type: wo
+  - bits: '6'
+    name: TCM_LST_FAT
+    type: wo
+  - bits: '5'
+    name: TCM_PREFETCH_FAT
+    type: wo
+  - bits: '4'
+    name: DDATA_CE
+    type: wo
+  - bits: '3'
+    name: DTAG_DIRTY_CE
+    type: wo
+  - bits: '2'
+    name: IDATA_CE
+    type: wo
+  - bits: '1'
+    name: ITAG_CE
+    type: wo
+  - bits: '0'
+    name: APB_ERR
+    type: wo
+  name: RPU1_IEN
+  offset: '0x0000021C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Disable Register
+  field:
+  - bits: '31:25'
+    name: RESERVED
+    type: raz
+  - bits: '24'
+    name: FPUFC
+    type: wo
+  - bits: '23'
+    name: FPOFC
+    type: wo
+  - bits: '22'
+    name: FPIXC
+    type: wo
+  - bits: '21'
+    name: FPIOC
+    type: wo
+  - bits: '20'
+    name: FPIDC
+    type: wo
+  - bits: '19'
+    name: FPDZC
+    type: wo
+  - bits: '18'
+    name: TCM_ASLV_CE
+    type: wo
+  - bits: '17'
+    name: TCM_ASLV_FAT
+    type: wo
+  - bits: '16'
+    name: TCM_LST_CE
+    type: wo
+  - bits: '15'
+    name: TCM_PREFETCH_CE
+    type: wo
+  - bits: '14'
+    name: B1TCM_CE
+    type: wo
+  - bits: '13'
+    name: B0TCM_CE
+    type: wo
+  - bits: '12'
+    name: ATCM_CE
+    type: wo
+  - bits: '11'
+    name: B1TCM_UE
+    type: wo
+  - bits: '10'
+    name: B0TCM_UE
+    type: wo
+  - bits: '9'
+    name: ATCM_UE
+    type: wo
+  - bits: '8'
+    name: DTAG_DIRTY_FAT
+    type: wo
+  - bits: '7'
+    name: DDATA_FAT
+    type: wo
+  - bits: '6'
+    name: TCM_LST_FAT
+    type: wo
+  - bits: '5'
+    name: TCM_PREFETCH_FAT
+    type: wo
+  - bits: '4'
+    name: DDATA_CE
+    type: wo
+  - bits: '3'
+    name: DTAG_DIRTY_CE
+    type: wo
+  - bits: '2'
+    name: IDATA_CE
+    type: wo
+  - bits: '1'
+    name: ITAG_CE
+    type: wo
+  - bits: '0'
+    name: APB_ERR
+    type: wo
+  name: RPU1_IDS
+  offset: '0x00000220'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Slave Base Address Register
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: raz
+  - bits: '7:0'
+    longdesc: If incomign access is going to caches, RPU use this register to generate
+      final address passed to R5 {RPU_1_SLV_BASE_ADDR[7:0], ARADDR[14:0]}
+    name: ADDR
+    shortdesc: Slave address is appended wih 8 bits to generate 23 bit address.
+    type: rw
+  name: RPU1_SLV_BASE
+  offset: '0x00000224'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: RPU 1 AXI Override Register
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: raz
+  - bits: '9:6'
+    name: AWCACHE
+    type: rw
+  - bits: '5:2'
+    name: ARCACHE
+    type: rw
+  - bits: '1'
+    name: AWCACHE_EN
+    type: rw
+  - bits: '0'
+    name: ARCACHE_EN
+    type: rw
+  name: RPU1_AXI_OVER
+  offset: '0x00000228'
+  type: mixed
+  width: 32

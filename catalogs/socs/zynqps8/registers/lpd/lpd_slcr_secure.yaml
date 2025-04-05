@@ -1,0 +1,128 @@
+bank:
+- address: '0xff4b0000'
+  name: LPD_SLCR_SECURE
+description: Low-power Domain System-level Control Registers - Secure
+register:
+- default: '0x00000000'
+  description: General control register for the LP SLCR
+  field:
+  - bits: '0'
+    longdesc: 'However, a maskable interrupt exsists. By enabling this slverr_enable
+      invalid address requests cause a slverr to occur. Enable/Disable SLVERR during
+      address decode failure. 0: SLVERR is disabled. For request address: Writes are
+      ignored. Read returns 0. 1: SLVERR is enabled. For requestes address, SLVERR
+      is asserted. Writes are ignored. Read returns 0.'
+    name: SLVERR_ENABLE
+    shortdesc: By default, invalid address requests are ignored.
+    type: rw
+  name: CTRL
+  offset: '0x00000004'
+  type: rw
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Status Register
+  field:
+  - bits: '0'
+    longdesc: 'Reads: 0: No Event. 1: Event Occurred. Writes: 0: ignored. 1: clear
+      bit.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Status for an address decode error.
+    type: wtc
+  name: ISR
+  offset: '0x00000008'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Interrupt Mask Register
+  field:
+  - bits: '0'
+    longdesc: '0: Interrupt Enabled 1: Interrupt Disabled'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error.
+    type: ro
+  name: IMR
+  offset: '0x0000000C'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Enable Register
+  field:
+  - bits: '0'
+    longdesc: 'Writes: 0: ignored. 1: IMR register bit set to 0.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Enable for an address decode error.
+    type: wo
+  name: IER
+  offset: '0x00000010'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Disable Register
+  field:
+  - bits: '0'
+    longdesc: 'Writes: 0: ignored. 1: IMR register bit set to 1.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Mask for an address decode error.
+    type: wo
+  name: IDR
+  offset: '0x00000014'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Interrupt Trigger Register
+  field:
+  - bits: '0'
+    longdesc: 'Writes: 0: ignored. 1: ISR register bit set to 1.'
+    name: ADDR_DECODE_ERR
+    shortdesc: Trigger an address decode error interrupt.
+    type: wo
+  name: ITR
+  offset: '0x00000018'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: RPU TrustZone settings
+  field:
+  - bits: '1'
+    name: TZ_R5_1
+    type: rw
+  - bits: '0'
+    name: TZ_R5_0
+    type: rw
+  name: SLCR_RPU
+  offset: '0x00000020'
+  type: rw
+  width: 2
+- default: '0x00000000'
+  description: LPD DMA TrustZone setting.
+  field:
+  - bits: '7:0'
+    name: TZ
+    type: rw
+  name: SLCR_ADMA
+  offset: '0x00000024'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Safety endpoint connectivity check.
+  field:
+  - bits: '31:0'
+    name: CHK_VAL
+    type: rw
+  name: SAFETY_CHK
+  offset: '0x00000030'
+  type: rw
+  width: 32
+- default: '0x00000003'
+  description: USB TrustZone settings.
+  field:
+  - bits: '1'
+    name: TZ_USB3_1
+    type: rw
+  - bits: '0'
+    name: TZ_USB3_0
+    type: rw
+  name: SLCR_USB
+  offset: '0x00000034'
+  type: rw
+  width: 2

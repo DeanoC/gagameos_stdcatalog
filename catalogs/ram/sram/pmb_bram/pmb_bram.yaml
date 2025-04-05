@@ -1,0 +1,32 @@
+actions:
+- make_config
+- sbt_run
+- src
+- read_verilog_top
+parameters:
+  address_width: 32
+  bits_per_byte: 8
+  data_width: 32
+  size_in_bytes: 1024
+process:
+- filename: config.toml
+  name: make_config
+  parameters:
+  - size_in_bytes
+  - bits_per_byte
+  - data_width
+  - address_width
+  processor: toml
+- args: +runMain PmbBram config.toml .. ${name}
+  main_scala: pmb_bram.scala
+  name: sbt_run
+  processor: sbt
+  with_build_sbt: true
+- name: src
+  processor: sources
+  sources:
+  - file: ${name}.v
+    language: verilog
+- name: read_verilog_top
+  processor: read_verilog_top
+  source: ${name}

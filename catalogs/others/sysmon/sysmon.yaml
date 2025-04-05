@@ -1,0 +1,16 @@
+definition:
+- buses:
+  - data_width: 32
+    name: lpdunitsswitch_pssysmon
+    supplier: false
+  registers:
+  - base_address: '0x02a5_0000'
+    name: AMS_CTRL
+    resource: zynqps8/ams.toml
+  - base_address: '0x02a5_0c00'
+    name: PLSYSMON
+    resource: zynqps8/plsysmon.toml
+  - base_address: '0x02a5_0800'
+    name: PSSYSMON
+    resource: zynqps8/pssysmon.toml
+  type: other.sysmon.zynqps8

@@ -1,0 +1,4 @@
+definition:
+- type: soc.zynqps7
+hasFpga: true
+isHard: true

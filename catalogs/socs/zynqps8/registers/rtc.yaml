@@ -1,0 +1,213 @@
+bank:
+- address: '0xffa60000'
+  name: RTC
+description: Real Time Clock Control and Configuration
+register:
+- default: '0x00000000'
+  description: Set the Current Time.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: wo
+  name: SET_TIME_WRITE
+  offset: '0x00000000'
+  type: wo
+  width: 32
+- default: '0x00000000'
+  description: Last Current-time Value Programmed.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: ro
+  name: SET_TIME_READ
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: One Second Time Based.
+  field:
+  - bits: '20'
+    name: FRACTION_EN
+    type: wo
+  - bits: '19:16'
+    name: FRACTION_DATA
+    type: wo
+  - bits: '15:0'
+    name: MAX_TICK
+    type: wo
+  name: CALIB_WRITE
+  offset: '0x00000008'
+  type: wo
+  width: 21
+- default: '0x00000000'
+  description: Read-back Calibration Value.
+  field:
+  - bits: '20'
+    name: FRACTION_EN
+    type: ro
+  - bits: '19:16'
+    name: FRACTION_DATA
+    type: ro
+  - bits: '15:0'
+    name: MAX_TICK
+    type: ro
+  name: CALIB_READ
+  offset: '0x0000000C'
+  type: ro
+  width: 21
+- default: '0x00000000'
+  description: Current time in seconds.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: ro
+  name: CURRENT_TIME
+  offset: '0x00000010'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Alarm Value.
+  field:
+  - bits: '31:0'
+    name: VALUE
+    type: rw
+  name: ALARM
+  offset: '0x00000018'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Status.
+  field:
+  - bits: '1'
+    name: ALARM
+    type: wtc
+  - bits: '0'
+    name: SECONDS
+    type: wtc
+  name: RTC_INT_STATUS
+  offset: '0x00000020'
+  type: wtc
+  width: 2
+- default: '0x00000003'
+  description: Interrupt Mask.
+  field:
+  - bits: '1'
+    name: ALARM
+    type: ro
+  - bits: '0'
+    name: SECONDS
+    type: ro
+  name: RTC_INT_MASK
+  offset: '0x00000024'
+  type: ro
+  width: 2
+- default: '0x00000000'
+  description: Interrupt Enable.
+  field:
+  - bits: '1'
+    name: ALARM
+    type: wo
+  - bits: '0'
+    name: SECONDS
+    type: wo
+  name: RTC_INT_EN
+  offset: '0x00000028'
+  type: wo
+  width: 2
+- default: '0x00000000'
+  description: Interrupt Disable.
+  field:
+  - bits: '1'
+    name: ALARM
+    type: wo
+  - bits: '0'
+    name: SECONDS
+    type: wo
+  name: RTC_INT_DIS
+  offset: '0x0000002C'
+  type: wo
+  width: 2
+- default: '0x00000000'
+  description: Address Decode Error Status.
+  field:
+  - bits: '0'
+    name: STATUS
+    type: wtc
+  name: ADDR_ERROR
+  offset: '0x00000030'
+  type: wtc
+  width: 1
+- default: '0x00000001'
+  description: Address Decode Error Interrupt Mask.
+  field:
+  - bits: '0'
+    name: MASK
+    type: ro
+  name: ADDR_ERROR_INT_MASK
+  offset: '0x00000034'
+  type: ro
+  width: 1
+- default: '0x00000000'
+  description: Address Decode Error Interrupt Enable.
+  field:
+  - bits: '0'
+    name: MASK
+    type: wo
+  name: ADDR_ERROR_INT_EN
+  offset: '0x00000038'
+  type: wo
+  width: 1
+- default: '0x00000000'
+  description: Address Decode Error Interrupt Disable.
+  field:
+  - bits: '0'
+    name: MASK
+    type: wo
+  name: ADDR_ERROR_INT_DIS
+  offset: '0x0000003C'
+  type: wo
+  width: 1
+- default: '0x01000000'
+  description: Control.
+  field:
+  - bits: '31'
+    longdesc: 'By writing a 0 to this bit, RTC will be powered off and the only module
+      that potentially draws current from the battery will be BBRAM. The value read
+      through this bit does not necessarily reflect whether RTC is enabled or not.
+      It is expected that RTC is enabled every time it is being configured. If RTC
+      is not used in the design, FSBL will disable it by writing a 0 to this bit.
+      0: RTC power off. 1: RTC power on. Read-only.'
+    name: BATTERY_ENABLE
+    shortdesc: Enables the RTC.
+    type: wo
+  - bits: '30:28'
+    name: RESERVED
+    type: rw
+  - bits: '27:24'
+    name: OSC_CNTRL
+    type: rw
+  - bits: '23:1'
+    name: RESERVED
+    type: rw
+  - bits: '0'
+    longdesc: 'By default, this feature is disabled. 0: SLVERR is disabled. Writes
+      are ignored and Reads return 0. 1: SLVERR is enabled. SLVERR is asserted. Writes
+      are ignored and Reads return 0.'
+    name: SLVERR_ENABLE
+    shortdesc: Enables SLVERR (Slave Error) if there is an access to an invalid register
+      address.
+    type: rw
+  name: CONTROL
+  offset: '0x00000040'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Safety Check.
+  field:
+  - bits: '31:0'
+    name: REG
+    type: rw
+  name: SAFETY_CHK
+  offset: '0x00000050'
+  type: rw
+  width: 32

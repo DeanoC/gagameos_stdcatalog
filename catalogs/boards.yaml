@@ -1,0 +1,5 @@
+resources:
+- boards/Arty35T.toml
+- boards/Kv260.toml
+- boards/MyirFZ3.toml
+- boards/PynqZ2.toml

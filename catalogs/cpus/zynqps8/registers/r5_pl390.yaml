@@ -1,0 +1,2904 @@
+description: RPU GIC Interrupt Controller; GICv1
+register:
+- default: '0x00000000'
+  description: Interrupt Control Register (ICDICR)
+  name: ENABLE_ENABLE
+  offset: '0x00000000'
+  type: rw
+  width: 32
+- default: '0x0000FC05'
+  description: Provides information about the configuration of the GIC.
+  field:
+  - bits: '15:11'
+    longdesc: 'Read as: b00000 = no LSPIs, b00001 = 1 LSPI. INTID32, b00010 = 2 LSPIs,
+      INTID32 - INTID33, b00011 = 3 LSPIs, INTID32 - INTID34, .., b11110 = 30 LSPIs,
+      INTID32 - INTID61, b11111 = 31 LSPIs, INTID32 - INTID62. When CFGSDISABLE is
+      HIGH then the GIC prevents writes to any register locations that control the
+      operating state of an LSPI that is programmed to be secure.'
+    name: LSPI
+    shortdesc: Returns the number of Lockable Shared Peripheral Interrupts (LSPIs)
+      that the GIC contains.
+    type: ro
+  - bits: '10'
+    name: TZ
+    type: ro
+  - bits: '7:5'
+    name: CPU_NUMBER
+    type: ro
+  - bits: '4:0'
+    longdesc: 'Read as: b00000 = the Distributor provides 1-32 INTIDs, b00001 = the
+      Distributor provides 33-64 INTIDs, b00010 = the Distributor provides 63-96 INTIDs,
+      b00011 = the Distributor provides 97-128 INTIDs, .., b11110 = the Distributor
+      provides 961-992 INTIDs, b11111 = the Distributor provides 993-1020 INTIDs.'
+    name: IT_LINES_NUMBER
+    shortdesc: Returns the number of INTIDs, to the nearest 32, that the Distributor
+      provides.
+    type: ro
+  name: ENABLE_IC_TYPE
+  offset: '0x00000004'
+  type: ro
+  width: 32
+- default: '0x0000043B'
+  description: Provides information about the implementor of the Distributor and the
+    revision of the GIC.
+  field:
+  - bits: '31:24'
+    longdesc: For a GIC (PL390) this field reads back as 0x00.
+    name: IMPL_VER
+    shortdesc: Returns the product identifier.
+    type: ro
+  - bits: '23:12'
+    longdesc: For revision r0p0, these bits read back as 0x000.
+    name: REV_NUM
+    shortdesc: Returns the revision number of the GIC.
+    type: ro
+  - bits: '11:0'
+    longdesc: 'It uses the following bit format: [11:8] = 0x4, that is, the JEP106
+      continuation code for ARM, [7] = 0, [6:0] = b0111011, that is, the JEP106 code
+      [6:0] for ARM.'
+    name: IMPLEMENTOR
+    shortdesc: Returns the JEP106 code of the company that implemented the Distributor
+      RTL, that is, ARM.
+    type: ro
+  name: ENABLE_DIST_IDENT
+  offset: '0x00000008'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Security Registers (ICDISR)
+  name: ENABLE_SGI_SECURITY_IF_N
+  offset: '0x00000080'
+  type: rw
+  width: 16
+- default: '0x00000000'
+  description: Interrupt Security Registers (ICDISR)
+  name: ENABLE_SPI_SECURITY0
+  offset: '0x00000084'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Security Registers (ICDISR)
+  name: ENABLE_SPI_SECURITY1
+  offset: '0x00000088'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Security Registers (ICDISR)
+  name: ENABLE_SPI_SECURITY2
+  offset: '0x0000008C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Security Registers (ICDISR)
+  name: ENABLE_SPI_SECURITY3
+  offset: '0x00000090'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Security Registers (ICDISR)
+  name: ENABLE_SPI_SECURITY4
+  offset: '0x00000094'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Enable Registers (ICDISER)
+  name: ENABLE_SPI_ENABLE_SET0
+  offset: '0x00000104'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Enable Registers (ICDISER)
+  name: ENABLE_SPI_ENABLE_SET1
+  offset: '0x00000108'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Enable Registers (ICDISER)
+  name: ENABLE_SPI_ENABLE_SET2
+  offset: '0x0000010C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Enable Registers (ICDISER)
+  name: ENABLE_SPI_ENABLE_SET3
+  offset: '0x00000110'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Enable Registers (ICDISER)
+  name: ENABLE_SPI_ENABLE_SET4
+  offset: '0x00000114'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Enable Registers (ICDICER)
+  name: ENABLE_SPI_ENABLE_CLR0
+  offset: '0x00000184'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Enable Registers (ICDICER)
+  name: ENABLE_SPI_ENABLE_CLR1
+  offset: '0x00000188'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Enable Registers (ICDICER)
+  name: ENABLE_SPI_ENABLE_CLR2
+  offset: '0x0000018C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Enable Registers (ICDICER)
+  name: ENABLE_SPI_ENABLE_CLR3
+  offset: '0x00000190'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Clear-Enable Registers (ICDICER)
+  name: ENABLE_SPI_ENABLE_CLR4
+  offset: '0x00000194'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers (ICDISPR)
+  name: ENABLE_SGI_PENDING_SET_IF_N
+  offset: '0x00000200'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers (ICDISPR)
+  name: ENABLE_SPI_PENDING_SET0
+  offset: '0x00000204'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers (ICDISPR)
+  name: ENABLE_SPI_PENDING_SET1
+  offset: '0x00000208'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers (ICDISPR)
+  name: ENABLE_SPI_PENDING_SET2
+  offset: '0x0000020C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers (ICDISPR)
+  name: ENABLE_SPI_PENDING_SET3
+  offset: '0x00000210'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Set-Pending Registers (ICDISPR)
+  name: ENABLE_SPI_PENDING_SET4
+  offset: '0x00000214'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Pending Clear Register (ICDICPR)
+  name: ENABLE_SGI_PENDING_CLR_IF_N
+  offset: '0x00000280'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Pending Clear Register (ICDICPR)
+  name: ENABLE_SPI_PENDING_CLR0
+  offset: '0x00000284'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Pending Clear Register (ICDICPR)
+  name: ENABLE_SPI_PENDING_CLR1
+  offset: '0x00000288'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Pending Clear Register (ICDICPR)
+  name: ENABLE_SPI_PENDING_CLR2
+  offset: '0x0000028C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Pending Clear Register (ICDICPR)
+  name: ENABLE_SPI_PENDING_CLR3
+  offset: '0x00000290'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Pending Clear Register (ICDICPR)
+  name: ENABLE_SPI_PENDING_CLR4
+  offset: '0x00000294'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Active Bit Registers (ICDABR)
+  name: ENABLE_SGI_ACTIVE_IF_N
+  offset: '0x00000300'
+  type: ro
+  width: 16
+- default: '0x00000000'
+  description: Active Bit Registers (ICDABR)
+  name: ENABLE_SPI_ACTIVE0
+  offset: '0x00000304'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Bit Registers (ICDABR)
+  name: ENABLE_SPI_ACTIVE1
+  offset: '0x00000308'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Bit Registers (ICDABR)
+  name: ENABLE_SPI_ACTIVE2
+  offset: '0x0000030C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Bit Registers (ICDABR)
+  name: ENABLE_SPI_ACTIVE3
+  offset: '0x00000310'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Active Bit Registers (ICDABR)
+  name: ENABLE_SPI_ACTIVE4
+  offset: '0x00000314'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N0
+  offset: '0x00000400'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N1
+  offset: '0x00000401'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N2
+  offset: '0x00000402'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N3
+  offset: '0x00000403'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N4
+  offset: '0x00000404'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N5
+  offset: '0x00000405'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N6
+  offset: '0x00000406'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N7
+  offset: '0x00000407'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N8
+  offset: '0x00000408'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N9
+  offset: '0x00000409'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N10
+  offset: '0x0000040A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N11
+  offset: '0x0000040B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N12
+  offset: '0x0000040C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N13
+  offset: '0x0000040D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N14
+  offset: '0x0000040E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SGI_INTID_IF_N15
+  offset: '0x0000040F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID0
+  offset: '0x00000420'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID1
+  offset: '0x00000421'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID2
+  offset: '0x00000422'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID3
+  offset: '0x00000423'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID4
+  offset: '0x00000424'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID5
+  offset: '0x00000425'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID6
+  offset: '0x00000426'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID7
+  offset: '0x00000427'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID8
+  offset: '0x00000428'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID9
+  offset: '0x00000429'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID10
+  offset: '0x0000042A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID11
+  offset: '0x0000042B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID12
+  offset: '0x0000042C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID13
+  offset: '0x0000042D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID14
+  offset: '0x0000042E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID15
+  offset: '0x0000042F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID16
+  offset: '0x00000430'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID17
+  offset: '0x00000431'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID18
+  offset: '0x00000432'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID19
+  offset: '0x00000433'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID20
+  offset: '0x00000434'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID21
+  offset: '0x00000435'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID22
+  offset: '0x00000436'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID23
+  offset: '0x00000437'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID24
+  offset: '0x00000438'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID25
+  offset: '0x00000439'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID26
+  offset: '0x0000043A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID27
+  offset: '0x0000043B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID28
+  offset: '0x0000043C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID29
+  offset: '0x0000043D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID30
+  offset: '0x0000043E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID31
+  offset: '0x0000043F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID32
+  offset: '0x00000440'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID33
+  offset: '0x00000441'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID34
+  offset: '0x00000442'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID35
+  offset: '0x00000443'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID36
+  offset: '0x00000444'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID37
+  offset: '0x00000445'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID38
+  offset: '0x00000446'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID39
+  offset: '0x00000447'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID40
+  offset: '0x00000448'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID41
+  offset: '0x00000449'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID42
+  offset: '0x0000044A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID43
+  offset: '0x0000044B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID44
+  offset: '0x0000044C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID45
+  offset: '0x0000044D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID46
+  offset: '0x0000044E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID47
+  offset: '0x0000044F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID48
+  offset: '0x00000450'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID49
+  offset: '0x00000451'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID50
+  offset: '0x00000452'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID51
+  offset: '0x00000453'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID52
+  offset: '0x00000454'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID53
+  offset: '0x00000455'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID54
+  offset: '0x00000456'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID55
+  offset: '0x00000457'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID56
+  offset: '0x00000458'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID57
+  offset: '0x00000459'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID58
+  offset: '0x0000045A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID59
+  offset: '0x0000045B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID60
+  offset: '0x0000045C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID61
+  offset: '0x0000045D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID62
+  offset: '0x0000045E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID63
+  offset: '0x0000045F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID64
+  offset: '0x00000460'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID65
+  offset: '0x00000461'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID66
+  offset: '0x00000462'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID67
+  offset: '0x00000463'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID68
+  offset: '0x00000464'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID69
+  offset: '0x00000465'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID70
+  offset: '0x00000466'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID71
+  offset: '0x00000467'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID72
+  offset: '0x00000468'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID73
+  offset: '0x00000469'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID74
+  offset: '0x0000046A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID75
+  offset: '0x0000046B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID76
+  offset: '0x0000046C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID77
+  offset: '0x0000046D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID78
+  offset: '0x0000046E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID79
+  offset: '0x0000046F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID80
+  offset: '0x00000470'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID81
+  offset: '0x00000471'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID82
+  offset: '0x00000472'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID83
+  offset: '0x00000473'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID84
+  offset: '0x00000474'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID85
+  offset: '0x00000475'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID86
+  offset: '0x00000476'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID87
+  offset: '0x00000477'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID88
+  offset: '0x00000478'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID89
+  offset: '0x00000479'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID90
+  offset: '0x0000047A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID91
+  offset: '0x0000047B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID92
+  offset: '0x0000047C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID93
+  offset: '0x0000047D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID94
+  offset: '0x0000047E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID95
+  offset: '0x0000047F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID96
+  offset: '0x00000480'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID97
+  offset: '0x00000481'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID98
+  offset: '0x00000482'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID99
+  offset: '0x00000483'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID100
+  offset: '0x00000484'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID101
+  offset: '0x00000485'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID102
+  offset: '0x00000486'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID103
+  offset: '0x00000487'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID104
+  offset: '0x00000488'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID105
+  offset: '0x00000489'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID106
+  offset: '0x0000048A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID107
+  offset: '0x0000048B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID108
+  offset: '0x0000048C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID109
+  offset: '0x0000048D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID110
+  offset: '0x0000048E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID111
+  offset: '0x0000048F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID112
+  offset: '0x00000490'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID113
+  offset: '0x00000491'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID114
+  offset: '0x00000492'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID115
+  offset: '0x00000493'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID116
+  offset: '0x00000494'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID117
+  offset: '0x00000495'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID118
+  offset: '0x00000496'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID119
+  offset: '0x00000497'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID120
+  offset: '0x00000498'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID121
+  offset: '0x00000499'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID122
+  offset: '0x0000049A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID123
+  offset: '0x0000049B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID124
+  offset: '0x0000049C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID125
+  offset: '0x0000049D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID126
+  offset: '0x0000049E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID127
+  offset: '0x0000049F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID128
+  offset: '0x000004A0'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID129
+  offset: '0x000004A1'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID130
+  offset: '0x000004A2'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID131
+  offset: '0x000004A3'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID132
+  offset: '0x000004A4'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID133
+  offset: '0x000004A5'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID134
+  offset: '0x000004A6'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID135
+  offset: '0x000004A7'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID136
+  offset: '0x000004A8'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID137
+  offset: '0x000004A9'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID138
+  offset: '0x000004AA'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID139
+  offset: '0x000004AB'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID140
+  offset: '0x000004AC'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID141
+  offset: '0x000004AD'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID142
+  offset: '0x000004AE'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID143
+  offset: '0x000004AF'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID144
+  offset: '0x000004B0'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID145
+  offset: '0x000004B1'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID146
+  offset: '0x000004B2'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID147
+  offset: '0x000004B3'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID148
+  offset: '0x000004B4'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID149
+  offset: '0x000004B5'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID150
+  offset: '0x000004B6'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID151
+  offset: '0x000004B7'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID152
+  offset: '0x000004B8'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID153
+  offset: '0x000004B9'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID154
+  offset: '0x000004BA'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID155
+  offset: '0x000004BB'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID156
+  offset: '0x000004BC'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID157
+  offset: '0x000004BD'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID158
+  offset: '0x000004BE'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Priority Registers (ICDIPR)
+  name: ENABLE_PRIORITY_SPI_INTID159
+  offset: '0x000004BF'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID0
+  offset: '0x00000820'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID1
+  offset: '0x00000821'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID2
+  offset: '0x00000822'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID3
+  offset: '0x00000823'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID4
+  offset: '0x00000824'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID5
+  offset: '0x00000825'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID6
+  offset: '0x00000826'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID7
+  offset: '0x00000827'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID8
+  offset: '0x00000828'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID9
+  offset: '0x00000829'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID10
+  offset: '0x0000082A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID11
+  offset: '0x0000082B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID12
+  offset: '0x0000082C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID13
+  offset: '0x0000082D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID14
+  offset: '0x0000082E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID15
+  offset: '0x0000082F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID16
+  offset: '0x00000830'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID17
+  offset: '0x00000831'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID18
+  offset: '0x00000832'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID19
+  offset: '0x00000833'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID20
+  offset: '0x00000834'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID21
+  offset: '0x00000835'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID22
+  offset: '0x00000836'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID23
+  offset: '0x00000837'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID24
+  offset: '0x00000838'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID25
+  offset: '0x00000839'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID26
+  offset: '0x0000083A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID27
+  offset: '0x0000083B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID28
+  offset: '0x0000083C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID29
+  offset: '0x0000083D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID30
+  offset: '0x0000083E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID31
+  offset: '0x0000083F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID32
+  offset: '0x00000840'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID33
+  offset: '0x00000841'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID34
+  offset: '0x00000842'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID35
+  offset: '0x00000843'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID36
+  offset: '0x00000844'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID37
+  offset: '0x00000845'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID38
+  offset: '0x00000846'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID39
+  offset: '0x00000847'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID40
+  offset: '0x00000848'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID41
+  offset: '0x00000849'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID42
+  offset: '0x0000084A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID43
+  offset: '0x0000084B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID44
+  offset: '0x0000084C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID45
+  offset: '0x0000084D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID46
+  offset: '0x0000084E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID47
+  offset: '0x0000084F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID48
+  offset: '0x00000850'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID49
+  offset: '0x00000851'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID50
+  offset: '0x00000852'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID51
+  offset: '0x00000853'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID52
+  offset: '0x00000854'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID53
+  offset: '0x00000855'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID54
+  offset: '0x00000856'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID55
+  offset: '0x00000857'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID56
+  offset: '0x00000858'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID57
+  offset: '0x00000859'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID58
+  offset: '0x0000085A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID59
+  offset: '0x0000085B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID60
+  offset: '0x0000085C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID61
+  offset: '0x0000085D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID62
+  offset: '0x0000085E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID63
+  offset: '0x0000085F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID64
+  offset: '0x00000860'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID65
+  offset: '0x00000861'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID66
+  offset: '0x00000862'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID67
+  offset: '0x00000863'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID68
+  offset: '0x00000864'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID69
+  offset: '0x00000865'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID70
+  offset: '0x00000866'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID71
+  offset: '0x00000867'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID72
+  offset: '0x00000868'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID73
+  offset: '0x00000869'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID74
+  offset: '0x0000086A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID75
+  offset: '0x0000086B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID76
+  offset: '0x0000086C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID77
+  offset: '0x0000086D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID78
+  offset: '0x0000086E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID79
+  offset: '0x0000086F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID80
+  offset: '0x00000870'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID81
+  offset: '0x00000871'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID82
+  offset: '0x00000872'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID83
+  offset: '0x00000873'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID84
+  offset: '0x00000874'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID85
+  offset: '0x00000875'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID86
+  offset: '0x00000876'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID87
+  offset: '0x00000877'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID88
+  offset: '0x00000878'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID89
+  offset: '0x00000879'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID90
+  offset: '0x0000087A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID91
+  offset: '0x0000087B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID92
+  offset: '0x0000087C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID93
+  offset: '0x0000087D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID94
+  offset: '0x0000087E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID95
+  offset: '0x0000087F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID96
+  offset: '0x00000880'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID97
+  offset: '0x00000881'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID98
+  offset: '0x00000882'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID99
+  offset: '0x00000883'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID100
+  offset: '0x00000884'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID101
+  offset: '0x00000885'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID102
+  offset: '0x00000886'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID103
+  offset: '0x00000887'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID104
+  offset: '0x00000888'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID105
+  offset: '0x00000889'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID106
+  offset: '0x0000088A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID107
+  offset: '0x0000088B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID108
+  offset: '0x0000088C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID109
+  offset: '0x0000088D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID110
+  offset: '0x0000088E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID111
+  offset: '0x0000088F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID112
+  offset: '0x00000890'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID113
+  offset: '0x00000891'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID114
+  offset: '0x00000892'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID115
+  offset: '0x00000893'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID116
+  offset: '0x00000894'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID117
+  offset: '0x00000895'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID118
+  offset: '0x00000896'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID119
+  offset: '0x00000897'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID120
+  offset: '0x00000898'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID121
+  offset: '0x00000899'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID122
+  offset: '0x0000089A'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID123
+  offset: '0x0000089B'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID124
+  offset: '0x0000089C'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID125
+  offset: '0x0000089D'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID126
+  offset: '0x0000089E'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID127
+  offset: '0x0000089F'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID128
+  offset: '0x000008A0'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID129
+  offset: '0x000008A1'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID130
+  offset: '0x000008A2'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID131
+  offset: '0x000008A3'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID132
+  offset: '0x000008A4'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID133
+  offset: '0x000008A5'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID134
+  offset: '0x000008A6'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID135
+  offset: '0x000008A7'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID136
+  offset: '0x000008A8'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID137
+  offset: '0x000008A9'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID138
+  offset: '0x000008AA'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID139
+  offset: '0x000008AB'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID140
+  offset: '0x000008AC'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID141
+  offset: '0x000008AD'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID142
+  offset: '0x000008AE'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID143
+  offset: '0x000008AF'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID144
+  offset: '0x000008B0'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID145
+  offset: '0x000008B1'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID146
+  offset: '0x000008B2'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID147
+  offset: '0x000008B3'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID148
+  offset: '0x000008B4'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID149
+  offset: '0x000008B5'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID150
+  offset: '0x000008B6'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID151
+  offset: '0x000008B7'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID152
+  offset: '0x000008B8'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID153
+  offset: '0x000008B9'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID154
+  offset: '0x000008BA'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID155
+  offset: '0x000008BB'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID156
+  offset: '0x000008BC'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID157
+  offset: '0x000008BD'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID158
+  offset: '0x000008BE'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Processor Targets Registers (ICDIPTR)
+  name: ENABLE_TARGETS_SPI_INTID159
+  offset: '0x000008BF'
+  type: rw
+  width: 8
+- default: '0x00000000'
+  description: Interrupt Configuration Register (ICDICR)
+  name: ENABLE_SPI_CONFIG0
+  offset: '0x00000C08'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Configuration Register (ICDICR)
+  name: ENABLE_SPI_CONFIG1
+  offset: '0x00000C0C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Configuration Register (ICDICR)
+  name: ENABLE_SPI_CONFIG2
+  offset: '0x00000C10'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Configuration Register (ICDICR)
+  name: ENABLE_SPI_CONFIG3
+  offset: '0x00000C14'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Interrupt Configuration Register (ICDICR)
+  name: ENABLE_SPI_CONFIG4
+  offset: '0x00000C18'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Each bit provides the status of the SPI[987:0] inputs.
+  field:
+  - bits: '31:0'
+    name: SPI_STATUS
+    type: ro
+  name: ENABLE_SPI
+  offset: '0x00000D04'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 'Enables an external AMBA master to access the status of the: legacy_nirq_c<n>
+    and legacy_nfiq_c<n> inputs for CPU Interface <n>, cfgsdisable tie-off signal.'
+  field:
+  - bits: '2'
+    name: CFGSDISABLE
+    type: ro
+  - bits: '1'
+    name: LEGACY_NFIQ_IF_N
+    type: ro
+  - bits: '0'
+    name: LEGACY_NIRQ_IF_N
+    type: ro
+  name: ENABLE_LEGACY_INT_N
+  offset: '0x00000DD4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Returns the status of the match_d<n> tie-off signals for CPU Interface
+    <n>.
+  field:
+  - bits: '31:0'
+    longdesc: Where <n> is a number, from 0 to 7, that identifies one of the CPU Interfaces.
+    name: MATCH_D
+    shortdesc: 'Returns the status of the match_d<n>[31:0] inputs on the Distributor:
+      Bit [X] = 0 match_d<n>[X] is LOW, Bit [X] = 1 match_d<n>[X] is HIGH.'
+    type: ro
+  name: ENABLE_MATCH_D_N
+  offset: '0x00000DE0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Returns the status of the enable_d<n> tie-off signals for CPU Interface
+    <n>.
+  field:
+  - bits: '31:0'
+    longdesc: Where <n> is a number, from 0 to 7. that identifies one of the CPU Interfaces.
+    name: ENABLE_D
+    shortdesc: 'Returns the status of the enable_d<n>[31:0] inputs on the Distributor:
+      Bit [X] = 0 enable_d<n>[X] is LOW, Bit [X] = 1 enable_d<n>[X] is HIGH.'
+    type: ro
+  name: ENABLE_ENABLE_D_N
+  offset: '0x00000DE4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Software Generated Interrupt Register (ICDSGIR)
+  name: ENABLE_SGI_CONTROL
+  offset: '0x00000F00'
+  type: wo
+  width: 32
+- default: '0x00000087'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7'
+    name: IDENTIFIER
+    type: ro
+  - bits: '6:5'
+    name: IF_TYPE
+    type: ro
+  - bits: '4:2'
+    name: CPU_IF
+    type: ro
+  - bits: '1'
+    name: FIQ_LEGACY
+    type: ro
+  - bits: '0'
+    name: IRQ_LEGACY
+    type: ro
+  name: ENABLE_PERIPH_ID_8
+  offset: '0x00000FC0'
+  type: ro
+  width: 8
+- default: '0x00000090'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:0'
+    name: PART_NUMBER_0
+    type: ro
+  name: ENABLE_PERIPH_ID_0
+  offset: '0x00000FD0'
+  type: ro
+  width: 8
+- default: '0x000000B3'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:4'
+    name: JEP106_ID_3_0
+    type: ro
+  - bits: '3:0'
+    name: PART_NUMBER_1
+    type: ro
+  name: ENABLE_PERIPH_ID_1
+  offset: '0x00000FD4'
+  type: ro
+  width: 8
+- default: '0x0000001B'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:4'
+    longdesc: This field is set to 0x1.
+    name: REVISION
+    shortdesc: Identifies the architecture version of the GIC.
+    type: ro
+  - bits: '3'
+    name: JEDEC_USED
+    type: ro
+  - bits: '2:0'
+    name: JEP106_ID_6_4
+    type: ro
+  name: ENABLE_PERIPH_ID_2
+  offset: '0x00000FD8'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:4'
+    longdesc: Once silicon is available, if metal fixes are necessary then the manufacturer
+      can modify the tie-offs to indicate that a revision of the silicon has occurred.
+    name: REVAND
+    shortdesc: The top-level RTL provides four AND gates that are tied-off to provide
+      an output value of 0x0.
+    type: ro
+  - bits: '3:0'
+    longdesc: ARM set this to 0x0.
+    name: MOD_NUMBER
+    shortdesc: The customer can update this field if they modify the RTL of the GIC.
+    type: ro
+  name: ENABLE_PERIPH_ID_3
+  offset: '0x00000FDC'
+  type: ro
+  width: 8
+- default: '0x00000004'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:4'
+    name: FOURKB_COUNT
+    type: ro
+  - bits: '3:0'
+    name: JEP106_C_CODE
+    type: ro
+  name: ENABLE_PERIPH_ID_4
+  offset: '0x00000FE0'
+  type: ro
+  width: 8
+- default: '0x00000010'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:5'
+    name: PPI_NUMBER_0
+    type: ro
+  - bits: '4:0'
+    longdesc: b00000 = no SGIs, b00001 = one SGI, INTID0, b00010 = two SGIs, INTID[1:0],
+      .., b10000 = 16 SGIs, INTID[15:0], b10001-b11111 = reserved.
+    name: SGI_NUMBER
+    shortdesc: The number of SGIs that the GIC provides.
+    type: ro
+  name: ENABLE_PERIPH_ID_5
+  offset: '0x00000FE4'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:2'
+    name: SPI_NUMBER_0
+    type: ro
+  - bits: '1:0'
+    name: PPI_NUMBER_1
+    type: ro
+  name: ENABLE_PERIPH_ID_6
+  offset: '0x00000FE8'
+  type: ro
+  width: 8
+- default: '0x00000092'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7'
+    name: TZ
+    type: ro
+  - bits: '6:4'
+    name: PRIORITY
+    type: ro
+  - bits: '3:0'
+    name: SPI_NUMBER_1
+    type: ro
+  name: ENABLE_PERIPH_ID_7
+  offset: '0x00000FEC'
+  type: ro
+  width: 8
+- default: '0x0000000D'
+  description: The component_id_[3:0] Registers are four eight-bit wide registers,
+    that can conceptually be treated as a single register that holds a 32-bit PrimeCell
+    ID value.
+  field:
+  - bits: '7:0'
+    name: COMPONENT_ID_0
+    type: ro
+  name: ENABLE_COMPONENT_ID_0
+  offset: '0x00000FF0'
+  type: ro
+  width: 8
+- default: '0x000000F0'
+  description: The component_id_[3:0] Registers are four eight-bit wide registers,
+    that can conceptually be treated as a single register that holds a 32-bit PrimeCell
+    ID value.
+  field:
+  - bits: '7:0'
+    name: COMPONENT_ID_1
+    type: ro
+  name: ENABLE_COMPONENT_ID_1
+  offset: '0x00000FF4'
+  type: ro
+  width: 8
+- default: '0x00000005'
+  description: The component_id_[3:0] Registers are four eight-bit wide registers,
+    that can conceptually be treated as a single register that holds a 32-bit PrimeCell
+    ID value.
+  field:
+  - bits: '7:0'
+    name: COMPONENT_ID_2
+    type: ro
+  name: ENABLE_COMPONENT_ID_2
+  offset: '0x00000FF8'
+  type: ro
+  width: 8
+- default: '0x000000B1'
+  description: The component_id_[3:0] Registers are four eight-bit wide registers,
+    that can conceptually be treated as a single register that holds a 32-bit PrimeCell
+    ID value.
+  field:
+  - bits: '7:0'
+    name: COMPONENT_ID_3
+    type: ro
+  name: ENABLE_COMPONENT_ID_3
+  offset: '0x00000FFC'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: CPU Interface Control Register (ICCICR)
+  name: CONTROL_N_CONTROL_N
+  offset: '0x00001000'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Priority Mask Register (ICCIPMR)
+  name: CONTROL_N_PRI_MSK_C_N
+  offset: '0x00001004'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Binary Point Register (ICCBPR)
+  name: CONTROL_N_BP_C_N
+  offset: '0x00001008'
+  type: rw
+  width: 32
+- default: '0x000003FF'
+  description: Interrupt Acknowledge Register (ICCIAR)
+  name: CONTROL_N_INT_ACK_N
+  offset: '0x0000100C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: End of Interrupt Register (ICCEOIR)
+  name: CONTROL_N_EOI_N
+  offset: '0x00001010'
+  type: wo
+  width: 32
+- default: '0x000000FF'
+  description: Running Priority Register (ICCRPR)
+  name: CONTROL_N_RUN_PRIORITY_N
+  offset: '0x00001014'
+  type: ro
+  width: 32
+- default: '0x000003FF'
+  description: Highest Pending Interrupt Register (ICCHPIR)
+  name: CONTROL_N_HI_PEND_N
+  offset: '0x00001018'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Aliased Binary Point Register (ICCABPR)
+  name: CONTROL_N_ALIAS_NSBP_C_N
+  offset: '0x0000101C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Enables the integration test logic to modify the status of the nfiq_c<n>
+    and nirq_c<n> signals.
+  field:
+  - bits: '0'
+    name: INTEG_EN
+    type: rw
+  name: CONTROL_N_INTEG_EN_C_N
+  offset: '0x00001040'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Enables the integration test logic to modify the status of the nfiq_c<n>
+    and nirq_c<n> signals.
+  field:
+  - bits: '1'
+    name: SET_NFIQ_C
+    type: rw
+  - bits: '0'
+    name: SET_NIRQ_C
+    type: rw
+  name: CONTROL_N_INTERRUPT_OUT_N
+  offset: '0x00001044'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Returns the status of the match_c<n> tie-off signals for CPU Interface
+    <n>.
+  field:
+  - bits: '31:0'
+    longdesc: Where <n> is a number, from 0 to 7. that identifies one of the CPU Interfaces.
+    name: MATCH_C
+    shortdesc: 'Returns the status of the match_c<n>[31:0] inputs for CPU Interface
+      <n>: Bit [X] = 0 match_c<n>[x] is LOW Bit [X] = 1 match_c<n>[x] is HIGH.'
+    type: ro
+  name: CONTROL_N_MATCH_C_N
+  offset: '0x00001050'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Returns the status of the enable_c<n> tie-off signals for CPU Interface
+    <n>.
+  field:
+  - bits: '31:0'
+    longdesc: Where <n> is a number, from 0 to 7. that identifies one of the CPU Interfaces.
+    name: ENABLE_C
+    shortdesc: 'Returns the status of the enable_c<n>[31:0] inputs for CPU Interface
+      <n>: Bit [X] = 0 enable_c<n>[x] is LOW Bit [X] = 1 enable_c<n>[x] is HIGH.'
+    type: ro
+  name: CONTROL_N_ENABLE_C_N
+  offset: '0x00001054'
+  type: ro
+  width: 32
+- default: '0x3901043B'
+  description: Returns the status of the enable_c<n> tie-off signals for CPU Interface
+    <n>.
+  field:
+  - bits: '31:20'
+    longdesc: The part number of the GIC is 0x390.
+    name: PART_NUM
+    shortdesc: Identifies the peripheral.
+    type: ro
+  - bits: '19:16'
+    longdesc: For version 1.0, this field reads back as 0x1.
+    name: ARCH_NUM
+    shortdesc: Identifies the version of the ARM Generic Interrupt Controller Architecture
+      Specification that the GIC implements.
+    type: ro
+  - bits: '15:12'
+    longdesc: For revision r0p0, these bits read back as 0x0.
+    name: REV_NUM
+    shortdesc: Returns the revision number of the GIC.
+    type: ro
+  - bits: '11:0'
+    longdesc: 'It uses the following bit format: [11:8] = 0x4, that is, the JEP106
+      continuation code for ARM, [7] = 0, [6:0] = b0111011, that is, the JEP106 code
+      [6:0] for ARM.'
+    name: IMPLEMENTOR
+    shortdesc: Returns the JEP106 code of the company that implemented the Distributor
+      RTL, that is, ARM.
+    type: ro
+  name: CONTROL_N_CPU_IF_IDENT
+  offset: '0x000010FC'
+  type: ro
+  width: 32
+- default: '0x00000087'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7'
+    name: IDENTIFIER
+    type: ro
+  - bits: '6:5'
+    name: IF_TYPE
+    type: ro
+  - bits: '4:2'
+    name: CPU_IF
+    type: ro
+  - bits: '1'
+    name: FIQ_LEGACY
+    type: ro
+  - bits: '0'
+    name: IRQ_LEGACY
+    type: ro
+  name: CONTROL_N_PERIPH_ID_8
+  offset: '0x00001FC0'
+  type: ro
+  width: 8
+- default: '0x00000090'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:0'
+    name: PART_NUMBER_0
+    type: ro
+  name: CONTROL_N_PERIPH_ID_0
+  offset: '0x00001FD0'
+  type: ro
+  width: 8
+- default: '0x000000B3'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:4'
+    name: JEP106_ID_3_0
+    type: ro
+  - bits: '3:0'
+    name: PART_NUMBER_1
+    type: ro
+  name: CONTROL_N_PERIPH_ID_1
+  offset: '0x00001FD4'
+  type: ro
+  width: 8
+- default: '0x0000001B'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:4'
+    longdesc: This field is set to 0x1.
+    name: REVISION
+    shortdesc: Identifies the architecture version of the GIC.
+    type: ro
+  - bits: '3'
+    name: JEDEC_USED
+    type: ro
+  - bits: '2:0'
+    name: JEP106_ID_6_4
+    type: ro
+  name: CONTROL_N_PERIPH_ID_2
+  offset: '0x00001FD8'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:4'
+    longdesc: Once silicon is available, if metal fixes are necessary then the manufacturer
+      can modify the tie-offs to indicate that a revision of the silicon has occurred.
+    name: REVAND
+    shortdesc: The top-level RTL provides four AND gates that are tied-off to provide
+      an output value of 0x0.
+    type: ro
+  - bits: '3:0'
+    longdesc: ARM set this to 0x0.
+    name: MOD_NUMBER
+    shortdesc: The customer can update this field if they modify the RTL of the GIC.
+    type: ro
+  name: CONTROL_N_PERIPH_ID_3
+  offset: '0x00001FDC'
+  type: ro
+  width: 8
+- default: '0x00000004'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:4'
+    name: FOURKB_COUNT
+    type: ro
+  - bits: '3:0'
+    name: JEP106_C_CODE
+    type: ro
+  name: CONTROL_N_PERIPH_ID_4
+  offset: '0x00001FE0'
+  type: ro
+  width: 8
+- default: '0x00000010'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:5'
+    name: PPI_NUMBER_0
+    type: ro
+  - bits: '4:0'
+    longdesc: b00000 = no SGIs, b00001 = one SGI, INTID0, b00010 = two SGIs, INTID[1:0],
+      .., b10000 = 16 SGIs, INTID[15:0], b10001-b11111 = reserved.
+    name: SGI_NUMBER
+    shortdesc: The number of SGIs that the GIC provides.
+    type: ro
+  name: CONTROL_N_PERIPH_ID_5
+  offset: '0x00001FE4'
+  type: ro
+  width: 8
+- default: '0x00000000'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7:2'
+    name: SPI_NUMBER_0
+    type: ro
+  - bits: '1:0'
+    name: PPI_NUMBER_1
+    type: ro
+  name: CONTROL_N_PERIPH_ID_6
+  offset: '0x00001FE8'
+  type: ro
+  width: 8
+- default: '0x00000092'
+  description: The periph_id_[8:0] Registers provide information about the configuration
+    of the peripheral. Note some fields span across adjacent registers.
+  field:
+  - bits: '7'
+    name: TZ
+    type: ro
+  - bits: '6:4'
+    name: PRIORITY
+    type: ro
+  - bits: '3:0'
+    name: SPI_NUMBER_1
+    type: ro
+  name: CONTROL_N_PERIPH_ID_7
+  offset: '0x00001FEC'
+  type: ro
+  width: 8
+- default: '0x0000000D'
+  description: The component_id_[3:0] Registers are four eight-bit wide registers,
+    that can conceptually be treated as a single register that holds a 32-bit PrimeCell
+    ID value.
+  field:
+  - bits: '7:0'
+    name: COMPONENT_ID_0
+    type: ro
+  name: CONTROL_N_COMPONENT_ID_0
+  offset: '0x00001FF0'
+  type: ro
+  width: 8
+- default: '0x000000F0'
+  description: The component_id_[3:0] Registers are four eight-bit wide registers,
+    that can conceptually be treated as a single register that holds a 32-bit PrimeCell
+    ID value.
+  field:
+  - bits: '7:0'
+    name: COMPONENT_ID_1
+    type: ro
+  name: CONTROL_N_COMPONENT_ID_1
+  offset: '0x00001FF4'
+  type: ro
+  width: 8
+- default: '0x00000005'
+  description: The component_id_[3:0] Registers are four eight-bit wide registers,
+    that can conceptually be treated as a single register that holds a 32-bit PrimeCell
+    ID value.
+  field:
+  - bits: '7:0'
+    name: COMPONENT_ID_2
+    type: ro
+  name: CONTROL_N_COMPONENT_ID_2
+  offset: '0x00001FF8'
+  type: ro
+  width: 8
+- default: '0x000000B1'
+  description: The component_id_[3:0] Registers are four eight-bit wide registers,
+    that can conceptually be treated as a single register that holds a 32-bit PrimeCell
+    ID value.
+  field:
+  - bits: '7:0'
+    name: COMPONENT_ID_3
+    type: ro
+  name: CONTROL_N_COMPONENT_ID_3
+  offset: '0x00001FFC'
+  type: ro
+  width: 8

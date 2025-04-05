@@ -1,0 +1,5101 @@
+bank:
+- address: '0xff0b0000'
+  name: GEM0
+- address: '0xff0c0000'
+  name: GEM1
+- address: '0xff0d0000'
+  name: GEM2
+- address: '0xff0e0000'
+  name: GEM3
+description: Gigabit Ethernet; GEM 0 Controller
+register:
+- default: '0x00000000'
+  description: The network control register contains general MAC control functions
+    for both receiver and transmitter.
+  field:
+  - bits: '31:26'
+    name: RESERVED
+    type: ro
+  - bits: '25'
+    longdesc: Writeable register. Ignore on read.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: rw
+  - bits: '24'
+    longdesc: Write 1 to enable. Replace timestamp field in the 1588 header for TX
+      Sync Frames with current TSU timer value.
+    name: ONE_STEP_SYNC_MODE
+    shortdesc: 1588 One Step Sync Mode.
+    type: rw
+  - bits: '23'
+    name: EXT_TSU_PORT_ENABLE
+    type: rw
+  - bits: '22'
+    longdesc: Setting this bit to one will cause the upper 16-bits of the CRC of every
+      received frame to be replaced with the offset from start of frame to the beginning
+      of the UDP or TCP header. The lower 16-bits of the CRC are replaced with zero
+      and reserved for future use. The offset is measured in units of 2 bytes. Set
+      to zero for normal operation.
+    name: STORE_UDP_OFFSET
+    shortdesc: Store UDP / TCP offset to memory.
+    type: rw
+  - bits: '21'
+    longdesc: If asserted with sgmii_mode in the network control register the ACK
+      bit is driven before ability detect during transfer of status information from
+      the PHY to the MAC.
+    name: ALT_SGMII_MODE
+    shortdesc: Alternative sgmii mode.
+    type: rw
+  - bits: '20'
+    name: PTP_UNICAST_ENA
+    type: rw
+  - bits: '19'
+    name: TX_LPI_EN
+    type: rw
+  - bits: '18'
+    longdesc: Writing one to this bit will only have an effect if the DMA is not currently
+      writing a packet already stored in the DPRAM to memory. Self clearing register.
+    name: FLUSH_RX_PKT_PCLK
+    shortdesc: Flush the next packet from the external RX DPRAM.
+    type: rw
+  - bits: '17'
+    longdesc: Takes the values stored in the Transmit PFC Pause Register. Self clearing
+      register.
+    name: TRANSMIT_PFC_PRIORITY_BASED_PAUSE_FRAME
+    shortdesc: Write a one to transmit PFC priority based pause frame.
+    type: wo
+  - bits: '16'
+    longdesc: Setting this bit will enable PFC negotiation and recognition of priority
+      based pause frames.
+    name: PFC_ENABLE
+    shortdesc: Enable PFC Priority Based Pause Reception capabilities.
+    type: rw
+  - bits: '15'
+    longdesc: Setting this bit to one will cause the CRC of every received frame to
+      be replaced with the value of the nanoseconds field of the 1588 timer that was
+      captured as the receive frame passed the message time stamp point. Set to zero
+      for normal operation.
+    name: STORE_RX_TS
+    shortdesc: Store receive time stamp to memory.
+    type: rw
+  - bits: '14:13'
+    name: RESERVED
+    type: ro
+  - bits: '12'
+    longdesc: Self clearing register.
+    name: TX_PAUSE_FRAME_ZERO
+    shortdesc: Transmit zero quantum pause frame - writing one to this bit causes
+      a pause frame with zero quantum to be transmitted.
+    type: wo
+  - bits: '11'
+    longdesc: Self clearing register.
+    name: TX_PAUSE_FRAME_REQ
+    shortdesc: Transmit pause frame - writing one to this bit causes a pause frame
+      to be transmitted.
+    type: wo
+  - bits: '10'
+    longdesc: Self clearing register.
+    name: TX_HALT_PCLK
+    shortdesc: Transmit halt - writing one to this bit halts transmission as soon
+      as any ongoing frame transmission ends.
+    type: rw
+  - bits: '9'
+    longdesc: Self clearing register.
+    name: TX_START_PCLK
+    shortdesc: Start transmission - writing one to this bit starts transmission.
+    type: rw
+  - bits: '8'
+    longdesc: Ignored in gigabit half duplex mode.
+    name: BACK_PRESSURE
+    shortdesc: Back pressure if set in 10M or 100M half duplex mode will force collisions
+      on all received frames.
+    type: rw
+  - bits: '7'
+    name: STATS_WRITE_EN
+    type: rw
+  - bits: '6'
+    longdesc: Writing a one increments all the statistics registers by one for test
+      purposes. Self clearing register.
+    name: INC_ALL_STATS_REGS
+    shortdesc: Incremental statistics registers - this bit is write only.
+    type: rw
+  - bits: '5'
+    longdesc: Writing a one clears the statistics registers. Self clearing register.
+    name: CLEAR_ALL_STATS_REGS
+    shortdesc: Clear statistics registers - this bit is write only.
+    type: rw
+  - bits: '4'
+    longdesc: When zero forces mdio to high impedance state and mdc low.
+    name: MAN_PORT_EN
+    shortdesc: Management port enable - set to one to enable the management port.
+    type: rw
+  - bits: '3'
+    longdesc: When reset transmission will stop immediately, the transmit pipeline
+      and control registers will be cleared and the transmit queue pointer register
+      will reset to point to the start of the transmit descriptor list.
+    name: ENABLE_TRANSMIT
+    shortdesc: Transmit enable - when set, it enables the GEM transmitter to send
+      data.
+    type: rw
+  - bits: '2'
+    longdesc: When reset frame reception will stop immediately and the receive pipeline
+      will be cleared. The receive queue pointer register is unaffected.
+    name: ENABLE_RECEIVE
+    shortdesc: Receive enable - when set, it enables the GEM to receive data.
+    type: rw
+  - bits: '1'
+    longdesc: Also connects txd to rxd, tx_en to rx_dv and forces full duplex mode.
+      Bit 11 of the network configuration register must be set low to disable TBI
+      mode when in internal loopback. rx_clk and tx_clk may malfunction as the GEM
+      is switched into and out of internal loopback. It is important that receive
+      and transmit circuits have already been disabled when making the switch into
+      and out of internal loopback. Local loopback functionality is optional and may
+      not be supported by some instantiations of the GEM.
+    name: LOOPBACK_LOCAL
+    shortdesc: Loopback local - asserts the loopback_local signal to the system clock
+      generator.
+    type: rw
+  - bits: '0'
+    name: LOOPBACK
+    type: rw
+  name: NETWORK_CONTROL
+  offset: '0x00000000'
+  type: mixed
+  width: 32
+- default: '0x00280000'
+  description: The network configuration register contains functions for setting the
+    mode of operation for the Gigabit Ethernet MAC.
+  field:
+  - bits: '31'
+    longdesc: When low the PCS will transmit idle symbols if the link goes down. When
+      high the PCS can transmit frame data when the link is down.
+    name: UNI_DIRECTION_ENABLE
+    shortdesc: Uni-direction-enable.
+    type: rw
+  - bits: '30'
+    longdesc: When set rx_er has no effect on the GEMs operation when rx_dv is low.
+      Set this when using the RGMII wrapper in half-duplex mode.
+    name: IGNORE_IPG_RX_ER
+    shortdesc: Ignore IPG rx_er.
+    type: rw
+  - bits: '29'
+    longdesc: When set frames with non-standard preamble are not rejected.
+    name: NSP_CHANGE
+    shortdesc: Receive bad preamble.
+    type: rw
+  - bits: '28'
+    name: IPG_STRETCH_ENABLE
+    type: rw
+  - bits: '27'
+    longdesc: 6 ms.
+    name: SGMII_MODE_ENABLE
+    shortdesc: SGMII mode enable - changes behaviour of the auto-negotiation advertisement
+      and link partner ability registers to meet the requirements of SGMII and reduces
+      the duration of the link timer from 10 ms to 1.
+    type: rw
+  - bits: '26'
+    longdesc: FCS error statistics will still be collected for frames with bad FCS
+      and FCS status will be recorded in frame's DMA descriptor. For normal operation
+      this bit must be set to zero.
+    name: IGNORE_RX_FCS
+    shortdesc: Ignore RX FCS - when set frames with FCS/CRC errors will not be rejected.
+    type: rw
+  - bits: '25'
+    name: EN_HALF_DUPLEX_RX
+    type: rw
+  - bits: '24'
+    longdesc: Frames with bad IP, TCP or UDP checksums are discarded.
+    name: RECEIVE_CHECKSUM_OFFLOAD_ENABLE
+    shortdesc: Receive checksum offload enable - when set, the receive checksum engine
+      is enabled.
+    type: rw
+  - bits: '23'
+    longdesc: When set, pause frames are not copied to memory regardless of the state
+      of the copy all frames bit; whether a hash match is found or whether a type
+      ID match is identified. If a destination address match is found the pause frame
+      will be copied to memory. Note that valid pause frames received will still increment
+      pause statistics and pause the transmission of frames as required.
+    name: DISABLE_COPY_OF_PAUSE_FRAMES
+    shortdesc: Disable copy of pause frames - set to one to prevent valid pause frames
+      being copied to memory.
+    type: rw
+  - bits: '22:21'
+    longdesc: '00: 32 bit data bus width (External FIFO mode) 01: 64 bit AMBA AXI
+      data bus width (AMBA AXI DMA mode) 10: Reserved 11: Reserved'
+    name: DATA_BUS_WIDTH
+    shortdesc: Data bus width - set according to AMBA AXI or external FIFO data bus
+      width.
+    type: rw
+  - bits: '20:18'
+    longdesc: 'These three bits determine the number pclk will be divided by to generate
+      MDC. For conformance with the 802.3 specification, MDC must not exceed 2.5 MHz
+      (MDC is only active during MDIO read and write operations). The reset value
+      for this can be changed by defining a new value for gem_mdc_clock_div in gem_defs.v000:
+      divide pclk by 8 (pclk up to 20 MHz)001: divide pclk by 16 (pclk up to 40 MHz)010:
+      divide pclk by 32 (pclk up to 80 MHz)011: divide pclk by 48 (pclk up to 120MHz)100:
+      divide pclk by 64 (pclk up to 160 MHz)101: divide pclk by 96 (pclk up to 240
+      MHz)110: divide pclk by 128 (pclk up to 320 MHz)111: divide pclk by 224 (pclk
+      up to 540 MHz).Note. The reset value of this field is equal to the gem_mdc_clock_div
+      define, which is user configurable.'
+    name: MDC_CLOCK_DIVISION
+    shortdesc: MDC clock division - set according to pclk speed.
+    type: rw
+  - bits: '17'
+    longdesc: The frame length indicated will be reduced by four bytes in this mode.
+    name: FCS_REMOVE
+    shortdesc: FCS remove - setting this bit will cause received frames to be written
+      to memory without their frame check sequence (last 4 bytes).
+    type: rw
+  - bits: '16'
+    longdesc: This only applies to frames with a length field less than 0x0600.
+    name: LENGTH_FIELD_ERROR_FRAME_DISCARD
+    shortdesc: Length field error frame discard - setting this bit causes frames with
+      a measured length shorter than the extracted length field (as indicated by bytes
+      13 and 14 in a non-VLAN tagged frame) to be discarded.
+    type: rw
+  - bits: '15:14'
+    name: RECEIVE_BUFFER_OFFSET
+    type: rw
+  - bits: '13'
+    longdesc: 3 classic pause frame is received and PFC has not been negotiated.
+    name: PAUSE_ENABLE
+    shortdesc: Pause enable - when set, transmission will pause if a non zero 802.
+    type: rw
+  - bits: '12'
+    longdesc: If set to one the backoff between collisions will always be one slot
+      time. Setting this bit to one helps test the too many retries condition. Also
+      used in the pause frame tests to reduce the pause counter's decrement time from
+      512 bit times, to every rx_clk cycle.
+    name: RETRY_TEST
+    shortdesc: Retry test - must be set to zero for normal operation.
+    type: rw
+  - bits: '11'
+    longdesc: 'Must be set for SGMII operation.0: GMII/MII interface enabled, TBI
+      disabled1: TBI enabled, GMII/MII disabled'
+    name: PCS_SELECT
+    shortdesc: PCS select - selects between MII/GMII and TBI.
+    type: rw
+  - bits: '10'
+    longdesc: '0: 10/100 operation using MII or TBI interface1: Gigabit operation
+      using GMII or TBI interface'
+    name: GIGABIT_MODE_ENABLE
+    shortdesc: Gigabit mode enable - setting this bit configures the GEM for 1000
+      Mbps operation.
+    type: rw
+  - bits: '9'
+    name: EXTERNAL_ADDRESS_MATCH_ENABLE
+    type: rw
+  - bits: '8'
+    longdesc: Normally the GEM would reject any frame above 1518 bytes.
+    name: RECEIVE_1536_BYTE_FRAMES
+    shortdesc: Receive 1536 byte frames - setting this bit means the GEM will accept
+      frames up to 1536 bytes in length.
+    type: rw
+  - bits: '7'
+    name: UNICAST_HASH_ENABLE
+    type: rw
+  - bits: '6'
+    name: MULTICAST_HASH_ENABLE
+    type: rw
+  - bits: '5'
+    name: NO_BROADCAST
+    type: rw
+  - bits: '4'
+    name: COPY_ALL_FRAMES
+    type: rw
+  - bits: '3'
+    longdesc: The default length is 10,240 bytes.
+    name: JUMBO_FRAMES
+    shortdesc: Jumbo frames - set to one to enable jumbo frames up to `gem_jumbo_max_length
+      bytes to be accepted.
+    type: rw
+  - bits: '2'
+    name: DISCARD_NON_VLAN_FRAMES
+    type: rw
+  - bits: '1'
+    longdesc: Also controls the half_duplex pin.
+    name: FULL_DUPLEX
+    shortdesc: Full duplex - if set to logic one, the transmit block ignores the state
+      of collision and carrier sense and allows receive while transmitting.
+    type: rw
+  - bits: '0'
+    longdesc: The value of this pin is reflected on the speed_mode[0] output pin.
+    name: SPEED
+    shortdesc: Speed - set to logic one to indicate 100Mbps operation, logic zero
+      for 10Mbps.
+    type: rw
+  name: NETWORK_CONFIG
+  offset: '0x00000004'
+  type: rw
+  width: 32
+- default: '0x00000004'
+  description: The network status register returns status information with respect
+    to the PHY management interface.
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    longdesc: This bit is set when LPI is detected and reset when normal idle is detected.
+      An interrupt is generated when the state of this bit changes.
+    name: LPI_INDICATE_PCLK
+    shortdesc: LPI Indication - Low power idle has been detected on receive.
+    type: ro
+  - bits: '6'
+    name: PFC_NEGOTIATE_PCLK
+    type: ro
+  - bits: '5'
+    name: MAC_PAUSE_TX_EN
+    type: ro
+  - bits: '4'
+    name: MAC_PAUSE_RX_EN
+    type: ro
+  - bits: '3'
+    longdesc: Set to one if the resolution function determines that both devices are
+      capable of full duplex operation. If zero half-duplex operation is possible
+      as long as bit 0 (PCS link state) is also one.
+    name: MAC_FULL_DUPLEX
+    shortdesc: PCS auto-negotiation duplex resolution.
+    type: ro
+  - bits: '2'
+    longdesc: e. has completed).
+    name: MAN_DONE
+    shortdesc: The PHY management logic is idle (i.
+    type: ro
+  - bits: '1'
+    name: MDIO_IN
+    type: ro
+  - bits: '0'
+    longdesc: If auto-negotiation is disabled this returns the synchronisation status.
+      If auto-negotiation is enabled it is set in the LINK_OK state as long as a compatible
+      duplex mode is resolved, it is always set in the LINK_OK state in SGMII mode.
+    name: PCS_LINK_STATE
+    shortdesc: Returns status of PCS link state.
+    type: ro
+  name: NETWORK_STATUS
+  offset: '0x00000008'
+  type: ro
+  width: 32
+- default: '0x00020784'
+  description: DMA Configuration Register
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    longdesc: 0 = 32b, 1 = 64b.
+    name: DMA_ADDR_BUS_WIDTH_1
+    shortdesc: DMA address bus width.
+    type: rw
+  - bits: '29'
+    longdesc: See TX BD control register definition for description of feature.
+    name: TX_BD_EXTENDED_MODE_EN
+    shortdesc: Enable TX extended BD mode.
+    type: rw
+  - bits: '28'
+    longdesc: See RX BD control register definition for description of feature.
+    name: RX_BD_EXTENDED_MODE_EN
+    shortdesc: Enable RX extended BD mode.
+    type: rw
+  - bits: '27'
+    name: RESERVED
+    type: ro
+  - bits: '26'
+    longdesc: Force the TX DMA to always issue max length bursts on EOP(end of packet)
+      or EOB(end of buffer) transfers as defined by bits 4:0 of this register, even
+      when there is less that max burst data bytes to read. Residual data read is
+      ignored. Does not apply on bursts that break 1k boundary rule.
+    name: FORCE_MAX_AMBA_BURST_TX
+    shortdesc: Force max length bursts on TX.
+    type: rw
+  - bits: '25'
+    longdesc: Force the RX DMA to always issue max length bursts on EOP(end of packet)
+      or EOB(end of buffer)transfers, even if there is less than max burst real packet
+      data required to write. Any extra bytes of pad data is set to 0x00. Does not
+      apply on bursts that break 1k boundary rule.
+    name: FORCE_MAX_AMBA_BURST_RX
+    shortdesc: Force max length bursts on RX.
+    type: rw
+  - bits: '24'
+    longdesc: When set, the GEM DMA will automatically discard receive packets from
+      the receiver packet buffer memory when no AMBA (AHB/AXI) resource is available.
+      When low, then received packets will remain to be stored in the SRAM based packet
+      buffer until AMBA (AHB/AXI) buffer resource next becomes available. A write
+      to this bit is ignored if the DMA is not configured in the packet buffer full
+      store and forward mode.
+    name: FORCE_DISCARD_ON_ERR
+    shortdesc: Auto Discard RX pkts during lack of resource.
+    type: rw
+  - bits: '23:16'
+    longdesc: 'The value defined by these bits determines the size of buffer to use
+      in main system memory when writing received data. The value is defined in multiples
+      of 64 bytes.0x01 corresponds to buffers of 64 bytes0x02 corresponds to 128 bytes
+      etc.For example:0x02: 128 byte.0x18: 1536 byte (1*max length frame/buffer)0xA0:
+      10240 byte (1*10K jumbo frame/buffer)Note that this value should never be written
+      as zero.Note. The reset value of this field is equal to the gem_rx_buffer_length_def
+      define, which is user configurable.'
+    name: RX_BUF_SIZE
+    shortdesc: DMA receive buffer size in external AMBA (AHB/AXI) system memory.
+    type: rw
+  - bits: '15:12'
+    name: RESERVED
+    type: ro
+  - bits: '11'
+    longdesc: When set, the transmitter checksum generation engine is enabled, to
+      calculate and substitute checksums for transmit frames. When clear, frame data
+      is unaffected. If the GEM is not configured to use the DMA packet buffer, this
+      bit is not implemented and will be treated as reserved, read as zero, ignored
+      on write.
+    name: TX_PBUF_TCP_EN
+    shortdesc: Transmitter IP, TCP and UDP checksum generation offload enable (not
+      supported when in TX Partial Store and Forward mode).
+    type: rw
+  - bits: '10'
+    longdesc: 'Having this bit at zero halves the amount of memory used for the transmit
+      packet buffer. This reduces the amount of memory used by the GEM. It is important
+      to set this bit to one if the full configured physical memory is available.
+      The value in brackets below represents the size that would result for the default
+      maximum configured memory size of 4 Kbytes.1: Use full configured addressable
+      space (4 Kb)0: Do not use top address bit (2 Kb)If the GEM is not configured
+      to use the DMA packet buffer, this bit is not implemented and will be treated
+      as reserved, read as zero, ignored on write.Note. The reset value of this field
+      is equal to the gem_tx_pbuf_size_def define, which is user configurable.'
+    name: TX_PBUF_SIZE
+    shortdesc: Transmitter packet buffer memory size select.
+    type: rw
+  - bits: '9:8'
+    longdesc: 'Having these bits at less than 11 reduces the amount of memory used
+      for the receive packet buffer. This reduces the amount of memory used by the
+      GEM. It is important to set these bits both to one if the full configured physical
+      memory is available. The value in brackets below represents the size that would
+      result for the default maximum configured memory size of 8 Kbytes.11: Use full
+      configured addressable space (8 Kb)10: Do not use top address bit (4 Kb)01:
+      Do not use top two address bits (2 Kb)00: Do not use top three address bits
+      (1 Kb)If the GEM is not configured to use the DMA packet buffer, these bits
+      are not implemented and will be treated as reserved, read as zero, ignored on
+      write.Note. The reset value of this field is equal to the gem_rx_pbuf_size_def
+      define, which is user configurable.'
+    name: RX_PBUF_SIZE
+    shortdesc: Receiver packet buffer memory size select.
+    type: rw
+  - bits: '7'
+    longdesc: When set, selects swapped endianism for AMBA (AHB/AXI) transfers. When
+      clear, selects little endian mode.
+    name: ENDIAN_SWAP_PACKET
+    shortdesc: endian swap mode enable for packet data accesses.
+    type: rw
+  - bits: '6'
+    longdesc: When set, selects swapped endianism for AMBA (AHB/AXI) transfers. When
+      clear, selects little endian mode.
+    name: ENDIAN_SWAP_MANAGEMENT
+    shortdesc: endian swap mode enable for management descriptor accesses.
+    type: rw
+  - bits: '5'
+    name: RESERVED
+    type: ro
+  - bits: '4:0'
+    longdesc: 'Not used for DMA management operations and only used where space and
+      data size allow and respecting AXI/AHB burst boundary rules. One-hot priority
+      encoding enforced automatically on register writes as follows, where x represents
+      don''t care:1xxxx: Attempt to use bursts of up to 16.01xxx: Attempt to use bursts
+      of up to 8.001xx: Attempt to use bursts of up to 4.0001x: Always use SINGLE
+      bursts.00001: Always use SINGLE bursts.00000: In AXI mode, a setting of 5''b00000
+      means the core will optimally decide the best AXI burst length possible up to
+      256 beats, whilst respecting the 4KB boundary rule.'
+    name: AMBA_BURST_LENGTH
+    shortdesc: Selects the burst length to attempt to use on the AMBA (AHB/AXI) when
+      transferring frame data.
+    type: rw
+  name: DMA_CONFIG
+  offset: '0x00000010'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This register, when read, provides details of the status of a transmit.
+    Once read, individual bits may be cleared by writing 1 to them. It is not possible
+    to set a bit to 1 by writing to the register.
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: ro
+  - bits: '8'
+    longdesc: Cleared by writing a one to this bit.
+    name: RESP_NOT_OK
+    shortdesc: bresp/hresp not OK - set when the DMA block sees bresp/hresp not OK.
+    type: rw
+  - bits: '7'
+    longdesc: Cleared by writing a one to this bit.
+    name: LATE_COLLISION_OCCURRED
+    shortdesc: Late collision occurred - only set if the condition occurs in gigabit
+      mode, as retry is not attempted.
+    type: rw
+  - bits: '6'
+    longdesc: This bit is set if a transmitter status write back has not completed
+      when another status write back is attempted. When using the DMA interface configured
+      for internal FIFO mode, this bit is also set when the transmit DMA has written
+      the SOP data into the FIFO and either the AHB bus was not granted in time for
+      further data, or because an AHB not OK response was returned, or because a used
+      bit was read. When using the DMA interface configured for packet buffer mode,
+      this bit will never be set. When using the external FIFO interface, this bit
+      is also set when the tx_r_underflow input is asserted during a frame transfer.
+      Cleared by writing a 1.
+    name: TRANSMIT_UNDER_RUN
+    shortdesc: Transmit under run - this bit is set if the transmitter was forced
+      to terminate a frame that it had already began transmitting due to further data
+      being unavailable.
+    type: rw
+  - bits: '5'
+    longdesc: Cleared by writing a one to this bit.
+    name: TRANSMIT_COMPLETE
+    shortdesc: Transmit complete - set when a frame has been transmitted.
+    type: rw
+  - bits: '4'
+    longdesc: Set if an error occurs whilst midway through reading transmit frame
+      from external memory including HRESP(AHB), RRESP or BRESP(AXI) errors and buffers
+      exhausted mid frame (if the buffers run out during transmission of a frame then
+      transmission stops, FCS shall be bad and tx_er asserted). Also set in DMA packet
+      buffer mode if single frame is too large for configured packet buffer memory
+      size. Cleared by writing a one to this bit.
+    name: AMBA_ERROR
+    shortdesc: Transmit frame corruption due to AMBA (AHB/AXI) errors.
+    type: rw
+  - bits: '3'
+    longdesc: When using the exposed FIFO interface, this bit represents bit 3 of
+      the network control register. When using the DMA interface this bit represents
+      the tx_go variable as specified in the transmit buffer description.
+    name: TRANSMIT_GO
+    shortdesc: Transmit go - if high transmit is active.
+    type: ro
+  - bits: '2'
+    name: RETRY_LIMIT_EXCEEDED
+    type: rw
+  - bits: '1'
+    longdesc: Cleared by writing a one to this bit. When operating in 10/100 mode,
+      this status indicates either a collision or a late collision. In gigabit mode,
+      this status is not set for a late collision.
+    name: COLLISION_OCCURRED
+    shortdesc: Collision occurred - set by the assertion of collision.
+    type: rw
+  - bits: '0'
+    longdesc: Cleared by writing a one to this bit.
+    name: USED_BIT_READ
+    shortdesc: Used bit read - set when a transmit buffer descriptor is read with
+      its used bit set.
+    type: rw
+  name: TRANSMIT_STATUS
+  offset: '0x00000014'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This register holds the start address of the receive buffer queue (receive
+    buffers descriptor list). The receive buffer queue base address must be initialized
+    before receive is enabled through bit 2 of the network control register. Once
+    reception is enabled, any write to the receive buffer queue base address register
+    is ignored. Reading this register returns the location of the descriptor currently
+    being accessed. This value increments as buffers are used. Software should not
+    use this register for determining where to remove received frames from the queue
+    as it constantly changes as new frames are received. Software should instead work
+    its way through the buffer descriptor queue checking the used bits. In terms of
+    AMBA (AHB/AXI) operation, the receive descriptors are read from memory using a
+    single 32bit AHB/AXI access. When the datapath is configured at 64bit, the receive
+    descriptors should be aligned at 64-bit boundaries and each pair of 32-bit descriptors
+    is written to using a single 64bit AHB/AXI access. For 32bit datapaths, the receive
+    descriptors should be aligned at 32-bit boundaries and are written to using two
+    individual non sequential 32-bit accesses.
+  field:
+  - bits: '31:2'
+    name: DMA_RX_Q_PTR
+    type: rw
+  - bits: '1:0'
+    name: RESERVED
+    type: ro
+  name: RECEIVE_Q_PTR
+  offset: '0x00000018'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This register holds the start address of the transmit buffer queue
+    (transmit buffers descriptor list). The transmit buffer queue base address register
+    must be initialized before transmit is started through bit 9 of the network control
+    register. Once transmission has started, any write to the transmit buffer queue
+    base address register is illegal and therefore ignored. Note that due to clock
+    boundary synchronization, it takes a maximum of four pclk cycles from the writing
+    of the transmit start bit before the transmitter is active. Writing to the transmit
+    buffer queue base address register during this time may produce unpredictable
+    results. Reading this register returns the location of the descriptor currently
+    being accessed. Since the DMA handles two frames at once, this may not necessarily
+    be pointing to the current frame being transmitted. In terms of AMBA (AHB/AXI)
+    AHB/AXI operation, the transmit descriptors are written to memory using a single
+    32bit AHB access. When the datapath is configured at 64bit, the transmit descriptors
+    should be aligned at 64-bit boundaries and each pair of 32-bit descriptors is
+    read from memory using a single AHB access. For 32bit datapaths, the descriptors
+    should be aligned at 32-bit boundaries and the descriptors are read from memory
+    using two individual 32-bit non sequential accesses.
+  field:
+  - bits: '31:2'
+    name: DMA_TX_Q_PTR
+    type: rw
+  - bits: '1:0'
+    name: RESERVED
+    type: ro
+  name: TRANSMIT_Q_PTR
+  offset: '0x0000001C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This register, when read provides details of the status of a receive.
+    Once read, individual bits may be cleared by writing 1 to them. It is not possible
+    to set a bit to 1 by writing to the register.
+  field:
+  - bits: '31:4'
+    name: RESERVED
+    type: ro
+  - bits: '3'
+    longdesc: Cleared by writing a one to this bit.
+    name: RESP_NOT_OK
+    shortdesc: bresp/hresp not OK - set when the DMA block sees bresp/hresp not OK.
+    type: rw
+  - bits: '2'
+    longdesc: This bit is also set in DMA packet buffer mode if the packet buffer
+      overflows. For DMA operation the buffer will be recovered if an overrun occurs.
+      This bit is cleared by writing a one to it.
+    name: RECEIVE_OVERRUN
+    shortdesc: Receive overrun - this bit is set if either the gem_dma RX FIFO or
+      external RX FIFO were unable to store the receive frame due to a FIFO overflow,
+      or if the receive status, reported by the gem_rx module to the gem_dma was not
+      taken at end of frame.
+    type: rw
+  - bits: '1'
+    longdesc: Cleared by writing a one to this bit.
+    name: FRAME_RECEIVED
+    shortdesc: Frame received - one or more frames have been received and placed in
+      memory.
+    type: rw
+  - bits: '0'
+    longdesc: The DMA will reread the pointer each time an end of frame is received
+      until a valid pointer is found. This bit is set following each descriptor read
+      attempt that fails, even if consecutive pointers are unsuccessful and software
+      has in the mean time cleared the status flag. Cleared by writing a one to this
+      bit.
+    name: BUFFER_NOT_AVAILABLE
+    shortdesc: Buffer not available - an attempt was made to get a new buffer and
+      the pointer indicated that it was owned by the processor.
+    type: rw
+  name: RECEIVE_STATUS
+  offset: '0x00000020'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: If not configured for priority queueing, the GEM generates a single
+    interrupt. This register indicates the source of this interrupt. The corresponding
+    bit in the mask register must be clear for a bit to be set. If any bit is set
+    in this register the ethernet_int signal will be asserted. For test purposes each
+    bit can be set or reset by writing to the interrupt mask register. The default
+    configuration is shown below whereby all bits are reset to zero on read. Changing
+    the validity of the `gem_irq_read_clear define will instead require a one to be
+    written to the appropriate bit in order to clear it. In this mode reading has
+    no affect on the status of the bit.
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    longdesc: Indicates when TSU timer count value is equal to programmed value.
+    name: TSU_TIMER_COMPARISON_INTERRUPT
+    shortdesc: TSU timer comparison interrupt.
+    type: rw
+  - bits: '28'
+    longdesc: Indicates a WOL event has been received.
+    name: WOL_INTERRUPT
+    shortdesc: WOL interrupt.
+    type: rw
+  - bits: '27'
+    name: RECEIVE_LPI_INDICATION_STATUS_BIT_CHANGE
+    type: rw
+  - bits: '26'
+    longdesc: Cleared on read.
+    name: TSU_SECONDS_REGISTER_INCREMENT
+    shortdesc: TSU seconds register increment indicates the register has incremented.
+    type: rw
+  - bits: '25'
+    longdesc: Cleared on read.
+    name: PTP_PDELAY_RESP_FRAME_TRANSMITTED
+    shortdesc: PTP pdelay_resp frame transmitted indicates a PTP pdelay_resp frame
+      has been transmitted.
+    type: rw
+  - bits: '24'
+    longdesc: Cleared on read.
+    name: PTP_PDELAY_REQ_FRAME_TRANSMITTED
+    shortdesc: PTP pdelay_req frame transmitted indicates a PTP pdelay_req frame has
+      been transmitted.
+    type: rw
+  - bits: '23'
+    longdesc: Cleared on read.
+    name: PTP_PDELAY_RESP_FRAME_RECEIVED
+    shortdesc: PTP pdelay_resp frame received indicates a PTP pdelay_resp frame has
+      been received.
+    type: rw
+  - bits: '22'
+    longdesc: Cleared on read.
+    name: PTP_PDELAY_REQ_FRAME_RECEIVED
+    shortdesc: PTP pdelay_req frame received indicates a PTP pdelay_req frame has
+      been received.
+    type: rw
+  - bits: '21'
+    longdesc: Cleared on read.
+    name: PTP_SYNC_FRAME_TRANSMITTED
+    shortdesc: PTP sync frame transmitted indicates a PTP sync frame has been transmitted.
+    type: rw
+  - bits: '20'
+    longdesc: Cleared on read.
+    name: PTP_DELAY_REQ_FRAME_TRANSMITTED
+    shortdesc: PTP delay_req frame transmitted indicates a PTP delay_req frame has
+      been transmitted.
+    type: rw
+  - bits: '19'
+    longdesc: Cleared on read.
+    name: PTP_SYNC_FRAME_RECEIVED
+    shortdesc: PTP sync frame received indicates a PTP sync frame has been received.
+    type: rw
+  - bits: '18'
+    longdesc: Cleared on read.
+    name: PTP_DELAY_REQ_FRAME_RECEIVED
+    shortdesc: PTP delay_req frame received indicates a PTP delay_req frame has been
+      received.
+    type: rw
+  - bits: '17'
+    longdesc: The first time this interrupt is received, it will indicate base page
+      received and subsequent reads will indicate next pages. The next page and base
+      page registers should only be read when this interrupt is signalled. For next
+      pages, the link partner next page register should be read first to avoid the
+      register being over written. This interrupt also indicates when the host should
+      write a new page into the next page register. If further next page exchange
+      is only required by the link partner, this register should be written with a
+      null message page (0x2001). Cleared on read.
+    name: PCS_LINK_PARTNER_PAGE_RECEIVED
+    shortdesc: PCS link partner page received - set when a new base page or next page
+      is received from the link partner.
+    type: rw
+  - bits: '16'
+    longdesc: Cleared on read.
+    name: PCS_AUTO_NEGOTIATION_COMPLETE
+    shortdesc: PCS auto-negotiation complete - set once the internal PCS layer has
+      completed auto-negotiation.
+    type: rw
+  - bits: '15'
+    longdesc: Cleared on read.
+    name: EXTERNAL_INTERRUPT
+    shortdesc: External interrupt - set when a rising edge has been detected on the
+      ext_interrupt_in input pin.
+    type: rw
+  - bits: '14'
+    longdesc: Cleared on read.
+    name: PAUSE_FRAME_TRANSMITTED
+    shortdesc: Pause frame transmitted - indicates a pause frame has been successfully
+      transmitted after being initiated from the network control register or from
+      the tx_pause control pin.
+    type: rw
+  - bits: '13'
+    longdesc: set when either the pause time register at address 0x38 decrements to
+      zero, or when a valid pause frame is received with a zero pause quantum field.
+      Cleared on read.
+    name: PAUSE_TIME_ELAPSED
+    shortdesc: Pause Time elapsed.
+    type: rw
+  - bits: '12'
+    longdesc: Cleared on read.
+    name: PAUSE_FRAME_WITH_NON_ZERO_PAUSE_QUANTUM_RECEIVED
+    shortdesc: Pause frame with non-zero pause quantum received - indicates a valid
+      pause has been received that has a non-zero pause quantum field.
+    type: rw
+  - bits: '11'
+    longdesc: Cleared on read.
+    name: RESP_NOT_OK
+    shortdesc: bresp/hresp not OK - set when the DMA block sees bresp/hresp not OK.
+    type: rw
+  - bits: '10'
+    longdesc: Cleared on read.
+    name: RECEIVE_OVERRUN
+    shortdesc: Receive overrun - set when the receive overrun status bit gets set.
+    type: rw
+  - bits: '9'
+    longdesc: Cleared on read.
+    name: LINK_CHANGE
+    shortdesc: Link change - set when the state of the link detected by the internal
+      PCS changes state.
+    type: rw
+  - bits: '8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    longdesc: Cleared on read.
+    name: TRANSMIT_COMPLETE
+    shortdesc: Transmit complete - set when a frame has been transmitted.
+    type: rw
+  - bits: '6'
+    longdesc: Set if an error occurs whilst midway through reading transmit frame
+      from external system memory, including HRESP errors(AHB), RRESP or BRESP(AXI)
+      errors and buffers exhausted mid frame (if the buffers run out during transmission
+      of a frame then transmission stops, FCS shall be bad and tx_er asserted). Also
+      set in DMA packet buffer mode if single frame is too large for configured packet
+      buffer memory size. Cleared on a read.
+    name: AMBA_ERROR
+    shortdesc: Transmit frame corruption due to AMBA (AHB/AXI) error.
+    type: rw
+  - bits: '5'
+    longdesc: Late collision will only cause this status bit to be set in gigabit
+      mode (as a retry is not attempted). Cleared on read.
+    name: RETRY_LIMIT_EXCEEDED_OR_LATE_COLLISION
+    shortdesc: Retry limit exceeded or late collision - transmit error.
+    type: rw
+  - bits: '4'
+    longdesc: If an under run occurs, the transmitter will force bad crc and tx_er
+      high. This interrupt is set if a transmitter status write back has not completed
+      when another status write back is attempted. When using the DMA interface configured
+      for internal FIFO mode, this interrupt is also set when the transmit DMA has
+      written the SOP data into the FIFO and either the AHB bus was not granted in
+      time for further data, or because an AHB/AXI error response was returned by
+      the connected slave, or because a used bit was read. When using the DMA interface
+      configured for packet buffer mode, this bit will never be set. When using the
+      external FIFO interface, this interrupt is also set when the tx_r_underflow
+      input was asserted during a frame transfer. Cleared on read.
+    name: TRANSMIT_UNDER_RUN
+    shortdesc: Transmit under run - this interrupt is set if the transmitter was forced
+      to terminate a frame that it has already began transmitting due to further data
+      being unavailable.
+    type: rw
+  - bits: '3'
+    longdesc: Cleared on read.
+    name: TX_USED_BIT_READ
+    shortdesc: TX used bit read - set when a transmit buffer descriptor is read with
+      its used bit set.
+    type: rw
+  - bits: '2'
+    longdesc: Cleared on read.
+    name: RX_USED_BIT_READ
+    shortdesc: RX used bit read - set when a receive buffer descriptor is read with
+      its used bit set.
+    type: rw
+  - bits: '1'
+    longdesc: Cleared on read.
+    name: RECEIVE_COMPLETE
+    shortdesc: Receive complete - a frame has been stored in memory.
+    type: rw
+  - bits: '0'
+    longdesc: Cleared on read.
+    name: MANAGEMENT_FRAME_SENT
+    shortdesc: Management frame sent - the PHY maintenance register has completed
+      its operation.
+    type: rw
+  name: INT_STATUS
+  offset: '0x00000024'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: At reset all interrupts are disabled. Writing a one to the relevant
+    bit location enables the required interrupt. This register is write only and when
+    read will return zero.
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    name: ENABLE_TSU_TIMER_COMPARISON_INTERRUPT
+    type: wo
+  - bits: '28'
+    name: ENABLE_WOL_EVENT_RECEIVED_INTERRUPT
+    type: wo
+  - bits: '27'
+    name: ENABLE_RX_LPI_INDICATION_INTERRUPT
+    type: wo
+  - bits: '26'
+    name: ENABLE_TSU_SECONDS_REGISTER_INCREMENT
+    type: wo
+  - bits: '25'
+    name: ENABLE_PTP_PDELAY_RESP_FRAME_TRANSMITTED
+    type: wo
+  - bits: '24'
+    name: ENABLE_PTP_PDELAY_REQ_FRAME_TRANSMITTED
+    type: wo
+  - bits: '23'
+    name: ENABLE_PTP_PDELAY_RESP_FRAME_RECEIVED
+    type: wo
+  - bits: '22'
+    name: ENABLE_PTP_PDELAY_REQ_FRAME_RECEIVED
+    type: wo
+  - bits: '21'
+    name: ENABLE_PTP_SYNC_FRAME_TRANSMITTED
+    type: wo
+  - bits: '20'
+    name: ENABLE_PTP_DELAY_REQ_FRAME_TRANSMITTED
+    type: wo
+  - bits: '19'
+    name: ENABLE_PTP_SYNC_FRAME_RECEIVED
+    type: wo
+  - bits: '18'
+    name: ENABLE_PTP_DELAY_REQ_FRAME_RECEIVED
+    type: wo
+  - bits: '17'
+    name: ENABLE_PCS_LINK_PARTNER_PAGE_RECEIVED
+    type: wo
+  - bits: '16'
+    name: ENABLE_PCS_AUTO_NEGOTIATION_COMPLETE_INTERRUPT
+    type: wo
+  - bits: '15'
+    name: ENABLE_EXTERNAL_INTERRUPT
+    type: wo
+  - bits: '14'
+    name: ENABLE_PAUSE_FRAME_TRANSMITTED_INTERRUPT
+    type: wo
+  - bits: '13'
+    name: ENABLE_PAUSE_TIME_ZERO_INTERRUPT
+    type: wo
+  - bits: '12'
+    name: ENABLE_PAUSE_FRAME_WITH_NON_ZERO_PAUSE_QUANTUM_INTERRUPT
+    type: wo
+  - bits: '11'
+    name: ENABLE_RESP_NOT_OK_INTERRUPT
+    type: wo
+  - bits: '10'
+    name: ENABLE_RECEIVE_OVERRUN_INTERRUPT
+    type: wo
+  - bits: '9'
+    name: ENABLE_LINK_CHANGE_INTERRUPT
+    type: wo
+  - bits: '8'
+    name: NOT_USED
+    type: ro
+  - bits: '7'
+    name: ENABLE_TRANSMIT_COMPLETE_INTERRUPT
+    type: wo
+  - bits: '6'
+    name: ENABLE_TRANSMIT_FRAME_CORRUPTION_DUE_TO_AMBA_ERROR_INTERRUPT
+    type: wo
+  - bits: '5'
+    name: ENABLE_RETRY_LIMIT_EXCEEDED_OR_LATE_COLLISION_INTERRUPT
+    type: wo
+  - bits: '4'
+    name: ENABLE_TRANSMIT_BUFFER_UNDER_RUN_INTERRUPT
+    type: wo
+  - bits: '3'
+    name: ENABLE_TRANSMIT_USED_BIT_READ_INTERRUPT
+    type: wo
+  - bits: '2'
+    name: ENABLE_RECEIVE_USED_BIT_READ_INTERRUPT
+    type: wo
+  - bits: '1'
+    name: ENABLE_RECEIVE_COMPLETE_INTERRUPT
+    type: wo
+  - bits: '0'
+    name: ENABLE_MANAGEMENT_DONE_INTERRUPT
+    type: wo
+  name: INT_ENABLE
+  offset: '0x00000028'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Writing a 1 to the relevant bit location disables that particular interrupt.
+    This register is write only and when read will return zero.
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    name: DISABLE_TSU_TIMER_COMPARISON_INTERRUPT
+    type: wo
+  - bits: '28'
+    name: DISABLE_WOL_EVENT_RECEIVED_INTERRUPT
+    type: wo
+  - bits: '27'
+    name: DISABLE_RX_LPI_INDICATION_INTERRUPT
+    type: wo
+  - bits: '26'
+    name: DISABLE_TSU_SECONDS_REGISTER_INCREMENT
+    type: wo
+  - bits: '25'
+    name: DISABLE_PTP_PDELAY_RESP_FRAME_TRANSMITTED
+    type: wo
+  - bits: '24'
+    name: DISABLE_PTP_PDELAY_REQ_FRAME_TRANSMITTED
+    type: wo
+  - bits: '23'
+    name: DISABLE_PTP_PDELAY_RESP_FRAME_RECEIVED
+    type: wo
+  - bits: '22'
+    name: DISABLE_PTP_PDELAY_REQ_FRAME_RECEIVED
+    type: wo
+  - bits: '21'
+    name: DISABLE_PTP_SYNC_FRAME_TRANSMITTED
+    type: wo
+  - bits: '20'
+    name: DISABLE_PTP_DELAY_REQ_FRAME_TRANSMITTED
+    type: wo
+  - bits: '19'
+    name: DISABLE_PTP_SYNC_FRAME_RECEIVED
+    type: wo
+  - bits: '18'
+    name: DISABLE_PTP_DELAY_REQ_FRAME_RECEIVED
+    type: wo
+  - bits: '17'
+    name: DISABLE_PCS_LINK_PARTNER_PAGE_RECEIVED
+    type: wo
+  - bits: '16'
+    name: DISABLE_PCS_AUTO_NEGOTIATION_COMPLETE_INTERRUPT
+    type: wo
+  - bits: '15'
+    name: DISABLE_EXTERNAL_INTERRUPT
+    type: wo
+  - bits: '14'
+    name: DISABLE_PAUSE_FRAME_TRANSMITTED_INTERRUPT
+    type: wo
+  - bits: '13'
+    name: DISABLE_PAUSE_TIME_ZERO_INTERRUPT
+    type: wo
+  - bits: '12'
+    name: DISABLE_PAUSE_FRAME_WITH_NON_ZERO_PAUSE_QUANTUM_INTERRUPT
+    type: wo
+  - bits: '11'
+    name: DISABLE_RESP_NOT_OK_INTERRUPT
+    type: wo
+  - bits: '10'
+    name: DISABLE_RECEIVE_OVERRUN_INTERRUPT
+    type: wo
+  - bits: '9'
+    name: DISABLE_LINK_CHANGE_INTERRUPT
+    type: wo
+  - bits: '8'
+    name: NOT_USED
+    type: ro
+  - bits: '7'
+    name: DISABLE_TRANSMIT_COMPLETE_INTERRUPT
+    type: wo
+  - bits: '6'
+    name: DISABLE_TRANSMIT_FRAME_CORRUPTION_DUE_TO_AMBA_ERROR_INTERRUPT
+    type: wo
+  - bits: '5'
+    name: DISABLE_RETRY_LIMIT_EXCEEDED_OR_LATE_COLLISION_INTERRUPT
+    type: wo
+  - bits: '4'
+    name: DISABLE_TRANSMIT_BUFFER_UNDER_RUN_INTERRUPT
+    type: wo
+  - bits: '3'
+    name: DISABLE_TRANSMIT_USED_BIT_READ_INTERRUPT
+    type: wo
+  - bits: '2'
+    name: DISABLE_RECEIVE_USED_BIT_READ_INTERRUPT
+    type: wo
+  - bits: '1'
+    name: DISABLE_RECEIVE_COMPLETE_INTERRUPT
+    type: wo
+  - bits: '0'
+    name: DISABLE_MANAGEMENT_DONE_INTERRUPT
+    type: wo
+  name: INT_DISABLE
+  offset: '0x0000002C'
+  type: mixed
+  width: 32
+- default: '0x3FFFFFFF'
+  description: The interrupt mask register is a read only register indicating which
+    interrupts are masked. All bits are set at reset and can be reset individually
+    by writing to the interrupt enable register or set individually by writing to
+    the interrupt disable register. Having separate address locations for enable and
+    disable saves the need for performing a read modify write when updating the interrupt
+    mask register. For test purposes there is a write-only function to this register
+    that allows the bits in the interrupt status register to be set or cleared, regardless
+    of the state of the mask register.
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    name: TSU_TIMER_COMPARISON_MASK
+    type: ro
+  - bits: '28'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: WOL_EVENT_RECEIVED_MASK
+    shortdesc: A read of this register returns the value of the WOL event received
+      mask.
+    type: ro
+  - bits: '27'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written'
+    name: RX_LPI_INDICATION_MASK
+    shortdesc: A read of this register returns the value of the RX LPI indication
+      mask.
+    type: ro
+  - bits: '26'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: TSU_SECONDS_REGISTER_INCREMENT_MASK
+    shortdesc: A read of this register returns the value of the TSU seconds register
+      increment mask.
+    type: ro
+  - bits: '25'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PTP_PDELAY_RESP_FRAME_TRANSMITTED_MASK
+    shortdesc: A read of this register returns the value of the PTP pdelay_resp frame
+      transmitted mask.
+    type: ro
+  - bits: '24'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PTP_PDELAY_REQ_FRAME_TRANSMITTED_MASK
+    shortdesc: A read of this register returns the value of the PTP pdelay_req frame
+      transmitted mask.
+    type: ro
+  - bits: '23'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PTP_PDELAY_RESP_FRAME_RECEIVED_MASK
+    shortdesc: A read of this register returns the value of the PTP pdelay_resp frame
+      received mask.
+    type: ro
+  - bits: '22'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PTP_PDELAY_REQ_FRAME_RECEIVED_MASK
+    shortdesc: A read of this register returns the value of the PTP pdelay_req frame
+      received mask.
+    type: ro
+  - bits: '21'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PTP_SYNC_FRAME_TRANSMITTED_MASK
+    shortdesc: A read of this register returns the value of the PTP sync frame transmitted
+      mask.
+    type: ro
+  - bits: '20'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PTP_DELAY_REQ_FRAME_TRANSMITTED_MASK
+    shortdesc: A read of this register returns the value of the PTP delay_req frame
+      transmitted mask.
+    type: ro
+  - bits: '19'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PTP_SYNC_FRAME_RECEIVED_MASK
+    shortdesc: A read of this register returns the value of the PTP sync frame received
+      mask.
+    type: ro
+  - bits: '18'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PTP_DELAY_REQ_FRAME_RECEIVED_MASK
+    shortdesc: A read of this register returns the value of the PTP delay_req frame
+      received mask.
+    type: ro
+  - bits: '17'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PCS_LINK_PARTNER_PAGE_MASK
+    shortdesc: A read of this register returns the value of the PCS link partner page
+      mask.
+    type: ro
+  - bits: '16'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PCS_AUTO_NEGOTIATION_COMPLETE_INTERRUPT_MASK
+    shortdesc: A read of this register returns the value of the PCS auto-negotiation
+      complete interrupt mask.
+    type: ro
+  - bits: '15'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: EXTERNAL_INTERRUPT_MASK
+    shortdesc: external interrupt mask.
+    type: ro
+  - bits: '14'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PAUSE_FRAME_TRANSMITTED_INTERRUPT_MASK
+    shortdesc: pause frame transmitted interrupt mask.
+    type: ro
+  - bits: '13'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PAUSE_TIME_ZERO_INTERRUPT_MASK
+    shortdesc: pause time zero interrupt mask.
+    type: ro
+  - bits: '12'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled. A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: PAUSE_FRAME_WITH_NON_ZERO_PAUSE_QUANTUM_INTERRUPT_MASK
+    shortdesc: pause frame with non-zero pause quantum interrupt mask.
+    type: ro
+  - bits: '11'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: RESP_NOT_OK_INTERRUPT_MASK
+    shortdesc: bresp/hresp not OK interrupt mask.
+    type: ro
+  - bits: '10'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: RECEIVE_OVERRUN_INTERRUPT_MASK
+    shortdesc: receive overrun interrupt mask.
+    type: ro
+  - bits: '9'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: LINK_CHANGE_INTERRUPT_MASK
+    shortdesc: A read of this register returns the value of the link change interrupt
+      mask.
+    type: ro
+  - bits: '8'
+    name: NOT_USED
+    type: ro
+  - bits: '7'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: TRANSMIT_COMPLETE_INTERRUPT_MASK
+    shortdesc: transmit complete interrupt mask.
+    type: ro
+  - bits: '6'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: AMBA_ERROR_INTERRUPT_MASK
+    shortdesc: transmit frame corruption due to AMBA (AHB/AXI) error interrupt mask.
+    type: ro
+  - bits: '5'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: RETRY_LIMIT_EXCEEDED_OR_LATE_COLLISION
+    shortdesc: A read of this register returns the value of the retry limit exceeded
+      or late collision (gigabit mode only) interrupt mask.
+    type: ro
+  - bits: '4'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: TRANSMIT_BUFFER_UNDER_RUN_INTERRUPT_MASK
+    shortdesc: transmit buffer under run interrupt mask.
+    type: ro
+  - bits: '3'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: TRANSMIT_USED_BIT_READ_INTERRUPT_MASK
+    shortdesc: transmit used bit read interrupt mask.
+    type: ro
+  - bits: '2'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: RECEIVE_USED_BIT_READ_INTERRUPT_MASK
+    shortdesc: receive used bit read interrupt mask.
+    type: ro
+  - bits: '1'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: RECEIVE_COMPLETE_INTERRUPT_MASK
+    shortdesc: receive complete interrupt mask.
+    type: ro
+  - bits: '0'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: MANAGEMENT_DONE_INTERRUPT_MASK
+    shortdesc: management done interrupt mask.
+    type: ro
+  name: INT_MASK
+  offset: '0x00000030'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: The PHY maintenance register is implemented as a shift register. Writing
+    to the register starts a shift operation which is signalled as complete when bit-2
+    is set in the network status register. It takes about 2000 pclk cycles to complete,
+    when MDC is set for pclk divide by 32 in the network configuration register. An
+    interrupt is generated upon completion. During this time, the MSB of the register
+    is output on the MDIO pin and the LSB updated from the MDIO pin with each MDC
+    cycle. This causes transmission of a PHY management frame on MDIO. See Section
+    22.2.4.5 of the IEEE 802.3 standard. Reading during the shift operation will return
+    the current contents of the shift register. At the end of management operation,
+    the bits will have shifted back to their original locations. For a read operation,
+    the data bits will be updated with data read from the PHY. It is important to
+    write the correct values to the register to ensure a valid PHY management frame
+    is produced. The MDIO interface can read IEEE 802.3 clause 45 PHYs as well as
+    clause 22 PHYs. To read clause 45 PHYs, bit 30 should be written with a 0 rather
+    than a 1. For a description of MDC generation, see Network Configuration Register.
+  field:
+  - bits: '31'
+    name: WRITE0
+    type: rw
+  - bits: '30'
+    name: WRITE1
+    type: rw
+  - bits: '29:28'
+    longdesc: 'For a Clause 45 frame: 00 is an addr, 01 is a write, 10 is a post read
+      increment, 11 is a read frame. For a Clause 22 frame: 10 is a read, 01 is a
+      write.'
+    name: OPERATION
+    shortdesc: Operation.
+    type: rw
+  - bits: '27:23'
+    name: PHY_ADDRESS
+    type: rw
+  - bits: '22:18'
+    name: REGISTER_ADDRESS
+    type: rw
+  - bits: '17:16'
+    name: WRITE10
+    type: rw
+  - bits: '15:0'
+    longdesc: After a read operation this contains the data read from the PHY.
+    name: PHY_WRITE_READ_DATA
+    shortdesc: For a write operation this is written with the data to be written to
+      the PHY.
+    type: rw
+  name: PHY_MANAGEMENT
+  offset: '0x00000034'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Received Pause Quantum Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    name: QUANTUM
+    type: ro
+  name: PAUSE_TIME
+  offset: '0x00000038'
+  type: ro
+  width: 32
+- default: '0x0000FFFF'
+  description: Transmit Pause Quantum Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    name: QUANTUM
+    type: rw
+  name: TX_PAUSE_QUANTUM
+  offset: '0x0000003C'
+  type: mixed
+  width: 32
+- default: '0x00000FFF'
+  description: Partial store and forward is only applicable when using the the DMA
+    configured in SRAM based packet buffer mode. It is also not available when using
+    multi buffer frames. TX Partial Store and Forward
+  field:
+  - bits: '31'
+    name: DMA_TX_CUTTHRU
+    type: rw
+  - bits: '30:12'
+    name: RESERVED
+    type: ro
+  - bits: '11:0'
+    longdesc: This value must be >= 0x14.
+    name: DMA_TX_CUTTHRU_THRESHOLD
+    shortdesc: Watermark value.
+    type: rw
+  name: PBUF_TXCUTTHRU
+  offset: '0x00000040'
+  type: mixed
+  width: 32
+- default: '0x00000FFF'
+  description: RX Partial Store and Forward
+  field:
+  - bits: '31'
+    name: DMA_RX_CUTTHRU
+    type: rw
+  - bits: '30:12'
+    name: RESERVED
+    type: ro
+  - bits: '11:0'
+    name: DMA_RX_CUTTHRU_THRESHOLD
+    type: rw
+  name: PBUF_RXCUTTHRU
+  offset: '0x00000044'
+  type: mixed
+  width: 32
+- default: '0x00003FFF'
+  description: Maximum Jumbo Frame Size.
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    name: JUMBO_MAX_LENGTH
+    type: rw
+  name: JUMBO_MAX_LENGTH
+  offset: '0x00000048'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: External FIFO Interface Enable (only valid when gem_host_if_soft_select
+    is defined)
+  field:
+  - bits: '31:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    longdesc: '1: Enabled.0: Disabled.'
+    name: EXTERNAL_FIFO_INTERFACE
+    shortdesc: Enable external fifo interface.
+    type: rw
+  name: EXTERNAL_FIFO_INTERFACE
+  offset: '0x0000004C'
+  type: mixed
+  width: 32
+- default: '0x00000101'
+  description: Used to set the maximum amnount of outstanding transactions on the
+    AXI bus between AR / R channels and AW / W channels. Cannot be more than the depth
+    of the configured AXI pipeline FIFO (defined in verilog defs.v)
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:8'
+    name: AW2W_MAX_PIPELINE
+    type: rw
+  - bits: '7:0'
+    name: AR2R_MAX_PIPELINE
+    type: rw
+  name: AXI_MAX_PIPELINE
+  offset: '0x00000054'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: The unicast hash enable and the multicast hash enable bits in the network
+    configuration register enable the reception of hash matched framesHash Register
+    Bottom [31:0]
+  field:
+  - bits: '31:0'
+    name: ADDRESS
+    type: rw
+  name: HASH_BOTTOM
+  offset: '0x00000080'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Hash Register Top 63:32
+  field:
+  - bits: '31:0'
+    name: ADDRESS
+    type: rw
+  name: HASH_TOP
+  offset: '0x00000084'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: The addresses stored in the specific address registers are deactivated
+    at reset or when their corresponding specific address register bottom is written.
+    They are activated when specific address register top is written.
+  field:
+  - bits: '31:0'
+    longdesc: Bit zero indicates whether the address is multicast or unicast and corresponds
+      to the least significant bit of the first byte received.
+    name: ADDRESS
+    shortdesc: Least significant 32 bits of the destination address, that is bits
+      31:0.
+    type: rw
+  name: SPEC_ADD1_BOTTOM
+  offset: '0x00000088'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Specific Address Top
+  field:
+  - bits: '31:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    longdesc: When set to zero, the filter is a destination address filter. When set
+      to one, the filter is a source address filter. Specific address 1. The most
+      significant bits of the destination address, that is bits 47:32.
+    name: FILTER_TYPE
+    shortdesc: This control bit selects whether this filter should be comparing the
+      MAC source address or the MAC destination address of the received Ethernet frame.
+    type: rw
+  - bits: '15:0'
+    longdesc: The most significant bits of the destination/source address that is
+      to be compared, that is bits 47:32.
+    name: ADDRESS
+    shortdesc: Specific address 1.
+    type: rw
+  name: SPEC_ADD1_TOP
+  offset: '0x0000008C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: The addresses stored in the specific address registers are deactivated
+    at reset or when their corresponding specific address register bottom is written.
+    They are activated when specific address register top is written.
+  field:
+  - bits: '31:0'
+    longdesc: Bit zero indicates whether the address is multicast or unicast and corresponds
+      to the least significant bit of the first byte received.
+    name: ADDRESS
+    shortdesc: Least significant 32 bits of the destination address, that is bits
+      31:0.
+    type: rw
+  name: SPEC_ADD2_BOTTOM
+  offset: '0x00000090'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Specific Address Top
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29:24'
+    longdesc: Bit 24 controls whether the first byte received should be compared.
+      Bit 29 controls whether the last byte received should be compared.
+    name: FILTER_BYTE_MASK
+    shortdesc: When high, the associated byte of the specific address will not be
+      compared.
+    type: rw
+  - bits: '23:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    longdesc: When set to zero, the filter is a destination address filter. When set
+      to one, the filter is a source address filter. Specific address 1. The most
+      significant bits of the destination address, that is bits 47:32.
+    name: FILTER_TYPE
+    shortdesc: This control bit selects whether this filter should be comparing the
+      MAC source address or the MAC destination address of the received Ethernet frame.
+    type: rw
+  - bits: '15:0'
+    longdesc: The most significant bits of the destination/source address that is
+      to be compared, that is bits 47:32.
+    name: ADDRESS
+    shortdesc: Specific address 1.
+    type: rw
+  name: SPEC_ADD2_TOP
+  offset: '0x00000094'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: The addresses stored in the specific address registers are deactivated
+    at reset or when their corresponding specific address register bottom is written.
+    They are activated when specific address register top is written.
+  field:
+  - bits: '31:0'
+    longdesc: Bit zero indicates whether the address is multicast or unicast and corresponds
+      to the least significant bit of the first byte received.
+    name: ADDRESS
+    shortdesc: Least significant 32 bits of the destination address, that is bits
+      31:0.
+    type: rw
+  name: SPEC_ADD3_BOTTOM
+  offset: '0x00000098'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Specific Address Top
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29:24'
+    longdesc: Bit 24 controls whether the first byte received should be compared.
+      Bit 29 controls whether the last byte received should be compared.
+    name: FILTER_BYTE_MASK
+    shortdesc: When high, the associated byte of the specific address will not be
+      compared.
+    type: rw
+  - bits: '23:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    longdesc: When set to zero, the filter is a destination address filter. When set
+      to one, the filter is a source address filter. Specific address 1. The most
+      significant bits of the destination address, that is bits 47:32.
+    name: FILTER_TYPE
+    shortdesc: This control bit selects whether this filter should be comparing the
+      MAC source address or the MAC destination address of the received Ethernet frame.
+    type: rw
+  - bits: '15:0'
+    longdesc: The most significant bits of the destination/source address that is
+      to be compared, that is bits 47:32.
+    name: ADDRESS
+    shortdesc: Specific address 1.
+    type: rw
+  name: SPEC_ADD3_TOP
+  offset: '0x0000009C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: The addresses stored in the specific address registers are deactivated
+    at reset or when their corresponding specific address register bottom is written.
+    They are activated when specific address register top is written.
+  field:
+  - bits: '31:0'
+    longdesc: Bit zero indicates whether the address is multicast or unicast and corresponds
+      to the least significant bit of the first byte received.
+    name: ADDRESS
+    shortdesc: Least significant 32 bits of the destination address, that is bits
+      31:0.
+    type: rw
+  name: SPEC_ADD4_BOTTOM
+  offset: '0x000000A0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Specific Address Top
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29:24'
+    longdesc: Bit 24 controls whether the first byte received should be compared.
+      Bit 29 controls whether the last byte received should be compared.
+    name: FILTER_BYTE_MASK
+    shortdesc: When high, the associated byte of the specific address will not be
+      compared.
+    type: rw
+  - bits: '23:17'
+    name: RESERVED
+    type: ro
+  - bits: '16'
+    longdesc: When set to zero, the filter is a destination address filter. When set
+      to one, the filter is a source address filter. Specific address 1. The most
+      significant bits of the destination address, that is bits 47:32.
+    name: FILTER_TYPE
+    shortdesc: This control bit selects whether this filter should be comparing the
+      MAC source address or the MAC destination address of the received Ethernet frame.
+    type: rw
+  - bits: '15:0'
+    longdesc: The most significant bits of the destination/source address that is
+      to be compared, that is bits 47:32.
+    name: ADDRESS
+    shortdesc: Specific address 1.
+    type: rw
+  name: SPEC_ADD4_TOP
+  offset: '0x000000A4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Type ID Match 1
+  field:
+  - bits: '31'
+    name: ENABLE_COPY
+    type: rw
+  - bits: '30:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: For use in comparisons with received frames type ID/length field.
+    name: MATCH
+    shortdesc: Type ID match 1.
+    type: rw
+  name: SPEC_TYPE1
+  offset: '0x000000A8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Type ID Match 2
+  field:
+  - bits: '31'
+    name: ENABLE_COPY
+    type: rw
+  - bits: '30:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: For use in comparisons with received frames type ID/length field.
+    name: MATCH
+    shortdesc: Type ID match 2.
+    type: rw
+  name: SPEC_TYPE2
+  offset: '0x000000AC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Type ID Match 3
+  field:
+  - bits: '31'
+    name: ENABLE_COPY
+    type: rw
+  - bits: '30:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: For use in comparisons with received frames type ID/length field.
+    name: MATCH
+    shortdesc: Type ID match 3.
+    type: rw
+  name: SPEC_TYPE3
+  offset: '0x000000B0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Type ID Match 4
+  field:
+  - bits: '31'
+    name: ENABLE_COPY
+    type: rw
+  - bits: '30:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: For use in comparisons with received frames type ID/length field.
+    name: MATCH
+    shortdesc: Type ID match 4.
+    type: rw
+  name: SPEC_TYPE4
+  offset: '0x000000B4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Wake on LAN Register
+  field:
+  - bits: '31:20'
+    name: RESERVED
+    type: ro
+  - bits: '19'
+    longdesc: When set multicast hash events will cause the wol output to be asserted.
+    name: WOL_MASK_3
+    shortdesc: Wake on LAN multicast hash event enable.
+    type: rw
+  - bits: '18'
+    longdesc: When set specific address 1 events will cause the wol output to be asserted.
+    name: WOL_MASK_2
+    shortdesc: Wake on LAN specific address register 1 event enable.
+    type: rw
+  - bits: '17'
+    longdesc: When set ARP request events will cause the wol output to be asserted.
+    name: WOL_MASK_1
+    shortdesc: Wake on LAN ARP request event enable.
+    type: rw
+  - bits: '16'
+    longdesc: When set magic packet events will cause the wol output to be asserted.
+    name: WOL_MASK_0
+    shortdesc: Wake on LAN magic packet event enable.
+    type: rw
+  - bits: '15:0'
+    longdesc: Written to define the least significant 16 bits of the target IP address
+      that is matched to generate a Wake on LAN event. A value of zero will not generate
+      an event, even if this is matched by the received frame.
+    name: ADDR
+    shortdesc: Wake on LAN ARP request IP address.
+    type: rw
+  name: WOL_REGISTER
+  offset: '0x000000B8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: IPG stretch register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Bits 7:0 are multiplied with the previously transmitted frame length
+      (including preamble) bits 15:8 +1 divide the frame length. If the resulting
+      number is greater than 96 and bit 28 is set in the network configuration register
+      then the resulting number is used for the transmit inter-packet-gap. 1 is added
+      to bits 15:8 to prevent a divide by zero.
+    name: IPG_STRETCH
+    shortdesc: IPG Stretch.
+    type: rw
+  name: STRETCH_RATIO
+  offset: '0x000000BC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Stacked VLAN Register
+  field:
+  - bits: '31'
+    name: ENABLE_PROCESSING
+    type: rw
+  - bits: '30:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: When Stacked VLAN is enabled, the first VLAN tag in a received frame
+      will only be accepted if the VLAN type field is equal to this user defined VLAN_TYPE
+      OR equal to the standard VLAN type (0x8100). Note that the second VLAN tag of
+      a Stacked VLAN packet will only be matched correctly if its VLAN_TYPE field
+      equals 0x8100.
+    name: MATCH
+    shortdesc: User defined VLAN_TYPE field.
+    type: rw
+  name: STACKED_VLAN
+  offset: '0x000000C0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Transmit PFC Pause Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:8'
+    longdesc: If bit 17 of the network control register is written with a one then
+      for each entry equal to zero in the Transmit PFC Pause Register[15:8], the PFC
+      pause frame's pause quantum field associated with that entry will be taken from
+      the transmit pause quantum register. For each entry equal to one in the Transmit
+      PFC Pause Register [15:8], the pause quantum associated with that entry will
+      be zero.
+    name: VECTOR
+    shortdesc: Priority Vector Pause Size.
+    type: rw
+  - bits: '7:0'
+    longdesc: If bit 17 of the network control register is written with a one then
+      the priority enable vector of the PFC priority based pause frame will be set
+      equal to the value stored in this register [7:0].
+    name: VECTOR_ENABLE
+    shortdesc: Priority Vector Enable.
+    type: rw
+  name: TX_PFC_PAUSE
+  offset: '0x000000C4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Specific Address Mask 1 Bottom 31:0
+  field:
+  - bits: '31:0'
+    longdesc: Setting a bit to one masks the corresponding bit in the specific address
+      1 register
+    name: ADDRESS_MASK
+    shortdesc: Specific Address Mask.
+    type: rw
+  name: MASK_ADD1_BOTTOM
+  offset: '0x000000C8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Specific Address Mask 1 Top 47:32
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Setting a bit to one masks the corresponding bit in the specific address
+      1 register
+    name: ADDRESS_MASK
+    shortdesc: Specific Address Mask.
+    type: rw
+  name: MASK_ADD1_TOP
+  offset: '0x000000CC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Receive DMA Data Buffer Address Mask
+  field:
+  - bits: '31:28'
+    longdesc: Values used to force bits 31:28 of the receive data buffer AHB/AXI address
+      to a particular value when the associated enable bits stored in this register
+      [3:0] are set. Any changes to this register will be ignored while the DMA is
+      currently processing a receive packet. It will only affect the next full packet
+      to be written to external system memory.
+    name: MASK_VALUE
+    shortdesc: Data Buffer Address Mask Value.
+    type: rw
+  - bits: '27:4'
+    name: RESERVED
+    type: ro
+  - bits: '3:0'
+    longdesc: These bits are associated directly with bits[31:28].When bit 0 is set,
+      the AHB/AXI address bit 28 used for accessing the receive data buffers will
+      be forced to the value stored in bit 28 of this register. When bit 1 is set,
+      the AHB/AXI address bit 29 used for accessing the receive data buffers will
+      be forced to the value stored in bit 29 of this register. When bit 2 is set,
+      the AHB/AXI address bit 30 used for accessing the receive data buffers will
+      be forced to the value stored in bit 30 of this register. When bit 3 is set,
+      the AHB/AXI address bit 31 used for accessing the receive data buffers will
+      be forced to the value stored in bit 31 of this register. When these bits are
+      clear, the associated value stored in bits 31:28 have no effect on the AHB/AXI
+      address used for receive data buffer accesses. Any changes to this register
+      will be ignored while the DMA is currently processing a receive packet. It will
+      only affect the next full packet to be written to external memory.
+    name: MASK_ENABLE
+    shortdesc: Data Buffer Address Mask Enable.
+    type: rw
+  name: DMA_ADDR_OR_MASK
+  offset: '0x000000D0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PTP RX unicast IP destination address
+  field:
+  - bits: '31:0'
+    longdesc: Used for detection of PTP frames on receive path.
+    name: ADDRESS
+    shortdesc: Unicast IP destination address.
+    type: rw
+  name: RX_PTP_UNICAST
+  offset: '0x000000D4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: PTP TX unicast IP destination address
+  field:
+  - bits: '31:0'
+    longdesc: Used for detection of PTP frames on transmit path.
+    name: ADDRESS
+    shortdesc: Unicast IP destination address.
+    type: rw
+  name: TX_PTP_UNICAST
+  offset: '0x000000D8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: TSU timer comparison value nanoseconds
+  field:
+  - bits: '31:22'
+    name: RESERVED
+    type: ro
+  - bits: '21:0'
+    longdesc: Value is compared to the bits[45:24] of the TSU timer count value (upper
+      22 bits of nanosecond value).
+    name: COMPARISON_VALUE
+    shortdesc: TSU timer comparison value (ns).
+    type: rw
+  name: TSU_NSEC_CMP
+  offset: '0x000000DC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: TSU timer comparison value seconds 31:0
+  field:
+  - bits: '31:0'
+    longdesc: Value is compared to seconds value bits [31:0] of the TSU timer count
+      value.
+    name: COMPARISON_VALUE
+    shortdesc: TSU timer comparison value (s).
+    type: rw
+  name: TSU_SEC_CMP
+  offset: '0x000000E0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: TSU timer comparison value seconds 47:32
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Value is compared to the top 16 bits (most significant 16-bits {47:32]
+      of seconds value) of the TSU timer count value.
+    name: COMPARISON_VALUE
+    shortdesc: TSU timer comparison value (s).
+    type: rw
+  name: TSU_MSB_SEC_CMP
+  offset: '0x000000E4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PTP Event Frame Transmitted Seconds Register 47:32
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: The register is updated with the value that the 1588 timer seconds register
+      held when the SFD of a PTP transmit primary event crosses the MII interface.
+      The actual update occurs when the GEM recognizes the frame as a PTP sync or
+      delay_req frame. An interrupt is issued when the register is updated.
+    name: TIMER_SECONDS
+    shortdesc: PTP Event Frame TX Seconds.
+    type: ro
+  name: TSU_PTP_TX_MSB_SEC
+  offset: '0x000000E8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PTP Event Frame Received Seconds Register 47:32
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: The register is updated with the value that the 1588 timer seconds register
+      held when the SFD of a PTP receive primary event crosses the MII interface.
+      The actual update occurs when the GEM recognizes the frame as a PTP sync or
+      delay_req frame. An interrupt is issued when the register is updated.
+    name: TIMER_SECONDS
+    shortdesc: PTP Event Frame TX Seconds.
+    type: ro
+  name: TSU_PTP_RX_MSB_SEC
+  offset: '0x000000EC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PTP Peer Event Frame Transmitted Seconds Register 47:32
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: The register is updated with the value that the 1588 timer seconds register
+      held when the SFD of a PTP transmit peer event crosses the MII interface. The
+      actual update occurs when the GEM recognizes the frame as a PTP pdealy_req or
+      pdelay_resp frame. An interrupt is issued when the register is updated.
+    name: TIMER_SECONDS
+    shortdesc: PTP Peer Event Frame TX Seconds.
+    type: ro
+  name: TSU_PEER_TX_MSB_SEC
+  offset: '0x000000F0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PTP Peer Event Frame Received Seconds Register 47:32
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: The register is updated with the value that the 1588 timer seconds register
+      held when the SFD of a PTP receive peer event crosses the MII interface. The
+      actual update occurs when the GEM recognizes the frame as a PTP pdelay_req or
+      pdelay_resp frame. An interrupt is issued when the register is updated.
+    name: TIMER_SECONDS
+    shortdesc: PTP Peer Event Frame RX Seconds.
+    type: ro
+  name: TSU_PEER_RX_MSB_SEC
+  offset: '0x000000F4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: The fill levels for the TX & RX packet buffers can be read using this
+    register, including the fill level for each queue in the TX direction.
+  field:
+  - bits: '31:16'
+    longdesc: Read this register to determine the fill level.
+    name: DMA_TX_RX_FILL_LEVEL
+    shortdesc: Fill Level - TX or RX packet buffer fill level, selected by the tx_q_fill_level_select
+      and tx_rx_fill_level_select registers.
+    type: ro
+  - bits: '15:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:4'
+    name: DMA_TX_Q_FILL_LEVEL_SELECT
+    type: rw
+  - bits: '3:1'
+    name: RESERVED
+    type: ro
+  - bits: '0'
+    name: DMA_TX_RX_FILL_LEVEL_SELECT
+    type: rw
+  name: DPRAM_FILL_DBG
+  offset: '0x000000F8'
+  type: mixed
+  width: 32
+- default: '0x40070106'
+  description: This register indicates a module identification number and module revision.
+    The value of this register is read only as defined by `gem_revision_reg_value
+  field:
+  - bits: '31:28'
+    name: FIX_NUMBER
+    type: ro
+  - bits: '27:16'
+    name: MODULE_IDENTIFICATION_NUMBER
+    type: ro
+  - bits: '15:0'
+    name: MODULE_REVISION
+    type: ro
+  name: REVISION_REG
+  offset: '0x000000FC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: These registers reset to zero on a read and stick at all ones when
+    they count to their maximum value. They should be read frequently enough to prevent
+    loss of data. In order to reduce overall design area, the statistics registers
+    may be optionally removed in the configuration file if they are deemed unnecsessary
+    for a particular design. The receive statistics registers are only incremented
+    when the receive enable bit is set in the network control register. The statistics
+    registers optionally have a snapshot capability which, when exercised, will simultaneously
+    store and clear the current values of all the statistics registers into a snapshot
+    register set in order to allow a consistent set of statistics to be read by the
+    processor. The snapshot is controlled using bit 13 of the network control register.
+    The read snapshot control indicated by bit 14 of the network control register
+    determines whether the processor reads the snapshot registers (logic 1) or the
+    incrementing registers (logic 0). The default GEM configuration does not support
+    the snapshot capability. See Parameterization section under Implementation Application
+    Notes for an explanation of how to enable this function. All the statistics registers
+    are read only. For test purposes they may be written by setting bit 7 (Write Enable)
+    in the network control register. Setting bit 6 (increment statistics) in the network
+    control register causes all the statistics registers to increment by one, again
+    for test purposes. Once a statistics register has been read, it is automatically
+    cleared. When reading the octets transmitted and octets received registers, bits
+    31:0 should be read prior to bits 47:32 to ensure reliable operation. The statistics
+    register block contains the following registers. Octets Transmitted [31:0]
+  field:
+  - bits: '31:0'
+    longdesc: The number of octets transmitted in valid frames of any type. This counter
+      is 48-bits, and is read through two registers. This count does not include octets
+      from automatically generated pause frames.
+    name: COUNT
+    shortdesc: Transmitted octets in frame without errors [31:0].
+    type: rw
+  name: OCTETS_TXED_BOTTOM
+  offset: '0x00000100'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Octets Transmitted 47:32
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: The number of octets transmitted in valid frames of any type. This counter
+      is 48-bits, and is read through two registers. This count does not include octets
+      from automatically generated pause frames.
+    name: COUNT
+    shortdesc: Transmitted octets in frame without errors [47:32].
+    type: rw
+  name: OCTETS_TXED_TOP
+  offset: '0x00000104'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Frames Transmitted
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of frames successfully transmitted,
+      i.e. no under run and not too many retries. Excludes pause frames.
+    name: COUNT
+    shortdesc: Frames transmitted without error.
+    type: rw
+  name: FRAMES_TXED_OK
+  offset: '0x00000108'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Broadcast Frames Transmitted
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of broadcast frames successfully
+      transmitted without error, i.e. no under run and not too many retries. Excludes
+      pause frames.
+    name: COUNT
+    shortdesc: Broadcast frames transmitted without error.
+    type: rw
+  name: BROADCAST_TXED
+  offset: '0x0000010C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Multicast Frames Transmitted
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of multicast frames successfully
+      transmitted without error, i.e. no under run and not too many retries. Excludes
+      pause frames.
+    name: COUNT
+    shortdesc: Multicast frames transmitted without error.
+    type: rw
+  name: MULTICAST_TXED
+  offset: '0x00000110'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Pause Frames Transmitted
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: Only pause frames triggered by the register interface or through the
+      external pause pins are counted as pause frames. Pause frames received through
+      the external FIFO interface are counted in the frames transmitted counter.
+    name: COUNT
+    shortdesc: Transmitted pause frames - a 16 bit register counting the number of
+      pause frames transmitted.
+    type: rw
+  name: PAUSE_FRAMES_TXED
+  offset: '0x00000114'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 64 Byte Frames Transmitted
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 64 byte frames successfully
+      transmitted without error, i.e. no under run and not too many retries. Excludes
+      pause frames.
+    name: COUNT
+    shortdesc: 64 byte frames transmitted without error.
+    type: rw
+  name: FRAMES_TXED_64
+  offset: '0x00000118'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 65 to 127 Byte Frames Transmitted
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 65 to127 byte frames successfully
+      transmitted without error, i.e. no under run and not too many retries.
+    name: COUNT
+    shortdesc: 65 to127 byte frames transmitted without error.
+    type: rw
+  name: FRAMES_TXED_65
+  offset: '0x0000011C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 128 to 255 Byte Frames Transmitted
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 128 to 255 byte frames successfully
+      transmitted without error, i.e. no under run and not too many retries.
+    name: COUNT
+    shortdesc: 128 to 255 byte frames transmitted without error.
+    type: rw
+  name: FRAMES_TXED_128
+  offset: '0x00000120'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 256 to 511 Byte Frames Transmitted
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 256 to 511 byte frames successfully
+      transmitted without error, i.e. no under run and not too many retries.
+    name: COUNT
+    shortdesc: 256 to 511 byte frames transmitted without error.
+    type: rw
+  name: FRAMES_TXED_256
+  offset: '0x00000124'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 512 to 1023 Byte Frames Transmitted
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 512 to 1023 byte frames successfully
+      transmitted without error, i.e. no under run and not too many retries.
+    name: COUNT
+    shortdesc: 512 to 1023 byte frames transmitted without error.
+    type: rw
+  name: FRAMES_TXED_512
+  offset: '0x00000128'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 1024 to 1518 Byte Frames Transmitted
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 1024 to 1518 byte frames successfully
+      transmitted without error, i.e. no under run and not too many retries.
+    name: COUNT
+    shortdesc: 1024 to 1518 byte frames transmitted without error.
+    type: rw
+  name: FRAMES_TXED_1024
+  offset: '0x0000012C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Greater Than 1518 Byte Frames Transmitted
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 1518 or above byte frames successfully
+      transmitted without error, i.e. no under run and not too many retries.
+    name: COUNT
+    shortdesc: Greater than 1518 byte frames transmitted without error.
+    type: rw
+  name: FRAMES_TXED_1519
+  offset: '0x00000130'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Transmit Under Runs
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    longdesc: If this register is incremented then no other statistics register is
+      incremented.
+    name: COUNT
+    shortdesc: Transmit under runs - a 10 bit register counting the number of frames
+      not transmitted due to a transmit under run.
+    type: rw
+  name: TX_UNDERRUNS
+  offset: '0x00000134'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Single Collision Frames
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17:0'
+    longdesc: e. no under run.
+    name: COUNT
+    shortdesc: Single collision frames - an 18 bit register counting the number of
+      frames experiencing a single collision before being successfully transmitted,
+      i.
+    type: rw
+  name: SINGLE_COLLISIONS
+  offset: '0x00000138'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Multiple Collision Frames
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17:0'
+    longdesc: e. no under run and not too many retries.
+    name: COUNT
+    shortdesc: Multiple collision frames - an 18 bit register counting the number
+      of frames experiencing between two and fifteen collisions prior to being successfully
+      transmitted, i.
+    type: rw
+  name: MULTIPLE_COLLISIONS
+  offset: '0x0000013C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Excessive Collisions
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: COUNT
+    type: rw
+  name: EXCESSIVE_COLLISIONS
+  offset: '0x00000140'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Late Collisions
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    longdesc: In 10/100 mode, late collisions are counted twice i.e. both as a collision
+      and a late collision. In gigabit mode, a late collision causes the transmission
+      to be aborted, thus the single and multi collision registers are not updated.
+    name: COUNT
+    shortdesc: Late collisions - a 10 bit register counting the number of late collision
+      occurring after the slot time (512 bits) has expired.
+    type: rw
+  name: LATE_COLLISIONS
+  offset: '0x00000144'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Deferred Transmission Frames
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17:0'
+    longdesc: Frames involved in any collision are not counted nor are frames that
+      experienced a transmit under run.
+    name: COUNT
+    shortdesc: Deferred transmission frames - an 18 bit register counting the number
+      of frames experiencing deferral due to carrier sense being active on their first
+      attempt at transmission.
+    type: rw
+  name: DEFERRED_FRAMES
+  offset: '0x00000148'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Carrier Sense Errors
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    longdesc: Only incremented in half duplex mode. The only effect of a carrier sense
+      error is to increment this register. The behaviour of the other statistics registers
+      is unaffected by the detection of a carrier sense error.
+    name: COUNT
+    shortdesc: Carrier sense errors - a 10 bit register counting the number of frames
+      transmitted where carrier sense was not seen during transmission or where carrier
+      sense was deasserted after being asserted in a transmit frame without collision
+      (no under run).
+    type: rw
+  name: CRS_ERRORS
+  offset: '0x0000014C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Octets Received 31:0
+  field:
+  - bits: '31:0'
+    longdesc: The number of octets received in valid frames of any type. This counter
+      is 48-bits and is read through two registers. This count does not include octets
+      from pause frames, and is only incremented if the frame is successfully filtered
+      and copied to memory.
+    name: COUNT
+    shortdesc: Received octets in frame without errors [31:0].
+    type: rw
+  name: OCTETS_RXED_BOTTOM
+  offset: '0x00000150'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Octets Received 47:32
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: The number of octets received in valid frames of any type. This counter
+      is 48-bits and is read through two registers. This count does not include octets
+      from pause frames, and is only incremented if the frame is successfully filtered
+      and copied to memory.
+    name: COUNT
+    shortdesc: Received octets in frame without errors [47:32].
+    type: rw
+  name: OCTETS_RXED_TOP
+  offset: '0x00000154'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Frames Received
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of frames successfully received.
+      Excludes pause frames, and is only incremented if the frame is successfully
+      filtered and copied to memory.
+    name: COUNT
+    shortdesc: Frames received without error.
+    type: rw
+  name: FRAMES_RXED_OK
+  offset: '0x00000158'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Broadcast Frames Received
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of broadcast frames successfully
+      received without error. Excludes pause frames, and is only incremented if the
+      frame is successfully filtered and copied to memory.
+    name: COUNT
+    shortdesc: Broadcast frames received without error.
+    type: rw
+  name: BROADCAST_RXED
+  offset: '0x0000015C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Multicast Frames Received
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of multicast frames successfully
+      received without error. Excludes pause frames, and is only incremented if the
+      frame is successfully filtered and copied to memory.
+    name: COUNT
+    shortdesc: Multicast frames received without error.
+    type: rw
+  name: MULTICAST_RXED
+  offset: '0x00000160'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Pause Frames Received
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    name: COUNT
+    type: rw
+  name: PAUSE_FRAMES_RXED
+  offset: '0x00000164'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 64 Byte Frames Received
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 64 byte frames successfully
+      received without error. Excludes pause frames, and is only incremented if the
+      frame is successfully filtered and copied to memory.
+    name: COUNT
+    shortdesc: 64 byte frames received without error.
+    type: rw
+  name: FRAMES_RXED_64
+  offset: '0x00000168'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 65 to 127 Byte Frames Received
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 65 to 127 byte frames successfully
+      received without error. Excludes pause frames, and is only incremented if the
+      frame is successfully filtered and copied to memory.
+    name: COUNT
+    shortdesc: 65 to 127 byte frames received without error.
+    type: rw
+  name: FRAMES_RXED_65
+  offset: '0x0000016C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 128 to 255 Byte Frames Received
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 128 to 255 byte frames successfully
+      received without error. Excludes pause frames, and is only incremented if the
+      frame is successfully filtered and copied to memory.
+    name: COUNT
+    shortdesc: 128 to 255 byte frames received without error.
+    type: rw
+  name: FRAMES_RXED_128
+  offset: '0x00000170'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 256 to 511 Byte Frames Received
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 256 to 511 byte frames successfully
+      transmitted without error. Excludes pause frames, and is only incremented if
+      the frame is successfully filtered and copied to memory.
+    name: COUNT
+    shortdesc: 256 to 511 byte frames received without error.
+    type: rw
+  name: FRAMES_RXED_256
+  offset: '0x00000174'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 512 to 1023 Byte Frames Received
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 512 to 1023 byte frames successfully
+      received without error. Excludes pause frames, and is only incremented if the
+      frame is successfully filtered and copied to memory.
+    name: COUNT
+    shortdesc: 512 to 1023 byte frames received without error.
+    type: rw
+  name: FRAMES_RXED_512
+  offset: '0x00000178'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 1024 to 1518 Byte Frames Received
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 1024 to 1518 byte frames successfully
+      received without error. Excludes pause frames, and is only incremented if the
+      frame is successfully filtered and copied to memory.
+    name: COUNT
+    shortdesc: 1024 to 1518 byte frames received without error.
+    type: rw
+  name: FRAMES_RXED_1024
+  offset: '0x0000017C'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 1519 to maximum Byte Frames Received
+  field:
+  - bits: '31:0'
+    longdesc: A 32 bit register counting the number of 1519 byte or above frames successfully
+      received without error. Maximum frame size is determined by the network configuration
+      register bit 8 (1536 maximum frame size) or bit 3 (jumbo frame size). Excludes
+      pause frames, and is only incremented if the frame is successfully filtered
+      and copied to memory.
+    name: COUNT
+    shortdesc: 1519 to maximum byte frames received without error.
+    type: rw
+  name: FRAMES_RXED_1519
+  offset: '0x00000180'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Undersized Frames Received
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    longdesc: In gigabit mode, half duplex, this register counts either frames not
+      conforming to the minimum slot time of 512 bytes or frames not conforming to
+      the minimum frame size once bursting is active.
+    name: COUNT
+    shortdesc: Undersize frames received - a 10 bit register counting the number of
+      frames received less than 64 bytes in length (10/100 mode or gigabit mode, full
+      duplex) that do not have either a CRC error or an alignment error.
+    type: rw
+  name: UNDERSIZE_FRAMES
+  offset: '0x00000184'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Oversize Frames Received
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: COUNT
+    type: rw
+  name: EXCESSIVE_RX_LENGTH
+  offset: '0x00000188'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Jabbers Received
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: COUNT
+    type: rw
+  name: RX_JABBERS
+  offset: '0x0000018C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Frame Check Sequence Errors
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    longdesc: This register is also incremented if a symbol error is detected and
+      the frame is of valid length and has an integral number of bytes. This register
+      is incremented for a frame with bad FCS, regardless of whether it is copied
+      to memory due to ignore FCS mode being enabled in bit 26 of the network configuration
+      register.
+    name: COUNT
+    shortdesc: Frame check sequence errors - a 10 bit register counting frames that
+      are an integral number of bytes, have bad CRC and are between 64 and 1518 bytes
+      in length (1536 if bit 8 set in network configuration register, 10,240 bytes
+      if bit 3 is set in the network configuration register).
+    type: rw
+  name: FCS_ERRORS
+  offset: '0x00000190'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Length Field Frame Errors
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    longdesc: This condition is only counted if the value of the length field is less
+      than 0x0600, the frame is not of excessive length and checking is enabled through
+      bit 16 of the network configuration register.
+    name: COUNT
+    shortdesc: Length field frame errors - this 10-bit register counts the number
+      of frames received that have a measured length shorter than that extracted from
+      the length field (bytes 13 and 14).
+    type: rw
+  name: RX_LENGTH_ERRORS
+  offset: '0x00000194'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Receive Symbol Errors
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    longdesc: For 10/100 mode symbol errors are counted regardless of frame length
+      checks. For gigabit mode the frame must satisfy slot time requirements in order
+      to count a symbol error. Additionally, in gigabit half duplex mode, carrier
+      extension errors are also recorded. Receive symbol errors will also be counted
+      as an FCS or alignment error if the frame is between 64 and 1518 bytes (1536
+      bytes if bit 8 is set in the network configuration register, 10240 bytes if
+      bit 3 is set in the network configuration register). If the frame is larger
+      it will be recorded as a jabber error.
+    name: COUNT
+    shortdesc: Receive symbol errors - a 10-bit register counting the number of frames
+      that had rx_er asserted during reception.
+    type: rw
+  name: RX_SYMBOL_ERRORS
+  offset: '0x00000198'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Alignment Errors
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    longdesc: This register is also incremented if a symbol error is detected and
+      the frame is of valid length and does not have an integral number of bytes.
+    name: COUNT
+    shortdesc: Alignment errors - a 10 bit register counting frames that are not an
+      integral number of bytes long and have bad CRC when their length is truncated
+      to an integral number of bytes and are between 64 and 1518 bytes in length (1536
+      if bit 8 set in network configuration register, 10,240 bytes if bit 3 is set
+      in the network configuration register).
+    type: rw
+  name: ALIGNMENT_ERRORS
+  offset: '0x0000019C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Receive Resource Errors
+  field:
+  - bits: '31:18'
+    name: RESERVED
+    type: ro
+  - bits: '17:0'
+    longdesc: This occurs when the GEM reads a buffer descriptor with its ownership
+      (or used) bit set.
+    name: COUNT
+    shortdesc: Receive resource errors - an 18 bit register counting the number of
+      frames that were successfully received by the MAC (correct address matched frame
+      and adequate slot time) but could not be copied to memory because no receive
+      buffer was available.
+    type: rw
+  name: RX_RESOURCE_ERRORS
+  offset: '0x000001A0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Receive Overruns
+  field:
+  - bits: '31:10'
+    name: RESERVED
+    type: ro
+  - bits: '9:0'
+    name: COUNT
+    type: rw
+  name: RX_OVERRUNS
+  offset: '0x000001A4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: IP Header Checksum Errors
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    name: COUNT
+    type: rw
+  name: RX_IP_CK_ERRORS
+  offset: '0x000001A8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: TCP Checksum Errors
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    name: COUNT
+    type: rw
+  name: RX_TCP_CK_ERRORS
+  offset: '0x000001AC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: UDP Checksum Errors
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    name: COUNT
+    type: rw
+  name: RX_UDP_CK_ERRORS
+  offset: '0x000001B0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Receive DMA Flushed Packets
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: A 16 bit register counting the number of frames that have been flushed
+      from the receive SRAM based packet buffer due to one of the following reasons..1.When
+      partial store and forward mode is enabled or bit 24 of the DMA configuration
+      register is enabled, a packet is received while there is no AMBA (AHB/AXI) resource.
+      2.When partial store and forward mode is enabled and an AMBA (AHB/AXI) error
+      is encountered while writing the packet data to external memory. When bit 18
+      of the network control register(software action to flush a packet from the head
+      of the PBUF queue) is pulsed and the GEM DMA is not currently busy.
+    name: COUNT
+    shortdesc: Flushed RX pkts counter.
+    type: rw
+  name: AUTO_FLUSHED_PKTS
+  offset: '0x000001B4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 1588 Timer Increment Register sub nsec
+  field:
+  - bits: '31:24'
+    name: SUB_NS_INCR_LSB
+    type: rw
+  - bits: '23:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: 24 bits of sub nanosecond precision gives resolution of approximately
+      5.86E-17 seconds (16 bits gives 15.2 femtoseconds).
+    name: SUB_NS_INCR
+    shortdesc: These are the most significant bits [23:8] of the sub-ns value by which
+      the 1588 timer will be incremented each clock cycle.
+    type: rw
+  name: TSU_TIMER_INCR_SUB_NSEC
+  offset: '0x000001BC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 1588 Timer Seconds Register 47:32
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: 'Most significant 16 bits of seconds timer count. The register is writeable.
+      The 48-bit counter increments by one when the 1588 nanoseconds counter counts
+      to one second. It may also be incremented or decremented when the timer adjust
+      register is written (if decremented from zero the 48-bit combined count would
+      roll back to 0xFFFFFFFFFFFF). Note: The value of this register is used only
+      when the lower 32 bit register is written to. This s to ensure a single update
+      of the 48 bit seconds value'
+    name: TIMER
+    shortdesc: TSU timer value (s).
+    type: rw
+  name: TSU_TIMER_MSB_SEC
+  offset: '0x000001C0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 1588 Timer Sync Strobe Seconds Register 47:32
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: The most significant 16-bit value of the Timer Seconds register captured
+      when gem_tsu_ms and gem_tsu_inc_ctrl are zero.
+    name: STROBE
+    shortdesc: 1588 Timer Sync Strobe Seconds.
+    type: ro
+  name: TSU_STROBE_MSB_SEC
+  offset: '0x000001C4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 1588 Timer Sync Strobe Seconds Register 31:0
+  field:
+  - bits: '31:0'
+    longdesc: The lowest significant 32-bit value of the Timer Seconds register captured
+      when gem_tsu_ms and gem_tsu_inc_ctrl are zero.
+    name: STROBE
+    shortdesc: 1588 Timer Sync Strobe Seconds.
+    type: ro
+  name: TSU_STROBE_SEC
+  offset: '0x000001C8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 1588 Timer Sync Strobe Nanoseconds Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29:0'
+    longdesc: The value of the Timer Nanoseconds register captured when gem_tsu_ms
+      and gem_tsu_inc_ctrl are zero.
+    name: STROBE
+    shortdesc: 1588 Timer Sync Strobe Nanoseconds.
+    type: ro
+  name: TSU_STROBE_NSEC
+  offset: '0x000001CC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: 1588 Timer Seconds Register 31:0
+  field:
+  - bits: '31:0'
+    longdesc: TSU timer value (s). Least significant 32 bits of seconds timer count.
+      This register is writeable. The 48-bit counter increments by one when the 1588
+      nanoseconds counter counts to one second. It may also be incremented or decremented
+      when the timer adjust register is written (if decremented from zero the 48-bit
+      combined count would roll back to 0xFFFFFFFFFFFF).
+    name: TIMER
+    shortdesc: 1588 Timer Seconds Register.
+    type: rw
+  name: TSU_TIMER_SEC
+  offset: '0x000001D0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 1588 Timer Nanoseconds Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29:0'
+    longdesc: This register is writeable. It can also be adjusted by writes to the
+      1588 timer adjust register. It increments by the value of the 1588 timer increment
+      register each clock cycle (if this register is close to zero and a write to
+      the timer adjust register causes a decrement the seconds register will be decremented
+      if necessary and the nanoseconds register will roll back to 9999999xx(dec)).
+    name: TIMER
+    shortdesc: Timer count in nanoseconds.
+    type: rw
+  name: TSU_TIMER_NSEC
+  offset: '0x000001D4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This register returns all zeroes when read.
+  field:
+  - bits: '31'
+    longdesc: Write as zero to add to it.
+    name: ADD_SUBTRACT
+    shortdesc: Write as one to subtract from the 1588 timer.
+    type: wo
+  - bits: '30'
+    name: RESERVED
+    type: ro
+  - bits: '29:0'
+    longdesc: The number of nanoseconds to increment or decrement the 1588 timer nanoseconds
+      register. If necessary the 1588 seconds register will be incremented or decremented.
+    name: INCREMENT_VALUE
+    shortdesc: Timer increment value.
+    type: wo
+  name: TSU_TIMER_ADJUST
+  offset: '0x000001D8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 1588 Timer Increment Register
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23:16'
+    longdesc: The number of increments after which the alternative increment is used.
+    name: NUM_INCS
+    shortdesc: Number of incs before alt inc.
+    type: rw
+  - bits: '15:8'
+    longdesc: Alternative count of nanoseconds by which the 1588 timer nanoseconds
+      register will be incremented each clock cycle.
+    name: ALT_NS_INCR
+    shortdesc: Alternative nanoseconds count.
+    type: rw
+  - bits: '7:0'
+    longdesc: These are the most significant 8 bits of the 32 bit timer_increment
+      counter. The tsu_timer_incr_sub_nsec register holds the least significant 24
+      bits of the increment.
+    name: NS_INCREMENT
+    shortdesc: A count of nanoseconds by which the 1588 timer nanoseconds register
+      will be incremented each clock cycle.
+    type: rw
+  name: TSU_TIMER_INCR
+  offset: '0x000001DC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: PTP Event Frame Transmitted Seconds Register 31:0
+  field:
+  - bits: '31:0'
+    longdesc: The register is updated with the value that the 1588 timer seconds register
+      held when the SFD of a PTP transmit primary event crosses the MII interface.
+      The actual update occurs when the GEM recognizes the frame as a PTP sync or
+      delay_req frame. An interrupt is issued when the register is updated.
+    name: TIMER
+    shortdesc: PTP Event Frame Transmitted Seconds.
+    type: ro
+  name: TSU_PTP_TX_SEC
+  offset: '0x000001E0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PTP Event Frame Transmitted Nanoseconds Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29:0'
+    longdesc: The register is updated with the value that the 1588 timer nanoseconds
+      register held when the SFD of a PTP transmit primary event crosses the MII interface.
+      The actual update occurs when the GEM recognizes the frame as a PTP sync or
+      delay_req frame. An interrupt is issued when the register is updated.
+    name: TIMER
+    shortdesc: PTP Event Frame Transmitted Nanoseconds.
+    type: ro
+  name: TSU_PTP_TX_NSEC
+  offset: '0x000001E4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PTP Event Frame Received Seconds Register 31:0
+  field:
+  - bits: '31:0'
+    longdesc: The register is updated with the value that the 1588 timer seconds register
+      held when the SFD of a PTP receive primary event crosses the MII interface.
+      The actual update occurs when the GEM recognizes the frame as a PTP sync or
+      delay_req frame. An interrupt is issued when the register is updated.
+    name: TIMER
+    shortdesc: PTP Event Frame Received Seconds.
+    type: ro
+  name: TSU_PTP_RX_SEC
+  offset: '0x000001E8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PTP Event Frame Received Nanoseconds Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29:0'
+    longdesc: The register is updated with the value that the 1588 timer nanoseconds
+      register held when the SFD of a PTP receive primary event crosses the MII interface.
+      The actual update occurs when the GEM recognizes the frame as a PTP sync or
+      delay_req frame. An interrupt is issued when the register is updated.
+    name: TIMER
+    shortdesc: PTP Event Frame Received Nanoseconds.
+    type: ro
+  name: TSU_PTP_RX_NSEC
+  offset: '0x000001EC'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PTP Peer Event Frame Transmitted Seconds Register 31:0
+  field:
+  - bits: '31:0'
+    longdesc: The register is updated with the value that the 1588 timer seconds register
+      held when the SFD of a PTP transmit peer event crosses the MII interface. The
+      actual update occurs when the GEM recognizes the frame as a PTP pdealy_req or
+      pdelay_resp frame. An interrupt is issued when the register is updated.
+    name: TIMER
+    shortdesc: PTP Peer Event Frame Received Seconds.
+    type: ro
+  name: TSU_PEER_TX_SEC
+  offset: '0x000001F0'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PTP Peer Event Frame Transmitted Nanoseconds Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29:0'
+    longdesc: The register is updated with the value that the 1588 timer nanoseconds
+      register held when the SFD of a PTP transmit peer event crosses the MII interface.
+      The actual update occurs when the GEM recognizes the frame as a PTP pdelay_req
+      or pdelay_resp frame. An interrupt is issued when the register is updated.
+    name: TIMER
+    shortdesc: PTP Peer Event Frame Transmitted Nanoseconds.
+    type: ro
+  name: TSU_PEER_TX_NSEC
+  offset: '0x000001F4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PTP Peer Event Frame Received Seconds Register 31:0
+  field:
+  - bits: '31:0'
+    longdesc: The register is updated with the value that the 1588 timer seconds register
+      held when the SFD of a PTP receive peer event crosses the MII interface. The
+      actual update occurs when the GEM recognizes the frame as a PTP pdelay_req or
+      pdelay_resp frame. An interrupt is issued when the register is updated.
+    name: TIMER
+    shortdesc: PTP Peer Event Frame Received Seconds.
+    type: ro
+  name: TSU_PEER_RX_SEC
+  offset: '0x000001F8'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: PTP Peer Event Frame Received Nanoseconds Register
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29:0'
+    longdesc: The register is updated with the value that the 1588 timer nanoseconds
+      register held when the SFD of a PTP receive peer event crosses the MII interface.
+      The actual update occurs when the GEM recognizes the frame as a PTP pdelay_req
+      or pdelay_resp frame. An interrupt is issued when the register is updated.
+    name: TIMER
+    shortdesc: PTP Peer Event Frame Received Nanoseconds.
+    type: ro
+  name: TSU_PEER_RX_NSEC
+  offset: '0x000001FC'
+  type: ro
+  width: 32
+- default: '0x00001040'
+  description: Note:All PCS registers are defined in the IEEE 802.3 Standard. PCS
+    Control RegisterThis register provides the main control functions with respect
+    to the PCS.
+  field:
+  - bits: '31:16'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '15'
+    longdesc: This bit is self clearing. When reading this bit, logic 1 is returned
+      until both the soft reset has completed and the PCS is enabled through the PCS
+      select bit of the network configuration register. Writing logic 0 has no affect.
+    name: PCS_SOFTWARE_RESET
+    shortdesc: PCS software reset - written by software to force the hardware logic
+      into a reset state.
+    type: rw
+  - bits: '14'
+    longdesc: '0: Loopback mode disabled. 1: Loopback mode enabled.'
+    name: LOOPBACK_MODE
+    shortdesc: Loopback mode - the ewrap output pin of the GEM reflects this control
+      bit, and can be used to select loopback mode in the PHY transceiver.
+    type: rw
+  - bits: '13'
+    longdesc: As the GEM PCS is only intended to operate at 1000 Mbps, this bit is
+      hardwired to logic 0.
+    name: SPEED_SELECT_BIT_1
+    shortdesc: Speed select bit 1 - combined with speed select [0] to indicate the
+      speed of operation of the PCS.
+    type: ro
+  - bits: '12'
+    name: ENABLE_AUTO_NEG
+    type: rw
+  - bits: '11:10'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '9'
+    longdesc: This bit is self clearing, but once set shall remain in this state until
+      auto-negotiation has restarted. Writing logic 0 has no affect.
+    name: RESTART_AUTO_NEG
+    shortdesc: Restart auto-negotiation - when set active high, the hardware restarts
+      auto-negotiation.
+    type: rw
+  - bits: '8'
+    longdesc: This returns the value of the MAC's duplex state as indicated in bit
+      1 of the MAC's network configuration register.
+    name: MAC_DUPLEX_STATE
+    shortdesc: MAC Duplex state.
+    type: ro
+  - bits: '7'
+    longdesc: This bit should only be set for test purposes.
+    name: COLLISION_TEST
+    shortdesc: Collision test - when set active high, the PCS generates collisions
+      on transmit.
+    type: rw
+  - bits: '6'
+    longdesc: As the GEM PCS is only intended to operate at 1000 Mbps, this bit is
+      hardwired to logic 1.
+    name: SPEED_SELECT_BIT_0
+    shortdesc: Speed select bit 0 - combined with speed select [1] to indicate the
+      speed of operation of the PCS.
+    type: ro
+  - bits: '5:0'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  name: PCS_CONTROL
+  offset: '0x00000200'
+  type: mixed
+  width: 32
+- default: '0x00000109'
+  description: This register indicates general status information concerning the PCS.
+  field:
+  - bits: '31:16'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '15'
+    longdesc: This bit is hardwired to logic 0.
+    name: BASE_100_T4
+    shortdesc: 100 BASE-T4 - the GEM PCS does not support 100 BASE-T4.
+    type: ro
+  - bits: '14'
+    longdesc: This bit is hardwired to logic 0.
+    name: BASE_100_X_FULL_DUPLEX
+    shortdesc: 100 BASE-X full duplex - the GEM PCS does not support 100 BASE-X.
+    type: ro
+  - bits: '13'
+    longdesc: This bit is hardwired to logic 0.
+    name: BASE_100_X_HALF_DUPLEX
+    shortdesc: 100 BASE-X half duplex - the GEM PCS does not support 100 BASE-X.
+    type: ro
+  - bits: '12'
+    longdesc: This bit is hardwired to logic 0.
+    name: MBPS_10_FULL_DUPLEX
+    shortdesc: 10 Mbps full duplex - the GEM PCS does not support this mode.
+    type: ro
+  - bits: '11'
+    longdesc: This bit is hardwired to logic 0.
+    name: MBPS_10_HALF_DUPLEX
+    shortdesc: 10 Mbps half duplex - the GEM PCS does not support this mode.
+    type: ro
+  - bits: '10'
+    longdesc: This bit is hardwired to logic 0.
+    name: BASE_100_T2_FULL_DUPLEX
+    shortdesc: 100 BASE-T2 full duplex - the GEM PCS does not support 100 BASE-T2.
+    type: ro
+  - bits: '9'
+    longdesc: This bit is hardwired to logic 0.
+    name: BASE_100_T2_HALF_DUPLEX
+    shortdesc: 100 BASE-T2 half duplex - the GEM PCS does not support 100 BASE-T2.
+    type: ro
+  - bits: '8'
+    longdesc: This bit is hardwired to logic 1.
+    name: EXTENDED_STATUS
+    shortdesc: Extended status - when set active high, indicates extended status information
+      is present in the PCS auto-negotiation extended status register.
+    type: ro
+  - bits: '7:6'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '5'
+    name: AUTO_NEG_COMPLETE
+    type: ro
+  - bits: '4'
+    longdesc: Resets low when read.
+    name: REMOTE_FAULT
+    shortdesc: Remote fault - set active high if the link partner remote fault bits
+      in the PCS auto-negotiation link partner ability register, indicates an error.
+    type: ro
+  - bits: '3'
+    longdesc: '0: PCS is not able to perform auto-negotiation. 1: PCS is able to perform
+      auto-negotiation.'
+    name: AUTO_NEG_ABILITY
+    shortdesc: Auto-negotiation ability - this bit indicates whether the PCS has auto-negotiation
+      ability and reflects the value of the auto-negotiation enable bit in the PCS
+      control register.
+    type: ro
+  - bits: '2'
+    longdesc: When set to logic 1 the link is up, and when set to logic 0, the link
+      is down. If auto-negotiation is disabled this returns the synchronisation status.
+      Held at logic 0 if the link goes down until this bit is read.
+    name: LINK_STATUS
+    shortdesc: Link status - indicates the status of the physical connection to the
+      link partner.
+    type: ro
+  - bits: '1'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '0'
+    longdesc: This bit is hardwired to logic 1.
+    name: EXTENDED_CAPABILITIES
+    shortdesc: Extended register capabilities - when set active high, indicates the
+      PCS supports extended register capabilities.
+    type: ro
+  name: PCS_STATUS
+  offset: '0x00000204'
+  type: ro
+  width: 32
+- default: '0x00004007'
+  description: The value of this register indicates the upper 16-bits of the PHY's
+    identification code. This is a read-only register with a value defined by `gem_phy_id_top
+  field:
+  - bits: '31:16'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '15:0'
+    name: ID_CODE
+    type: ro
+  name: PCS_PHY_TOP_ID
+  offset: '0x00000208'
+  type: ro
+  width: 32
+- default: '0x00000106'
+  description: The value of this register indicates the lower 16-bits of the PHY's
+    identification code. This is a read-only register with a value defined by `gem_phy_id_bot
+  field:
+  - bits: '31:16'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '15:0'
+    name: ID_CODE
+    type: ro
+  name: PCS_PHY_BOT_ID
+  offset: '0x0000020C'
+  type: ro
+  width: 32
+- default: '0x00000020'
+  description: The value of this register is used to transmit the base page of the
+    GEM PCS capabilities. Note this is only valid for the default configuration where
+    SGMII is not included in the GEM. In this case the registers is reserved. When
+    SGMII is included, this register returns fixed 0x00000001 when read. SGMII specifies
+    that the transmit configuration information sent from the MAC to the PHY is fixed
+    with bit 14 set to 1 to indicate acknowledge, bit 0 set to 1 to indicate SGMII
+    and all other bits set to 0.
+  field:
+  - bits: '31:16'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '15'
+    longdesc: When set active high, this bit is used during auto-negotiation to indicate
+      to the link partner that the PCS requires exchanging next pages.
+    name: NEXT_PAGE
+    shortdesc: Next page.
+    type: rw
+  - bits: '14'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '13:12'
+    longdesc: 'K.01: Link Failure. 10: Off line. 11: Auto-negotiation error.'
+    name: REMOTE_FAULT
+    shortdesc: 'Remote fault [1:0] - indicates and classifies a remote fault condition
+      to the link partner:00: No error, Link O.'
+    type: rw
+  - bits: '11:9'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '8:7'
+    longdesc: '01: Symmetric pause. 10: Asymmetric pause toward link partner. 11:
+      Both symmetric pause and asymmetric pause toward link device.'
+    name: PAUSE
+    shortdesc: 'Pause[1:0] - used to provide a pause capability mechanism as follows:00:
+      No pause.'
+    type: rw
+  - bits: '6'
+    longdesc: '0: The GEM cannot support half duplex. 1: The GEM can support half
+      duplex.'
+    name: HALF_DUPLEX
+    shortdesc: Half duplex - this bit defines to the link partner whether the GEM
+      is capable of supporting half duplex operation.
+    type: rw
+  - bits: '5'
+    longdesc: '0: The GEM cannot support full duplex. 1: The GEM can support full
+      duplex.'
+    name: FULL_DUPLEX
+    shortdesc: Full duplex - this bit defines to the link partner whether the GEM
+      is capable of supporting full duplex operation.
+    type: rw
+  - bits: '4:0'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  name: PCS_AN_ADV
+  offset: '0x00000210'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: For non SGMII (default) mode, the value of this register contains the
+    link partner's base page received information. This register is updated in the
+    ABILITY_DETECT state of the PCS auto-negotiation state machine so bit 14 will
+    only be set if the link partner is sending acknowledge while the PCS in this state.
+    The register is not updated in the ACK_DETECT state. For SGMII mode, the contents
+    of this register change to the one defined in the SGMII standard. The value of
+    this register contains the link partner's base page received information. In this
+    case the link partner is the PHY connected by the SGMII.
+  field:
+  - bits: '31:16'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '15'
+    longdesc: 'Default Mode:Link partner next page - when set active high, this bit
+      indicates the link partner''s intention to exchange next pages.SGMII Mode: Link
+      Status.0: Link Down.1: Link Up.'
+    name: LINK_PARTNER_NEXT_PAGE_STATUS
+    shortdesc: The contents of this register change depending on SGMII or non SGMII
+      (default) mode.
+    type: ro
+  - bits: '14'
+    name: LINK_PARTNER_ACKNOWLEDGE
+    type: ro
+  - bits: '13:12'
+    longdesc: 'Default Mode:Link partner remote fault [1:0] - indicates and classifies
+      a remote fault condition has been detected by the link partner as follows:00:
+      No error, Link O.K.01: Link Failure.10: Off line. 11: Auto-negotiation error.SGMII
+      Mode: Bit 13: Reserved. Read as Zero.Bit 12: 0: Half Duplex. 1: Full Duplex.'
+    name: LINK_PARTNER_REMOTE_FAULT_DUPLEX_MODE
+    shortdesc: The contents of this register change depending on SGMII or non SGMII
+      (default) mode.
+    type: ro
+  - bits: '11:9'
+    longdesc: 'Default Mode: Reserved. Set to zero.SGMII Mode: Bits 11:10: Speed:
+      11: Reserved10: 1000 Mbps01: 100Mbps00: 10 Mbps Bit 9: Reserved. Read as Zero.'
+    name: SPEED_RESERVED
+    shortdesc: The contents of this register change depending on SGMII or non SGMII
+      (default) mode.
+    type: ro
+  - bits: '8:7'
+    longdesc: 'Default Mode: Pause[1:0] - provides the link partner''s pause frame
+      capability as follows:00: No pause. 01: Symmetric pause. 10: Asymmetric pause
+      toward link partner. 11: Both symmetric pause and asymmetric pause toward link
+      device.SGMII Mode: Reserved. Read as Zero.'
+    name: PAUSE
+    shortdesc: The contents of this register change depending on SGMII or non SGMII
+      (default) mode.
+    type: ro
+  - bits: '6'
+    longdesc: 'Default Mode: Link partner half duplex - this bit indicates whether
+      the link partner is capable of supporting half duplex operation. 0: The link
+      partner cannot support half duplex. 1: The link partner can support half duplex.SGMII
+      Mode: Reserved. Read as Zero.'
+    name: LINK_PARTNER_HALF_DUPLEX
+    shortdesc: The contents of this register change depending on SGMII or non SGMII
+      (default) mode.
+    type: ro
+  - bits: '5'
+    longdesc: 'Default Mode: Link partner full duplex - this bit indicates whether
+      the link partner is capable of supporting full duplex operation. 0: The link
+      partner cannot support full duplex. 1: The link partner can support full duplex.SGMII
+      Mode: Reserved. Read as Zero.'
+    name: LINK_PARTNER_FULL_DUPLEX
+    shortdesc: The contents of this register change depending on SGMII or non SGMII
+      (default) mode.
+    type: ro
+  - bits: '4:0'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  name: PCS_AN_LP_BASE
+  offset: '0x00000214'
+  type: ro
+  width: 32
+- default: '0x00000004'
+  description: This register contains auto-negotiation next page ability and page
+    received information.
+  field:
+  - bits: '31:3'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '2'
+    name: NEXT_PAGE_CAPABILITY
+    type: ro
+  - bits: '1'
+    longdesc: It is cleared when the link partner next page register has been read.
+    name: PAGE_RECEIVED
+    shortdesc: Page received - this bit is set active high when a new page has been
+      received from the link partner.
+    type: ro
+  - bits: '0'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  name: PCS_AN_EXP
+  offset: '0x00000218'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: The value of this register is used to transmit the next page information
+    for the GEM PCS. For next page exchange to work this register must be written
+    within 10 ms of receiving a new page from the link partner. If the link partner
+    is requesting next pages and the GEM has none or no more to send then this register
+    should be written with the null message (0x2001). The value 0x0000 must not be
+    written to this register.
+  field:
+  - bits: '31:16'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '15'
+    longdesc: '1: Additional page(s) to follow.'
+    name: NEXT_PAGE_TO_TRANSMIT
+    shortdesc: 'Next page to transmit - this bit indicates whether this is the last
+      next page to be transmitted:0: Last page.'
+    type: rw
+  - bits: '14'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '13'
+    longdesc: '0: Unformatted page. 1: Message page.'
+    name: MESSAGE_PAGE_INDICATOR
+    shortdesc: Message page indicator - this bit identifies the message.
+    type: rw
+  - bits: '12'
+    name: ACKNOWLEDGE_2
+    type: rw
+  - bits: '11'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '10:0'
+    name: MESSAGE
+    type: rw
+  name: PCS_AN_NP_TX
+  offset: '0x0000021C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This value of this register contains the next page received information
+    from the link partner.
+  field:
+  - bits: '31:16'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '15'
+    longdesc: '1: Additional page(s) to follow.'
+    name: NEXT_PAGE_TO_RECEIVE
+    shortdesc: 'Next page to receive - this bit indicates whether this is the last
+      page to be received in the sequence by the GEM PCS:0: Last page.'
+    type: ro
+  - bits: '14'
+    name: ACKNOWLEDGE
+    type: ro
+  - bits: '13'
+    longdesc: '0: Unformatted page. 1: Message page.'
+    name: MESSAGE_PAGE_INDICATOR
+    shortdesc: Message page indicator - this bit identifies the message.
+    type: ro
+  - bits: '12'
+    name: ACKNOWLEDGE_2
+    type: ro
+  - bits: '11'
+    name: TOGGLE
+    type: ro
+  - bits: '10:0'
+    name: MESSAGE
+    type: ro
+  name: PCS_AN_LP_NP
+  offset: '0x00000220'
+  type: ro
+  width: 32
+- default: '0x00008000'
+  description: This register contains PCS auto-negotiation extended status information.
+  field:
+  - bits: '31:16'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '15'
+    name: FULL_DUPLEX_1000BASE_X
+    type: ro
+  - bits: '14'
+    name: HALF_DUPLEX_1000BASE_X
+    type: ro
+  - bits: '13'
+    name: FULL_DUPLEX_1000BASE_T
+    type: ro
+  - bits: '12'
+    name: HALF_DUPLEX_1000BASE_T
+    type: ro
+  - bits: '11:0'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  name: PCS_AN_EXT_STATUS
+  offset: '0x0000023C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Received LPI transitions
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: A count of the number of times there is a transition from receiving
+      normal idle to receiving low power idle. Cleared on read.
+    name: COUNT
+    shortdesc: Count of RX LPI transitions.
+    type: rw
+  name: RX_LPI
+  offset: '0x00000270'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Received LPI time
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: rw
+  - bits: '23:0'
+    longdesc: This register increments once every 16 pclk cycles when the LPI indication
+      bit 20 is set in the receive configuration register. Cleared on read.
+    name: LPI_TIME
+    shortdesc: Time in LPI.
+    type: rw
+  name: RX_LPI_TIME
+  offset: '0x00000274'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Transmit LPI transitions
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    longdesc: A count of the number of times the enable LPI transmission bit 20 goes
+      from low to high in the transmit control register.
+    name: COUNT
+    shortdesc: Count of LPI transmitions.
+    type: rw
+  name: TX_LPI
+  offset: '0x00000278'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Transmit LPI time
+  field:
+  - bits: '31:24'
+    name: RESERVED
+    type: ro
+  - bits: '23:0'
+    longdesc: This register increments once every 16 pclk cycles when the enable LPI
+      transmission bit 20 is set in the transmit control register. Cleared on read.
+    name: LPI_TIME
+    shortdesc: Time in LPI.
+    type: rw
+  name: TX_LPI_TIME
+  offset: '0x0000027C'
+  type: mixed
+  width: 32
+- default: '0x0450011C'
+  description: 'The GEM has many parameterisation options to configure the IP during
+    compilation stage. This is achieved using Verilog define compiler directives in
+    an include file called gem_defs.v. Refer to Section 3 for further details on how
+    to configure the GEM in this way. This configuration is readable through APB addressable
+    registers as follows: Design Configuration Register 1'
+  field:
+  - bits: '31:28'
+    name: AXI_CACHE_VALUE
+    type: ro
+  - bits: '27:25'
+    name: DMA_BUS_WIDTH
+    type: ro
+  - bits: '24'
+    name: RESERVED
+    type: ro
+  - bits: '23'
+    name: IRQ_READ_CLEAR
+    type: ro
+  - bits: '22'
+    name: NO_SNAPSHOT
+    type: ro
+  - bits: '21'
+    name: NO_STATS
+    type: ro
+  - bits: '20'
+    name: NO_SCAN_PINS
+    type: ro
+  - bits: '19:15'
+    name: USER_IN_WIDTH
+    type: ro
+  - bits: '14:10'
+    name: USER_OUT_WIDTH
+    type: ro
+  - bits: '9'
+    name: USER_IO
+    type: ro
+  - bits: '8'
+    name: APB_REV2
+    type: ro
+  - bits: '7'
+    name: APB_REV1
+    type: ro
+  - bits: '6'
+    name: EXT_FIFO_INTERFACE
+    type: ro
+  - bits: '5'
+    name: NO_INT_LOOPBACK
+    type: ro
+  - bits: '4'
+    name: INT_LOOPBACK
+    type: ro
+  - bits: '3'
+    name: TDC_50
+    type: ro
+  - bits: '2'
+    name: RDC_50
+    type: ro
+  - bits: '1'
+    name: SERDES
+    type: ro
+  - bits: '0'
+    name: NO_PCS
+    type: ro
+  name: DESIGNCFG_DEBUG1
+  offset: '0x00000280'
+  type: ro
+  width: 32
+- default: '0x73313FFF'
+  description: Design Configuration Register 2
+  field:
+  - bits: '31'
+    name: SPRAM
+    type: ro
+  - bits: '30'
+    name: AXI
+    type: ro
+  - bits: '29:26'
+    name: TX_PBUF_ADDR
+    type: ro
+  - bits: '25:22'
+    name: RX_PBUF_ADDR
+    type: ro
+  - bits: '21'
+    name: TX_PKT_BUFFER
+    type: ro
+  - bits: '20'
+    name: RX_PKT_BUFFER
+    type: ro
+  - bits: '19:16'
+    name: HPROT_VALUE
+    type: ro
+  - bits: '15:0'
+    name: JUMBO_MAX_LENGTH
+    type: ro
+  name: DESIGNCFG_DEBUG2
+  offset: '0x00000284'
+  type: ro
+  width: 32
+- default: '0x04000000'
+  description: Design Configuration Register 3
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29:24'
+    name: NUM_SPEC_ADD_FILTERS
+    type: ro
+  - bits: '23:0'
+    name: RESERVED
+    type: ro
+  name: DESIGNCFG_DEBUG3
+  offset: '0x00000288'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Design Configuration Register 4
+  field:
+  - bits: '31:0'
+    name: RESERVED
+    type: ro
+  name: DESIGNCFG_DEBUG4
+  offset: '0x0000028C'
+  type: ro
+  width: 32
+- default: '0x502F2744'
+  description: Design Configuration Register 5
+  field:
+  - bits: '31:29'
+    name: AXI_PROT_VALUE
+    type: ro
+  - bits: '28'
+    name: TSU_CLK
+    type: ro
+  - bits: '27:20'
+    name: RX_BUFFER_LENGTH_DEF
+    type: ro
+  - bits: '19'
+    name: TX_PBUF_SIZE_DEF
+    type: ro
+  - bits: '18:17'
+    name: RX_PBUF_SIZE_DEF
+    type: ro
+  - bits: '16:15'
+    name: ENDIAN_SWAP_DEF
+    type: ro
+  - bits: '14:12'
+    name: MDC_CLOCK_DIV
+    type: ro
+  - bits: '11:10'
+    name: DMA_BUS_WIDTH_DEF
+    type: ro
+  - bits: '9'
+    name: PHY_IDENT
+    type: ro
+  - bits: '8'
+    name: TSU
+    type: ro
+  - bits: '7:4'
+    name: TX_FIFO_CNT_WIDTH
+    type: ro
+  - bits: '3:0'
+    name: RX_FIFO_CNT_WIDTH
+    type: ro
+  name: DESIGNCFG_DEBUG5
+  offset: '0x00000290'
+  type: ro
+  width: 32
+- default: '0x02510002'
+  description: Design Configuration Register 6
+  field:
+  - bits: '31:26'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  - bits: '25'
+    name: PBUF_CUTTHRU
+    type: ro
+  - bits: '24'
+    name: PFC_MULTI_QUANTUM
+    type: ro
+  - bits: '23'
+    name: DMA_ADDR_WIDTH_IS_64B
+    type: ro
+  - bits: '22'
+    name: HOST_IF_SOFT_SELECT
+    type: ro
+  - bits: '21'
+    name: TX_ADD_FIFO_IF
+    type: ro
+  - bits: '20'
+    name: EXT_TSU_TIMER
+    type: ro
+  - bits: '19:16'
+    name: TX_PBUF_QUEUE_SEGMENT_SIZE
+    type: ro
+  - bits: '15'
+    name: DMA_PRIORITY_QUEUE15
+    type: ro
+  - bits: '14'
+    name: DMA_PRIORITY_QUEUE14
+    type: ro
+  - bits: '13'
+    name: DMA_PRIORITY_QUEUE13
+    type: ro
+  - bits: '12'
+    name: DMA_PRIORITY_QUEUE12
+    type: ro
+  - bits: '11'
+    name: DMA_PRIORITY_QUEUE11
+    type: ro
+  - bits: '10'
+    name: DMA_PRIORITY_QUEUE10
+    type: ro
+  - bits: '9'
+    name: DMA_PRIORITY_QUEUE9
+    type: ro
+  - bits: '8'
+    name: DMA_PRIORITY_QUEUE8
+    type: ro
+  - bits: '7'
+    name: DMA_PRIORITY_QUEUE7
+    type: ro
+  - bits: '6'
+    name: DMA_PRIORITY_QUEUE6
+    type: ro
+  - bits: '5'
+    name: DMA_PRIORITY_QUEUE5
+    type: ro
+  - bits: '4'
+    name: DMA_PRIORITY_QUEUE4
+    type: ro
+  - bits: '3'
+    name: DMA_PRIORITY_QUEUE3
+    type: ro
+  - bits: '2'
+    name: DMA_PRIORITY_QUEUE2
+    type: ro
+  - bits: '1'
+    name: DMA_PRIORITY_QUEUE1
+    type: ro
+  - bits: '0'
+    longdesc: Set to zero.
+    name: RESERVED
+    shortdesc: Reserved.
+    type: ro
+  name: DESIGNCFG_DEBUG6
+  offset: '0x00000294'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Design Configuration Register 7
+  field:
+  - bits: '31:28'
+    name: TX_PBUF_NUM_SEGMENTS_Q7
+    type: ro
+  - bits: '27:24'
+    name: TX_PBUF_NUM_SEGMENTS_Q6
+    type: ro
+  - bits: '23:20'
+    name: TX_PBUF_NUM_SEGMENTS_Q5
+    type: ro
+  - bits: '19:16'
+    name: TX_PBUF_NUM_SEGMENTS_Q4
+    type: ro
+  - bits: '15:12'
+    name: TX_PBUF_NUM_SEGMENTS_Q3
+    type: ro
+  - bits: '11:8'
+    name: TX_PBUF_NUM_SEGMENTS_Q2
+    type: ro
+  - bits: '7:4'
+    name: TX_PBUF_NUM_SEGMENTS_Q1
+    type: ro
+  - bits: '3:0'
+    name: TX_PBUF_NUM_SEGMENTS_Q0
+    type: ro
+  name: DESIGNCFG_DEBUG7
+  offset: '0x00000298'
+  type: ro
+  width: 32
+- default: '0x04040404'
+  description: Design Configuration Register 8
+  field:
+  - bits: '31:24'
+    name: NUM_TYPE1_SCREENERS
+    type: ro
+  - bits: '23:16'
+    name: NUM_TYPE2_SCREENERS
+    type: ro
+  - bits: '15:8'
+    name: NUM_SCR2_ETHTYPE_REGS
+    type: ro
+  - bits: '7:0'
+    name: NUM_SCR2_COMPARE_REGS
+    type: ro
+  name: DESIGNCFG_DEBUG8
+  offset: '0x0000029C'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Design Configuration Register 9
+  field:
+  - bits: '31:28'
+    name: TX_PBUF_NUM_SEGMENTS_Q15
+    type: ro
+  - bits: '27:24'
+    name: TX_PBUF_NUM_SEGMENTS_Q14
+    type: ro
+  - bits: '23:20'
+    name: TX_PBUF_NUM_SEGMENTS_Q13
+    type: ro
+  - bits: '19:16'
+    name: TX_PBUF_NUM_SEGMENTS_Q12
+    type: ro
+  - bits: '15:12'
+    name: TX_PBUF_NUM_SEGMENTS_Q11
+    type: ro
+  - bits: '11:8'
+    name: TX_PBUF_NUM_SEGMENTS_Q10
+    type: ro
+  - bits: '7:4'
+    name: TX_PBUF_NUM_SEGMENTS_Q9
+    type: ro
+  - bits: '3:0'
+    name: TX_PBUF_NUM_SEGMENTS_Q8
+    type: ro
+  name: DESIGNCFG_DEBUG9
+  offset: '0x000002A0'
+  type: ro
+  width: 32
+- default: '0x22242222'
+  description: Design Configuration Register 10
+  field:
+  - bits: '31:28'
+    longdesc: 1 - The MAC has a datawidth of 32bits. 2 - The MAC has a datawidth of
+      64bits. 4 - The MAC has a datawidth of 128bits
+    name: EMAC_BUS_WIDTH
+    shortdesc: Takes the value of the `gem_emac_bus_width DEFINE.
+    type: ro
+  - bits: '27:24'
+    longdesc: 1 - The TX DPRAM has a datawidth of 32bits. 2 - The TX DPRAM has a datawidth
+      of 64bits. 4 - The TX DPRAM has a datawidth of 128bits
+    name: TX_PBUF_DATA
+    shortdesc: Takes the value of the `gem_tx_pbuf_data DEFINE.
+    type: ro
+  - bits: '23:20'
+    longdesc: 1 - The RX DPRAM has a datawidth of 32bits. 2 - The RX DPRAM has a datawidth
+      of 64bits. 4 - RX The DPRAM has a datawidth of 128bits
+    name: RX_PBUF_DATA
+    shortdesc: Takes the value of the `gem_rx_pbuf_data DEFINE.
+    type: ro
+  - bits: '19:16'
+    name: AXI_ACCESS_PIPELINE_BITS
+    type: ro
+  - bits: '15:12'
+    name: AXI_TX_DESCR_RD_BUFF_BITS
+    type: ro
+  - bits: '11:8'
+    name: AXI_RX_DESCR_RD_BUFF_BITS
+    type: ro
+  - bits: '7:4'
+    name: AXI_TX_DESCR_WR_BUFF_BITS
+    type: ro
+  - bits: '3:0'
+    name: AXI_RX_DESCR_WR_BUFF_BITS
+    type: ro
+  name: DESIGNCFG_DEBUG10
+  offset: '0x000002A4'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Priority Queue Interrupt Status Register
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: ro
+  - bits: '11'
+    name: RESP_NOT_OK
+    type: rw
+  - bits: '10'
+    name: RECEIVE_OVERRUN
+    type: rw
+  - bits: '9:8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: TRANSMIT_COMPLETE
+    type: rw
+  - bits: '6'
+    name: AMBA_ERROR
+    type: rw
+  - bits: '5'
+    name: RETRY_LIMIT_EXCEEDED_OR_LATE_COLLISION
+    type: rw
+  - bits: '4:3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: RX_USED_BIT_READ
+    type: rw
+  - bits: '1'
+    name: RECEIVE_COMPLETE
+    type: rw
+  - bits: '0'
+    name: RESERVED
+    type: ro
+  name: INT_Q1_STATUS
+  offset: '0x00000400'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This register holds the start address of the transmit buffer queue
+    (transmit buffers descriptor list). The transmit buffer queue base address register
+    must be initialized before transmit is started through bit 9 of the network control
+    register. Once transmission has started, any write to the transmit buffer queue
+    base address register is illegal and therefore ignored. Note that due to clock
+    boundary synchronization, it takes a maximum of four pclk cycles from the writing
+    of the transmit start bit before the transmitter is active. Writing to the transmit
+    buffer queue base address register during this time may produce unpredictable
+    results. Reading this register returns the location of the descriptor currently
+    being accessed. Since the DMA handles two frames at once, this may not necessarily
+    be pointing to the current frame being transmitted. In terms of AMBA (AHB/AXI)
+    AHB/AXI operation, the transmit descriptors are written to memory using a single
+    32bit AHB access. When the datapath is configured at 64bit, the transmit descriptors
+    should be aligned at 64-bit boundaries and each pair of 32-bit descriptors is
+    read from memory using a single AHB access. For 32bit datapaths, the descriptors
+    should be aligned at 32-bit boundaries and the descriptors are read from memory
+    using two individual 32-bit non sequential accesses.
+  field:
+  - bits: '31:2'
+    name: DMA_TX_Q_PTR
+    type: rw
+  - bits: '1:0'
+    name: RESERVED
+    type: ro
+  name: TRANSMIT_Q1_PTR
+  offset: '0x00000440'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: This register holds the start address of the receive buffer queue (receive
+    buffers descriptor list). The receive buffer queue base address must be initialized
+    before receive is enabled through bit 2 of the network control register. Once
+    reception is enabled, any write to the receive buffer queue base address register
+    is ignored. Reading this register returns the location of the descriptor currently
+    being accessed. This value increments as buffers are used. Software should not
+    use this register for determining where to remove received frames from the queue
+    as it constantly changes as new frames are received. Software should instead work
+    its way through the buffer descriptor queue checking the used bits. In terms of
+    AMBA (AHB/AXI) operation, the receive descriptors are read from memory using a
+    single 32bit AHB/AXI access. When the datapath is configured at 64bit, the receive
+    descriptors should be aligned at 64-bit boundaries and each pair of 32-bit descriptors
+    is written to using a single 64bit AHB/AXI access. For 32bit datapaths, the receive
+    descriptors should be aligned at 32-bit boundaries and are written to using two
+    individual non sequential 32-bit accesses.
+  field:
+  - bits: '31:2'
+    name: DMA_RX_Q_PTR
+    type: rw
+  - bits: '1:0'
+    name: RESERVED
+    type: ro
+  name: RECEIVE_Q1_PTR
+  offset: '0x00000480'
+  type: mixed
+  width: 32
+- default: '0x00000002'
+  description: Receive Buffer Queue Size
+  field:
+  - bits: '31:8'
+    name: RESERVED
+    type: ro
+  - bits: '7:0'
+    longdesc: 'The value defined by these bits determines the size of buffer to use
+      in main system memory when writing received data. The value is defined in multiples
+      of 64 bytes.0x01 corresponds to buffers of 64 bytes.0x02 corresponds to 128
+      bytes etc.For example:0x02: 128 byte0x18: 1536 byte (1*max length frame/buffer)0xA0:
+      10240 byte (1*10K jumbo frame/buffer)Note that this value should never be written
+      as zero.Note. The reset value of this field is equal to the gem_rx_buffer_length_def
+      define, which is user configurable.'
+    name: DMA_RX_Q_BUF_SIZE
+    shortdesc: DMA receive buffer size in system memory.
+    type: rw
+  name: DMA_RXBUF_SIZE_Q1
+  offset: '0x000004A0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'The IdleSlope value is defined as the rate of change of credit when
+    a packet is waiting to be sent. This must not exceed the portTransmitRate which
+    is dependent on the speed of operation, eg, portTranmsitRate: 1Gb/sec= 32''h07735940,100Mb/sec
+    = 32''h017D7840, 10Mb/sec = 32''h002625A0. If 50% of bandwidth was to be allocated
+    to a particular queue in 1Gb/sec mode then the IdleSlope value for that queue
+    would be calculated as 32''h07735940/2. Note: Credit-Based Shaping should be disabled
+    prior to updating the IdleSlope values.'
+  field:
+  - bits: '31:2'
+    name: RESERVED
+    type: ro
+  - bits: '1'
+    longdesc: Write 1 to enable
+    name: CBS_ENABLE_QUEUE_B
+    shortdesc: Enable Credit-Based shaping on the 2nd highest priority queue (queue
+      B).
+    type: rw
+  - bits: '0'
+    longdesc: Write 1 to enable
+    name: CBS_ENABLE_QUEUE_A
+    shortdesc: Enable Credit-Based Shaping on the highest priority queue (queue A).
+    type: rw
+  name: CBS_CONTROL
+  offset: '0x000004BC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Queue A is the highest priority queue. This would be queue 8 in an
+    8 queue configuration.
+  field:
+  - bits: '31:0'
+    name: IDLESLOPE_A
+    type: rw
+  name: CBS_IDLESLOPE_Q_A
+  offset: '0x000004C0'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Queue B is the 2nd highest priority queue. This would be queue 7 in
+    an 8 queue configuration.
+  field:
+  - bits: '31:0'
+    name: IDLESLOPE_B
+    type: rw
+  name: CBS_IDLESLOPE_Q_B
+  offset: '0x000004C4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Upper 32 bits of transmit buffer descriptor queue base address.
+  field:
+  - bits: '31:0'
+    longdesc: Used when 64 bit addressing is enabled. (In releases earlier to 1p06f2
+      this register also affected the receive descriptor queue.)
+    name: UPPER_TX_Q_BASE_ADDR
+    shortdesc: Upper 32 bits of transmit buffer descriptor queue base address.
+    type: rw
+  name: UPPER_TX_Q_BASE_ADDR
+  offset: '0x000004C8'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: TX BD control register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:4'
+    name: TX_BD_TS_MODE
+    type: rw
+  - bits: '3:0'
+    name: RESERVED
+    type: ro
+  name: TX_BD_CONTROL
+  offset: '0x000004CC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: RX BD control register
+  field:
+  - bits: '31:6'
+    name: RESERVED
+    type: ro
+  - bits: '5:4'
+    name: RX_BD_TS_MODE
+    type: rw
+  - bits: '3:0'
+    name: RESERVED
+    type: ro
+  name: RX_BD_CONTROL
+  offset: '0x000004D0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Upper 32 bits of receive buffer descriptor queue base address.
+  field:
+  - bits: '31:0'
+    longdesc: Used when 64 bit addressing is enabled.
+    name: UPPER_RX_Q_BASE_ADDR
+    shortdesc: Upper 32 bits of receive buffer descriptor queue base address.
+    type: rw
+  name: UPPER_RX_Q_BASE_ADDR
+  offset: '0x000004D4'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: 'Screening type 1 registers are used to allocate up to 16 priority
+    queues to received frames based on certain IP or UDP fields of incoming frames.
+    Firstly, when DS/TC match enable is set (bit 28), the DS (Differentiated Services)
+    field of the received IPv4 header or TCfield (traffic class) of IPv6 headers are
+    matched against bits 11:4. Secondly, when UDP port match enable is set (bit 29),
+    the UDP Destination Port of the received UDP frame is matched against bits 27:12.
+    Both UDP and DS/TC matching can be enabled simultaneously or individually. If
+    a match is successful, then the queue value programmed in bits 2:0 is allocated
+    to the frame. The required number of Type 1 screening registers is configured
+    in the gem defines file. Up to 16 type 1 screening registers have been allocated
+    APB address space between 0x500 and 0x53C. The bit mappings for these registers
+    will be as follows:'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    name: UDP_PORT_MATCH_ENABLE
+    type: rw
+  - bits: '28'
+    name: DSTC_ENABLE
+    type: rw
+  - bits: '27:12'
+    name: UDP_PORT_MATCH
+    type: rw
+  - bits: '11:4'
+    name: DSTC_MATCH
+    type: rw
+  - bits: '3:0'
+    name: QUEUE_NUMBER
+    type: rw
+  name: SCREENING_TYPE_1_REGISTER_0
+  offset: '0x00000500'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Screening type 1 registers are used to allocate up to 16 priority
+    queues to received frames based on certain IP or UDP fields of incoming frames.
+    Firstly, when DS/TC match enable is set (bit 28), the DS (Differentiated Services)
+    field of the received IPv4 header or TCfield (traffic class) of IPv6 headers are
+    matched against bits 11:4. Secondly, when UDP port match enable is set (bit 29),
+    the UDP Destination Port of the received UDP frame is matched against bits 27:12.
+    Both UDP and DS/TC matching can be enabled simultaneously or individually. If
+    a match is successful, then the queue value programmed in bits 2:0 is allocated
+    to the frame. The required number of Type 1 screening registers is configured
+    in the gem defines file. Up to 16 type 1 screening registers have been allocated
+    APB address space between 0x500 and 0x53C. The bit mappings for these registers
+    will be as follows:'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    name: UDP_PORT_MATCH_ENABLE
+    type: rw
+  - bits: '28'
+    name: DSTC_ENABLE
+    type: rw
+  - bits: '27:12'
+    name: UDP_PORT_MATCH
+    type: rw
+  - bits: '11:4'
+    name: DSTC_MATCH
+    type: rw
+  - bits: '3:0'
+    name: QUEUE_NUMBER
+    type: rw
+  name: SCREENING_TYPE_1_REGISTER_1
+  offset: '0x00000504'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Screening type 1 registers are used to allocate up to 16 priority
+    queues to received frames based on certain IP or UDP fields of incoming frames.
+    Firstly, when DS/TC match enable is set (bit 28), the DS (Differentiated Services)
+    field of the received IPv4 header or TCfield (traffic class) of IPv6 headers are
+    matched against bits 11:4. Secondly, when UDP port match enable is set (bit 29),
+    the UDP Destination Port of the received UDP frame is matched against bits 27:12.
+    Both UDP and DS/TC matching can be enabled simultaneously or individually. If
+    a match is successful, then the queue value programmed in bits 2:0 is allocated
+    to the frame. The required number of Type 1 screening registers is configured
+    in the gem defines file. Up to 16 type 1 screening registers have been allocated
+    APB address space between 0x500 and 0x53C. The bit mappings for these registers
+    will be as follows:'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    name: UDP_PORT_MATCH_ENABLE
+    type: rw
+  - bits: '28'
+    name: DSTC_ENABLE
+    type: rw
+  - bits: '27:12'
+    name: UDP_PORT_MATCH
+    type: rw
+  - bits: '11:4'
+    name: DSTC_MATCH
+    type: rw
+  - bits: '3:0'
+    name: QUEUE_NUMBER
+    type: rw
+  name: SCREENING_TYPE_1_REGISTER_2
+  offset: '0x00000508'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Screening type 1 registers are used to allocate up to 16 priority
+    queues to received frames based on certain IP or UDP fields of incoming frames.
+    Firstly, when DS/TC match enable is set (bit 28), the DS (Differentiated Services)
+    field of the received IPv4 header or TCfield (traffic class) of IPv6 headers are
+    matched against bits 11:4. Secondly, when UDP port match enable is set (bit 29),
+    the UDP Destination Port of the received UDP frame is matched against bits 27:12.
+    Both UDP and DS/TC matching can be enabled simultaneously or individually. If
+    a match is successful, then the queue value programmed in bits 2:0 is allocated
+    to the frame. The required number of Type 1 screening registers is configured
+    in the gem defines file. Up to 16 type 1 screening registers have been allocated
+    APB address space between 0x500 and 0x53C. The bit mappings for these registers
+    will be as follows:'
+  field:
+  - bits: '31:30'
+    name: RESERVED
+    type: ro
+  - bits: '29'
+    name: UDP_PORT_MATCH_ENABLE
+    type: rw
+  - bits: '28'
+    name: DSTC_ENABLE
+    type: rw
+  - bits: '27:12'
+    name: UDP_PORT_MATCH
+    type: rw
+  - bits: '11:4'
+    name: DSTC_MATCH
+    type: rw
+  - bits: '3:0'
+    name: QUEUE_NUMBER
+    type: rw
+  name: SCREENING_TYPE_1_REGISTER_3
+  offset: '0x0000050C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Screener Type 2 match registers allow a screen to be configured that
+    is the combination of all or any of the following comparisons1)An enabled VLAN
+    Priority. A VLAN Priority match will be performed if the VLAN priority enable
+    is set. The extracted priority field in the VLAN header is compared against 3
+    bits within the screener type 2 register itself. 2)An enabled EtherType. 3)An
+    enabled Field Compare A. 4)An enabled Field Compare B. 5)An enabled Field Compare
+    C. The required number of Type 2 screening registers is configured in the gem
+    defines file. Up to 16 type 2 screening registers have been allocated APB address
+    space between 0x540 and 0x57C. The bit mappings for these registers is as follows:'
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    name: COMPARE_C_ENABLE
+    type: rw
+  - bits: '29:25'
+    name: COMPARE_C
+    type: rw
+  - bits: '24'
+    name: COMPARE_B_ENABLE
+    type: rw
+  - bits: '23:19'
+    name: COMPARE_B
+    type: rw
+  - bits: '18'
+    name: COMPARE_A_ENABLE
+    type: rw
+  - bits: '17:13'
+    name: COMPARE_A
+    type: rw
+  - bits: '12'
+    name: ETHERTYPE_ENABLE
+    type: rw
+  - bits: '11:9'
+    name: INDEX
+    type: rw
+  - bits: '8'
+    name: VLAN_ENABLE
+    type: rw
+  - bits: '7'
+    name: RESERVED
+    type: ro
+  - bits: '6:4'
+    name: VLAN_PRIORITY
+    type: rw
+  - bits: '3:0'
+    name: QUEUE_NUMBER
+    type: rw
+  name: SCREENING_TYPE_2_REGISTER_0
+  offset: '0x00000540'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Screener Type 2 match registers allow a screen to be configured that
+    is the combination of all or any of the following comparisons1)An enabled VLAN
+    Priority. A VLAN Priority match will be performed if the VLAN priority enable
+    is set. The extracted priority field in the VLAN header is compared against 3
+    bits within the screener type 2 register itself. 2)An enabled EtherType. 3)An
+    enabled Field Compare A. 4)An enabled Field Compare B. 5)An enabled Field Compare
+    C. The required number of Type 2 screening registers is configured in the gem
+    defines file. Up to 16 type 2 screening registers have been allocated APB address
+    space between 0x540 and 0x57C. The bit mappings for these registers is as follows:'
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    name: COMPARE_C_ENABLE
+    type: rw
+  - bits: '29:25'
+    name: COMPARE_C
+    type: rw
+  - bits: '24'
+    name: COMPARE_B_ENABLE
+    type: rw
+  - bits: '23:19'
+    name: COMPARE_B
+    type: rw
+  - bits: '18'
+    name: COMPARE_A_ENABLE
+    type: rw
+  - bits: '17:13'
+    name: COMPARE_A
+    type: rw
+  - bits: '12'
+    name: ETHERTYPE_ENABLE
+    type: rw
+  - bits: '11:9'
+    name: INDEX
+    type: rw
+  - bits: '8'
+    name: VLAN_ENABLE
+    type: rw
+  - bits: '7'
+    name: RESERVED
+    type: ro
+  - bits: '6:4'
+    name: VLAN_PRIORITY
+    type: rw
+  - bits: '3:0'
+    name: QUEUE_NUMBER
+    type: rw
+  name: SCREENING_TYPE_2_REGISTER_1
+  offset: '0x00000544'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Screener Type 2 match registers allow a screen to be configured that
+    is the combination of all or any of the following comparisons1)An enabled VLAN
+    Priority. A VLAN Priority match will be performed if the VLAN priority enable
+    is set. The extracted priority field in the VLAN header is compared against 3
+    bits within the screener type 2 register itself. 2)An enabled EtherType. 3)An
+    enabled Field Compare A. 4)An enabled Field Compare B. 5)An enabled Field Compare
+    C. The required number of Type 2 screening registers is configured in the gem
+    defines file. Up to 16 type 2 screening registers have been allocated APB address
+    space between 0x540 and 0x57C. The bit mappings for these registers is as follows:'
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    name: COMPARE_C_ENABLE
+    type: rw
+  - bits: '29:25'
+    name: COMPARE_C
+    type: rw
+  - bits: '24'
+    name: COMPARE_B_ENABLE
+    type: rw
+  - bits: '23:19'
+    name: COMPARE_B
+    type: rw
+  - bits: '18'
+    name: COMPARE_A_ENABLE
+    type: rw
+  - bits: '17:13'
+    name: COMPARE_A
+    type: rw
+  - bits: '12'
+    name: ETHERTYPE_ENABLE
+    type: rw
+  - bits: '11:9'
+    name: INDEX
+    type: rw
+  - bits: '8'
+    name: VLAN_ENABLE
+    type: rw
+  - bits: '7'
+    name: RESERVED
+    type: ro
+  - bits: '6:4'
+    name: VLAN_PRIORITY
+    type: rw
+  - bits: '3:0'
+    name: QUEUE_NUMBER
+    type: rw
+  name: SCREENING_TYPE_2_REGISTER_2
+  offset: '0x00000548'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Screener Type 2 match registers allow a screen to be configured that
+    is the combination of all or any of the following comparisons1)An enabled VLAN
+    Priority. A VLAN Priority match will be performed if the VLAN priority enable
+    is set. The extracted priority field in the VLAN header is compared against 3
+    bits within the screener type 2 register itself. 2)An enabled EtherType. 3)An
+    enabled Field Compare A. 4)An enabled Field Compare B. 5)An enabled Field Compare
+    C. The required number of Type 2 screening registers is configured in the gem
+    defines file. Up to 16 type 2 screening registers have been allocated APB address
+    space between 0x540 and 0x57C. The bit mappings for these registers is as follows:'
+  field:
+  - bits: '31'
+    name: RESERVED
+    type: ro
+  - bits: '30'
+    name: COMPARE_C_ENABLE
+    type: rw
+  - bits: '29:25'
+    name: COMPARE_C
+    type: rw
+  - bits: '24'
+    name: COMPARE_B_ENABLE
+    type: rw
+  - bits: '23:19'
+    name: COMPARE_B
+    type: rw
+  - bits: '18'
+    name: COMPARE_A_ENABLE
+    type: rw
+  - bits: '17:13'
+    name: COMPARE_A
+    type: rw
+  - bits: '12'
+    name: ETHERTYPE_ENABLE
+    type: rw
+  - bits: '11:9'
+    name: INDEX
+    type: rw
+  - bits: '8'
+    name: VLAN_ENABLE
+    type: rw
+  - bits: '7'
+    name: RESERVED
+    type: ro
+  - bits: '6:4'
+    name: VLAN_PRIORITY
+    type: rw
+  - bits: '3:0'
+    name: QUEUE_NUMBER
+    type: rw
+  name: SCREENING_TYPE_2_REGISTER_3
+  offset: '0x0000054C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: At reset all interrupts are disabled. Writing a one to the relevant
+    bit location enables the required interrupt. This register is write only and when
+    read will return zero.
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: ro
+  - bits: '11'
+    name: ENABLE_RESP_NOT_OK_INTERRUPT
+    type: wo
+  - bits: '10'
+    name: ENABLE_RECEIVE_OVERRUN_INTERRUPT
+    type: wo
+  - bits: '9:8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: ENABLE_TRANSMIT_COMPLETE_INTERRUPT
+    type: wo
+  - bits: '6'
+    name: ENABLE_TRANSMIT_FRAME_CORRUPTION_DUE_TO_AMBA_ERROR_INTERRUPT
+    type: wo
+  - bits: '5'
+    name: ENABLE_RETRY_LIMIT_EXCEEDED_OR_LATE_COLLISION_INTERRUPT
+    type: wo
+  - bits: '4:3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: ENABLE_RX_USED_BIT_READ_INTERRUPT
+    type: wo
+  - bits: '1'
+    name: ENABLE_RECEIVE_COMPLETE_INTERRUPT
+    type: wo
+  - bits: '0'
+    name: RESERVED
+    type: ro
+  name: INT_Q1_ENABLE
+  offset: '0x00000600'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Writing a 1 to the relevant bit location disables that particular interrupt.
+    This register is write only and when read will return zero.
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: ro
+  - bits: '11'
+    name: DISABLE_RESP_NOT_OK_INTERRUPT
+    type: wo
+  - bits: '10'
+    name: DISABLE_RECEIVE_OVERRUN_INTERRUPT
+    type: wo
+  - bits: '9:8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    name: DISABLE_TRANSMIT_COMPLETE_INTERRUPT
+    type: wo
+  - bits: '6'
+    name: DISABLE_TRANSMIT_FRAME_CORRUPTION_DUE_TO_AMBA_ERROR_INTERRUPT
+    type: wo
+  - bits: '5'
+    name: DISABLE_RETRY_LIMIT_EXCEEDED_OR_LATE_COLLISION_INTERRUPT
+    type: wo
+  - bits: '4:3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    name: DISABLE_RX_USED_BIT_READ_INTERRUPT
+    type: wo
+  - bits: '1'
+    name: DISABLE_RECEIVE_COMPLETE_INTERRUPT
+    type: wo
+  - bits: '0'
+    name: RESERVED
+    type: ro
+  name: INT_Q1_DISABLE
+  offset: '0x00000620'
+  type: mixed
+  width: 32
+- default: '0x00000CE6'
+  description: The interrupt mask register is a read only register indicating which
+    interrupts are masked. All bits are set at reset and can be reset individually
+    by writing to the interrupt enable register or set individually by writing to
+    the interrupt disable register. Having separate address locations for enable and
+    disable saves the need for performing a read modify write when updating the interrupt
+    mask register. For test purposes there is a write-only function to this register
+    that allows the bits in the interrupt status register to be set or cleared, regardless
+    of the state of the mask register.
+  field:
+  - bits: '31:12'
+    name: RESERVED
+    type: ro
+  - bits: '11'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: RESP_NOT_OK_INTERRUPT_MASK
+    shortdesc: bresp/hresp not OK interrupt mask.
+    type: ro
+  - bits: '10'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: RECEIVE_OVERRUN_INTERRUPT_MASK
+    shortdesc: receive overrun interrupt mask.
+    type: ro
+  - bits: '9:8'
+    name: RESERVED
+    type: ro
+  - bits: '7'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: TRANSMIT_COMPLETE_INTERRUPT_MASK
+    shortdesc: transmit complete interrupt mask.
+    type: ro
+  - bits: '6'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: AMBA_ERROR_INTERRUPT_MASK
+    shortdesc: A read of this register returns the value of the AMBA (AHB/AXI) error
+      interrupt mask.
+    type: ro
+  - bits: '5'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: RETRY_LIMIT_EXCEEDED_OR_LATE_COLLISION_INTERRUPT_MASK
+    shortdesc: retry limit exceeded or late collision interrupt mask.
+    type: ro
+  - bits: '4:3'
+    name: RESERVED
+    type: ro
+  - bits: '2'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: RX_USED_INTERRUPT_MASK
+    shortdesc: A read of this register returns the value of the RX Used interrupt
+      mask.
+    type: ro
+  - bits: '1'
+    longdesc: '0: Interrupt is enabled.1: Interrupt is disabled.A write to this register
+      directly affects the state of the corresponding bit in the interrupt status
+      register, causing an interrupt to be generated if a 1 is written.'
+    name: RECEIVE_COMPLETE_INTERRUPT_MASK
+    shortdesc: receive complete interrupt mask.
+    type: ro
+  - bits: '0'
+    name: RESERVED
+    type: ro
+  name: INT_Q1_MASK
+  offset: '0x00000640'
+  type: ro
+  width: 32
+- default: '0x00000000'
+  description: Ethertype Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    name: COMPARE_VALUE
+    type: rw
+  name: SCREENING_TYPE_2_ETHERTYPE_REG_0
+  offset: '0x000006E0'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Ethertype Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    name: COMPARE_VALUE
+    type: rw
+  name: SCREENING_TYPE_2_ETHERTYPE_REG_1
+  offset: '0x000006E4'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Ethertype Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    name: COMPARE_VALUE
+    type: rw
+  name: SCREENING_TYPE_2_ETHERTYPE_REG_2
+  offset: '0x000006E8'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: Ethertype Register
+  field:
+  - bits: '31:16'
+    name: RESERVED
+    type: ro
+  - bits: '15:0'
+    name: COMPARE_VALUE
+    type: rw
+  name: SCREENING_TYPE_2_ETHERTYPE_REG_3
+  offset: '0x000006EC'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Compare A,B and C fields of the screener type 2 match register are
+    pointers to a pool of up to 32 compare registers. If enabled the compare is true
+    if the data at the OFFSET into the frame, ANDed with the MASK Value, is equal
+    to the COMPARE Value. A 16 bit word comparison is done. The byte at the OFFSET
+    number of bytes from the index start is compared thru bits 7:0 of the configured
+    VALUE and MASK. The byte at the OFFSET number of bytes + 1 from the index start
+    is compared thru bits 15:8 of the configured VALUE and MASK. The OFFSET can be
+    configured to be from 0 to 127 bytes from either the start of the frame, the byte
+    following the etherType field (last EtherType in the header if the frame is VLAN
+    tagged), the byte following the IP header (IPv4 or IPv6) or from the byte following
+    the start of the TCP/UDP header. The required number of Type 2 screening registers
+    up to a maximum of 32 is configurable in the gem defines file and have been allocated
+    APB address space between 0x700 and 0x7fc. Note. when using RX Partial Store and
+    Forward mode and priority queues, the frame offset must be less than the Partial
+    Store and Forward watermark. If the offset is higher than the watermark value
+    it''s not possible to identify the priority queue before the frame is sent to
+    the AMBA interface, and an incorrect priority queue may be used. The bit mapping
+    for these registers is as follows:'
+  field:
+  - bits: '31:16'
+    longdesc: The byte stored in bits [23:16] is compared against the 1st byte of
+      the 2 bytes extracted from the frame. The byte stored in bits [31:24] is compared
+      against the 2nd byte of the 2 bytes extracted from the frame
+    name: COMPARE_VALUE
+    shortdesc: 2 byte Compare Value.
+    type: rw
+  - bits: '15:0'
+    name: MASK_VALUE
+    type: rw
+  name: TYPE2_COMPARE_0_WORD_0
+  offset: '0x00000700'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Type2 Compare Word 1
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:7'
+    longdesc: '00: Offset from beginning of the frame.01: Offset from byte after Ether
+      Type.10: Offset from byte following end of IP header.11: Offset from byte following
+      end of TCP/UDP header'
+    name: COMPARE_OFFSET
+    shortdesc: compare byte offset.
+    type: rw
+  - bits: '6:0'
+    name: OFFSET_VALUE
+    type: rw
+  name: TYPE2_COMPARE_0_WORD_1
+  offset: '0x00000704'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Compare A,B and C fields of the screener type 2 match register are
+    pointers to a pool of up to 32 compare registers. If enabled the compare is true
+    if the data at the OFFSET into the frame, ANDed with the MASK Value, is equal
+    to the COMPARE Value. A 16 bit word comparison is done. The byte at the OFFSET
+    number of bytes from the index start is compared thru bits 7:0 of the configured
+    VALUE and MASK. The byte at the OFFSET number of bytes + 1 from the index start
+    is compared thru bits 15:8 of the configured VALUE and MASK. The OFFSET can be
+    configured to be from 0 to 127 bytes from either the start of the frame, the byte
+    following the etherType field (last EtherType in the header if the frame is VLAN
+    tagged), the byte following the IP header (IPv4 or IPv6) or from the byte following
+    the start of the TCP/UDP header. The required number of Type 2 screening registers
+    up to a maximum of 32 is configurable in the gem defines file and have been allocated
+    APB address space between 0x700 and 0x7fc. Note. when using RX Partial Store and
+    Forward mode and priority queues, the frame offset must be less than the Partial
+    Store and Forward watermark. If the offset is higher than the watermark value
+    it''s not possible to identify the priority queue before the frame is sent to
+    the AMBA interface, and an incorrect priority queue may be used. The bit mapping
+    for these registers is as follows:'
+  field:
+  - bits: '31:16'
+    longdesc: The byte stored in bits [23:16] is compared against the 1st byte of
+      the 2 bytes extracted from the frame. The byte stored in bits [31:24] is compared
+      against the 2nd byte of the 2 bytes extracted from the frame
+    name: COMPARE_VALUE
+    shortdesc: 2 byte Compare Value.
+    type: rw
+  - bits: '15:0'
+    name: MASK_VALUE
+    type: rw
+  name: TYPE2_COMPARE_1_WORD_0
+  offset: '0x00000708'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Type2 Compare Word 1
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:7'
+    longdesc: '00: Offset from beginning of the frame.01: Offset from byte after Ether
+      Type.10: Offset from byte following end of IP header.11: Offset from byte following
+      end of TCP/UDP header'
+    name: COMPARE_OFFSET
+    shortdesc: compare byte offset.
+    type: rw
+  - bits: '6:0'
+    name: OFFSET_VALUE
+    type: rw
+  name: TYPE2_COMPARE_1_WORD_1
+  offset: '0x0000070C'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Compare A,B and C fields of the screener type 2 match register are
+    pointers to a pool of up to 32 compare registers. If enabled the compare is true
+    if the data at the OFFSET into the frame, ANDed with the MASK Value, is equal
+    to the COMPARE Value. A 16 bit word comparison is done. The byte at the OFFSET
+    number of bytes from the index start is compared thru bits 7:0 of the configured
+    VALUE and MASK. The byte at the OFFSET number of bytes + 1 from the index start
+    is compared thru bits 15:8 of the configured VALUE and MASK. The OFFSET can be
+    configured to be from 0 to 127 bytes from either the start of the frame, the byte
+    following the etherType field (last EtherType in the header if the frame is VLAN
+    tagged), the byte following the IP header (IPv4 or IPv6) or from the byte following
+    the start of the TCP/UDP header. The required number of Type 2 screening registers
+    up to a maximum of 32 is configurable in the gem defines file and have been allocated
+    APB address space between 0x700 and 0x7fc. Note. when using RX Partial Store and
+    Forward mode and priority queues, the frame offset must be less than the Partial
+    Store and Forward watermark. If the offset is higher than the watermark value
+    it''s not possible to identify the priority queue before the frame is sent to
+    the AMBA interface, and an incorrect priority queue may be used. The bit mapping
+    for these registers is as follows:'
+  field:
+  - bits: '31:16'
+    longdesc: The byte stored in bits [23:16] is compared against the 1st byte of
+      the 2 bytes extracted from the frame. The byte stored in bits [31:24] is compared
+      against the 2nd byte of the 2 bytes extracted from the frame
+    name: COMPARE_VALUE
+    shortdesc: 2 byte Compare Value.
+    type: rw
+  - bits: '15:0'
+    name: MASK_VALUE
+    type: rw
+  name: TYPE2_COMPARE_2_WORD_0
+  offset: '0x00000710'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Type2 Compare Word 1
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:7'
+    longdesc: '00: Offset from beginning of the frame.01: Offset from byte after Ether
+      Type.10: Offset from byte following end of IP header.11: Offset from byte following
+      end of TCP/UDP header'
+    name: COMPARE_OFFSET
+    shortdesc: compare byte offset.
+    type: rw
+  - bits: '6:0'
+    name: OFFSET_VALUE
+    type: rw
+  name: TYPE2_COMPARE_2_WORD_1
+  offset: '0x00000714'
+  type: mixed
+  width: 32
+- default: '0x00000000'
+  description: 'Compare A,B and C fields of the screener type 2 match register are
+    pointers to a pool of up to 32 compare registers. If enabled the compare is true
+    if the data at the OFFSET into the frame, ANDed with the MASK Value, is equal
+    to the COMPARE Value. A 16 bit word comparison is done. The byte at the OFFSET
+    number of bytes from the index start is compared thru bits 7:0 of the configured
+    VALUE and MASK. The byte at the OFFSET number of bytes + 1 from the index start
+    is compared thru bits 15:8 of the configured VALUE and MASK. The OFFSET can be
+    configured to be from 0 to 127 bytes from either the start of the frame, the byte
+    following the etherType field (last EtherType in the header if the frame is VLAN
+    tagged), the byte following the IP header (IPv4 or IPv6) or from the byte following
+    the start of the TCP/UDP header. The required number of Type 2 screening registers
+    up to a maximum of 32 is configurable in the gem defines file and have been allocated
+    APB address space between 0x700 and 0x7fc. Note. when using RX Partial Store and
+    Forward mode and priority queues, the frame offset must be less than the Partial
+    Store and Forward watermark. If the offset is higher than the watermark value
+    it''s not possible to identify the priority queue before the frame is sent to
+    the AMBA interface, and an incorrect priority queue may be used. The bit mapping
+    for these registers is as follows:'
+  field:
+  - bits: '31:16'
+    longdesc: The byte stored in bits [23:16] is compared against the 1st byte of
+      the 2 bytes extracted from the frame. The byte stored in bits [31:24] is compared
+      against the 2nd byte of the 2 bytes extracted from the frame
+    name: COMPARE_VALUE
+    shortdesc: 2 byte Compare Value.
+    type: rw
+  - bits: '15:0'
+    name: MASK_VALUE
+    type: rw
+  name: TYPE2_COMPARE_3_WORD_0
+  offset: '0x00000718'
+  type: rw
+  width: 32
+- default: '0x00000000'
+  description: Type2 Compare Word 1
+  field:
+  - bits: '31:9'
+    name: RESERVED
+    type: ro
+  - bits: '8:7'
+    longdesc: '00: Offset from beginning of the frame.01: Offset from byte after Ether
+      Type.10: Offset from byte following end of IP header.11: Offset from byte following
+      end of TCP/UDP header'
+    name: COMPARE_OFFSET
+    shortdesc: compare byte offset.
+    type: rw
+  - bits: '6:0'
+    name: OFFSET_VALUE
+    type: rw
+  name: TYPE2_COMPARE_3_WORD_1
+  offset: '0x0000071C'
+  type: mixed
+  width: 32
