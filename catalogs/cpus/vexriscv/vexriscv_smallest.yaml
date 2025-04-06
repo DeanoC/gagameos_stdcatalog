@@ -4,11 +4,11 @@ actions:
 - src
 - read_verilog_top
 process:
-- filename: config.toml
+- filename: config.yaml
   name: make_config
   parameters: []
-  processor: toml
-- args: +runMain VexRiscV_smallest config.toml .. ${name}
+  processor: yaml
+- args: +runMain VexRiscV_smallest config.yaml .. ${name}
   main_scala: VexRiscV_smallest.scala
   name: sbt_run
   processor: sbt

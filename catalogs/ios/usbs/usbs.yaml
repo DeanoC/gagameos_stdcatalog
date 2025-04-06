@@ -9,10 +9,10 @@ definition:
   - address_increment: '0x10_0000'
     base_address: '0x120_0000'
     name: USB3${index}_XHCI
-    resource: zynqps8/usb3_xhci.toml
+    resource: zynqps8/usb3_xhci.yaml
   - address_increment: '0x1_0000'
     base_address: '0x29d_0000'
     name: USB3${index}_REGS
-    resource: zynqps8/usb3_regs.toml
+    resource: zynqps8/usb3_regs.yaml
   type: io.internal.usb.zynqps8
 path: usbs

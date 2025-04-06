@@ -72,37 +72,37 @@ definition:
     prefix: plToPsAxiAcp0_
     protocol: axi4
     supplier: false
-  gateware: ps8soc/ps8soc.toml
+  gateware: ps8soc/ps8soc.yaml
   registers:
   - base_address: '0x36_0000'
     name: S_AXI_HPC0_FPD
-    resource: registers/afifm.toml
+    resource: registers/afifm.yaml
   - base_address: '0x37_0000'
     name: S_AXI_HPC1_FPD
-    resource: registers/afifm.toml
+    resource: registers/afifm.yaml
   - base_address: '0x38_0000'
     name: S_AXI_HP0_FPD
-    resource: registers/afifm.toml
+    resource: registers/afifm.yaml
   - base_address: '0x39_0000'
     name: S_AXI_HP1_FPD
-    resource: registers/afifm.toml
+    resource: registers/afifm.yaml
   - base_address: '0x3a_0000'
     name: S_AXI_HP2_FPD
-    resource: registers/afifm.toml
+    resource: registers/afifm.yaml
   - base_address: '0x3b_0000'
     name: S_AXI_HP3_FPD
-    resource: registers/afifm.toml
+    resource: registers/afifm.yaml
   - base_address: '0x29b_0000'
     name: S_AXI_LPD
-    resource: registers/afifm.toml
+    resource: registers/afifm.yaml
   - base_address: '0x5c_0000'
     name: APU
-    resource: registers/apu.toml
+    resource: registers/apu.yaml
   - base_address: '0x29a_0000'
     name: RPU
-    resource: registers/rpu.toml
+    resource: registers/rpu.yaml
   type: soc.zynqps8.ps8soc
-- gateware: gateware/ps8.toml
+- gateware: gateware/ps8.yaml
   registersX:
   - resource: registers/ams
   - resource: registers/axipcie_dma
@@ -153,5 +153,5 @@ definition:
   - resource: registers/pmu_global
   type: other.zynqps8.rawps8
 include:
-- resource: software/software.toml
-- resource: fabric.toml
+- resource: software/software.yaml
+- resource: fabric.yaml

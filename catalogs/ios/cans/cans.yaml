@@ -4,6 +4,6 @@ definition:
   - address_increment: '0x1_0000'
     base_address: '0x0106_0000'
     name: CAN${index}
-    resource: zynqps8/can.toml
+    resource: zynqps8/can.yaml
   type: io.internal.can.zynqps8
 path: cans

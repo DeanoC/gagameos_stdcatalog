@@ -18,7 +18,7 @@ definition:
   registers:
   - base_address: '0xf900_0000'
     name: RCPU_GIC
-    resource: registers/r5_pl390.toml
+    resource: registers/r5_pl390.yaml
   triple: arm-none-eabi
   type: cpu.r5f.zynqps8
   width: 32

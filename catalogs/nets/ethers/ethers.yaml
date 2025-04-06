@@ -4,5 +4,5 @@ definition:
   - address_increment: '0x1_0000'
     base_address: '0x010B_0000'
     name: GEM
-    resource: zynqps8/gem.toml
+    resource: zynqps8/gem.yaml
   type: net.ethernet.zynqps8

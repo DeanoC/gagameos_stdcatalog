@@ -1,3 +1,3 @@
 resources:
-- graphics/gpus/gpus.toml
-- graphics/displays/displays.toml
+- graphics/gpus/gpus.yaml
+- graphics/displays/displays.yaml

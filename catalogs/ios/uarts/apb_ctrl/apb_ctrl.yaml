@@ -3,14 +3,14 @@ actions:
 - sbt_run
 - src
 - read_verilog_top
-- read_toml_registers
+- read_yaml_registers
 process:
-- filename: config.toml
+- filename: config.yaml
   name: make_config
   parameters:
   - reset_clocks
-  processor: toml
-- args: +runMain UartApbCtrl config.toml .. ${name}
+  processor: yaml
+- args: +runMain UartApbCtrl config.yaml .. ${name}
   main_scala: apb_ctrl.scala
   name: sbt_run
   processor: sbt
@@ -23,6 +23,6 @@ process:
 - name: read_verilog_top
   processor: read_verilog_top
   source: ${name}
-- name: read_toml_registers
-  processor: read_toml_registers
+- name: read_yaml_registers
+  processor: read_yaml_registers
   source: ${name}_regs

@@ -1,5 +1,5 @@
 include:
-- resource: fabric.toml
+- resource: fabric.yaml
 instance:
 - type: program.zynqps8.ikuy_boot
 - type: program.zynqps8.pmu_monitor

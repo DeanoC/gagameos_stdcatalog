@@ -6,5 +6,5 @@ definition:
   max_instances: 3
   registers:
   - base_address: '0x1cb0000'
-    resource: zynqps8/swdt.toml
+    resource: zynqps8/swdt.yaml
   type: other.timer.watchdog.zynqps8

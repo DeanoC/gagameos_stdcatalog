@@ -5,5 +5,5 @@ definition:
   registers:
   - base_address: '0x020a_0000'
     name: GPIO
-    resource: zynqps8/gpio.toml
+    resource: zynqps8/gpio.yaml
   type: io.gpio.zynqps8

@@ -1,2 +1,2 @@
 resources:
-- hosts/x86_64_linux_host.toml
+- hosts/x86_64_linux_host.yaml

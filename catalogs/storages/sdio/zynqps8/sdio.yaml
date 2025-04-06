@@ -1,0 +1,85 @@
+description: "SDIO 0 Controller"
+registers:
+  - name: "REG_SDMASYSADDRLO"
+    type: "rw"
+    width: 16
+    description: "Dual purpose: low SDMA address, Auto CMD23 arg."
+    default: "0x00000000"
+    offset: "0x00000000"
+    fields:
+      - name: "SDMA_SYSADDRESS"
+        bits: "15:0"
+        type: "rw"
+  - name: "REG_SDMASYSADDRHI"
+    type: "rw"
+    width: 16
+    description: "Dual purpose: high SDMA address, Auto CMD23 arg."
+    default: "0x00000000"
+    offset: "0x00000002"
+    fields:
+      - name: "SDMA_SYSADDRESS"
+        bits: "15:0"
+        type: "rw"
+  - name: "REG_ARGUMENT1LO"
+    type: "rw"
+    width: 16
+    description: "Lower bits of SD Command Argument"
+    default: "0x00000000"
+    offset: "0x00000008"
+    fields:
+      - name: "COMMAND_ARGUMENT1"
+        bits: "15:0"
+        type: "rw"
+  - name: "REG_ARGUMENT1HI"
+    type: "rw"
+    width: 16
+    description: "Upper bits of SD Command Argument"
+    default: "0x00000000"
+    offset: "0x0000000A"
+    fields:
+      - name: "COMMAND_ARGUMENT1"
+        bits: "15:0"
+        type: "rw"
+  - name: "REG_TRANSFERMODE"
+    type: "rw"
+    width: 16
+    description: "Control the Data Transfer Operations."
+    default: "0x00000000"
+    offset: "0x0000000C"
+    fields:
+      - name: "XFERMODE_MULTIBLKSEL"
+        bits: "5"
+        type: "rw"
+        shortdesc: "This bit enables multiple block data transfers."
+        longdesc: "'0' Single Block.'1' Multiple Block."
+      - name: "XFERMODE_DATAXFERDIR"
+        bits: "4"
+        type: "rw"
+        shortdesc: "This bit defines the direction of data transfers."
+        longdesc: "0: Write from Host to Card. 1: Read from Card to Host."
+      - name: "XFERMODE_AUTOCMDENA"
+        bits: "3:2"
+        type: "rw"
+        shortdesc: "Auto command function enables."
+        longdesc: |
+          00: Auto Command Disabled.
+          01: Auto CMD12 Enabled.
+          10: Auto CMD23 Enabled.
+          11: reserved.
+          There are two methods to stop multiple-block read and write operation.
+          (1) Auto CMD12 Enable: Multiple-block read and write commands for memory require CMD12 to stop the operation. The controller issues CMD12 automatically when the last block transfer is completed. Auto CMD12 error is indicated in the Auto CMD Error Status register. The driver shall not set this bit if the command does not require Auto CMD12.
+          (2) Auto CMD23 Enable: The controller issues an Auto CMD23 before issuing a command specified in the Command Register. The following conditions are required to use the Auto CMD23:
+          * Auto CMD23 Supported (Host Controller Version is 3.00 or later).
+          * A memory card that supports CMD23 (SCR[33]=1).
+          * If DMA is used, it shall be ADMA.
+          * Only when CMD18 or CMD25 is issued. By writing the Command register, the controller issues a CMD23 first and then issues a command specified by the Command Index in Command register 32-bit block count value for CMD23 is set to SDMA System Address / Argument 2 register.
+      - name: "XFERMODE_BLKCNTENA"
+        bits: "1"
+        type: "rw"
+        shortdesc: "Block Count Register Enable."
+        longdesc: "0: disable (setting is also useful for executing an infinite transfer). 1: enable. Applicable to multiple block transfers."
+      - name: "XFERMODE_DMAENABLE"
+        bits: "0"
+        type: "rw"
+        shortdesc: "DMA can be enabled only if DMA Support bit in the Capabilities register is set."
+        longdesc: "If this bit is set to 1, a DMA operation shall begin when the Host Driver writes to the upper byte of Command register (00Fh). 0: disable DMA. 1: enable DMA."

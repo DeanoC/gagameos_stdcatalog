@@ -36,16 +36,16 @@ definition:
   registers:
   - base_address: '0x110_0000'
     name: LPD_GPV
-    resource: registers/lpd/lpd_gpv.toml
+    resource: registers/lpd/lpd_gpv.yaml
   - base_address: '0x241_0000'
     name: LPD_SLCR
-    resource: registers/lpd/lpd_slcr.toml
+    resource: registers/lpd/lpd_slcr.yaml
   - base_address: '0x24b_0000'
     name: LPD_SLCR_SECURE
-    resource: registers/lpd/lpd_slcr_secure.toml
+    resource: registers/lpd/lpd_slcr_secure.yaml
   - base_address: '0x25e_0000'
     name: CRL_APB
-    resource: registers/lpd/crl_apb.toml
+    resource: registers/lpd/crl_apb.yaml
   type: switch.internal.lpd.zynqps8
 - buses:
   - data_width: 32

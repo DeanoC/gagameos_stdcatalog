@@ -12,5 +12,5 @@ definition:
   - address_increment: '0x1_0000'
     base_address: '0x0202_0000'
     name: I2C${index}
-    resource: zynqps8/i2c.toml
+    resource: zynqps8/i2c.yaml
   type: switch.i2c.zynqps8

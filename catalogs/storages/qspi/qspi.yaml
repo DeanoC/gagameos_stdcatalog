@@ -11,6 +11,6 @@ definition:
   registers:
   - base_address: '0x020f_0000'
     name: QSPI
-    resource: zynqps8/qspi.toml
+    resource: zynqps8/qspi.yaml
   type: storage.qspi.zynqps8
 path: qspi

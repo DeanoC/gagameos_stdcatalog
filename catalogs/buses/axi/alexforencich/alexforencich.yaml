@@ -8,7 +8,7 @@ definition:
     prefix: m_axi_
     protocol: axi4
     supplier: true
-  gateware: axi_width_adapter.toml
+  gateware: axi_width_adapter.yaml
   type: switch.axi.width_adapter.alexforencich
 - buses:
   - name: in
@@ -19,5 +19,5 @@ definition:
     prefix: m_axil_
     protocol: axilite4
     supplier: true
-  gateware: axi_axil_adapter.toml
+  gateware: axi_axil_adapter.yaml
   type: switch.axi.axil_adapter.alexforencich

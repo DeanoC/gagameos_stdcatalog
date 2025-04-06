@@ -9,15 +9,15 @@ definition:
   registers:
   - base_address: '0x4a_0000'
     name: DP
-    resource: displayport/zynqps8/dp.toml
+    resource: displayport/zynqps8/dp.yaml
   - base_address: '-1'
     name: DP_DPCD
-    resource: displayport/zynqps8/dp_dpcd.toml
+    resource: displayport/zynqps8/dp_dpcd.yaml
   - base_address: '0x4c0000'
     name: DPDMA
-    resource: displayport/zynqps8/dpdma.toml
+    resource: displayport/zynqps8/dpdma.yaml
   - base_address: '-1'
     name: EEDID
-    resource: displayport/zynqps8/eedid.toml
+    resource: displayport/zynqps8/eedid.yaml
   type: graphic.display.displayport.zynqps8
 path: graphics/displays

@@ -8,8 +8,8 @@ definition:
   - address_increment: '0x1_0000'
     base_address: '0x211_0000'
     name: TTC${index}
-    resource: zynqps8/ttc.toml
+    resource: zynqps8/ttc.yaml
   type: other.timer.ttc.zynqps8
 path: timer
 resources:
-- watchdog/watchdog.toml
+- watchdog/watchdog.yaml

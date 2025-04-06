@@ -1,4 +1,4 @@
 path: ram
 resources:
-- ddr/ddr.toml
-- sram/sram.toml
+- ddr/ddr.yaml
+- sram/sram.yaml

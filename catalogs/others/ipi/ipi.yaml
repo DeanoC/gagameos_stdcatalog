@@ -6,8 +6,8 @@ definition:
   registers:
   - base_address: '0x0230_0000'
     name: IPI
-    resource: zynqps8/ipi.toml
+    resource: zynqps8/ipi.yaml
   - base_address: '0x0299_0000'
     name: IPI_BUFFER
-    resource: zynqps8/ipi_buffer.toml
+    resource: zynqps8/ipi_buffer.yaml
   type: other.ipi.zynqps8

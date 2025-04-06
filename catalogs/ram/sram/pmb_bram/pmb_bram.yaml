@@ -9,15 +9,15 @@ parameters:
   data_width: 32
   size_in_bytes: 1024
 process:
-- filename: config.toml
+- filename: config.yaml
   name: make_config
   parameters:
   - size_in_bytes
   - bits_per_byte
   - data_width
   - address_width
-  processor: toml
-- args: +runMain PmbBram config.toml .. ${name}
+  processor: yaml
+- args: +runMain PmbBram config.yaml .. ${name}
   main_scala: pmb_bram.scala
   name: sbt_run
   processor: sbt

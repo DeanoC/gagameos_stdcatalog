@@ -1,4 +1,4 @@
 resources:
-- i2c/i2c.toml
-- spi/spi.toml
-- axi/axi.toml
+- i2c/i2c.yaml
+- spi/spi.yaml
+- axi/axi.yaml

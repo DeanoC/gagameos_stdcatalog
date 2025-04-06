@@ -14,6 +14,6 @@ definition:
   - address_increment: '0x1_0000'
     base_address: '0x0216_0000'
     name: SD
-    resource: zynqps8/sdio.toml
+    resource: zynqps8/sdio.yaml
   type: storage.sdio.zynqps8
 path: sdio

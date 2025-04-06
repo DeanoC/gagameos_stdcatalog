@@ -1,4 +1,4 @@
 resources:
-- boards.toml
-- hosts.toml
-- socs.toml
+- boards.yaml
+- hosts.yaml
+- socs.yaml

@@ -2,8 +2,8 @@ definition:
 - registers:
   - base_address: '0x0008_0000'
     name: DDR_PHY
-    resource: zynqps8/ddr_phy.toml
+    resource: zynqps8/ddr_phy.yaml
   - base_address: '0x0009_0000'
     name: DDR_QOS_CTRL
-    resource: zynqps8/ddr_qos_ctrl.toml
+    resource: zynqps8/ddr_qos_ctrl.yaml
   type: ram.ddr.ddr4.zynqps8

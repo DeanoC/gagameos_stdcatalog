@@ -32,18 +32,18 @@ definition:
   - base_address: '0x02D4_0000'
     cpus: PMU
     name: PMU_IOMODULE
-    resource: registers/pmu_iomodule.toml
+    resource: registers/pmu_iomodule.yaml
   - base_address: '0x02D5_0000'
     cpus: PMU
     name: PMU_LMB_BRAM
-    resource: registers/pmu_lmb_bram.toml
+    resource: registers/pmu_lmb_bram.yaml
   - base_address: '0x02D6_0000'
     cpus: PMU
     name: PMU_LOCAL
-    resource: registers/pmu_local.toml
+    resource: registers/pmu_local.yaml
   - base_address: '0x02D8_0000'
     name: PMU_GLOBAL
-    resource: registers/pmu_global.toml
+    resource: registers/pmu_global.yaml
   type: switch.internal.pmuswitch
 - buses:
   - address_width: 18

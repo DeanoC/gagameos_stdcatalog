@@ -27,10 +27,10 @@ definition:
   registers:
   - base_address: '0x006e_0000'
     name: CCI_GPV
-    resource: registers/cci400.toml
+    resource: registers/cci400.yaml
   - base_address: '0x005e_0000'
     name: CCI_REG
-    resource: registers/cci_reg.toml
+    resource: registers/cci_reg.yaml
   type: switch.internal.cci.zynqps8
 - buses:
   - address_width: 40
@@ -63,10 +63,10 @@ definition:
   registers:
   - base_address: '0x1a_0000'
     name: CRF_APB
-    resource: registers/fpd/crf_apb.toml
+    resource: registers/fpd/crf_apb.yaml
   - base_address: '0x70_0000'
     name: FPD_GPV
-    resource: registers/fpd/fpd_gpv.toml
+    resource: registers/fpd/fpd_gpv.yaml
   type: switch.internal.fpd.zynqps8
 - buses:
   - address_width: 32
@@ -97,10 +97,10 @@ definition:
   registers:
   - base_address: '0x3d_0000'
     name: SIOU
-    resource: registers/siou.toml
+    resource: registers/siou.yaml
   - base_address: '0x40_0000'
     name: SERDES
-    resource: registers/serdes.toml
+    resource: registers/serdes.yaml
   type: switch.internal.siouswitch.zynqps8
 - buses:
   - address_width: 32
@@ -126,10 +126,10 @@ definition:
   registers:
   - base_address: '0x61_0000'
     name: FPD_SLCR
-    resource: registers/fpd/fpd_slcr.toml
+    resource: registers/fpd/fpd_slcr.yaml
   - base_address: '0x69_0000'
     name: FPD_SLCR_SECURE
-    resource: registers/fpd/fpd_slcr_secure.toml
+    resource: registers/fpd/fpd_slcr_secure.yaml
   type: other.internal.fpd_slcr.zynqps8
 - buses:
   - name: in0

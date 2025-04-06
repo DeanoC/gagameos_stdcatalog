@@ -6,11 +6,11 @@ definition:
   registers:
   - base_address: '0x02a5_0000'
     name: AMS_CTRL
-    resource: zynqps8/ams.toml
+    resource: zynqps8/ams.yaml
   - base_address: '0x02a5_0c00'
     name: PLSYSMON
-    resource: zynqps8/plsysmon.toml
+    resource: zynqps8/plsysmon.yaml
   - base_address: '0x02a5_0800'
     name: PSSYSMON
-    resource: zynqps8/pssysmon.toml
+    resource: zynqps8/pssysmon.yaml
   type: other.sysmon.zynqps8

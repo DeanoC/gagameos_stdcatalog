@@ -1,9 +1,9 @@
 definition:
-- gateware: resetti/resetti.toml
+- gateware: resetti/resetti.yaml
   type: other.resetti
 - type: clock.generated
 resources:
-- dma/dma.toml
-- sysmon/sysmon.toml
-- timer/timer.toml
-- ipi/ipi.toml
+- dma/dma.yaml
+- sysmon/sysmon.yaml
+- timer/timer.yaml
+- ipi/ipi.yaml

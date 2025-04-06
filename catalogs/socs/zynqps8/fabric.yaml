@@ -31,9 +31,9 @@ definition:
   registers:
   - base_address: '0x0007_0000'
     name: DDRC
-    resource: registers/ddrc.toml
+    resource: registers/ddrc.yaml
   type: switch.ddrc.zynqps8
 include:
-- resource: lpd.toml
-- resource: fpd.toml
-- resource: iop.toml
+- resource: lpd.yaml
+- resource: fpd.yaml
+- resource: iop.yaml

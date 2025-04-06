@@ -1,5 +1,5 @@
 resources:
-- uarts/uarts.toml
-- usbs/usbs.toml
-- cans/cans.toml
-- gpios/gpios.toml
+- uarts/uarts.yaml
+- usbs/usbs.yaml
+- cans/cans.yaml
+- gpios/gpios.yaml

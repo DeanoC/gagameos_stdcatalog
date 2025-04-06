@@ -94,13 +94,13 @@ definition:
   registers:
   - base_address: '0x100_0000'
     name: IOU_GPV
-    resource: registers/iop/iou_gpv.toml
+    resource: registers/iop/iou_gpv.yaml
   - base_address: '0x218_0000'
     name: IOU_SLCR
-    resource: registers/iop/iou_slcr.toml
+    resource: registers/iop/iou_slcr.yaml
   - base_address: '0x224_0000'
     name: IOU_SECURE_SLCR
-    resource: registers/iop/iou_secure_slcr.toml
+    resource: registers/iop/iou_secure_slcr.yaml
   type: switch.internal.iopunitsswitch.zynqps8
 - buses:
   - address_width: 32
@@ -138,10 +138,10 @@ definition:
   registers:
   - base_address: '0x2c80000'
     name: CSUDMA
-    resource: registers/csu/csudma.toml
+    resource: registers/csu/csudma.yaml
   - base_address: '0x2ca_0000'
     name: CSU
-    resource: registers/csu/csu.toml
+    resource: registers/csu/csu.yaml
   type: other.internal.csu.zynqps8
 - buses:
   - data_width: 32
@@ -150,5 +150,5 @@ definition:
   registers:
   - base_address: '0x80_0000'
     name: CORESIGHT_SOC_ROM
-    resource: registers/dap/daprom.toml
+    resource: registers/dap/daprom.yaml
   type: other.internal.dap.zynqps8

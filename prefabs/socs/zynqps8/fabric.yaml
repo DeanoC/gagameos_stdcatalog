@@ -31,10 +31,10 @@ connection:
   consumer_bus_name: splitter2_ddrc
   type: bus
 include:
-- resource: lpd.toml
-- resource: fpd.toml
-- resource: iop.toml
-- resource: lpdunits.toml
+- resource: lpd.yaml
+- resource: fpd.yaml
+- resource: iop.yaml
+- resource: lpdunits.yaml
 instance:
 - name: DDRController
   type: switch.ddrc.zynqps8

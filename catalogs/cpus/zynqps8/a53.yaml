@@ -13,67 +13,67 @@ definition:
   registers:
   - base_address: '0xFEC0_0000'
     name: CORESIGHT_A53_ROM
-    resource: registers/a53_rom.toml
+    resource: registers/a53_rom.yaml
   - base_address: '0xFEC1_0000'
     name: CORESIGHT_A53_DBG0
-    resource: registers/a53_dbg.toml
+    resource: registers/a53_dbg.yaml
   - base_address: '0xFED1_0000'
     name: CORESIGHT_A53_DBG1
-    resource: registers/a53_dbg.toml
+    resource: registers/a53_dbg.yaml
   - base_address: '0xFEE1_0000'
     name: CORESIGHT_A53_DBG2
-    resource: registers/a53_dbg.toml
+    resource: registers/a53_dbg.yaml
   - base_address: '0xFEF1_0000'
     name: CORESIGHT_A53_DBG3
-    resource: registers/a53_dbg.toml
+    resource: registers/a53_dbg.yaml
   - base_address: '0xFEC2_0000'
     name: CORESIGHT_A53_CTI0
-    resource: registers/a53_cti.toml
+    resource: registers/a53_cti.yaml
   - base_address: '0xFED2_0000'
     name: CORESIGHT_A53_CTI1
-    resource: registers/a53_cti.toml
+    resource: registers/a53_cti.yaml
   - base_address: '0xFEE2_0000'
     name: CORESIGHT_A53_CTI2
-    resource: registers/a53_cti.toml
+    resource: registers/a53_cti.yaml
   - base_address: '0xFEF2_0000'
     name: CORESIGHT_A53_CTI3
-    resource: registers/a53_cti.toml
+    resource: registers/a53_cti.yaml
   - base_address: '0xFEC3_0000'
     name: CORESIGHT_A53_PMU0
-    resource: registers/a53_pmu.toml
+    resource: registers/a53_pmu.yaml
   - base_address: '0xFED3_0000'
     name: CORESIGHT_A53_PMU1
-    resource: registers/a53_pmu.toml
+    resource: registers/a53_pmu.yaml
   - base_address: '0xFEE3_0000'
     name: CORESIGHT_A53_PMU2
-    resource: registers/a53_pmu.toml
+    resource: registers/a53_pmu.yaml
   - base_address: '0xFEF3_0000'
     name: CORESIGHT_A53_PMU3
-    resource: registers/a53_pmu.toml
+    resource: registers/a53_pmu.yaml
   - base_address: '0xFEC4_0000'
     name: CORESIGHT_A53_ETM0
-    resource: registers/a53_etm.toml
+    resource: registers/a53_etm.yaml
   - base_address: '0xFED4_0000'
     name: CORESIGHT_A53_ETM1
-    resource: registers/a53_etm.toml
+    resource: registers/a53_etm.yaml
   - base_address: '0xFEE4_0000'
     name: CORESIGHT_A53_ETM2
-    resource: registers/a53_etm.toml
+    resource: registers/a53_etm.yaml
   - base_address: '0xFEF4_0000'
     name: CORESIGHT_A53_ETM3
-    resource: registers/a53_etm.toml
+    resource: registers/a53_etm.yaml
   - base_address: '-1'
     name: A53_SYSTEM
-    resource: registers/a53_system.toml
+    resource: registers/a53_system.yaml
   - base_address: '0xf900_0000'
     name: ACPU_GIC
-    resource: registers/a53_gic400.toml
+    resource: registers/a53_gic400.yaml
   - base_address: '0xf902_0000'
     name: ACPU_GICC
-    resource: registers/a53_gic400_cpu.toml
+    resource: registers/a53_gic400_cpu.yaml
   - base_address: '0xf901_0000'
     name: ACPU_GICD
-    resource: registers/a53_gic400_dist.toml
+    resource: registers/a53_gic400_dist.yaml
   triple: aarch64-none-elf
   type: cpu.a53.zynqps8
   width: 64

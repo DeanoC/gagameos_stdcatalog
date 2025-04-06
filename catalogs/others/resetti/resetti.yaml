@@ -4,12 +4,12 @@ actions:
 - src
 - read_verilog_top
 process:
-- filename: config.toml
+- filename: config.yaml
   name: make_config
   parameters:
   - reset_clocks
-  processor: toml
-- args: +runMain Resetti config.toml .. ${name}
+  processor: yaml
+- args: +runMain Resetti config.yaml .. ${name}
   main_scala: resetti.scala
   name: sbt_run
   processor: sbt

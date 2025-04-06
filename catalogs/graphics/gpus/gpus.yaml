@@ -11,6 +11,6 @@ definition:
   registers:
   - base_address: '0x4b_0000'
     name: GPU
-    resource: mali400/zynqps8/gpu.toml
+    resource: mali400/zynqps8/gpu.yaml
   type: graphic.gpu.mali400.zynqps8
 path: graphics/gpus

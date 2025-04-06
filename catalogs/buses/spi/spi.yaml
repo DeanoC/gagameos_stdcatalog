@@ -8,5 +8,5 @@ definition:
   - address_increment: '0x1_0000'
     base_address: '0x0104_0000'
     name: SPI${index}
-    resource: zynqps8/spi.toml
+    resource: zynqps8/spi.yaml
   type: switch.spi.zynqps8

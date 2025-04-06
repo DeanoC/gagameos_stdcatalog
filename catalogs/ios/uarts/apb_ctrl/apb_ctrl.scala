@@ -60,7 +60,7 @@ object UartApbCtrl {
 			)
 
 		val regsToml = writeRegistersToToml
-		Utils.writeFile(Paths.get(targetDir).resolve(s"${name}_regs.toml"),
+		Utils.writeFile(Paths.get(targetDir).resolve(s"${name}_regs.yaml"),
 		                regsToml)
 
 		config
@@ -212,6 +212,6 @@ object UartApbCtrl {
 
 		val root = toml.Root(items.toList)
 
-		toml.Toml.generate(root)
+		toml.yaml.generate(root)
 	}
 }

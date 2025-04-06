@@ -51,7 +51,7 @@ instance:
   registers:
   - base_address: '0x960000'
     name: OCM
-    resource: registers/ocm.toml
+    resource: registers/ocm.yaml
   type: ram.sram.generic
 - name: PMUOutSwitch
   type: switch.internal.pmuoutbound.zynqps8
