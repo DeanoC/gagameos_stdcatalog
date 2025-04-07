@@ -1,3 +1,4 @@
 resources:
 - boards/myirfz3.yaml
 - boards/kv260.yaml
+- boards/tangnano9k.yaml

@@ -1,5 +1,6 @@
 resources:
-- boards/Arty35T.yaml
-- boards/Kv260.yaml
-- boards/MyirFZ3.yaml
-- boards/PynqZ2.yaml
+#- boards/arty35t.yaml
+- boards/kv260.yaml
+- boards/myirfz3.yaml
+#- boards/pynqz2.yaml
+- boards/tangnano9k.yaml

@@ -1,0 +1,24 @@
+definition:
+- board_device: GW1NR-LV9QN88PC6/I5
+  board_family: LittleBee
+  board_type: Gowin
+  type: board.tangnano9k
+
+  defaults:
+    drive: 4
+    pullup: true
+    slew: Slow
+    standard: LVCMOS33
+
+  clocks:
+  - frequency: 27Mhz
+    name: clock.ref.27MHz
+    pin: 52
+    pullup: false
+  # The following is a list of all the pins on the board
+  # and their corresponding pin numbers on the chip.
+  pingroups:
+  - name: BOARD.RSTN
+    pin: 3
+
+    
