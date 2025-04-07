@@ -1,0 +1,93 @@
+# Tang Nano 9K FPGA Development Board
+# -----------------------------------------
+# FPGA Chip: Gowin GW1NR-9 (LittleBee family)
+#   - Logic Units: 8,640 LUT4
+#   - Registers: 6,480 Flip-Flops
+#   - Shadow SRAM: 17,280 bits
+#   - Block SRAM: 468 Kbits (26 blocks)
+#   - Multipliers: 20 (18x18)
+#   - User Flash: 608 Kbits
+#   - PLL Count: 2
+#
+# Memory:
+#   - External SPI Flash: 32 Mbits (Puya P25Q32U)
+#   - SDR SDRAM: 64 Mbits
+#
+# Interfaces:
+#   - HDMI interface
+#   - RGB screen connector
+#   - SPI screen connector
+#   - Onboard BL702 chip (USB-JTAG and USB-UART)
+#   - TF card slot
+#   - 2x24-pin 2.54mm header pads
+#
+# Physical:
+#   - Power: 5V via USB Type-C
+#   - Dimensions: ~65 x 23 mm
+#   - Onboard clock: 27 MHz oscillator
+#   - User I/O: 2 buttons, 6 programmable LEDs
+#
+# Development Support:
+#   - Gowin IDE compatible
+#   - RISC-V softcore support (e.g., PicoRV32)
+#   - Open-source toolchain support available
+#
+# Pin Configurations:
+# ------------------
+# GPIO Pins:
+#   - GPIO0: Pin 25
+#   - GPIO1: Pin 26
+#   - GPIO2: Pin 27
+#   - GPIO3: Pin 28
+#   - GPIO4: Pin 29
+#   - GPIO5: Pin 30
+#   - GPIO6: Pin 33
+#   - GPIO7: Pin 34
+#
+# LEDs (Active Low):
+#   - LED0: Pin 10
+#   - LED1: Pin 11
+#   - LED2: Pin 13
+#   - LED3: Pin 14
+#   - LED4: Pin 15
+#   - LED5: Pin 16
+#
+# Buttons:
+#   - Button 1: Pin 3
+#   - Button 2: Pin 4
+#
+# Clock:
+#   - 27 MHz Crystal Oscillator: Pin 52
+#
+# Voltage Levels:
+#   - Most GPIOs: 3.3V
+#   - BANK3 (Pins 79-86): 1.8V (use only with 1.8V devices)
+
+# Interface Pin Configurations:
+# ---------------------------
+# BL702 Communication Interface:
+#   - UART RX: FPGA Bank 2, Pin 17 (connected to BL702)
+#   - UART TX: FPGA Bank 2, Pin 18 (connected to BL702)
+#   - The BL702 chip provides USB-JTAG and USB-UART functionality
+#     for programming and debugging via USB Type-C port
+#
+# HDMI Interface:
+#   - HDMI_D0_P (Data Channel 0+): PIN71 (RGB_R7)
+#   - HDMI_D0_N (Data Channel 0-): PIN61
+#   - HDMI_D1_P (Data Channel 1+): PIN73 (RGB_R5)
+#   - HDMI_D1_N (Data Channel 1-): PIN72 (RGB_R6)
+#   - HDMI_D2_P (Data Channel 2+): PIN75 (RGB_R3)
+#   - HDMI_D2_N (Data Channel 2-): PIN74 (RGB_R4)
+#   - HDMI_CK_P (Clock+): PIN69 (RGB_G3)
+#   - HDMI_CK_N (Clock-): PIN68 (RGB_G4)
+#
+# TF Card Slot (microSD):
+#   - SD_CLK (Clock): Pin 48
+#   - SD_CMD (Command): Pin 49
+#   - SD_DATA0 (Data Line 0): Pin 50
+#   - SD_DATA1 (Data Line 1): Pin 51
+#   - SD_DATA2 (Data Line 2): Pin 52
+#   - SD_DATA3 (Data Line 3): Pin 53
+#   - Note: Using SD card interface may overlap with other functions
+
+# Board YAML configuration below:

@@ -20,5 +20,93 @@ definition:
   pingroups:
   - name: BOARD.RSTN
     pin: 3
-
+  - name: BOARD.BUTTON2
+    pin: 4
     
+  # GPIO Pins
+  - name: BOARD.GPIO0
+    pin: 25
+  - name: BOARD.GPIO1
+    pin: 26
+  - name: BOARD.GPIO2
+    pin: 27
+  - name: BOARD.GPIO3
+    pin: 28
+  - name: BOARD.GPIO4
+    pin: 29
+  - name: BOARD.GPIO5
+    pin: 30
+  - name: BOARD.GPIO6
+    pin: 33
+  - name: BOARD.GPIO7
+    pin: 34
+    
+  # LEDs (Active Low)
+  - name: BOARD.LED0
+    pin: 10
+  - name: BOARD.LED1
+    pin: 11
+  - name: BOARD.LED2
+    pin: 13
+  - name: BOARD.LED3
+    pin: 14
+  - name: BOARD.LED4
+    pin: 15
+  - name: BOARD.LED5
+    pin: 16
+    
+  # UART Interface (BL702)
+  - name: BOARD.UART_RX
+    pin: 17
+    description: "Connected to BL702 (USB-UART)"
+  - name: BOARD.UART_TX
+    pin: 18
+    description: "Connected to BL702 (USB-UART)"
+    
+  # HDMI Interface
+  - name: BOARD.HDMI_D0_P
+    pin: 71
+    description: "HDMI Data Channel 0+ (RGB_R7)"
+  - name: BOARD.HDMI_D0_N
+    pin: 61
+    description: "HDMI Data Channel 0-"
+  - name: BOARD.HDMI_D1_P
+    pin: 73
+    description: "HDMI Data Channel 1+ (RGB_R5)"
+  - name: BOARD.HDMI_D1_N
+    pin: 72
+    description: "HDMI Data Channel 1- (RGB_R6)"
+  - name: BOARD.HDMI_D2_P
+    pin: 75
+    description: "HDMI Data Channel 2+ (RGB_R3)"
+  - name: BOARD.HDMI_D2_N
+    pin: 74
+    description: "HDMI Data Channel 2- (RGB_R4)"
+  - name: BOARD.HDMI_CK_P
+    pin: 69
+    description: "HDMI Clock+ (RGB_G3)"
+  - name: BOARD.HDMI_CK_N
+    pin: 68
+    description: "HDMI Clock- (RGB_G4)"
+    
+  # TF Card/microSD Interface
+  - name: BOARD.SD_CLK
+    pin: 48
+    description: "SD Card Clock"
+  - name: BOARD.SD_CMD
+    pin: 49
+    description: "SD Card Command"
+  - name: BOARD.SD_DATA0
+    pin: 50
+    description: "SD Card Data Line 0"
+  - name: BOARD.SD_DATA1
+    pin: 51
+    description: "SD Card Data Line 1"
+  - name: BOARD.SD_DATA2
+    pin: 52
+    description: "SD Card Data Line 2"
+  - name: BOARD.SD_DATA3
+    pin: 53
+    description: "SD Card Data Line 3"
+
+
