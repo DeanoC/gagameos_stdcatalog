@@ -1,0 +1,12 @@
+actions:
+- src
+- read_verilog_top
+process:
+- name: src
+  processor: sources
+  sources:
+  - file: uart_simple_fixed.v
+    language: verilog
+- name: read_verilog_top
+  processor: read_verilog_top
+  source: uart_simple_fixed.v

@@ -1,12 +1,12 @@
 resources:
 - boards.yaml
-- buses.yaml
-- cpus.yaml
+#- buses.yaml
+#- cpus.yaml
 - ios.yaml
-- graphics.yaml
-- nets.yaml
-- others.yaml
-- ram.yaml
-- socs.yaml
-- storages.yaml
-- software.yaml
+#- graphics.yaml
+#- nets.yaml
+#- others.yaml
+#- ram.yaml
+#- socs.yaml
+#- storages.yaml
+#- software.yaml
