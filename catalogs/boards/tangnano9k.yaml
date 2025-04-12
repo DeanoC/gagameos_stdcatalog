@@ -56,11 +56,12 @@ definition:
     pin: 16
     
   # UART Interface (BL702)
-  - name: BOARD.UART_RX
-    pin: 17
-    description: "Connected to BL702 (USB-UART)"
-  - name: BOARD.UART_TX
-    pin: 18
+  - names:
+    - BOARD.UART.RX
+    - BOARD.UART.TX
+    pins:
+    - 17
+    - 18
     description: "Connected to BL702 (USB-UART)"
     
   # HDMI Interface
