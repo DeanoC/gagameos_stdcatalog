@@ -1,11 +1,4 @@
 definition:
-- gateware: vexriscv/vexriscv_smallest.yaml
-  supplier_prefix:
-  - dBus_
-  - iBus_
-  triple: riscv32-none-elf
-  type: cpu.riscv32im.vexriscv_smallest
-  width: 32
 include:
 - resource: x86_64_linux_host.yaml
 - resource: zynqps8/a53.yaml
